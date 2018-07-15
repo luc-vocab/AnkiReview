@@ -5,12 +5,18 @@ import android.os.Bundle;
 import android.util.Log;
 import android.database.Cursor;
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import android.support.v4.content.ContextCompat;
 import android.content.pm.PackageManager;
 import android.support.v4.app.ActivityCompat;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+
 import com.ichi2.anki.FlashCardsContract;
 
 
@@ -39,14 +45,7 @@ public class DeckPickerActivity extends AppCompatActivity {
 
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_deck_picker);
-
-        Log.d(TAG, "hello world");
-
-
+    private void checkPermissions() {
         // Here, thisActivity is the current activity
         if (ContextCompat.checkSelfPermission(this,
                 "com.ichi2.anki.permission.READ_WRITE_DATABASE")
@@ -84,6 +83,22 @@ public class DeckPickerActivity extends AppCompatActivity {
 
             listDecks();
         }
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_deck_picker);
+        m_deckList = findViewById(R.id.deck_list);
+
+        //m_decks.add("item1");
+        //m_decks.add("item2");
+
+        m_adapter = new ArrayAdapter<String>(this, R.layout.deck_item);
+
+        m_deckList.setAdapter(m_adapter);
+
+        checkPermissions();
 
     }
 
@@ -97,6 +112,7 @@ public class DeckPickerActivity extends AppCompatActivity {
                 String deckName = decksCursor.getString(decksCursor.getColumnIndex(FlashCardsContract.Deck.DECK_NAME));
 
                 Log.d(TAG, "deck name: " + deckName);
+                m_adapter.add(deckName);
 
                 try {
                     JSONObject deckOptions = new JSONObject(decksCursor.getString(decksCursor.getColumnIndex(FlashCardsContract.Deck.OPTIONS)));
@@ -108,5 +124,9 @@ public class DeckPickerActivity extends AppCompatActivity {
             } while (decksCursor.moveToNext());
         }
     }
+
+    private ListView m_deckList;
+    private ArrayAdapter<String> m_adapter;
+    //private List<String> m_decks = new LinkedList<String>();
 
 }
