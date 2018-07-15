@@ -15,9 +15,9 @@ import com.ichi2.anki.FlashCardsContract;
 
 
 
-public class AnkiReviewActivity extends AppCompatActivity {
+public class DeckPickerActivity extends AppCompatActivity {
 
-    private static final String TAG = "AnkiReviewActivity";
+    private static final String TAG = "DeckPickerActivity";
 
 
     @Override
@@ -42,7 +42,7 @@ public class AnkiReviewActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_anki_review);
+        setContentView(R.layout.activity_deck_picker);
 
         Log.d(TAG, "hello world");
 
