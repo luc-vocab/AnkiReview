@@ -19,6 +19,26 @@ public class AnkiReviewActivity extends AppCompatActivity {
 
     private static final String TAG = "AnkiReviewActivity";
 
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+
+        if (grantResults.length > 0
+                && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            // permission was granted, yay! Do the
+            // contacts-related task you need to do.
+
+            listDecks();
+
+        } else {
+            // permission denied, boo! Disable the
+            // functionality that depends on this permission.
+        }
+        return;
+
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,6 +61,13 @@ public class AnkiReviewActivity extends AppCompatActivity {
                 // Show an explanation to the user *asynchronously* -- don't block
                 // this thread waiting for the user's response! After the user
                 // sees the explanation, try again to request the permission.
+
+                Log.d(TAG, "show explanation ?");
+
+                ActivityCompat.requestPermissions(this,
+                        new String[]{"com.ichi2.anki.permission.READ_WRITE_DATABASE"},
+                        0);
+
             } else {
                 Log.d(TAG, "request permission");
 
@@ -49,16 +76,18 @@ public class AnkiReviewActivity extends AppCompatActivity {
                         new String[]{"com.ichi2.anki.permission.READ_WRITE_DATABASE"},
                         0);
 
-                // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
-                // app-defined int constant. The callback method gets the
-                // result of the request.
+                // we're going to get a callback later
             }
         } else {
             // Permission has already been granted
-
             Log.d(TAG, "permission already granted");
+
+            listDecks();
         }
 
+    }
+
+    private void listDecks() {
 
         Cursor decksCursor = getContentResolver().query(FlashCardsContract.Deck.CONTENT_ALL_URI, null, null, null, null);
         if (decksCursor.moveToFirst()) {
@@ -78,7 +107,6 @@ public class AnkiReviewActivity extends AppCompatActivity {
                 decks.put(deckID, deckName);
             } while (decksCursor.moveToNext());
         }
-
     }
 
 }
