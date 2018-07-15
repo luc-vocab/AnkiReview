@@ -5,8 +5,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.database.Cursor;
 import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -14,6 +12,8 @@ import org.json.JSONObject;
 import android.support.v4.content.ContextCompat;
 import android.content.pm.PackageManager;
 import android.support.v4.app.ActivityCompat;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -21,10 +21,18 @@ import com.ichi2.anki.FlashCardsContract;
 
 
 
-public class DeckPickerActivity extends AppCompatActivity {
+public class DeckPickerActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
     private static final String TAG = "DeckPickerActivity";
 
+
+    private class AnkiDeck {
+        public long deckId;
+        public String deckName;
+        public String toString() {
+            return deckName;
+        }
+    }
 
     @Override
     public void onRequestPermissionsResult(int requestCode,
@@ -91,12 +99,10 @@ public class DeckPickerActivity extends AppCompatActivity {
         setContentView(R.layout.activity_deck_picker);
         m_deckList = findViewById(R.id.deck_list);
 
-        //m_decks.add("item1");
-        //m_decks.add("item2");
-
-        m_adapter = new ArrayAdapter<String>(this, R.layout.deck_item);
+        m_adapter = new ArrayAdapter<AnkiDeck>(this, R.layout.deck_item);
 
         m_deckList.setAdapter(m_adapter);
+        m_deckList.setOnItemClickListener(this);
 
         checkPermissions();
 
@@ -111,8 +117,12 @@ public class DeckPickerActivity extends AppCompatActivity {
                 long deckID = decksCursor.getLong(decksCursor.getColumnIndex(FlashCardsContract.Deck.DECK_ID));
                 String deckName = decksCursor.getString(decksCursor.getColumnIndex(FlashCardsContract.Deck.DECK_NAME));
 
+                AnkiDeck deck = new AnkiDeck();
+                deck.deckId = deckID;
+                deck.deckName = deckName;
+
                 Log.d(TAG, "deck name: " + deckName);
-                m_adapter.add(deckName);
+                m_adapter.add(deck);
 
                 try {
                     JSONObject deckOptions = new JSONObject(decksCursor.getString(decksCursor.getColumnIndex(FlashCardsContract.Deck.OPTIONS)));
@@ -126,7 +136,16 @@ public class DeckPickerActivity extends AppCompatActivity {
     }
 
     private ListView m_deckList;
-    private ArrayAdapter<String> m_adapter;
+    private ArrayAdapter<AnkiDeck> m_adapter;
+
+    @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+        Log.d(TAG, "position: " + i);
+
+        AnkiDeck deck = m_adapter.getItem(i);
+
+        Log.d(TAG, "selected deck: " + deck.deckName);
+    }
     //private List<String> m_decks = new LinkedList<String>();
 
 }
