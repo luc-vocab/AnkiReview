@@ -1,5 +1,6 @@
 package com.luc.ankireview;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -145,6 +146,11 @@ public class DeckPickerActivity extends AppCompatActivity implements AdapterView
         AnkiDeck deck = m_adapter.getItem(i);
 
         Log.d(TAG, "selected deck: " + deck.deckName);
+
+        // launch review activity
+        Intent intent = new Intent(DeckPickerActivity.this, ReviewActivity.class);
+        //myIntent.putExtra("key", value); //Optional parameters
+        this.startActivity(intent);
     }
     //private List<String> m_decks = new LinkedList<String>();
 
