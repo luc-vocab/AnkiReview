@@ -128,6 +128,7 @@ public class DeckPickerActivity extends AppCompatActivity implements AdapterView
                 try {
                     JSONObject deckOptions = new JSONObject(decksCursor.getString(decksCursor.getColumnIndex(FlashCardsContract.Deck.OPTIONS)));
                     JSONArray deckCounts = new JSONArray(decksCursor.getString(decksCursor.getColumnIndex(FlashCardsContract.Deck.DECK_COUNTS)));
+                    Log.d(TAG, deckOptions.toString());
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -145,11 +146,11 @@ public class DeckPickerActivity extends AppCompatActivity implements AdapterView
 
         AnkiDeck deck = m_adapter.getItem(i);
 
-        Log.d(TAG, "selected deck: " + deck.deckName);
+        Log.d(TAG, "selected deck: " + deck.deckName + " deckId: " + deck.deckId);
 
         // launch review activity
         Intent intent = new Intent(DeckPickerActivity.this, ReviewActivity.class);
-        //myIntent.putExtra("key", value); //Optional parameters
+        intent.putExtra("deckId", deck.deckId);
         this.startActivity(intent);
     }
     //private List<String> m_decks = new LinkedList<String>();
