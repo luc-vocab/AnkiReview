@@ -14,6 +14,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
@@ -39,6 +40,8 @@ public class ReviewActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         m_deckId = intent.getLongExtra("deckId", 0);
+
+
 
         Log.d(TAG, "ReviewActivity.onCreate, deckId: "  + m_deckId);
 
@@ -107,6 +110,7 @@ public class ReviewActivity extends AppCompatActivity {
     private long m_deckId;
     private Set<Card> m_initialCardSet = new HashSet<Card>();
     private Vector<Card> m_cardList = new Vector<Card>();
+
 
     // layout elements
     ViewPager m_questionPager;

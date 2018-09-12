@@ -1,6 +1,7 @@
 package com.luc.ankireview;
 
 import android.content.Context;
+import android.net.Uri;
 import android.os.Environment;
 import android.support.v4.view.PagerAdapter;
 import android.text.Spanned;
@@ -9,11 +10,25 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
 
+import java.io.File;
+import java.io.IOException;
+
 public class FlashCardViewPagerAdapter extends PagerAdapter {
     private static final String TAG = "FlashCardViewPagerAdapter";
 
     public FlashCardViewPagerAdapter(Context context) {
-        m_baseUrl = Environment.getExternalStorageDirectory().getAbsolutePath() + "/AnkiDroid/collection.media/";
+        String mediaDir = Environment.getExternalStorageDirectory().getAbsolutePath() + "/AnkiDroid/collection.media/";
+        Uri mediaDirUri = Uri.fromFile(new File(mediaDir));
+        m_baseUrl = mediaDirUri.toString() +"/";
+
+        //m_baseUrl = "file:///sdcard/AnkiDroid/collection.media/";
+        Log.v(TAG, "base url: " + m_baseUrl);
+
+        try {
+            m_cardTemplate = Utils.convertStreamToString(context.getAssets().open("card_template.html"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         // create all 3 webviews
         m_currentView = createWebView(context);
@@ -24,6 +39,9 @@ public class FlashCardViewPagerAdapter extends PagerAdapter {
 
     private WebView createWebView(Context context) {
         WebView webView = new WebView(context);
+        webView.getSettings().setJavaScriptEnabled(true);
+        webView.getSettings().setAllowFileAccess(true);
+        webView.getSettings().setAllowUniversalAccessFromFileURLs(true);
         webView.loadDataWithBaseURL(m_baseUrl + "__viewer__.html", "", "text/html", "utf-8", null);
         return webView;
     }
@@ -72,10 +90,13 @@ public class FlashCardViewPagerAdapter extends PagerAdapter {
 
     public void setCardContent(String cardContent, boolean isCenter) {
 
+        cardContent = processCardContent(cardContent);
+
         // the content in the center is the "main" item, the content on the sides is always the same, because we want to show
         // the same card, regardless of whether the user swipes left or right
 
         if (isCenter) {
+            Log.v(TAG, "content: " + cardContent);
             m_currentView.loadDataWithBaseURL(m_baseUrl + "__viewer__.html", cardContent, "text/html", "utf-8", null);
         }
 
@@ -85,10 +106,19 @@ public class FlashCardViewPagerAdapter extends PagerAdapter {
         }
     }
 
-    private String m_baseUrl;
+    private String processCardContent(String cardContent)
+    {
+        return m_cardTemplate.replace("::content::", cardContent).
+                              replace("::style::", "").
+                              replace("::class::", "card");
+    }
 
+    private String m_baseUrl;
+    private String m_cardTemplate;
 
     private WebView m_prevView = null;
     private WebView m_currentView = null;
     private WebView m_nextView = null;
+
+
 }
