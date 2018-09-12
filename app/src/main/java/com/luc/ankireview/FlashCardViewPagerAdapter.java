@@ -55,29 +55,11 @@ public class FlashCardViewPagerAdapter extends PagerAdapter {
                                     @Override
                                     public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error)
                                     {
-                                        Log.v(TAG, "*** WebView error " + error.getDescription() + " request: " + request.getUrl());
-                                    }
-
-                                    @Override
-                                    public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request)
-                                    {
-                                        Log.v(TAG, "*** WebView request " + request);
-                                        return false;
+                                        Log.e(TAG,"WebView error " + error.getDescription() + " request: " + request.getUrl());
                                     }
 
                                  });
 
-        /*
-        webView.setWebChromeClient(new WebChromeClient() {
-            @Override
-            public boolean onConsoleMessage(ConsoleMessage consoleMessage) {
-                Log.v(TAG, consoleMessage.message() + " -- From line "
-                        + consoleMessage.lineNumber() + " of "
-                        + consoleMessage.sourceId());
-                return super.onConsoleMessage(consoleMessage);
-            }
-        });
-        */
 
         webView.loadDataWithBaseURL(m_baseUrl + "__viewer__.html", "", "text/html", "utf-8", null);
         return webView;
@@ -133,7 +115,7 @@ public class FlashCardViewPagerAdapter extends PagerAdapter {
         // the same card, regardless of whether the user swipes left or right
 
         if (isCenter) {
-            Log.v(TAG, "baseUrl: " + m_baseUrl + " content: " + cardContent);
+            //Log.v(TAG, "baseUrl: " + m_baseUrl + " content: " + cardContent);
             m_currentView.loadDataWithBaseURL(m_baseUrl, cardContent, "text/html", "utf-8", null);
         }
 
