@@ -2,7 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.luc.ankireview">
 
+
     <uses-permission android:name="com.ichi2.anki.permission.READ_WRITE_DATABASE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"

@@ -1,5 +1,6 @@
 package com.luc.ankireview;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -25,6 +26,8 @@ import com.ichi2.anki.FlashCardsContract;
 public class DeckPickerActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
     private static final String TAG = "DeckPickerActivity";
+    private static final String ANKI_PERMISSIONS = "com.ichi2.anki.permission.READ_WRITE_DATABASE";
+    private static final String READ_STORAGE_PERMISSION = android.Manifest.permission.READ_EXTERNAL_STORAGE;
 
 
     private class AnkiDeck {
@@ -39,33 +42,39 @@ public class DeckPickerActivity extends AppCompatActivity implements AdapterView
     public void onRequestPermissionsResult(int requestCode,
                                            String permissions[], int[] grantResults) {
 
-        if (grantResults.length > 0
-                && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-            // permission was granted, yay! Do the
-            // contacts-related task you need to do.
+        boolean allPermissionsGranted = true;
 
-            listDecks();
+        for (int i=0; i<permissions.length; i++) {
+            String permission = permissions[i];
+            int grantResult = grantResults[i];
 
-        } else {
-            // permission denied, boo! Disable the
-            // functionality that depends on this permission.
+            if( grantResult != PackageManager.PERMISSION_GRANTED )
+            {
+                Log.e(TAG, "permission not granted: " + permission);
+                allPermissionsGranted = false;
+            }
         }
+
+        if(allPermissionsGranted) {
+            listDecks();
+        }
+
         return;
 
     }
 
-    private void checkPermissions() {
-        // Here, thisActivity is the current activity
-        if (ContextCompat.checkSelfPermission(this,
-                "com.ichi2.anki.permission.READ_WRITE_DATABASE")
-                != PackageManager.PERMISSION_GRANTED) {
 
-            Log.d(TAG, "permission not granted yet");
+    private void checkAllPermissions() {
+        // Here, thisActivity is the current activity
+        if ( ContextCompat.checkSelfPermission(this, ANKI_PERMISSIONS ) != PackageManager.PERMISSION_GRANTED ||
+                ContextCompat.checkSelfPermission(this, READ_STORAGE_PERMISSION ) != PackageManager.PERMISSION_GRANTED) {
+
+            Log.d(TAG, "permissions not granted yet");
 
             // Permission is not granted
             // Should we show an explanation?
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
-                    "com.ichi2.anki.permission.READ_WRITE_DATABASE")) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, ANKI_PERMISSIONS ) ||
+                    ActivityCompat.shouldShowRequestPermissionRationale(this, READ_STORAGE_PERMISSION )   ) {
                 // Show an explanation to the user *asynchronously* -- don't block
                 // this thread waiting for the user's response! After the user
                 // sees the explanation, try again to request the permission.
@@ -73,22 +82,22 @@ public class DeckPickerActivity extends AppCompatActivity implements AdapterView
                 Log.d(TAG, "show explanation ?");
 
                 ActivityCompat.requestPermissions(this,
-                        new String[]{"com.ichi2.anki.permission.READ_WRITE_DATABASE"},
+                        new String[]{ANKI_PERMISSIONS, READ_STORAGE_PERMISSION },
                         0);
 
             } else {
-                Log.d(TAG, "request permission");
+                Log.d(TAG, "requesting permissions");
 
                 // No explanation needed, we can request the permission.
                 ActivityCompat.requestPermissions(this,
-                        new String[]{"com.ichi2.anki.permission.READ_WRITE_DATABASE"},
+                        new String[]{ANKI_PERMISSIONS, READ_STORAGE_PERMISSION },
                         0);
 
                 // we're going to get a callback later
             }
         } else {
             // Permission has already been granted
-            Log.d(TAG, "permission already granted");
+            Log.d(TAG, "permissions already granted");
 
             listDecks();
         }
@@ -105,7 +114,7 @@ public class DeckPickerActivity extends AppCompatActivity implements AdapterView
         m_deckList.setAdapter(m_adapter);
         m_deckList.setOnItemClickListener(this);
 
-        checkPermissions();
+        checkAllPermissions();
 
     }
 

@@ -8,7 +8,13 @@ import android.text.Spanned;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.ConsoleMessage;
+import android.webkit.WebChromeClient;
+import android.webkit.WebResourceError;
+import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
+import android.webkit.WebSettings;
+import android.webkit.WebViewClient;
 
 import java.io.File;
 import java.io.IOException;
@@ -41,7 +47,38 @@ public class FlashCardViewPagerAdapter extends PagerAdapter {
         WebView webView = new WebView(context);
         webView.getSettings().setJavaScriptEnabled(true);
         webView.getSettings().setAllowFileAccess(true);
-        webView.getSettings().setAllowUniversalAccessFromFileURLs(true);
+        webView.getSettings().setAllowFileAccessFromFileURLs(true);
+        //webView.getSettings().setAllowUniversalAccessFromFileURLs(true);
+        //webView.getSettings().setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
+
+        webView.setWebViewClient(new WebViewClient() {
+                                    @Override
+                                    public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error)
+                                    {
+                                        Log.v(TAG, "*** WebView error " + error.getDescription() + " request: " + request.getUrl());
+                                    }
+
+                                    @Override
+                                    public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request)
+                                    {
+                                        Log.v(TAG, "*** WebView request " + request);
+                                        return false;
+                                    }
+
+                                 });
+
+        /*
+        webView.setWebChromeClient(new WebChromeClient() {
+            @Override
+            public boolean onConsoleMessage(ConsoleMessage consoleMessage) {
+                Log.v(TAG, consoleMessage.message() + " -- From line "
+                        + consoleMessage.lineNumber() + " of "
+                        + consoleMessage.sourceId());
+                return super.onConsoleMessage(consoleMessage);
+            }
+        });
+        */
+
         webView.loadDataWithBaseURL(m_baseUrl + "__viewer__.html", "", "text/html", "utf-8", null);
         return webView;
     }
@@ -96,8 +133,8 @@ public class FlashCardViewPagerAdapter extends PagerAdapter {
         // the same card, regardless of whether the user swipes left or right
 
         if (isCenter) {
-            Log.v(TAG, "content: " + cardContent);
-            m_currentView.loadDataWithBaseURL(m_baseUrl + "__viewer__.html", cardContent, "text/html", "utf-8", null);
+            Log.v(TAG, "baseUrl: " + m_baseUrl + " content: " + cardContent);
+            m_currentView.loadDataWithBaseURL(m_baseUrl, cardContent, "text/html", "utf-8", null);
         }
 
         if (! isCenter) {
