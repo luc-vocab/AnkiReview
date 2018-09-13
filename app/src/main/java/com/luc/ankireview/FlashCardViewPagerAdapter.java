@@ -4,16 +4,12 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Environment;
 import android.support.v4.view.PagerAdapter;
-import android.text.Spanned;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.ConsoleMessage;
-import android.webkit.WebChromeClient;
 import android.webkit.WebResourceError;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
-import android.webkit.WebSettings;
 import android.webkit.WebViewClient;
 
 import java.io.File;
@@ -48,8 +44,6 @@ public class FlashCardViewPagerAdapter extends PagerAdapter {
         webView.getSettings().setJavaScriptEnabled(true);
         webView.getSettings().setAllowFileAccess(true);
         webView.getSettings().setAllowFileAccessFromFileURLs(true);
-        //webView.getSettings().setAllowUniversalAccessFromFileURLs(true);
-        //webView.getSettings().setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
 
         webView.setWebViewClient(new WebViewClient() {
                                     @Override
@@ -120,8 +114,8 @@ public class FlashCardViewPagerAdapter extends PagerAdapter {
         }
 
         if (! isCenter) {
-            m_prevView.loadDataWithBaseURL(m_baseUrl + "__viewer__.html", cardContent, "text/html", "utf-8", null);
-            m_nextView .loadDataWithBaseURL(m_baseUrl + "__viewer__.html", cardContent, "text/html", "utf-8", null);
+            m_prevView.loadDataWithBaseURL(m_baseUrl, cardContent, "text/html", "utf-8", null);
+            m_nextView .loadDataWithBaseURL(m_baseUrl, cardContent, "text/html", "utf-8", null);
         }
     }
 

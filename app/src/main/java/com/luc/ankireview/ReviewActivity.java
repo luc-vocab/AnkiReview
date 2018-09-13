@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
+import android.widget.Toast;
 
 import com.ichi2.anki.FlashCardsContract;
 
@@ -35,8 +37,56 @@ public class ReviewActivity extends AppCompatActivity {
         m_answerAdapter = new FlashCardViewPagerAdapter(this);
 
         m_questionPager.setAdapter(m_questionAdapter);
-        m_questionPager.setCurrentItem(1);
+        m_answerPager.setAdapter(m_answerAdapter);
 
+        m_questionPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            }
+            @Override
+            public void onPageSelected(int position) {
+                mCurrentPosition = position;
+            }
+            @Override
+            public void onPageScrollStateChanged(int state) {
+                if(ViewPager.SCROLL_STATE_IDLE == state){
+                    if(mCurrentPosition != 1)
+                    {
+                        // user scrolled to one of the sides
+                        showAnswer();
+                    }
+                }
+            }
+            private int mCurrentPosition = 1;
+        });
+
+
+        m_answerPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            }
+            @Override
+            public void onPageSelected(int position) {
+                mCurrentPosition = position;
+            }
+            @Override
+            public void onPageScrollStateChanged(int state) {
+                if(ViewPager.SCROLL_STATE_IDLE == state){
+                    //Scrolling finished. Do something.
+                    if(mCurrentPosition == 0)
+                    {
+                        Log.v(TAG, "Answer Pager: user scrolled left, card not memorized");
+                        answerBad();
+
+                    } else if(mCurrentPosition == 2)
+                    {
+                        Log.v(TAG, "Answer Pager: user scrolled right, card memorized");
+                        answerGood();
+                    }
+                }
+            }
+            private int mCurrentPosition = 1;
+        });
 
         Intent intent = getIntent();
         m_deckId = intent.getLongExtra("deckId", 0);
@@ -50,7 +100,7 @@ public class ReviewActivity extends AppCompatActivity {
 
     private void loadCards() {
         Uri scheduled_cards_uri = FlashCardsContract.ReviewInfo.CONTENT_URI;
-        String deckArguments[] = new String[]{"2", Long.toString(m_deckId)};
+        String deckArguments[] = new String[]{"10", Long.toString(m_deckId)};
         String deckSelector = "limit=?, deckID=?";
         final Cursor cur = getContentResolver().query(scheduled_cards_uri,
                 null,  // projection
@@ -99,18 +149,98 @@ public class ReviewActivity extends AppCompatActivity {
             } while (cur.moveToNext());
         }
 
-        // done loading cards, populate
-        Card firstCard = m_cardList.get(0);
-        m_questionAdapter.setCardContent(firstCard.getQuestion(), true);
-        m_questionAdapter.setCardContent(firstCard.getAnswer(), false);
-
+        // done loading cards, show first question
+        moveToNextQuestion();
 
     }
+
+    private void loadFirstQuestion()
+    {
+        // if we've never shown a question before, do some first time setup
+
+        // show question in the middle
+        m_questionAdapter.setCardContent(m_currentCard.getQuestion(), true);
+        m_questionPager.setCurrentItem(1);
+
+        m_questionPager.bringToFront();
+
+    }
+
+    private void showQuestion() {
+        if(m_currentCardIndex == 0)
+        {
+            loadFirstQuestion();
+        }
+
+        // load current answer onto the sides (should not create visual disruption)
+        m_questionAdapter.setCardContent(m_currentCard.getAnswer(), false);
+
+        // the question pager data is already loaded. we only need to bring it to the front
+        m_questionPager.bringToFront();
+
+        // the question pager is now on top, we can make visual changes to the answer pager
+        m_answerAdapter.setCardContent(m_currentCard.getAnswer(), true);
+        m_answerPager.setCurrentItem(1);
+
+    }
+
+    private void showAnswer()
+    {
+        // load next question onto the sides (should not create visual disruption)
+        m_answerAdapter.setCardContent(m_nextCard.getQuestion(), false);
+
+        // the answer pager data is already loaded. we only need to bring it to the front
+        m_answerPager.bringToFront();
+
+        // load next question onto the middle page of the question pager
+        m_questionAdapter.setCardContent(m_nextCard.getQuestion(), true);
+
+        // center the question adapter ( not visible currently)
+        m_questionPager.setCurrentItem(1);
+
+    }
+
+    private void answerBad()
+    {
+        moveToNextQuestion();
+    }
+
+    private void answerGood()
+    {
+        moveToNextQuestion();
+    }
+
+
+    private void moveToNextQuestion()
+    {
+        if( m_cardList.size() > m_currentCardIndex + 2) {
+            m_currentCardIndex++;
+
+            m_currentCard = m_cardList.get(m_currentCardIndex);
+            m_nextCard = m_cardList.get(m_currentCardIndex + 1);
+            showQuestion();
+        } else {
+            showToast("End of cards reached");
+        }
+    }
+
+    private void showToast(String text)
+    {
+        int duration = Toast.LENGTH_SHORT;
+        Toast toast = Toast.makeText(this, text, duration);
+        toast.show();
+    }
+
 
     private long m_deckId;
     private Set<Card> m_initialCardSet = new HashSet<Card>();
     private Vector<Card> m_cardList = new Vector<Card>();
 
+
+    int m_currentCardIndex = -1;
+
+    Card m_currentCard;
+    Card m_nextCard;
 
     // layout elements
     ViewPager m_questionPager;
