@@ -18,10 +18,8 @@ import java.io.IOException;
 public class FlashCardViewPagerAdapter extends PagerAdapter {
     private static final String TAG = "FlashCardViewPagerAdapter";
 
-    public FlashCardViewPagerAdapter(Context context) {
-        String mediaDir = Environment.getExternalStorageDirectory().getAbsolutePath() + "/AnkiDroid/collection.media/";
-        Uri mediaDirUri = Uri.fromFile(new File(mediaDir));
-        m_baseUrl = mediaDirUri.toString() +"/";
+    public FlashCardViewPagerAdapter(Context context, String baseUrl) {
+        m_baseUrl = baseUrl;
 
         //m_baseUrl = "file:///sdcard/AnkiDroid/collection.media/";
         Log.v(TAG, "base url: " + m_baseUrl);

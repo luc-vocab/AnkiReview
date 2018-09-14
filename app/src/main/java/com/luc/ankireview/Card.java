@@ -44,6 +44,11 @@ public class Card {
         return m_answer;
     }
 
+    public String getAnswerAudio()
+    {
+        return m_answerSound;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

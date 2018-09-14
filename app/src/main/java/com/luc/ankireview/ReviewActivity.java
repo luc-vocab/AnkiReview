@@ -2,8 +2,11 @@ package com.luc.ankireview;
 
 import android.content.Intent;
 import android.database.Cursor;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -16,6 +19,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -30,11 +34,15 @@ public class ReviewActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_review);
 
+        String mediaDir = Environment.getExternalStorageDirectory().getAbsolutePath() + "/AnkiDroid/collection.media/";
+        Uri mediaDirUri = Uri.fromFile(new File(mediaDir));
+        m_baseUrl = mediaDirUri.toString() +"/";
+
         m_questionPager = findViewById(R.id.flashcard_question_pager);
         m_answerPager = findViewById(R.id.flashcard_answer_pager);
 
-        m_questionAdapter = new FlashCardViewPagerAdapter(this);
-        m_answerAdapter = new FlashCardViewPagerAdapter(this);
+        m_questionAdapter = new FlashCardViewPagerAdapter(this, m_baseUrl );
+        m_answerAdapter = new FlashCardViewPagerAdapter(this, m_baseUrl );
 
         m_questionPager.setAdapter(m_questionAdapter);
         m_answerPager.setAdapter(m_answerAdapter);
@@ -87,6 +95,10 @@ public class ReviewActivity extends AppCompatActivity {
             }
             private int mCurrentPosition = 1;
         });
+
+        m_mediaPlayer = new MediaPlayer();
+        m_mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+
 
         Intent intent = getIntent();
         m_deckId = intent.getLongExtra("deckId", 0);
@@ -182,6 +194,8 @@ public class ReviewActivity extends AppCompatActivity {
         m_answerAdapter.setCardContent(m_currentCard.getAnswer(), true);
         m_answerPager.setCurrentItem(1);
 
+        prepareAnswerAudio();
+
     }
 
     private void showAnswer()
@@ -198,6 +212,29 @@ public class ReviewActivity extends AppCompatActivity {
         // center the question adapter ( not visible currently)
         m_questionPager.setCurrentItem(1);
 
+        playAnswerAudio();
+
+    }
+
+    private void prepareAnswerAudio() {
+        if( m_currentCard.getAnswerAudio() != null)
+        {
+            Uri uri = Uri.parse(m_baseUrl + m_currentCard.getAnswerAudio());
+            try {
+                m_mediaPlayer.reset();
+                m_mediaPlayer.setDataSource(getApplicationContext(), uri);
+                m_mediaPlayer.prepare();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private void playAnswerAudio()
+    {
+        if( m_currentCard.getAnswerAudio() != null) {
+            m_mediaPlayer.start();
+        }
     }
 
     private void answerBad()
@@ -237,16 +274,20 @@ public class ReviewActivity extends AppCompatActivity {
     private Vector<Card> m_cardList = new Vector<Card>();
 
 
-    int m_currentCardIndex = -1;
+    private int m_currentCardIndex = -1;
 
-    Card m_currentCard;
-    Card m_nextCard;
+    private Card m_currentCard;
+    private Card m_nextCard;
 
     // layout elements
-    ViewPager m_questionPager;
-    ViewPager m_answerPager;
+    private ViewPager m_questionPager;
+    private ViewPager m_answerPager;
     // adapters
-    FlashCardViewPagerAdapter m_questionAdapter;
-    FlashCardViewPagerAdapter m_answerAdapter;
+    private FlashCardViewPagerAdapter m_questionAdapter;
+    private FlashCardViewPagerAdapter m_answerAdapter;
+    // where to load file assets
+    private String m_baseUrl;
+    // for playing audio
+    private MediaPlayer m_mediaPlayer;
 
 }
