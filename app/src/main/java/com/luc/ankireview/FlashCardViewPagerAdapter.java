@@ -50,10 +50,15 @@ public class FlashCardViewPagerAdapter extends PagerAdapter {
                                         Log.e(TAG,"WebView error " + error.getDescription() + " request: " + request.getUrl());
                                     }
 
-                                 });
+                                    @Override
+                                    public void onLoadResource(WebView view, String url)
+                                    {
+                                        Log.v(TAG,"WebView loadresource: " +  url);
+                                    }
 
 
-        webView.loadDataWithBaseURL(m_baseUrl + "__viewer__.html", "", "text/html", "utf-8", null);
+        });
+
         return webView;
     }
 
