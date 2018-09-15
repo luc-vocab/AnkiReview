@@ -32,7 +32,12 @@ public class ReviewActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_review);
+
+        m_initialCardSet = new HashSet<Card>();
+        m_cardList = new Vector<Card>();
+        m_currentCardIndex = -1;
 
         String mediaDir = Environment.getExternalStorageDirectory().getAbsolutePath() + "/AnkiDroid/collection.media/";
         Uri mediaDirUri = Uri.fromFile(new File(mediaDir));
@@ -270,11 +275,11 @@ public class ReviewActivity extends AppCompatActivity {
 
 
     private long m_deckId;
-    private Set<Card> m_initialCardSet = new HashSet<Card>();
-    private Vector<Card> m_cardList = new Vector<Card>();
+    private Set<Card> m_initialCardSet;
+    private Vector<Card> m_cardList;
 
 
-    private int m_currentCardIndex = -1;
+    private int m_currentCardIndex;
 
     private Card m_currentCard;
     private Card m_nextCard;
