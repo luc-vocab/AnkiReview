@@ -101,7 +101,9 @@ public class FlashCardViewPagerAdapter extends PagerAdapter {
 
     public void setCardContent(String cardContent, boolean isCenter) {
 
-        cardContent = processCardContent(cardContent);
+        // don't process an empty card (at the end we'll have empty cards)
+        if( cardContent.length() > 0 )
+            cardContent = processCardContent(cardContent);
 
         // the content in the center is the "main" item, the content on the sides is always the same, because we want to show
         // the same card, regardless of whether the user swipes left or right

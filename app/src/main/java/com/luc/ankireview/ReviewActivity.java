@@ -117,7 +117,7 @@ public class ReviewActivity extends AppCompatActivity {
 
     private void loadCards() {
         Uri scheduled_cards_uri = FlashCardsContract.ReviewInfo.CONTENT_URI;
-        String deckArguments[] = new String[]{"10", Long.toString(m_deckId)};
+        String deckArguments[] = new String[]{"2", Long.toString(m_deckId)};
         String deckSelector = "limit=?, deckID=?";
         final Cursor cur = getContentResolver().query(scheduled_cards_uri,
                 null,  // projection
@@ -206,13 +206,16 @@ public class ReviewActivity extends AppCompatActivity {
     private void showAnswer()
     {
         // load next question onto the sides (should not create visual disruption)
-        m_answerAdapter.setCardContent(m_nextCard.getQuestion(), false);
+        String nextCardQuestion = "";
+        if( m_nextCard != null)
+            nextCardQuestion = m_nextCard.getQuestion();
+        m_answerAdapter.setCardContent(nextCardQuestion, false);
 
         // the answer pager data is already loaded. we only need to bring it to the front
         m_answerPager.bringToFront();
 
         // load next question onto the middle page of the question pager
-        m_questionAdapter.setCardContent(m_nextCard.getQuestion(), true);
+        m_questionAdapter.setCardContent(nextCardQuestion, true);
 
         // center the question adapter ( not visible currently)
         m_questionPager.setCurrentItem(1);
@@ -255,15 +258,22 @@ public class ReviewActivity extends AppCompatActivity {
 
     private void moveToNextQuestion()
     {
-        if( m_cardList.size() > m_currentCardIndex + 2) {
+        if( m_cardList.size() > m_currentCardIndex + 1 )
+        {
             m_currentCardIndex++;
-
             m_currentCard = m_cardList.get(m_currentCardIndex);
-            m_nextCard = m_cardList.get(m_currentCardIndex + 1);
+
+            if( m_cardList.size() > m_currentCardIndex + 1) {
+                m_nextCard = m_cardList.get(m_currentCardIndex + 1);
+            } else {
+                m_nextCard = null;
+            }
+
             showQuestion();
         } else {
             showToast("End of cards reached");
         }
+
     }
 
     private void showToast(String text)
