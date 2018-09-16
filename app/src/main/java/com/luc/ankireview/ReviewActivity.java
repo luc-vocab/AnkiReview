@@ -172,8 +172,7 @@ public class ReviewActivity extends AppCompatActivity {
 
     private void singleTapHandler() {
         Log.v(TAG, "singleTapHandler");
-
-        showQuestion();
+        playAnswerAudio();
     }
 
     private void doubleTapHandler() {
@@ -192,7 +191,7 @@ public class ReviewActivity extends AppCompatActivity {
 
     private void loadCards() {
         Uri scheduled_cards_uri = FlashCardsContract.ReviewInfo.CONTENT_URI;
-        String deckArguments[] = new String[]{"2", Long.toString(m_deckId)};
+        String deckArguments[] = new String[]{"10", Long.toString(m_deckId)};
         String deckSelector = "limit=?, deckID=?";
         final Cursor cur = getContentResolver().query(scheduled_cards_uri,
                 null,  // projection
