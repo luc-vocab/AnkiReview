@@ -328,7 +328,8 @@ public class ReviewActivity extends AppCompatActivity {
         values.put(FlashCardsContract.ReviewInfo.TIME_TAKEN, timeTaken);
         getContentResolver().update(reviewInfoUri, values, null, null);
 
-        showToast("ease: " + ease + " time taken: " + timeTaken);
+        String msg = String.format("ease: %d time: %.1fs", ease, timeTaken / 1000.0);
+        showToast(msg);
     }
 
     private void playAnswerAudio()
