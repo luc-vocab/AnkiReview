@@ -1,5 +1,6 @@
 package com.luc.ankireview;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -232,7 +233,7 @@ public class ReviewActivity extends AppCompatActivity {
 
                     // Log.v(TAG, "question: " + question);
 
-                    Card card = new Card(noteId, cardOrd, question, answer);
+                    Card card = new Card(noteId, cardOrd, question, answer, buttonCount);
                     m_initialCardSet.add(card);
                     m_cardList.add(card);
                 }
@@ -275,6 +276,8 @@ public class ReviewActivity extends AppCompatActivity {
 
         prepareAnswerAudio();
 
+        m_cardReviewStartTime = System.currentTimeMillis();
+
     }
 
     private void showAnswer()
@@ -313,6 +316,21 @@ public class ReviewActivity extends AppCompatActivity {
         }
     }
 
+    private void answerCard(int ease) {
+
+        Uri reviewInfoUri = FlashCardsContract.ReviewInfo.CONTENT_URI;
+        ContentValues values = new ContentValues();
+        long timeTaken = System.currentTimeMillis() - m_cardReviewStartTime; //<- insert real time taken here
+
+        values.put(FlashCardsContract.ReviewInfo.NOTE_ID, m_currentCard.getNoteId());
+        values.put(FlashCardsContract.ReviewInfo.CARD_ORD, m_currentCard.getCardOrd());
+        values.put(FlashCardsContract.ReviewInfo.EASE, ease);
+        values.put(FlashCardsContract.ReviewInfo.TIME_TAKEN, timeTaken);
+        getContentResolver().update(reviewInfoUri, values, null, null);
+
+        showToast("ease: " + ease + " time taken: " + timeTaken);
+    }
+
     private void playAnswerAudio()
     {
         if( m_currentCard.getAnswerAudio() != null) {
@@ -322,11 +340,13 @@ public class ReviewActivity extends AppCompatActivity {
 
     private void answerBad()
     {
+        answerCard(m_currentCard.getEaseBad());
         moveToNextQuestion();
     }
 
     private void answerGood()
     {
+        answerCard(m_currentCard.getEaseGood());
         moveToNextQuestion();
     }
 
@@ -377,6 +397,9 @@ public class ReviewActivity extends AppCompatActivity {
     private ViewPager m_questionPager;
     private ViewPager m_answerPager;
     private FrameLayout m_touchLayer;
+
+    // keep track of review time
+    private long m_cardReviewStartTime;
 
     // adapters
     private FlashCardViewPagerAdapter m_questionAdapter;

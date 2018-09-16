@@ -9,14 +9,20 @@ import java.util.regex.Pattern;
 
 public class Card {
 
+    public static final int EASE_1 = 1;
+    public static final int EASE_2 = 2;
+    public static final int EASE_3 = 3;
+    public static final int EASE_4 = 4;
+
     public static Pattern s_soundPattern = Pattern.compile("\\[sound\\:([^\\[\\]]*)\\]");
     private static final String TAG = "Card";
 
 
-    public Card(long noteId, int cardOrd, String question, String answer) {
+    public Card(long noteId, int cardOrd, String question, String answer, int buttonCount) {
         m_noteId = noteId;
         m_cardOrd = cardOrd;
         m_question = question;
+        m_buttonCount = buttonCount;
 
         // does the answer content have a sound ?
         m_answer = filterSound(answer);
@@ -49,6 +55,37 @@ public class Card {
         return m_answerSound;
     }
 
+    public int getButtonCount()
+    {
+        return m_buttonCount;
+    }
+
+    public long getNoteId() {
+        return m_noteId;
+    }
+
+    public int getCardOrd() {
+        return m_cardOrd;
+    }
+
+
+    public int getEaseBad() {
+        return EASE_1;
+    }
+
+    public int getEaseGood() {
+        switch (m_buttonCount) {
+            case 2:
+                return EASE_2;
+            case 3:
+                return EASE_2;
+            case 4:
+                return EASE_3;
+            default:
+                return 0;
+        }
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -69,4 +106,5 @@ public class Card {
     private String m_question;
     private String m_answer;
     private String m_answerSound;
+    private int m_buttonCount;
 }
