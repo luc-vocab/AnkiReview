@@ -47,6 +47,12 @@ public class ReviewActivity extends AppCompatActivity {
         }
 
         @Override
+        public boolean onDoubleTap (MotionEvent e) {
+            doubleTapHandler();
+            return true;
+        }
+
+        @Override
         public boolean onSingleTapConfirmed(MotionEvent e)
         {
             singleTapHandler();
@@ -77,6 +83,8 @@ public class ReviewActivity extends AppCompatActivity {
         m_cardList = new Vector<Card>();
         m_currentCardIndex = -1;
 
+        m_firstTimeInitDone = false;
+
         String mediaDir = Environment.getExternalStorageDirectory().getAbsolutePath() + "/AnkiDroid/collection.media/";
         Uri mediaDirUri = Uri.fromFile(new File(mediaDir));
         m_baseUrl = mediaDirUri.toString() +"/";
@@ -93,8 +101,8 @@ public class ReviewActivity extends AppCompatActivity {
         m_touchLayer.setOnTouchListener(m_gestureListener);
 
 
-        m_questionAdapter = new FlashCardViewPagerAdapter(this, m_baseUrl );
-        m_answerAdapter = new FlashCardViewPagerAdapter(this, m_baseUrl );
+        m_questionAdapter = new FlashCardViewPagerAdapter(this, m_baseUrl,this );
+        m_answerAdapter = new FlashCardViewPagerAdapter(this, m_baseUrl,this );
 
         m_questionPager.setAdapter(m_questionAdapter);
         m_answerPager.setAdapter(m_answerAdapter);
@@ -165,7 +173,19 @@ public class ReviewActivity extends AppCompatActivity {
     private void singleTapHandler() {
         Log.v(TAG, "singleTapHandler");
 
-        loadFirstQuestion();
+        showQuestion();
+    }
+
+    private void doubleTapHandler() {
+        Log.v(TAG, "doubleTapHandler");
+    }
+
+    public void pageLoaded() {
+        if( ! m_firstTimeInitDone) {
+            Log.v(TAG, "reloading question for first time init");
+            showQuestion();
+            m_firstTimeInitDone = true;
+        }
     }
 
     private void loadCards() {
@@ -343,6 +363,7 @@ public class ReviewActivity extends AppCompatActivity {
     private Set<Card> m_initialCardSet;
     private Vector<Card> m_cardList;
 
+    private boolean m_firstTimeInitDone;
 
     private int m_currentCardIndex;
 

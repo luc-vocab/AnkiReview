@@ -18,8 +18,9 @@ import java.io.IOException;
 public class FlashCardViewPagerAdapter extends PagerAdapter {
     private static final String TAG = "FlashCardViewPagerAdapter";
 
-    public FlashCardViewPagerAdapter(Context context, String baseUrl) {
+    public FlashCardViewPagerAdapter(Context context, String baseUrl, ReviewActivity reviewActivity) {
         m_baseUrl = baseUrl;
+        m_reviewActivity = reviewActivity;
 
         //m_baseUrl = "file:///sdcard/AnkiDroid/collection.media/";
         Log.v(TAG, "base url: " + m_baseUrl);
@@ -54,6 +55,12 @@ public class FlashCardViewPagerAdapter extends PagerAdapter {
                                     public void onLoadResource(WebView view, String url)
                                     {
                                         Log.v(TAG,"WebView loadresource: " +  url);
+                                    }
+
+                                    @Override
+                                    public void onPageFinished(WebView view, String url) {
+                                        Log.v(TAG, "WebView pagefinished " + url);
+                                        m_reviewActivity.pageLoaded();
                                     }
 
 
@@ -138,5 +145,6 @@ public class FlashCardViewPagerAdapter extends PagerAdapter {
     private WebView m_currentView = null;
     private WebView m_nextView = null;
 
+    private ReviewActivity m_reviewActivity;
 
 }
