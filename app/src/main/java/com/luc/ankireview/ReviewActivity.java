@@ -41,28 +41,25 @@ public class ReviewActivity extends AppCompatActivity {
 
         @Override
         public boolean onDown(MotionEvent event) {
-            Log.v(TAG, "onDown");
+            // need to return true to indicate interest in the event, otherwise the
+            // remaining events won't be sent to us
             return true;
-        }
-
-        @Override
-        public boolean onSingleTapUp(MotionEvent e) {
-            Log.v(TAG, "single tap up");
-            return false;
         }
 
         @Override
         public boolean onSingleTapConfirmed(MotionEvent e)
         {
-            Log.v(TAG, "single tap detected");
-            return true;
+            singleTapHandler();
+            return true; // consume single tap event
         }
     }
 
     private View.OnTouchListener m_gestureListener = new View.OnTouchListener() {
         @Override
         public boolean onTouch(View v, MotionEvent event) {
-            Log.v(TAG, "gestureListener onTouch");
+            // let the viewpagers / webviews consume the event
+            m_flashcardFrame.dispatchTouchEvent(event);
+            // run through gesture detector
             if (m_detector.onTouchEvent(event)) {
                 return true;
             }
@@ -85,6 +82,7 @@ public class ReviewActivity extends AppCompatActivity {
         m_baseUrl = mediaDirUri.toString() +"/";
 
         m_frame = findViewById(R.id.review_frame);
+        m_flashcardFrame = findViewById(R.id.flashcard_frame);
         m_touchLayer = findViewById(R.id.touch_layer);
         m_questionPager = findViewById(R.id.flashcard_question_pager);
         m_answerPager = findViewById(R.id.flashcard_answer_pager);
@@ -164,6 +162,11 @@ public class ReviewActivity extends AppCompatActivity {
         loadCards();
     }
 
+    private void singleTapHandler() {
+        Log.v(TAG, "singleTapHandler");
+
+        loadFirstQuestion();
+    }
 
     private void loadCards() {
         Uri scheduled_cards_uri = FlashCardsContract.ReviewInfo.CONTENT_URI;
@@ -335,6 +338,7 @@ public class ReviewActivity extends AppCompatActivity {
     }
 
 
+
     private long m_deckId;
     private Set<Card> m_initialCardSet;
     private Vector<Card> m_cardList;
@@ -347,6 +351,7 @@ public class ReviewActivity extends AppCompatActivity {
 
     // layout elements
     private FrameLayout m_frame;
+    private FrameLayout m_flashcardFrame;
     private ViewPager m_questionPager;
     private ViewPager m_answerPager;
     private FrameLayout m_touchLayer;
