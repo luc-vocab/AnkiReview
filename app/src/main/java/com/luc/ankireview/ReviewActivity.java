@@ -1,5 +1,6 @@
 package com.luc.ankireview;
 
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.media.AudioManager;
@@ -7,10 +8,15 @@ import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Vibrator;
+import android.support.v4.view.GestureDetectorCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.GestureDetector;
+import android.view.MotionEvent;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import com.ichi2.anki.FlashCardsContract;
@@ -29,6 +35,41 @@ import java.util.Vector;
 public class ReviewActivity extends AppCompatActivity {
     private static final String TAG = "ReviewActivity";
 
+
+
+    class ReviewerGestureDetector extends GestureDetector.SimpleOnGestureListener {
+
+        @Override
+        public boolean onDown(MotionEvent event) {
+            Log.v(TAG, "onDown");
+            return true;
+        }
+
+        @Override
+        public boolean onSingleTapUp(MotionEvent e) {
+            Log.v(TAG, "single tap up");
+            return false;
+        }
+
+        @Override
+        public boolean onSingleTapConfirmed(MotionEvent e)
+        {
+            Log.v(TAG, "single tap detected");
+            return true;
+        }
+    }
+
+    private View.OnTouchListener m_gestureListener = new View.OnTouchListener() {
+        @Override
+        public boolean onTouch(View v, MotionEvent event) {
+            Log.v(TAG, "gestureListener onTouch");
+            if (m_detector.onTouchEvent(event)) {
+                return true;
+            }
+            return false;
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,8 +84,16 @@ public class ReviewActivity extends AppCompatActivity {
         Uri mediaDirUri = Uri.fromFile(new File(mediaDir));
         m_baseUrl = mediaDirUri.toString() +"/";
 
+        m_frame = findViewById(R.id.review_frame);
+        m_touchLayer = findViewById(R.id.touch_layer);
         m_questionPager = findViewById(R.id.flashcard_question_pager);
         m_answerPager = findViewById(R.id.flashcard_answer_pager);
+
+
+        // set touch listener
+        m_detector = new GestureDetectorCompat(this, new ReviewerGestureDetector());
+        m_touchLayer.setOnTouchListener(m_gestureListener);
+
 
         m_questionAdapter = new FlashCardViewPagerAdapter(this, m_baseUrl );
         m_answerAdapter = new FlashCardViewPagerAdapter(this, m_baseUrl );
@@ -114,6 +163,7 @@ public class ReviewActivity extends AppCompatActivity {
 
         loadCards();
     }
+
 
     private void loadCards() {
         Uri scheduled_cards_uri = FlashCardsContract.ReviewInfo.CONTENT_URI;
@@ -209,6 +259,7 @@ public class ReviewActivity extends AppCompatActivity {
         String nextCardQuestion = "";
         if( m_nextCard != null)
             nextCardQuestion = m_nextCard.getQuestion();
+
         m_answerAdapter.setCardContent(nextCardQuestion, false);
 
         // the answer pager data is already loaded. we only need to bring it to the front
@@ -295,8 +346,11 @@ public class ReviewActivity extends AppCompatActivity {
     private Card m_nextCard;
 
     // layout elements
+    private FrameLayout m_frame;
     private ViewPager m_questionPager;
     private ViewPager m_answerPager;
+    private FrameLayout m_touchLayer;
+
     // adapters
     private FlashCardViewPagerAdapter m_questionAdapter;
     private FlashCardViewPagerAdapter m_answerAdapter;
@@ -304,5 +358,9 @@ public class ReviewActivity extends AppCompatActivity {
     private String m_baseUrl;
     // for playing audio
     private MediaPlayer m_mediaPlayer;
+
+    // gesture detection
+    private GestureDetectorCompat m_detector;
+
 
 }
