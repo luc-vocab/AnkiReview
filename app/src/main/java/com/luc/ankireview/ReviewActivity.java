@@ -18,6 +18,7 @@ import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.ichi2.anki.FlashCardsContract;
@@ -92,6 +93,7 @@ public class ReviewActivity extends AppCompatActivity {
         m_questionPager = findViewById(R.id.flashcard_question_pager);
         m_answerPager = findViewById(R.id.flashcard_answer_pager);
 
+        m_progressBar = findViewById(R.id.review_progressbar);
 
         // set touch listener
         m_detector = new GestureDetectorCompat(this, new ReviewerGestureDetector());
@@ -191,6 +193,9 @@ public class ReviewActivity extends AppCompatActivity {
         m_initialDueCount = AnkiUtils.getDeckDueCount(getContentResolver(), m_deckId);
         m_currentDueCount = m_initialDueCount;
         Log.v(TAG, "initial due count: " + m_initialDueCount);
+
+        m_progressBar.setMax(m_initialDueCount);
+        m_progressBar.setProgress(0);
 
         Vector<Card> initialCards = AnkiUtils.getDueCards(getContentResolver(), m_deckId, 2);
         if( initialCards.size() == 0 ) {
@@ -322,6 +327,8 @@ public class ReviewActivity extends AppCompatActivity {
         m_currentDueCount = AnkiUtils.getDeckDueCount(getContentResolver(), m_deckId);
         Log.v(TAG,"current due count: " + m_currentDueCount);
 
+        m_progressBar.setProgress(m_initialDueCount - m_currentDueCount);
+
         Vector<Card> nextTwo = AnkiUtils.getDueCards(getContentResolver(), m_deckId, 2);
 
         if( nextTwo.size() == 0) {
@@ -371,6 +378,8 @@ public class ReviewActivity extends AppCompatActivity {
     private ViewPager m_questionPager;
     private ViewPager m_answerPager;
     private FrameLayout m_touchLayer;
+
+    private ProgressBar m_progressBar;
 
     // keep track of review time
     private long m_cardReviewStartTime;
