@@ -80,10 +80,6 @@ public class ReviewActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_review);
 
-        m_initialCardSet = new HashSet<Card>();
-        m_cardList = new Vector<Card>();
-        m_currentCardIndex = -1;
-
         m_firstTimeInitDone = false;
 
         String mediaDir = Environment.getExternalStorageDirectory().getAbsolutePath() + "/AnkiDroid/collection.media/";
@@ -191,58 +187,27 @@ public class ReviewActivity extends AppCompatActivity {
     }
 
     private void loadCards() {
-        Uri scheduled_cards_uri = FlashCardsContract.ReviewInfo.CONTENT_URI;
-        String deckArguments[] = new String[]{"10", Long.toString(m_deckId)};
-        String deckSelector = "limit=?, deckID=?";
-        final Cursor cur = getContentResolver().query(scheduled_cards_uri,
-                null,  // projection
-                deckSelector,  // if null, default values will be used
-                deckArguments,  // if null, the deckSelector must not contain any placeholders ("?")
-                null   // sortOrder is ignored for this URI
-        );
 
-        if (cur.moveToFirst()) {
-            do {
+        m_initialDueCount = AnkiUtils.getDeckDueCount(getContentResolver(), m_deckId);
+        m_currentDueCount = m_initialDueCount;
+        Log.v(TAG, "initial due count: " + m_initialDueCount);
 
-                long noteId = cur.getLong(cur.getColumnIndex(FlashCardsContract.ReviewInfo.NOTE_ID));
-                int cardOrd = cur.getInt(cur.getColumnIndex(FlashCardsContract.ReviewInfo.CARD_ORD));
-                int buttonCount = cur.getInt(cur.getColumnIndex(FlashCardsContract.ReviewInfo.BUTTON_COUNT));
-                try {
-                    JSONArray media = new JSONArray(cur.getString(cur.getColumnIndex(FlashCardsContract.ReviewInfo.MEDIA_FILES)));
-                    Log.v(TAG, media.toString());
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+        Vector<Card> initialCards = AnkiUtils.getDueCards(getContentResolver(), m_deckId, 2);
+        if( initialCards.size() == 0 ) {
+            // nothing to review
+            reviewsDone();
+        } else {
+            m_currentCard = initialCards.get(0);
+            if( initialCards.size() == 2)
+                m_nextCard = initialCards.get(1);
+            else
+                m_nextCard = null;
 
-                Log.v(TAG, "noteId: " + noteId + " cardOrd: " + cardOrd);
-
-                // retrieve card information
-
-                Uri noteUri = Uri.withAppendedPath(FlashCardsContract.Note.CONTENT_URI, Long.toString(noteId));
-                Uri cardsUri = Uri.withAppendedPath(noteUri, "cards");
-                Uri specificCardUri = Uri.withAppendedPath(cardsUri, Integer.toString(cardOrd));
-                final Cursor cardCursor = getContentResolver().query(specificCardUri,
-                        null,  // projection
-                        null,  // selection is ignored for this URI
-                        null,  // selectionArgs is ignored for this URI
-                        null   // sortOrder is ignored for this URI
-                );
-                if(cardCursor.moveToFirst()) {
-                    String question = cardCursor.getString(cardCursor.getColumnIndex(FlashCardsContract.Card.QUESTION));
-                    String answer = cardCursor.getString(cardCursor.getColumnIndex(FlashCardsContract.Card.ANSWER));
-
-                    // Log.v(TAG, "question: " + question);
-
-                    Card card = new Card(noteId, cardOrd, question, answer, buttonCount);
-                    m_initialCardSet.add(card);
-                    m_cardList.add(card);
-                }
-
-            } while (cur.moveToNext());
+            // done loading cards, show first question
+            showQuestion();
         }
 
-        // done loading cards, show first question
-        moveToNextQuestion();
+
 
     }
 
@@ -259,7 +224,7 @@ public class ReviewActivity extends AppCompatActivity {
     }
 
     private void showQuestion() {
-        if(m_currentCardIndex == 0)
+        if(m_initialDueCount == m_currentDueCount)
         {
             loadFirstQuestion();
         }
@@ -354,20 +319,27 @@ public class ReviewActivity extends AppCompatActivity {
 
     private void moveToNextQuestion()
     {
-        if( m_cardList.size() > m_currentCardIndex + 1 )
-        {
-            m_currentCardIndex++;
-            m_currentCard = m_cardList.get(m_currentCardIndex);
+        m_currentDueCount = AnkiUtils.getDeckDueCount(getContentResolver(), m_deckId);
+        Log.v(TAG,"current due count: " + m_currentDueCount);
 
-            if( m_cardList.size() > m_currentCardIndex + 1) {
-                m_nextCard = m_cardList.get(m_currentCardIndex + 1);
-            } else {
-                m_nextCard = null;
-            }
+        Vector<Card> nextTwo = AnkiUtils.getDueCards(getContentResolver(), m_deckId, 2);
 
+        if( nextTwo.size() == 0) {
+            // zero cards due. we've finished our reviews
+            reviewsDone();
+        } else if ( nextTwo.size() == 2 ) {
+            // we got two cards back.
+            // current card is now the previous "next card"
+            m_currentCard = m_nextCard;
+            // next card is the second card retrieved
+            m_nextCard = nextTwo.get(1);
             showQuestion();
         } else {
-            showToast("End of cards reached");
+            // only one card retrieved
+            // still move the previous "next card" to the current
+            m_currentCard = m_nextCard;
+            m_nextCard = nextTwo.get(0);
+            showQuestion();
         }
 
     }
@@ -380,14 +352,15 @@ public class ReviewActivity extends AppCompatActivity {
     }
 
 
+    private void reviewsDone() {
+        showToast("End of cards reached");
+        finish();
+    }
 
     private long m_deckId;
-    private Set<Card> m_initialCardSet;
-    private Vector<Card> m_cardList;
 
     private boolean m_firstTimeInitDone;
 
-    private int m_currentCardIndex;
 
     private Card m_currentCard;
     private Card m_nextCard;
@@ -401,6 +374,10 @@ public class ReviewActivity extends AppCompatActivity {
 
     // keep track of review time
     private long m_cardReviewStartTime;
+
+    // keep track of due counts
+    int m_initialDueCount;
+    int m_currentDueCount;
 
     // adapters
     private FlashCardViewPagerAdapter m_questionAdapter;
