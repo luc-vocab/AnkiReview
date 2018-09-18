@@ -17,11 +17,25 @@ public class AnkiUtils {
 
     private static final String TAG = "AnkiUtils";
 
-    public static int getDeckDueCount(ContentResolver contentResolver, long deckId) {
+    public static class DeckDueCounts {
+        public int learnCount;
+        public int reviewCount;
+        public int newCount;
+
+        public int getTotal() {
+            return learnCount + reviewCount + newCount;
+        }
+
+        public int getTotalWithWeights() {
+            return learnCount + reviewCount + 2 * newCount;
+        }
+    }
+
+    public static String getDeckName(ContentResolver contentResolver, long deckId) {
         Uri deckUri = Uri.withAppendedPath(FlashCardsContract.Deck.CONTENT_ALL_URI, Long.toString(deckId));
         Cursor decksCursor = contentResolver.query(deckUri, null, null, null, null);
 
-        int dueCount = 0;
+        String deckName = "unknown";
 
         if (decksCursor == null || !decksCursor.moveToFirst()) {
             Log.e(TAG, "query for deck returned no result");
@@ -31,20 +45,38 @@ public class AnkiUtils {
         } else {
             JSONObject decks = new JSONObject();
             long deckID = decksCursor.getLong(decksCursor.getColumnIndex(FlashCardsContract.Deck.DECK_ID));
-            String deckName = decksCursor.getString(decksCursor.getColumnIndex(FlashCardsContract.Deck.DECK_NAME));
+            deckName = decksCursor.getString(decksCursor.getColumnIndex(FlashCardsContract.Deck.DECK_NAME));
+        }
 
+        return deckName;
+    }
+
+    public static DeckDueCounts getDeckDueCount(ContentResolver contentResolver, long deckId) {
+        Uri deckUri = Uri.withAppendedPath(FlashCardsContract.Deck.CONTENT_ALL_URI, Long.toString(deckId));
+        Cursor decksCursor = contentResolver.query(deckUri, null, null, null, null);
+
+        DeckDueCounts deckDueCounts = new DeckDueCounts();
+
+        if (decksCursor == null || !decksCursor.moveToFirst()) {
+            Log.e(TAG, "query for deck returned no result");
+            if (decksCursor != null) {
+                decksCursor.close();
+            }
+        } else {
             try {
                 JSONArray deckCounts = new JSONArray(decksCursor.getString(decksCursor.getColumnIndex(FlashCardsContract.Deck.DECK_COUNTS)));
                 Log.d(TAG, "deckCounts " + deckCounts);
-                dueCount = deckCounts.getInt(0) + deckCounts.getInt(1) + deckCounts.getInt(2);
-                decks.put(deckName, deckID);
+
+                deckDueCounts.learnCount = deckCounts.getInt(0);
+                deckDueCounts.reviewCount = deckCounts.getInt(1);
+                deckDueCounts.newCount = deckCounts.getInt(2);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
             decksCursor.close();
         }
 
-        return dueCount;
+        return deckDueCounts;
     }
 
     public static Vector<Card> getDueCards(ContentResolver contentResolver, long deckId, int numCards)

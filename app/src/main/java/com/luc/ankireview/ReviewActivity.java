@@ -12,6 +12,7 @@ import android.os.Environment;
 import android.os.Vibrator;
 import android.support.v4.view.GestureDetectorCompat;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.GestureDetector;
@@ -161,10 +162,12 @@ public class ReviewActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         m_deckId = intent.getLongExtra("deckId", 0);
-
-
-
         Log.d(TAG, "ReviewActivity.onCreate, deckId: "  + m_deckId);
+
+        // load deck name
+        String deckName = AnkiUtils.getDeckName(getContentResolver(), m_deckId);
+        ActionBar ab = getSupportActionBar();
+        ab.setTitle(deckName);
 
         loadCards();
     }
@@ -190,8 +193,11 @@ public class ReviewActivity extends AppCompatActivity {
 
     private void loadCards() {
 
-        m_initialDueCount = AnkiUtils.getDeckDueCount(getContentResolver(), m_deckId);
-        m_currentDueCount = m_initialDueCount;
+        AnkiUtils.DeckDueCounts deckDueCounts = AnkiUtils.getDeckDueCount(getContentResolver(), m_deckId);
+        updateDueCountSubtitle(deckDueCounts);
+        m_initialDueCount = deckDueCounts.getTotalWithWeights();
+        m_cardsDone = 0;
+        m_isFirstCard = true;
         Log.v(TAG, "initial due count: " + m_initialDueCount);
 
         m_progressBar.setMax(m_initialDueCount);
@@ -203,10 +209,10 @@ public class ReviewActivity extends AppCompatActivity {
             reviewsDone();
         } else {
             m_currentCard = initialCards.get(0);
+            // default to current card
+            m_nextCard = m_currentCard;
             if( initialCards.size() == 2)
                 m_nextCard = initialCards.get(1);
-            else
-                m_nextCard = null;
 
             // done loading cards, show first question
             showQuestion();
@@ -229,9 +235,10 @@ public class ReviewActivity extends AppCompatActivity {
     }
 
     private void showQuestion() {
-        if(m_initialDueCount == m_currentDueCount)
+        if(m_isFirstCard)
         {
             loadFirstQuestion();
+            m_isFirstCard = false;
         }
 
         // load current answer onto the sides (should not create visual disruption)
@@ -321,31 +328,48 @@ public class ReviewActivity extends AppCompatActivity {
         moveToNextQuestion();
     }
 
+    private void updateDueCountSubtitle(AnkiUtils.DeckDueCounts deckDueCounts) {
+        ActionBar ab = getSupportActionBar();
+        ab.setSubtitle("Cards due: learn: " + deckDueCounts.learnCount + " review: " + deckDueCounts.reviewCount + " new: " + deckDueCounts.newCount);
+    }
 
     private void moveToNextQuestion()
     {
-        m_currentDueCount = AnkiUtils.getDeckDueCount(getContentResolver(), m_deckId);
-        Log.v(TAG,"current due count: " + m_currentDueCount);
+        AnkiUtils.DeckDueCounts deckDueCounts = AnkiUtils.getDeckDueCount(getContentResolver(), m_deckId);
+        updateDueCountSubtitle(deckDueCounts);
 
-        m_progressBar.setProgress(m_initialDueCount - m_currentDueCount);
+        int currentDueCount = deckDueCounts.getTotalWithWeights();
+        int numCardsDone = m_initialDueCount - currentDueCount;
+        Log.v(TAG,"current due count: " + currentDueCount);
 
-        Vector<Card> nextTwo = AnkiUtils.getDueCards(getContentResolver(), m_deckId, 2);
+        if( numCardsDone >= m_cardsDone) {
+            // we don't want the progress bar to move backwards (which can happen in some cases,
+            // a single bad review can result in two due cards created on the queue
+            m_cardsDone = numCardsDone;
+            m_progressBar.setProgress(m_cardsDone);
+        }
 
-        if( nextTwo.size() == 0) {
+
+        // retrieve next 5 cards due
+        Vector<Card> nextCards = AnkiUtils.getDueCards(getContentResolver(), m_deckId, 5);
+
+        if( nextCards.size() == 0) {
             // zero cards due. we've finished our reviews
             reviewsDone();
-        } else if ( nextTwo.size() == 2 ) {
-            // we got two cards back.
-            // current card is now the previous "next card"
-            m_currentCard = m_nextCard;
-            // next card is the second card retrieved
-            m_nextCard = nextTwo.get(1);
-            showQuestion();
         } else {
-            // only one card retrieved
-            // still move the previous "next card" to the current
+            // move "next card" up to current card
             m_currentCard = m_nextCard;
-            m_nextCard = nextTwo.get(0);
+
+            // now loop over the nextCards array. if we find a card which is different from
+            // the current card, assign it to m_nextCard (to avoid reviewing the same card twice in a row).
+            // if this is impossible ,then m_nextCard stays the same as m_currentCard.
+            for(Card card : nextCards) {
+                if( ! card.equals(m_currentCard)) {
+                    m_nextCard = card;
+                    break;
+                }
+            }
+
             showQuestion();
         }
 
@@ -384,9 +408,12 @@ public class ReviewActivity extends AppCompatActivity {
     // keep track of review time
     private long m_cardReviewStartTime;
 
+    // keep track of init
+    boolean m_isFirstCard;
+
     // keep track of due counts
     int m_initialDueCount;
-    int m_currentDueCount;
+    int m_cardsDone; // not due anymore
 
     // adapters
     private FlashCardViewPagerAdapter m_questionAdapter;
