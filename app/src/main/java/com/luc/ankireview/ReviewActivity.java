@@ -161,6 +161,8 @@ public class ReviewActivity extends AppCompatActivity {
         m_mediaPlayer = new MediaPlayer();
         m_mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
 
+        m_answerBadAudio = MediaPlayer.create(this, R.raw.cancel_37);
+        m_answerGoodAudio = MediaPlayer.create(this, R.raw.select_13);
 
         Intent intent = getIntent();
         m_deckId = intent.getLongExtra("deckId", 0);
@@ -298,15 +300,8 @@ public class ReviewActivity extends AppCompatActivity {
 
     private void answerCard(int ease) {
 
-        Uri reviewInfoUri = FlashCardsContract.ReviewInfo.CONTENT_URI;
-        ContentValues values = new ContentValues();
-        long timeTaken = System.currentTimeMillis() - m_cardReviewStartTime; //<- insert real time taken here
-
-        values.put(FlashCardsContract.ReviewInfo.NOTE_ID, m_currentCard.getNoteId());
-        values.put(FlashCardsContract.ReviewInfo.CARD_ORD, m_currentCard.getCardOrd());
-        values.put(FlashCardsContract.ReviewInfo.EASE, ease);
-        values.put(FlashCardsContract.ReviewInfo.TIME_TAKEN, timeTaken);
-        getContentResolver().update(reviewInfoUri, values, null, null);
+        long timeTaken = Math.max(System.currentTimeMillis() - m_cardReviewStartTime, 60000);
+        AnkiUtils.answerCard(getContentResolver(), m_currentCard, ease, timeTaken);
 
         String msg = String.format("ease: %d time: %.1fs", ease, timeTaken / 1000.0);
         showToast(msg);
@@ -321,12 +316,14 @@ public class ReviewActivity extends AppCompatActivity {
 
     private void answerBad()
     {
+        m_answerBadAudio.start();
         answerCard(m_currentCard.getEaseBad());
         moveToNextQuestion();
     }
 
     private void answerGood()
     {
+        m_answerGoodAudio.start();
         answerCard(m_currentCard.getEaseGood());
         moveToNextQuestion();
     }
@@ -435,6 +432,10 @@ public class ReviewActivity extends AppCompatActivity {
     private String m_baseUrl;
     // for playing audio
     private MediaPlayer m_mediaPlayer;
+
+    // answer audio
+    MediaPlayer m_answerBadAudio;
+    MediaPlayer m_answerGoodAudio;
 
     // gesture detection
     private GestureDetectorCompat m_detector;

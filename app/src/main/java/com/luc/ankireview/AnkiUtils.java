@@ -1,6 +1,7 @@
 package com.luc.ankireview;
 
 import android.content.ContentResolver;
+import android.content.ContentValues;
 import android.database.Cursor;
 import android.net.Uri;
 import android.util.Log;
@@ -133,6 +134,17 @@ public class AnkiUtils {
         }
 
         return cardList;
+    }
+
+    public static void answerCard(ContentResolver contentResolver, Card card, int ease, long timeTaken) {
+        Uri reviewInfoUri = FlashCardsContract.ReviewInfo.CONTENT_URI;
+        ContentValues values = new ContentValues();
+
+        values.put(FlashCardsContract.ReviewInfo.NOTE_ID, card.getNoteId());
+        values.put(FlashCardsContract.ReviewInfo.CARD_ORD, card.getCardOrd());
+        values.put(FlashCardsContract.ReviewInfo.EASE, ease);
+        values.put(FlashCardsContract.ReviewInfo.TIME_TAKEN, timeTaken);
+        contentResolver.update(reviewInfoUri, values, null, null);
     }
 
 }
