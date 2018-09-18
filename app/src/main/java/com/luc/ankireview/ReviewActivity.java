@@ -1,5 +1,6 @@
 package com.luc.ankireview;
 
+import android.animation.ObjectAnimator;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
@@ -18,6 +19,7 @@ import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -200,7 +202,7 @@ public class ReviewActivity extends AppCompatActivity {
         m_isFirstCard = true;
         Log.v(TAG, "initial due count: " + m_initialDueCount);
 
-        m_progressBar.setMax(m_initialDueCount);
+        m_progressBar.setMax(m_initialDueCount * 100);
         m_progressBar.setProgress(0);
 
         Vector<Card> initialCards = AnkiUtils.getDueCards(getContentResolver(), m_deckId, 2);
@@ -333,6 +335,15 @@ public class ReviewActivity extends AppCompatActivity {
         ab.setSubtitle("Cards due: learn: " + deckDueCounts.learnCount + " review: " + deckDueCounts.reviewCount + " new: " + deckDueCounts.newCount);
     }
 
+
+    // animate progress bar
+    private void setProgressAnimate(int progressTo)
+    {
+        ObjectAnimator animation = ObjectAnimator.ofInt(m_progressBar, "progress", m_progressBar.getProgress(), progressTo * 100);
+        animation.setDuration(500);
+        animation.setInterpolator(new DecelerateInterpolator());
+        animation.start();
+    }
     private void moveToNextQuestion()
     {
         AnkiUtils.DeckDueCounts deckDueCounts = AnkiUtils.getDeckDueCount(getContentResolver(), m_deckId);
@@ -346,7 +357,8 @@ public class ReviewActivity extends AppCompatActivity {
             // we don't want the progress bar to move backwards (which can happen in some cases,
             // a single bad review can result in two due cards created on the queue
             m_cardsDone = numCardsDone;
-            m_progressBar.setProgress(m_cardsDone);
+            // m_progressBar.setProgress(m_cardsDone * 100);
+            setProgressAnimate(m_cardsDone);
         }
 
 
