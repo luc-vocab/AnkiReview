@@ -300,7 +300,7 @@ public class ReviewActivity extends AppCompatActivity {
 
     private void answerCard(int ease) {
 
-        long timeTaken = Math.max(System.currentTimeMillis() - m_cardReviewStartTime, 60000);
+        long timeTaken = Math.min(System.currentTimeMillis() - m_cardReviewStartTime, 60000);
         AnkiUtils.answerCard(getContentResolver(), m_currentCard, ease, timeTaken);
 
         String msg = String.format("ease: %d time: %.1fs", ease, timeTaken / 1000.0);
