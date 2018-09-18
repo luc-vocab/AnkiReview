@@ -188,6 +188,7 @@ public class ReviewActivity extends AppCompatActivity {
             // WebView seems to have a hardtime loading assets from the collection.media directory on first run
             // we reload the first question card once to get around this issue.
             Log.v(TAG, "reloading question for first time init");
+            loadFirstQuestion();
             showQuestion();
             m_firstTimeInitDone = true;
         }
