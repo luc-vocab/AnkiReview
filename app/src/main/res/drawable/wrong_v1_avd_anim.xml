@@ -1,0 +1,81 @@
+<animated-vector
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt">
+    <aapt:attr name="android:drawable">
+        <vector
+            android:name="vector"
+            android:width="10dp"
+            android:height="10dp"
+            android:viewportWidth="10"
+            android:viewportHeight="10">
+            <group android:name="group">
+                <group android:name="vector_1">
+                    <group
+                        android:name="circle_group"
+                        android:pivotX="5"
+                        android:pivotY="5"
+                        android:rotation="120">
+                        <path
+                            android:name="circle"
+                            android:pathData="M 0.5 5 C 0.5 7.485 2.515 9.5 5 9.5 C 7.485 9.5 9.5 7.485 9.5 5 C 9.5 2.515 7.485 0.5 5 0.5 C 2.515 0.5 0.5 2.515 0.5 5"
+                            android:strokeColor="#ff0000"
+                            android:strokeWidth="1"
+                            android:trimPathEnd="0"
+                            android:strokeLineCap="round"/>
+                    </group>
+                    <group android:name="checkmark_group">
+                        <path
+                            android:name="cross_2"
+                            android:pathData="M 7 3 L 3 7"
+                            android:strokeColor="#ff0000"
+                            android:strokeWidth="1"
+                            android:trimPathEnd="0"
+                            android:strokeLineCap="round"
+                            android:strokeLineJoin="round"/>
+                        <path
+                            android:name="cross_1"
+                            android:pathData="M 3 3 L 7 7"
+                            android:strokeColor="#ff0000"
+                            android:strokeWidth="1"
+                            android:trimPathEnd="0"
+                            android:strokeLineCap="round"/>
+                    </group>
+                </group>
+            </group>
+        </vector>
+    </aapt:attr>
+    <target android:name="cross_1">
+        <aapt:attr name="android:animation">
+            <objectAnimator
+                android:propertyName="trimPathEnd"
+                android:startOffset="150"
+                android:duration="150"
+                android:valueFrom="0"
+                android:valueTo="1"
+                android:valueType="floatType"
+                android:interpolator="@android:interpolator/fast_out_slow_in"/>
+        </aapt:attr>
+    </target>
+    <target android:name="cross_2">
+        <aapt:attr name="android:animation">
+            <objectAnimator
+                android:propertyName="trimPathEnd"
+                android:duration="150"
+                android:valueFrom="0"
+                android:valueTo="1"
+                android:valueType="floatType"
+                android:interpolator="@android:interpolator/fast_out_slow_in"/>
+        </aapt:attr>
+    </target>
+    <target android:name="circle">
+        <aapt:attr name="android:animation">
+            <objectAnimator
+                android:propertyName="trimPathEnd"
+                android:duration="300"
+                android:valueFrom="0"
+                android:valueTo="1"
+                android:valueType="floatType"
+                android:interpolator="@android:interpolator/fast_out_slow_in"/>
+        </aapt:attr>
+    </target>
+</animated-vector>

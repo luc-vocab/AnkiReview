@@ -5,6 +5,9 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.drawable.Animatable2;
+import android.graphics.drawable.AnimatedVectorDrawable;
+import android.graphics.drawable.Drawable;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
@@ -21,6 +24,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -158,11 +162,28 @@ public class ReviewActivity extends AppCompatActivity {
             private int mCurrentPosition = 1;
         });
 
+        // setup audio
+        // -----------
+
         m_mediaPlayer = new MediaPlayer();
         m_mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
 
         m_answerBadAudio = MediaPlayer.create(this, R.raw.cancel_41);
         m_answerGoodAudio = MediaPlayer.create(this, R.raw.select_13);
+
+        // setup animation
+        // ---------------
+
+        m_correctImageView = (ImageView) findViewById(R.id.correct_avd);
+        m_correctAnimation = (AnimatedVectorDrawable) m_correctImageView.getDrawable();
+        m_correctImageView.setVisibility(View.INVISIBLE);
+        m_correctAnimation.registerAnimationCallback(new Animatable2.AnimationCallback() {
+            @Override
+            public void onAnimationEnd(Drawable drawable) {
+                super.onAnimationEnd(drawable);
+                m_correctImageView.setVisibility(View.INVISIBLE);
+            }
+        });
 
         Intent intent = getIntent();
         m_deckId = intent.getLongExtra("deckId", 0);
@@ -324,6 +345,7 @@ public class ReviewActivity extends AppCompatActivity {
     private void answerGood()
     {
         m_answerGoodAudio.start();
+        // showCorrectAnimation();
         answerCard(m_currentCard.getEaseGood());
         moveToNextQuestion();
     }
@@ -342,6 +364,13 @@ public class ReviewActivity extends AppCompatActivity {
         animation.setInterpolator(new DecelerateInterpolator());
         animation.start();
     }
+
+    private void showCorrectAnimation() {
+        m_correctAnimation.reset();
+        m_correctImageView.setVisibility(View.VISIBLE);
+        m_correctAnimation.start();
+    }
+
     private void moveToNextQuestion()
     {
         AnkiUtils.DeckDueCounts deckDueCounts = AnkiUtils.getDeckDueCount(getContentResolver(), m_deckId);
@@ -439,6 +468,10 @@ public class ReviewActivity extends AppCompatActivity {
 
     // gesture detection
     private GestureDetectorCompat m_detector;
+
+    // animations
+    private ImageView m_correctImageView;
+    private AnimatedVectorDrawable m_correctAnimation;
 
 
 }

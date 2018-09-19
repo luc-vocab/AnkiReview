@@ -1,0 +1,62 @@
+<animated-vector
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt">
+    <aapt:attr name="android:drawable">
+        <vector
+            android:name="vector"
+            android:width="10dp"
+            android:height="10dp"
+            android:viewportWidth="10"
+            android:viewportHeight="10">
+            <group android:name="group">
+                <group android:name="vector_1">
+                    <group
+                        android:name="circle_group"
+                        android:pivotX="5"
+                        android:pivotY="5"
+                        android:rotation="120">
+                        <path
+                            android:name="circle"
+                            android:pathData="M 0.5 5 C 0.5 7.485 2.515 9.5 5 9.5 C 7.485 9.5 9.5 7.485 9.5 5 C 9.5 2.515 7.485 0.5 5 0.5 C 2.515 0.5 0.5 2.515 0.5 5"
+                            android:strokeColor="#00ff00"
+                            android:strokeWidth="1"
+                            android:trimPathEnd="0.87"
+                            android:strokeLineCap="round"/>
+                    </group>
+                    <group android:name="checkmark_group">
+                        <path
+                            android:name="checkmark"
+                            android:pathData="M 2 4 L 4 6.5 L 9 2"
+                            android:strokeColor="#00ff00"
+                            android:strokeWidth="1"
+                            android:trimPathEnd="0"
+                            android:strokeLineCap="round"
+                            android:strokeLineJoin="round"/>
+                    </group>
+                </group>
+            </group>
+        </vector>
+    </aapt:attr>
+    <target android:name="checkmark">
+        <aapt:attr name="android:animation">
+            <objectAnimator
+                android:propertyName="trimPathEnd"
+                android:duration="300"
+                android:valueFrom="0"
+                android:valueTo="0.95"
+                android:valueType="floatType"
+                android:interpolator="@android:interpolator/fast_out_slow_in"/>
+        </aapt:attr>
+    </target>
+    <target android:name="circle">
+        <aapt:attr name="android:animation">
+            <objectAnimator
+                android:propertyName="trimPathStart"
+                android:duration="300"
+                android:valueFrom="0.87"
+                android:valueTo="0"
+                android:valueType="floatType"
+                android:interpolator="@android:interpolator/fast_out_slow_in"/>
+        </aapt:attr>
+    </target>
+</animated-vector>
