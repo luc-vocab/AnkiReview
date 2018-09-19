@@ -161,7 +161,7 @@ public class ReviewActivity extends AppCompatActivity {
         m_mediaPlayer = new MediaPlayer();
         m_mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
 
-        m_answerBadAudio = MediaPlayer.create(this, R.raw.cancel_33);
+        m_answerBadAudio = MediaPlayer.create(this, R.raw.cancel_41);
         m_answerGoodAudio = MediaPlayer.create(this, R.raw.select_13);
 
         Intent intent = getIntent();
