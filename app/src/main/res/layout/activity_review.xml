@@ -49,12 +49,21 @@
     </FrameLayout>
 
     <ImageView
-        android:id="@+id/correct_avd"
+        android:id="@+id/correct_svg"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginBottom="300dp"
-        android:layout_marginLeft="100dp"
-        android:layout_marginRight="100dp"
-        app:srcCompat="@drawable/correct_v1_avd_anim" />
+        android:layout_height="wrap_content"
+        android:layout_marginTop="150dp"
+        android:scaleX="5"
+        android:scaleY="5"
+        app:srcCompat="@drawable/correct" />
+
+    <ImageView
+        android:id="@+id/incorrect_svg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="150dp"
+        android:scaleX="5"
+        android:scaleY="5"
+        app:srcCompat="@drawable/incorrect" />
 
 </FrameLayout>

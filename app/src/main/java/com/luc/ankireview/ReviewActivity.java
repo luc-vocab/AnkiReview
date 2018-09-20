@@ -22,6 +22,10 @@ import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.AnimationSet;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -174,16 +178,41 @@ public class ReviewActivity extends AppCompatActivity {
         // setup animation
         // ---------------
 
-        m_correctImageView = (ImageView) findViewById(R.id.correct_avd);
-        m_correctAnimation = (AnimatedVectorDrawable) m_correctImageView.getDrawable();
-        m_correctImageView.setVisibility(View.INVISIBLE);
-        m_correctAnimation.registerAnimationCallback(new Animatable2.AnimationCallback() {
+        m_correct = (ImageView) findViewById(R.id.correct_svg);
+        m_incorrect = (ImageView) findViewById(R.id.incorrect_svg);
+
+        m_correct.setVisibility(View.INVISIBLE);
+        m_incorrect.setVisibility(View.INVISIBLE);
+
+        Animation fadeIn = new AlphaAnimation(0, 1);
+        fadeIn.setInterpolator(new DecelerateInterpolator()); //add this
+        fadeIn.setDuration(150);
+
+        Animation fadeOut = new AlphaAnimation(1, 0);
+        fadeOut.setInterpolator(new AccelerateInterpolator()); //and this
+        fadeOut.setStartOffset(150);
+        fadeOut.setDuration(150);
+
+        m_animationSet = new AnimationSet(false);
+        m_animationSet.addAnimation(fadeIn);
+        m_animationSet.addAnimation(fadeOut);
+
+        m_animationSet.setAnimationListener(new Animation.AnimationListener() {
             @Override
-            public void onAnimationEnd(Drawable drawable) {
-                super.onAnimationEnd(drawable);
-                m_correctImageView.setVisibility(View.INVISIBLE);
+            public void onAnimationEnd(Animation animation) {
+                m_correct.setVisibility(View.INVISIBLE);
+                m_incorrect.setVisibility(View.INVISIBLE);
+            }
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+            @Override
+            public void onAnimationStart(Animation animation) {
+
             }
         });
+
 
         Intent intent = getIntent();
         m_deckId = intent.getLongExtra("deckId", 0);
@@ -338,6 +367,7 @@ public class ReviewActivity extends AppCompatActivity {
     private void answerBad()
     {
         m_answerBadAudio.start();
+        showIncorrectAnimation();
         answerCard(m_currentCard.getEaseBad());
         moveToNextQuestion();
     }
@@ -345,7 +375,7 @@ public class ReviewActivity extends AppCompatActivity {
     private void answerGood()
     {
         m_answerGoodAudio.start();
-        // showCorrectAnimation();
+        showCorrectAnimation();
         answerCard(m_currentCard.getEaseGood());
         moveToNextQuestion();
     }
@@ -366,9 +396,13 @@ public class ReviewActivity extends AppCompatActivity {
     }
 
     private void showCorrectAnimation() {
-        m_correctAnimation.reset();
-        m_correctImageView.setVisibility(View.VISIBLE);
-        m_correctAnimation.start();
+        m_correct.startAnimation(m_animationSet);
+        m_correct.setVisibility(View.VISIBLE);
+    }
+
+    private void showIncorrectAnimation() {
+        m_incorrect.startAnimation(m_animationSet);
+        m_incorrect.setVisibility(View.VISIBLE);
     }
 
     private void moveToNextQuestion()
@@ -470,8 +504,9 @@ public class ReviewActivity extends AppCompatActivity {
     private GestureDetectorCompat m_detector;
 
     // animations
-    private ImageView m_correctImageView;
-    private AnimatedVectorDrawable m_correctAnimation;
+    private ImageView m_correct;
+    private ImageView m_incorrect;
+    private AnimationSet m_animationSet;
 
 
 }
