@@ -11,6 +11,7 @@ import android.graphics.drawable.Drawable;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Vibrator;
@@ -18,6 +19,7 @@ import android.support.v4.view.GestureDetectorCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.AppCompatDrawableManager;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
@@ -40,6 +42,9 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
@@ -184,14 +189,16 @@ public class ReviewActivity extends AppCompatActivity {
         m_correct.setVisibility(View.INVISIBLE);
         m_incorrect.setVisibility(View.INVISIBLE);
 
+        int animationSpeed = 450;
+
         Animation fadeIn = new AlphaAnimation(0, 1);
         fadeIn.setInterpolator(new DecelerateInterpolator()); //add this
-        fadeIn.setDuration(150);
+        fadeIn.setDuration(animationSpeed);
 
         Animation fadeOut = new AlphaAnimation(1, 0);
         fadeOut.setInterpolator(new AccelerateInterpolator()); //and this
-        fadeOut.setStartOffset(150);
-        fadeOut.setDuration(150);
+        fadeOut.setStartOffset(animationSpeed);
+        fadeOut.setDuration(animationSpeed);
 
         m_animationSet = new AnimationSet(false);
         m_animationSet.addAnimation(fadeIn);
