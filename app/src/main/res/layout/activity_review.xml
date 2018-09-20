@@ -16,7 +16,8 @@
             style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:progressTint="@color/colorPrimary" />
+            android:progressTint="@color/colorPrimary"
+            android:scaleY="3" />
 
         <FrameLayout
             android:id="@+id/flashcard_frame"
