@@ -11,17 +11,18 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <ProgressBar
+        <com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar
             android:id="@+id/review_progressbar"
-            style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="20dp"
             android:background="@color/colorPrimary"
-            android:paddingBottom="2dp"
+            android:paddingBottom="4dp"
             android:paddingLeft="16dp"
             android:paddingRight="16dp"
-            android:progressTint="@color/colorAccent"
-            android:scaleY="3" />
+            app:rcBackgroundColor="@color/colorProgressBackground"
+            app:rcBackgroundPadding="2dp"
+            app:rcProgressColor="@color/colorAccent"
+            app:rcRadius="20dp" />
 
         <FrameLayout
             android:id="@+id/flashcard_frame"

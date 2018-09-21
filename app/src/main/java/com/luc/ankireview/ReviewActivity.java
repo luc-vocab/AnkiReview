@@ -34,6 +34,8 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.akexorcist.roundcornerprogressbar.IconRoundCornerProgressBar;
+import com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar;
 import com.ichi2.anki.FlashCardsContract;
 
 import org.json.JSONArray;
@@ -231,16 +233,6 @@ public class ReviewActivity extends AppCompatActivity {
         ab.setTitle(deckName);
 
         getSupportActionBar().setElevation(0);
-
-        /*
-        m_progressBar.setElevation(12);
-        ab.setElevation(4);
-        */
-
-        Log.v(TAG, "appBar elevation: " + getSupportActionBar().getElevation());
-        Log.v(TAG, "reviewframe elevation " + findViewById(R.id.review_frame).getElevation());
-        Log.v(TAG, "review_progressbar elevation " + findViewById(R.id.review_progressbar).getElevation());
-
         loadCards();
     }
 
@@ -407,10 +399,13 @@ public class ReviewActivity extends AppCompatActivity {
     // animate progress bar
     private void setProgressAnimate(int progressTo)
     {
+        m_progressBar.setProgress(progressTo * 100);
+        /*
         ObjectAnimator animation = ObjectAnimator.ofInt(m_progressBar, "progress", m_progressBar.getProgress(), progressTo * 100);
         animation.setDuration(500);
         animation.setInterpolator(new DecelerateInterpolator());
         animation.start();
+        */
     }
 
     private void showCorrectAnimation() {
@@ -494,7 +489,7 @@ public class ReviewActivity extends AppCompatActivity {
     private ViewPager m_answerPager;
     private FrameLayout m_touchLayer;
 
-    private ProgressBar m_progressBar;
+    private RoundCornerProgressBar m_progressBar;
 
     // keep track of review time
     private long m_cardReviewStartTime;
