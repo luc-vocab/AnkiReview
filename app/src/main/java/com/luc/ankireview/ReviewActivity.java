@@ -399,13 +399,10 @@ public class ReviewActivity extends AppCompatActivity {
     // animate progress bar
     private void setProgressAnimate(int progressTo)
     {
-        m_progressBar.setProgress(progressTo * 100);
-        /*
-        ObjectAnimator animation = ObjectAnimator.ofInt(m_progressBar, "progress", m_progressBar.getProgress(), progressTo * 100);
+        ObjectAnimator animation = ObjectAnimator.ofFloat(m_progressBar, "progress", m_progressBar.getProgress(), progressTo * 100);
         animation.setDuration(500);
         animation.setInterpolator(new DecelerateInterpolator());
         animation.start();
-        */
     }
 
     private void showCorrectAnimation() {
