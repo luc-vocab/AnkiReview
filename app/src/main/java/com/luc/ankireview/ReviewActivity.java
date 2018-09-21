@@ -230,6 +230,17 @@ public class ReviewActivity extends AppCompatActivity {
         ActionBar ab = getSupportActionBar();
         ab.setTitle(deckName);
 
+        getSupportActionBar().setElevation(0);
+
+        /*
+        m_progressBar.setElevation(12);
+        ab.setElevation(4);
+        */
+
+        Log.v(TAG, "appBar elevation: " + getSupportActionBar().getElevation());
+        Log.v(TAG, "reviewframe elevation " + findViewById(R.id.review_frame).getElevation());
+        Log.v(TAG, "review_progressbar elevation " + findViewById(R.id.review_progressbar).getElevation());
+
         loadCards();
     }
 
