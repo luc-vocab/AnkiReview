@@ -40,17 +40,45 @@ public class ReviewActivity extends AppCompatActivity {
 
     public static class AnswerDialogFragment extends DialogFragment {
         @Override
+        public void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            m_numButtons = getArguments().getInt("numButtons");
+        }
+
+        @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-            String[] choices = {"bad", "easy", "good"};
+            Vector<String> choices = new Vector<String>();
+
+            // build possible choices based on number of buttons
+            switch (m_numButtons) {
+                case 2:
+                    choices.add(getResources().getString(R.string.ease_button_again));
+                    choices.add(getResources().getString(R.string.ease_button_good));
+                    break;
+                case 3:
+                    choices.add(getResources().getString(R.string.ease_button_again));
+                    choices.add(getResources().getString(R.string.ease_button_good));
+                    choices.add(getResources().getString(R.string.ease_button_easy));
+                    break;
+                default:
+                    choices.add(getResources().getString(R.string.ease_button_again));
+                    choices.add(getResources().getString(R.string.ease_button_hard));
+                    choices.add(getResources().getString(R.string.ease_button_good));
+                    choices.add(getResources().getString(R.string.ease_button_easy));
+                    break;
+            }
+
             builder.setTitle(R.string.pick_ease)
-                    .setItems(choices, new DialogInterface.OnClickListener() {
+                    .setItems(choices.toArray(new String[0]), new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
                             Log.v(TAG, "picked choice: " + which);
                         }
                     });
             return builder.create();
         }
+
+        private int m_numButtons;
     }
 
     class ReviewerGestureDetector extends GestureDetector.SimpleOnGestureListener {
@@ -245,6 +273,9 @@ public class ReviewActivity extends AppCompatActivity {
     private void showAnswerMenu() {
         if( ! m_showingQuestion ) {
             AnswerDialogFragment dialog = new AnswerDialogFragment();
+            Bundle args = new Bundle();
+            args.putInt("numButtons", m_currentCard.getButtonCount());
+            dialog.setArguments(args);
             dialog.show(getSupportFragmentManager(), "AnswerDialog");
         }
     }
@@ -366,13 +397,13 @@ public class ReviewActivity extends AppCompatActivity {
         }
     }
 
-    private void answerCard(int ease) {
+    private void answerCard(AnkiUtils.Ease ease) {
 
         long timeTaken = Math.min(System.currentTimeMillis() - m_cardReviewStartTime, 60000);
         AnkiUtils.answerCard(getContentResolver(), m_currentCard, ease, timeTaken);
 
-        //String msg = String.format("ease: %d time: %.1fs", ease, timeTaken / 1000.0);
-        //showToast(msg);
+        String msg = String.format("ease: %d time: %.1fs", ease.getValue(), timeTaken / 1000.0);
+        showToast(msg);
     }
 
     private void playAnswerAudio()

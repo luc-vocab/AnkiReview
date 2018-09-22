@@ -9,11 +9,6 @@ import java.util.regex.Pattern;
 
 public class Card {
 
-    public static final int EASE_1 = 1;
-    public static final int EASE_2 = 2;
-    public static final int EASE_3 = 3;
-    public static final int EASE_4 = 4;
-
     public static Pattern s_soundPattern = Pattern.compile("\\[sound\\:([^\\[\\]]*)\\]");
     private static final String TAG = "Card";
 
@@ -69,20 +64,20 @@ public class Card {
     }
 
 
-    public int getEaseBad() {
-        return EASE_1;
+    public AnkiUtils.Ease getEaseBad() {
+        return AnkiUtils.Ease.EASE_1;
     }
 
-    public int getEaseGood() {
+    public AnkiUtils.Ease getEaseGood() {
         switch (m_buttonCount) {
             case 2:
-                return EASE_2;
+                return AnkiUtils.Ease.EASE_2;
             case 3:
-                return EASE_2;
+                return AnkiUtils.Ease.EASE_2;
             case 4:
-                return EASE_3;
+                return AnkiUtils.Ease.EASE_3;
             default:
-                return 0;
+                return AnkiUtils.Ease.EASE_1;
         }
     }
 

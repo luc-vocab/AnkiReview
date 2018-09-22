@@ -18,6 +18,23 @@ public class AnkiUtils {
 
     private static final String TAG = "AnkiUtils";
 
+    public enum Ease {
+        EASE_1(1),
+        EASE_2(2),
+        EASE_3(3),
+        EASE_4(4);
+
+        private int m_value;
+
+        Ease(int value) {
+            m_value = value;
+        }
+
+        public int getValue() {
+            return m_value;
+        }
+    }
+
     public static class DeckDueCounts {
         public int learnCount;
         public int reviewCount;
@@ -136,13 +153,13 @@ public class AnkiUtils {
         return cardList;
     }
 
-    public static void answerCard(ContentResolver contentResolver, Card card, int ease, long timeTaken) {
+    public static void answerCard(ContentResolver contentResolver, Card card, AnkiUtils.Ease ease, long timeTaken) {
         Uri reviewInfoUri = FlashCardsContract.ReviewInfo.CONTENT_URI;
         ContentValues values = new ContentValues();
 
         values.put(FlashCardsContract.ReviewInfo.NOTE_ID, card.getNoteId());
         values.put(FlashCardsContract.ReviewInfo.CARD_ORD, card.getCardOrd());
-        values.put(FlashCardsContract.ReviewInfo.EASE, ease);
+        values.put(FlashCardsContract.ReviewInfo.EASE, ease.getValue());
         values.put(FlashCardsContract.ReviewInfo.TIME_TAKEN, timeTaken);
         contentResolver.update(reviewInfoUri, values, null, null);
     }
