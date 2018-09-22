@@ -1,8 +1,10 @@
 package com.luc.ankireview;
 
 import android.animation.ObjectAnimator;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.media.AudioManager;
@@ -45,6 +47,16 @@ public class ReviewActivity extends AppCompatActivity {
             m_numButtons = getArguments().getInt("numButtons");
         }
 
+        // Override the Fragment.onAttach() method to instantiate the NoticeDialogListener
+        @Override
+        public void onAttach(Context context) {
+            super.onAttach(context);
+            if (context instanceof ReviewActivity){
+                m_reviewActivity=(ReviewActivity) context;
+            }
+        }
+
+
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -73,12 +85,16 @@ public class ReviewActivity extends AppCompatActivity {
                     .setItems(choices.toArray(new String[0]), new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
                             Log.v(TAG, "picked choice: " + which);
+
+                            AnkiUtils.Ease ease = AnkiUtils.Ease.fromInt(which + 1);
+                            m_reviewActivity.answerCustom(ease);
                         }
                     });
             return builder.create();
         }
 
         private int m_numButtons;
+        private ReviewActivity m_reviewActivity;
     }
 
     class ReviewerGestureDetector extends GestureDetector.SimpleOnGestureListener {
@@ -402,8 +418,8 @@ public class ReviewActivity extends AppCompatActivity {
         long timeTaken = Math.min(System.currentTimeMillis() - m_cardReviewStartTime, 60000);
         AnkiUtils.answerCard(getContentResolver(), m_currentCard, ease, timeTaken);
 
-        String msg = String.format("ease: %d time: %.1fs", ease.getValue(), timeTaken / 1000.0);
-        showToast(msg);
+        //String msg = String.format("ease: %d time: %.1fs", ease.getValue(), timeTaken / 1000.0);
+        //showToast(msg);
     }
 
     private void playAnswerAudio()
@@ -426,6 +442,11 @@ public class ReviewActivity extends AppCompatActivity {
         m_answerGoodAudio.start();
         showCorrectAnimation();
         answerCard(m_currentCard.getEaseGood());
+        moveToNextQuestion();
+    }
+
+    public void answerCustom(AnkiUtils.Ease ease) {
+        answerCard(ease);
         moveToNextQuestion();
     }
 

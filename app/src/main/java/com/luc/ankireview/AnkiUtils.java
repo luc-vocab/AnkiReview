@@ -33,6 +33,15 @@ public class AnkiUtils {
         public int getValue() {
             return m_value;
         }
+
+        public static Ease fromInt(int value) {
+            for (Ease e : Ease.values()) {
+                if (e.getValue() == value) {
+                    return e;
+                }
+            }
+            throw new IllegalArgumentException("Not a valid ease value: " + value);
+        }
     }
 
     public static class DeckDueCounts {
