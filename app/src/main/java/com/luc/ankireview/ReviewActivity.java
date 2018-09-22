@@ -41,11 +41,6 @@ public class ReviewActivity extends AppCompatActivity {
     private static final String TAG = "ReviewActivity";
 
     public static class AnswerDialogFragment extends DialogFragment {
-        @Override
-        public void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-            m_numButtons = getArguments().getInt("numButtons");
-        }
 
         // Override the Fragment.onAttach() method to instantiate the NoticeDialogListener
         @Override
@@ -60,27 +55,7 @@ public class ReviewActivity extends AppCompatActivity {
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-            Vector<String> choices = new Vector<String>();
-
-            // build possible choices based on number of buttons
-            switch (m_numButtons) {
-                case 2:
-                    choices.add(getResources().getString(R.string.ease_button_again));
-                    choices.add(getResources().getString(R.string.ease_button_good));
-                    break;
-                case 3:
-                    choices.add(getResources().getString(R.string.ease_button_again));
-                    choices.add(getResources().getString(R.string.ease_button_good));
-                    choices.add(getResources().getString(R.string.ease_button_easy));
-                    break;
-                default:
-                    choices.add(getResources().getString(R.string.ease_button_again));
-                    choices.add(getResources().getString(R.string.ease_button_hard));
-                    choices.add(getResources().getString(R.string.ease_button_good));
-                    choices.add(getResources().getString(R.string.ease_button_easy));
-                    break;
-            }
-
+            Vector<String> choices = m_reviewActivity.getCurrentCard().getEaseStrings(getResources());
             builder.setTitle(R.string.pick_ease)
                     .setItems(choices.toArray(new String[0]), new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
@@ -93,7 +68,6 @@ public class ReviewActivity extends AppCompatActivity {
             return builder.create();
         }
 
-        private int m_numButtons;
         private ReviewActivity m_reviewActivity;
     }
 
@@ -289,9 +263,6 @@ public class ReviewActivity extends AppCompatActivity {
     private void showAnswerMenu() {
         if( ! m_showingQuestion ) {
             AnswerDialogFragment dialog = new AnswerDialogFragment();
-            Bundle args = new Bundle();
-            args.putInt("numButtons", m_currentCard.getButtonCount());
-            dialog.setArguments(args);
             dialog.show(getSupportFragmentManager(), "AnswerDialog");
         }
     }
@@ -536,6 +507,7 @@ public class ReviewActivity extends AppCompatActivity {
     private boolean m_firstTimeInitDone;
 
 
+    public Card getCurrentCard() { return m_currentCard; }
     private Card m_currentCard;
     private Card m_nextCard;
 

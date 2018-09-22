@@ -1,9 +1,11 @@
 package com.luc.ankireview;
 
+import android.content.res.Resources;
 import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Objects;
+import java.util.Vector;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -13,7 +15,7 @@ public class Card {
     private static final String TAG = "Card";
 
 
-    public Card(long noteId, int cardOrd, String question, String answer, int buttonCount) {
+    public Card(long noteId, int cardOrd, String question, String answer, int buttonCount, Vector<String> nextReviewTimes) {
         m_noteId = noteId;
         m_cardOrd = cardOrd;
         m_question = question;
@@ -21,6 +23,8 @@ public class Card {
 
         // does the answer content have a sound ?
         m_answer = filterSound(answer);
+
+        m_nextReviewTimes = nextReviewTimes;
     }
 
     private String filterSound( String content ) {
@@ -81,6 +85,30 @@ public class Card {
         }
     }
 
+    public Vector<String> getEaseStrings(Resources resources) {
+        Vector<String> choices = new Vector<String>();
+        // build possible choices based on number of buttons
+        switch (m_buttonCount) {
+            case 2:
+                choices.add(resources.getString(R.string.ease_button_again) + " (" + m_nextReviewTimes.get(0) + ")");
+                choices.add(resources.getString(R.string.ease_button_good) + " (" + m_nextReviewTimes.get(1) + ")");
+                break;
+            case 3:
+                choices.add(resources.getString(R.string.ease_button_again) + " (" + m_nextReviewTimes.get(0) + ")");
+                choices.add(resources.getString(R.string.ease_button_good) + " (" + m_nextReviewTimes.get(1) + ")");
+                choices.add(resources.getString(R.string.ease_button_easy) + " (" + m_nextReviewTimes.get(2) + ")");
+                break;
+            default:
+                choices.add(resources.getString(R.string.ease_button_again) + " (" + m_nextReviewTimes.get(0) + ")");
+                choices.add(resources.getString(R.string.ease_button_hard) + " (" + m_nextReviewTimes.get(1) + ")");
+                choices.add(resources.getString(R.string.ease_button_good) + " (" + m_nextReviewTimes.get(2) + ")");
+                choices.add(resources.getString(R.string.ease_button_easy) + " (" + m_nextReviewTimes.get(3) + ")");
+                break;
+        }
+
+        return choices;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -102,4 +130,5 @@ public class Card {
     private String m_answer;
     private String m_answerSound;
     private int m_buttonCount;
+    private Vector<String> m_nextReviewTimes;
 }

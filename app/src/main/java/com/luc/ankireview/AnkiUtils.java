@@ -126,9 +126,15 @@ public class AnkiUtils {
                 long noteId = cur.getLong(cur.getColumnIndex(FlashCardsContract.ReviewInfo.NOTE_ID));
                 int cardOrd = cur.getInt(cur.getColumnIndex(FlashCardsContract.ReviewInfo.CARD_ORD));
                 int buttonCount = cur.getInt(cur.getColumnIndex(FlashCardsContract.ReviewInfo.BUTTON_COUNT));
+                Vector<String> nextReviewTimes = new Vector<String>();
                 try {
+                    JSONArray reviewTimes = new JSONArray(cur.getString(cur.getColumnIndex(FlashCardsContract.ReviewInfo.NEXT_REVIEW_TIMES)));
+                    for (int i = 0; i < reviewTimes.length(); i++)
+                    {
+                        String nextReviewTime = reviewTimes.getString(i);
+                        nextReviewTimes.add(nextReviewTime);
+                    }
                     JSONArray media = new JSONArray(cur.getString(cur.getColumnIndex(FlashCardsContract.ReviewInfo.MEDIA_FILES)));
-                    Log.v(TAG, media.toString());
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -152,7 +158,7 @@ public class AnkiUtils {
 
                     // Log.v(TAG, "question: " + question);
 
-                    Card card = new Card(noteId, cardOrd, question, answer, buttonCount);
+                    Card card = new Card(noteId, cardOrd, question, answer, buttonCount, nextReviewTimes);
                     cardList.add(card);
                 }
 
