@@ -95,17 +95,6 @@ public class DeckPickerActivity extends AppCompatActivity implements AdapterView
                 view.findViewById(R.id.no_cards_due).setVisibility(View.VISIBLE);
             }
 
-
-
-            /*
-            view.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Toast.makeText(c, s.getName(), Toast.LENGTH_SHORT).show();
-                }
-            });
-            */
-
             return view;
         }
 
@@ -185,13 +174,27 @@ public class DeckPickerActivity extends AppCompatActivity implements AdapterView
         m_deckList = findViewById(R.id.deck_list);
         m_deckList.setOnItemClickListener(this);
 
+        m_ankiDeckList = new Vector<AnkiDeck>();
+
+        m_adapter = new DeckAdapter(this, m_ankiDeckList);
+        m_deckList.setAdapter(m_adapter);
+
         checkAllPermissions();
 
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        // refresh deck list
+        listDecks();
+    }
+
     private void listDecks() {
 
-        Vector<AnkiDeck> ankiDeckList = new Vector<AnkiDeck>();
+        m_ankiDeckList.clear();
+
         Cursor decksCursor = getContentResolver().query(FlashCardsContract.Deck.CONTENT_ALL_URI, null, null, null, null);
         if (decksCursor.moveToFirst()) {
             do {
@@ -207,7 +210,7 @@ public class DeckPickerActivity extends AppCompatActivity implements AdapterView
                     JSONArray deckCounts = new JSONArray(decksCursor.getString(decksCursor.getColumnIndex(FlashCardsContract.Deck.DECK_COUNTS)));
                     deck.deckDueCounts = AnkiUtils.parseDeckDueCount(deckCounts);
 
-                    Log.d(TAG, deckOptions.toString());
+                    // Log.d(TAG, deckOptions.toString());
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -215,16 +218,16 @@ public class DeckPickerActivity extends AppCompatActivity implements AdapterView
 
                 Log.d(TAG, "deck name: " + deckName);
                 if(!deckName.equals("Default"))
-                    ankiDeckList.add(deck);
+                    m_ankiDeckList.add(deck);
 
             } while (decksCursor.moveToNext());
         }
 
-        m_adapter = new DeckAdapter(this, ankiDeckList);
-        m_deckList.setAdapter(m_adapter);
+        m_adapter.notifyDataSetChanged();
 
     }
 
+    Vector<AnkiDeck> m_ankiDeckList;
     private ListView m_deckList;
     private DeckAdapter m_adapter;
 
