@@ -1,25 +1,20 @@
 package com.luc.ankireview;
 
 import android.animation.ObjectAnimator;
-import android.content.ContentValues;
-import android.content.Context;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.Cursor;
-import android.graphics.drawable.Animatable2;
-import android.graphics.drawable.AnimatedVectorDrawable;
-import android.graphics.drawable.Drawable;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.Vibrator;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.view.GestureDetectorCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.AppCompatDrawableManager;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
@@ -31,31 +26,32 @@ import android.view.animation.AnimationSet;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.akexorcist.roundcornerprogressbar.IconRoundCornerProgressBar;
 import com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar;
-import com.ichi2.anki.FlashCardsContract;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Set;
+
 import java.util.Vector;
 
 public class ReviewActivity extends AppCompatActivity {
     private static final String TAG = "ReviewActivity";
 
-
+    public static class AnswerDialogFragment extends DialogFragment {
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            String[] choices = {"bad", "easy", "good"};
+            builder.setTitle(R.string.pick_ease)
+                    .setItems(choices, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            Log.v(TAG, "picked choice: " + which);
+                        }
+                    });
+            return builder.create();
+        }
+    }
 
     class ReviewerGestureDetector extends GestureDetector.SimpleOnGestureListener {
 
@@ -243,6 +239,14 @@ public class ReviewActivity extends AppCompatActivity {
 
     private void doubleTapHandler() {
         Log.v(TAG, "doubleTapHandler");
+        showAnswerMenu();
+    }
+
+    private void showAnswerMenu() {
+        if( ! m_showingQuestion ) {
+            AnswerDialogFragment dialog = new AnswerDialogFragment();
+            dialog.show(getSupportFragmentManager(), "AnswerDialog");
+        }
     }
 
     public void pageLoaded() {
@@ -320,6 +324,8 @@ public class ReviewActivity extends AppCompatActivity {
 
         m_cardReviewStartTime = System.currentTimeMillis();
 
+        m_showingQuestion = true;
+
     }
 
     private void showAnswer()
@@ -341,6 +347,8 @@ public class ReviewActivity extends AppCompatActivity {
         m_questionPager.setCurrentItem(1);
 
         playAnswerAudio();
+
+        m_showingQuestion = false;
 
     }
 
@@ -369,7 +377,7 @@ public class ReviewActivity extends AppCompatActivity {
 
     private void playAnswerAudio()
     {
-        if( m_currentCard.getAnswerAudio() != null) {
+        if( m_currentCard.getAnswerAudio() != null && ! m_showingQuestion) {
             m_mediaPlayer.start();
         }
     }
@@ -493,6 +501,9 @@ public class ReviewActivity extends AppCompatActivity {
 
     // keep track of init
     boolean m_isFirstCard;
+
+    // keep track of whether we are displaying question
+    boolean m_showingQuestion;
 
     // keep track of due counts
     int m_initialDueCount;
