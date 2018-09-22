@@ -364,9 +364,12 @@ public class ReviewActivity extends AppCompatActivity {
         // center the question adapter ( not visible currently)
         m_questionPager.setCurrentItem(1);
 
-        playAnswerAudio();
 
         m_showingQuestion = false;
+        
+        playAnswerAudio();
+
+
 
     }
 
