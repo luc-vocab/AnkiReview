@@ -32,7 +32,7 @@
                 android:id="@+id/deck_due_counts"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="100dp"
+                android:layout_marginLeft="40dp"
                 android:layout_marginRight="100dp"
                 android:orientation="horizontal">
 
@@ -86,7 +86,7 @@
                 android:id="@+id/no_cards_due"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="100dp"
+                android:layout_marginLeft="40dp"
                 android:layout_marginRight="100dp"
                 android:layout_weight="1"
                 android:text="No cards due" />
