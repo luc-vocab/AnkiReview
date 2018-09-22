@@ -72,10 +72,30 @@ public class DeckPickerActivity extends AppCompatActivity implements AdapterView
                 view = LayoutInflater.from(m_context).inflate(R.layout.deck_card_item,viewGroup,false);
             }
 
-            TextView deckNameView = (TextView) view.findViewById(R.id.deck_name);
             AnkiDeck deck = (AnkiDeck) this.getItem(i);
-
+            TextView deckNameView = (TextView) view.findViewById(R.id.deck_name);
             deckNameView.setText(deck.deckName);
+
+            if( deck.deckDueCounts.getTotal() > 0) {
+
+                TextView deckNewCount = (TextView) view.findViewById(R.id.deck_new_count);
+                deckNewCount.setText(Integer.toString(deck.deckDueCounts.newCount));
+
+                TextView deckReviewCount = (TextView) view.findViewById(R.id.deck_review_count);
+                deckReviewCount.setText(Integer.toString(deck.deckDueCounts.reviewCount));
+
+                TextView deckLearnCount = (TextView) view.findViewById(R.id.deck_learn_count);
+                deckLearnCount.setText(Integer.toString(deck.deckDueCounts.learnCount));
+
+                view.findViewById(R.id.deck_due_counts).setVisibility(View.VISIBLE);
+                view.findViewById(R.id.no_cards_due).setVisibility(View.GONE);
+
+            } else {
+                view.findViewById(R.id.deck_due_counts).setVisibility(View.GONE);
+                view.findViewById(R.id.no_cards_due).setVisibility(View.VISIBLE);
+            }
+
+
 
             /*
             view.setOnClickListener(new View.OnClickListener() {
@@ -194,7 +214,8 @@ public class DeckPickerActivity extends AppCompatActivity implements AdapterView
                 }
 
                 Log.d(TAG, "deck name: " + deckName);
-                ankiDeckList.add(deck);
+                if(!deckName.equals("Default"))
+                    ankiDeckList.add(deck);
 
             } while (decksCursor.moveToNext());
         }

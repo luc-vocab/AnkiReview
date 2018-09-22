@@ -2,6 +2,6 @@
 <resources>
     <color name="colorPrimary">#1976D2</color>
     <color name="colorPrimaryDark">#0D47A1</color>
-    <color name="colorAccent">#1565C0</color>
+    <color name="colorAccent">#1565c0</color>
     <color name="colorProgressBackground">#E0E0E0</color>
 </resources>
