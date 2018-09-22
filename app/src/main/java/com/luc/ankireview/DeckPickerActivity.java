@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.database.Cursor;
 import java.util.HashMap;
+import java.util.Vector;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -14,10 +15,14 @@ import org.json.JSONObject;
 import android.support.v4.content.ContextCompat;
 import android.content.pm.PackageManager;
 import android.support.v4.app.ActivityCompat;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.ichi2.anki.FlashCardsContract;
 
@@ -33,9 +38,59 @@ public class DeckPickerActivity extends AppCompatActivity implements AdapterView
     private class AnkiDeck {
         public long deckId;
         public String deckName;
+        public AnkiUtils.DeckDueCounts deckDueCounts;
         public String toString() {
             return deckName;
         }
+    }
+
+    private class DeckAdapter extends BaseAdapter {
+        public DeckAdapter(Context context, Vector<AnkiDeck> ankiDeckList) {
+            this.m_context = context;
+            this.m_ankiDecks = ankiDeckList;
+        }
+
+        @Override
+        public int getCount() {
+            return m_ankiDecks.size();
+        }
+
+        @Override
+        public Object getItem(int i) {
+            return m_ankiDecks.get(i);
+        }
+
+        @Override
+        public long getItemId(int i) {
+            return i;
+        }
+
+        @Override
+        public View getView(int i, View view, ViewGroup viewGroup) {
+            if(view==null)
+            {
+                view = LayoutInflater.from(m_context).inflate(R.layout.deck_card_item,viewGroup,false);
+            }
+
+            TextView deckNameView = (TextView) view.findViewById(R.id.deck_name);
+            AnkiDeck deck = (AnkiDeck) this.getItem(i);
+
+            deckNameView.setText(deck.deckName);
+
+            /*
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(c, s.getName(), Toast.LENGTH_SHORT).show();
+                }
+            });
+            */
+
+            return view;
+        }
+
+        private Context m_context;
+        private Vector<AnkiDeck> m_ankiDecks;
     }
 
     @Override
@@ -108,10 +163,6 @@ public class DeckPickerActivity extends AppCompatActivity implements AdapterView
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_deck_picker);
         m_deckList = findViewById(R.id.deck_list);
-
-        m_adapter = new ArrayAdapter<AnkiDeck>(this, R.layout.deck_item);
-
-        m_deckList.setAdapter(m_adapter);
         m_deckList.setOnItemClickListener(this);
 
         checkAllPermissions();
@@ -120,9 +171,9 @@ public class DeckPickerActivity extends AppCompatActivity implements AdapterView
 
     private void listDecks() {
 
+        Vector<AnkiDeck> ankiDeckList = new Vector<AnkiDeck>();
         Cursor decksCursor = getContentResolver().query(FlashCardsContract.Deck.CONTENT_ALL_URI, null, null, null, null);
         if (decksCursor.moveToFirst()) {
-            HashMap decks = new HashMap();
             do {
                 long deckID = decksCursor.getLong(decksCursor.getColumnIndex(FlashCardsContract.Deck.DECK_ID));
                 String deckName = decksCursor.getString(decksCursor.getColumnIndex(FlashCardsContract.Deck.DECK_NAME));
@@ -131,30 +182,36 @@ public class DeckPickerActivity extends AppCompatActivity implements AdapterView
                 deck.deckId = deckID;
                 deck.deckName = deckName;
 
-                Log.d(TAG, "deck name: " + deckName);
-                m_adapter.add(deck);
-
                 try {
                     JSONObject deckOptions = new JSONObject(decksCursor.getString(decksCursor.getColumnIndex(FlashCardsContract.Deck.OPTIONS)));
                     JSONArray deckCounts = new JSONArray(decksCursor.getString(decksCursor.getColumnIndex(FlashCardsContract.Deck.DECK_COUNTS)));
+                    deck.deckDueCounts = AnkiUtils.parseDeckDueCount(deckCounts);
+
                     Log.d(TAG, deckOptions.toString());
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                decks.put(deckID, deckName);
+
+                Log.d(TAG, "deck name: " + deckName);
+                ankiDeckList.add(deck);
+
             } while (decksCursor.moveToNext());
         }
+
+        m_adapter = new DeckAdapter(this, ankiDeckList);
+        m_deckList.setAdapter(m_adapter);
+
     }
 
     private ListView m_deckList;
-    private ArrayAdapter<AnkiDeck> m_adapter;
+    private DeckAdapter m_adapter;
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         Log.d(TAG, "position: " + i);
 
-        AnkiDeck deck = m_adapter.getItem(i);
-
+        AnkiDeck deck = (AnkiDeck) m_adapter.getItem(i);
         Log.d(TAG, "selected deck: " + deck.deckName + " deckId: " + deck.deckId);
 
         // launch review activity

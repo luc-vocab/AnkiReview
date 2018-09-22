@@ -78,6 +78,18 @@ public class AnkiUtils {
         return deckName;
     }
 
+    public static DeckDueCounts parseDeckDueCount(JSONArray deckCounts) {
+        DeckDueCounts deckDueCounts = new DeckDueCounts();
+        try {
+            deckDueCounts.learnCount = deckCounts.getInt(0);
+            deckDueCounts.reviewCount = deckCounts.getInt(1);
+            deckDueCounts.newCount = deckCounts.getInt(2);
+        } catch( JSONException e ) {
+            e.printStackTrace();
+        }
+        return deckDueCounts;
+    }
+
     public static DeckDueCounts getDeckDueCount(ContentResolver contentResolver, long deckId) {
         Uri deckUri = Uri.withAppendedPath(FlashCardsContract.Deck.CONTENT_ALL_URI, Long.toString(deckId));
         Cursor decksCursor = contentResolver.query(deckUri, null, null, null, null);
@@ -92,11 +104,7 @@ public class AnkiUtils {
         } else {
             try {
                 JSONArray deckCounts = new JSONArray(decksCursor.getString(decksCursor.getColumnIndex(FlashCardsContract.Deck.DECK_COUNTS)));
-                Log.d(TAG, "deckCounts " + deckCounts);
-
-                deckDueCounts.learnCount = deckCounts.getInt(0);
-                deckDueCounts.reviewCount = deckCounts.getInt(1);
-                deckDueCounts.newCount = deckCounts.getInt(2);
+                deckDueCounts = parseDeckDueCount(deckCounts);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
