@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#1976D2</color>
+    <color name="colorPrimary">#1976d2</color>
     <color name="colorPrimaryDark">#0D47A1</color>
     <color name="colorAccent">#1565c0</color>
     <color name="colorProgressBackground">#E0E0E0</color>
+    <color name="toolbarTextColor">#E0E0E0</color>
 </resources>
