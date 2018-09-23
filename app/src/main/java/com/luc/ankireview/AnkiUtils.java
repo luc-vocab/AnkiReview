@@ -187,4 +187,42 @@ public class AnkiUtils {
         contentResolver.update(reviewInfoUri, values, null, null);
     }
 
+    public static void suspendCard(ContentResolver contentResolver, Card card) {
+        Uri reviewInfoUri = FlashCardsContract.ReviewInfo.CONTENT_URI;
+        ContentValues values = new ContentValues();
+
+        values.put(FlashCardsContract.ReviewInfo.NOTE_ID, card.getNoteId());
+        values.put(FlashCardsContract.ReviewInfo.CARD_ORD, card.getCardOrd());
+        values.put(FlashCardsContract.ReviewInfo.SUSPEND, 1);
+        contentResolver.update(reviewInfoUri, values, null, null);
+    }
+
+
+    public static void addCardTag(ContentResolver contentResolver, Card card, String newTag) {
+        Uri reviewInfoUri = FlashCardsContract.ReviewInfo.CONTENT_URI;
+        ContentValues values = new ContentValues();
+
+        // query existing tags
+        Uri noteUri = Uri.withAppendedPath(FlashCardsContract.Note.CONTENT_URI, Long.toString(card.getNoteId()));
+        final Cursor cursor = contentResolver.query(noteUri,
+                null,  // projection
+                null,  // selection is ignored for this URI
+                null,  // selectionArgs is ignored for this URI
+                null   // sortOrder is ignored for this URI
+        );
+
+        if (cursor.moveToFirst()) {
+            String tags = cursor.getString(cursor.getColumnIndex(FlashCardsContract.Note.TAGS));
+
+            // add the new tag at the end
+            String newTags = tags + " " + newTag;
+
+            Uri updateNoteUri = Uri.withAppendedPath(FlashCardsContract.Note.CONTENT_URI, Long.toString(card.getNoteId()));
+            values = new ContentValues();
+            values.put(FlashCardsContract.Note.TAGS, newTags);
+            int updateCount = contentResolver.update(updateNoteUri, values, null, null);
+
+        }
+    }
+
 }
