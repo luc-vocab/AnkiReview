@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.database.Cursor;
 import java.util.HashMap;
@@ -171,6 +172,10 @@ public class DeckPickerActivity extends AppCompatActivity implements AdapterView
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_deck_picker);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.deckpicker_toolbar);
+        setSupportActionBar(toolbar);
+
         m_deckList = findViewById(R.id.deck_list);
         m_deckList.setOnItemClickListener(this);
 
