@@ -31,4 +31,5 @@ dependencies {
     implementation 'com.android.support:cardview-v7:28.0.0-alpha3'
     implementation 'com.android.support:support-v4:28.0.0-alpha3'
     implementation 'com.akexorcist:RoundCornerProgressBar:2.0.3'
+    implementation "com.leinardi.android:speed-dial:2.0.0"
 }
