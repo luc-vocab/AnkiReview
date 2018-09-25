@@ -44,37 +44,6 @@ import java.util.Vector;
 public class ReviewActivity extends AppCompatActivity {
     private static final String TAG = "ReviewActivity";
 
-    public static class AnswerDialogFragment extends DialogFragment {
-
-        // Override the Fragment.onAttach() method to instantiate the NoticeDialogListener
-        @Override
-        public void onAttach(Context context) {
-            super.onAttach(context);
-            if (context instanceof ReviewActivity){
-                m_reviewActivity=(ReviewActivity) context;
-            }
-        }
-
-
-        @Override
-        public Dialog onCreateDialog(Bundle savedInstanceState) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-            Vector<String> choices = m_reviewActivity.getCurrentCard().getEaseStrings(getResources());
-            builder.setTitle(R.string.pick_ease)
-                    .setItems(choices.toArray(new String[0]), new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
-                            Log.v(TAG, "picked choice: " + which);
-
-                            AnkiUtils.Ease ease = AnkiUtils.Ease.fromInt(which + 1);
-                            m_reviewActivity.answerCustom(ease);
-                        }
-                    });
-            return builder.create();
-        }
-
-        private ReviewActivity m_reviewActivity;
-    }
-
     class ReviewerGestureDetector extends GestureDetector.SimpleOnGestureListener {
 
         @Override
@@ -298,7 +267,6 @@ public class ReviewActivity extends AppCompatActivity {
 
     private void doubleTapHandler() {
         Log.v(TAG, "doubleTapHandler");
-        showAnswerMenu();
     }
 
     private void setupSpeedDial() {
@@ -342,13 +310,6 @@ public class ReviewActivity extends AppCompatActivity {
 
 
 
-    }
-
-    private void showAnswerMenu() {
-        if( ! m_showingQuestion ) {
-            AnswerDialogFragment dialog = new AnswerDialogFragment();
-            dialog.show(getSupportFragmentManager(), "AnswerDialog");
-        }
     }
 
     public void pageLoaded() {
