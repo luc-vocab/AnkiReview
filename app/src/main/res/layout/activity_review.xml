@@ -44,6 +44,11 @@
 
             </android.support.v4.view.ViewPager>
 
+            <com.leinardi.android.speeddial.SpeedDialOverlayLayout
+                android:id="@+id/overlay"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
         </FrameLayout>
     </LinearLayout>
 
@@ -68,11 +73,13 @@
         android:layout_marginTop="120dp"
         app:srcCompat="@drawable/incorrect" />
 
+
     <com.leinardi.android.speeddial.SpeedDialView
         android:id="@+id/speedDial"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
+        app:sdOverlayLayout="@id/overlay"
         app:sdMainFabClosedSrc="@drawable/check"
         app:sdMainFabOpenedSrc="@drawable/close"/>
 

@@ -8,7 +8,7 @@
 
     <!-- answer colors -->
     <color name="answer_wrong">#EC407A</color>
-    <color name="answer_hard">#BDBDBD</color>
+    <color name="answer_hard">#BA68C8</color>
     <color name="answer_good">#4CAF50</color>
     <color name="answer_easy">#1976d2</color>
 
