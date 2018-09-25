@@ -31,6 +31,8 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar;
+import com.leinardi.android.speeddial.SpeedDialActionItem;
+import com.leinardi.android.speeddial.SpeedDialView;
 
 import java.io.File;
 import java.io.IOException;
@@ -240,6 +242,22 @@ public class ReviewActivity extends AppCompatActivity {
         Intent intent = getIntent();
         m_deckId = intent.getLongExtra("deckId", 0);
         Log.d(TAG, "ReviewActivity.onCreate, deckId: "  + m_deckId);
+
+        // setup speed dial
+        SpeedDialView speedDialView = findViewById(R.id.speedDial);
+
+        speedDialView.addActionItem(
+                new SpeedDialActionItem.Builder(R.id.reviewer_action_mark, R.drawable.tag)
+                        .setLabel(R.string.reviewer_action_mark)
+                        .create());
+        speedDialView.addActionItem(
+                new SpeedDialActionItem.Builder(R.id.reviewer_action_mark_suspend, R.drawable.pause)
+                        .setLabel(R.string.reviewer_action_mark_suspend)
+                        .create());
+        speedDialView.addActionItem(
+                new SpeedDialActionItem.Builder(R.id.reviewer_action_mark_bury, R.drawable.pause)
+                        .setLabel(R.string.reviewer_action_mark_bury)
+                        .create());
 
         // load deck name
         String deckName = AnkiUtils.getDeckName(getContentResolver(), m_deckId);

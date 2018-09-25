@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="reviewer_action_mark" type="id"/>
+    <item name="reviewer_action_mark_suspend" type="id"/>
+    <item name="reviewer_action_mark_bury" type="id"/>
+
+    <item name="reviewer_action_ease_1" type="id"/>
+    <item name="reviewer_action_ease_2" type="id"/>
+    <item name="reviewer_action_ease_3" type="id"/>
+    <item name="reviewer_action_ease_4" type="id"/>
+</resources>
