@@ -289,16 +289,19 @@ public class ReviewActivity extends AppCompatActivity {
 
         m_speedDialView.addActionItem(
                 new SpeedDialActionItem.Builder(R.id.reviewer_action_mark, R.drawable.tag)
+                        .setFabBackgroundColor(ResourcesCompat.getColor(getResources(), R.color.answer_tag_suspend, getTheme()))
                         .setLabel(R.string.reviewer_action_mark)
                         .create());
 
         m_speedDialView.addActionItem(
                 new SpeedDialActionItem.Builder(R.id.reviewer_action_mark_suspend, R.drawable.pause)
+                        .setFabBackgroundColor(ResourcesCompat.getColor(getResources(), R.color.answer_tag_suspend, getTheme()))
                         .setLabel(R.string.reviewer_action_mark_suspend)
                         .create());
 
         m_speedDialView.addActionItem(
                 new SpeedDialActionItem.Builder(R.id.reviewer_action_mark_bury, R.drawable.pause)
+                        .setFabBackgroundColor(ResourcesCompat.getColor(getResources(), R.color.answer_tag_suspend, getTheme()))
                         .setLabel(R.string.reviewer_action_mark_bury)
                         .create());
 
