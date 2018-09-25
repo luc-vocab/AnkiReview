@@ -17,6 +17,7 @@ import java.util.Vector;
 public class AnkiUtils {
 
     private static final String TAG = "AnkiUtils";
+    public static final String MARK_TAG = "marked";
 
     public enum Ease {
         EASE_1(1, R.id.reviewer_action_ease_1),
@@ -228,6 +229,19 @@ public class AnkiUtils {
         contentResolver.update(reviewInfoUri, values, null, null);
     }
 
+    public static void buryCard(ContentResolver contentResolver, Card card) {
+        Uri reviewInfoUri = FlashCardsContract.ReviewInfo.CONTENT_URI;
+        ContentValues values = new ContentValues();
+
+        values.put(FlashCardsContract.ReviewInfo.NOTE_ID, card.getNoteId());
+        values.put(FlashCardsContract.ReviewInfo.CARD_ORD, card.getCardOrd());
+        values.put(FlashCardsContract.ReviewInfo.BURY, 1);
+        contentResolver.update(reviewInfoUri, values, null, null);
+    }
+
+    public static void markCard(ContentResolver contentResolver, Card card) {
+        addCardTag(contentResolver, card, MARK_TAG);
+    }
 
     public static void addCardTag(ContentResolver contentResolver, Card card, String newTag) {
         Uri reviewInfoUri = FlashCardsContract.ReviewInfo.CONTENT_URI;

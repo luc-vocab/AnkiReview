@@ -248,6 +248,39 @@ public class ReviewActivity extends AppCompatActivity {
         // setup speed dial
         m_speedDialView = findViewById(R.id.speedDial);
 
+        m_speedDialView.setOnActionSelectedListener(new SpeedDialView.OnActionSelectedListener() {
+            @Override
+            public boolean onActionSelected(SpeedDialActionItem speedDialActionItem) {
+
+                int actionId = speedDialActionItem.getId();
+
+                if( actionId == R.id.reviewer_action_ease_1 ||
+                    actionId == R.id.reviewer_action_ease_2 ||
+                    actionId == R.id.reviewer_action_ease_3 ||
+                    actionId == R.id.reviewer_action_ease_4) {
+
+                    AnkiUtils.Ease ease = AnkiUtils.Ease.fromActionId(speedDialActionItem.getId());
+                    answerCustom(ease);
+                    return false;
+
+                } else {
+                    switch (speedDialActionItem.getId()) {
+                        case R.id.reviewer_action_mark:
+                            markCard();
+                            return false;
+                        case R.id.reviewer_action_mark_bury:
+                            markBuryCard();
+                            return false;
+                        case R.id.reviewer_action_mark_suspend:
+                            markSuspendCard();
+                            return false;
+                        default:
+                            return false;
+                    }
+                }
+            }
+        });
+
 
         // load deck name
         String deckName = AnkiUtils.getDeckName(getContentResolver(), m_deckId);
@@ -273,16 +306,18 @@ public class ReviewActivity extends AppCompatActivity {
 
         m_speedDialView.clearActionItems();
 
-        // card answers
+        if( ! m_showingQuestion) {
+            // card answers choices. only display on answer
 
-        Vector<AnkiUtils.AnswerChoice> answerChoices = m_currentCard.getAnswerChoices(getResources());
-        Collections.reverse(answerChoices);
-        for(AnkiUtils.AnswerChoice answerChoice:answerChoices) {
-            m_speedDialView.addActionItem(
-                    new SpeedDialActionItem.Builder(answerChoice.getActionId(), R.drawable.check)
-                            .setFabBackgroundColor(ResourcesCompat.getColor(getResources(), answerChoice.getColorId(), getTheme()))
-                            .setLabel(answerChoice.getText())
-                            .create());
+            Vector<AnkiUtils.AnswerChoice> answerChoices = m_currentCard.getAnswerChoices(getResources());
+            Collections.reverse(answerChoices);
+            for (AnkiUtils.AnswerChoice answerChoice : answerChoices) {
+                m_speedDialView.addActionItem(
+                        new SpeedDialActionItem.Builder(answerChoice.getActionId(), answerChoice.getDrawableId())
+                                .setFabBackgroundColor(ResourcesCompat.getColor(getResources(), answerChoice.getColorId(), getTheme()))
+                                .setLabel(answerChoice.getText())
+                                .create());
+            }
         }
 
         // other actions
@@ -419,7 +454,7 @@ public class ReviewActivity extends AppCompatActivity {
         
         playAnswerAudio();
 
-
+        setupSpeedDial();
 
     }
 
@@ -467,6 +502,27 @@ public class ReviewActivity extends AppCompatActivity {
         showCorrectAnimation();
         answerCard(m_currentCard.getEaseGood());
         moveToNextQuestion();
+    }
+
+    public void markCard() {
+        AnkiUtils.markCard(getContentResolver(), m_currentCard);
+        showToast("Marked Card");
+    }
+
+    public void markSuspendCard() {
+        AnkiUtils.markCard(getContentResolver(), m_currentCard);
+        AnkiUtils.suspendCard(getContentResolver(), m_currentCard);
+        showAnswer();
+        moveToNextQuestion();
+        showToast("Marked and Suspended Card");
+    }
+
+    public void markBuryCard() {
+        AnkiUtils.markCard(getContentResolver(), m_currentCard);
+        AnkiUtils.buryCard(getContentResolver(), m_currentCard);
+        showAnswer();
+        moveToNextQuestion();
+        showToast("Marked and Buried Card");
     }
 
     public void answerCustom(AnkiUtils.Ease ease) {
