@@ -13,6 +13,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.content.res.ResourcesCompat;
 import android.support.v4.view.GestureDetectorCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
@@ -37,6 +38,7 @@ import com.leinardi.android.speeddial.SpeedDialView;
 import java.io.File;
 import java.io.IOException;
 
+import java.util.Collections;
 import java.util.Vector;
 
 public class ReviewActivity extends AppCompatActivity {
@@ -244,20 +246,8 @@ public class ReviewActivity extends AppCompatActivity {
         Log.d(TAG, "ReviewActivity.onCreate, deckId: "  + m_deckId);
 
         // setup speed dial
-        SpeedDialView speedDialView = findViewById(R.id.speedDial);
+        m_speedDialView = findViewById(R.id.speedDial);
 
-        speedDialView.addActionItem(
-                new SpeedDialActionItem.Builder(R.id.reviewer_action_mark, R.drawable.tag)
-                        .setLabel(R.string.reviewer_action_mark)
-                        .create());
-        speedDialView.addActionItem(
-                new SpeedDialActionItem.Builder(R.id.reviewer_action_mark_suspend, R.drawable.pause)
-                        .setLabel(R.string.reviewer_action_mark_suspend)
-                        .create());
-        speedDialView.addActionItem(
-                new SpeedDialActionItem.Builder(R.id.reviewer_action_mark_bury, R.drawable.pause)
-                        .setLabel(R.string.reviewer_action_mark_bury)
-                        .create());
 
         // load deck name
         String deckName = AnkiUtils.getDeckName(getContentResolver(), m_deckId);
@@ -276,6 +266,44 @@ public class ReviewActivity extends AppCompatActivity {
     private void doubleTapHandler() {
         Log.v(TAG, "doubleTapHandler");
         showAnswerMenu();
+    }
+
+    private void setupSpeedDial() {
+        // populate with possible choices
+
+        m_speedDialView.clearActionItems();
+
+        // card answers
+
+        Vector<AnkiUtils.AnswerChoice> answerChoices = m_currentCard.getAnswerChoices(getResources());
+        Collections.reverse(answerChoices);
+        for(AnkiUtils.AnswerChoice answerChoice:answerChoices) {
+            m_speedDialView.addActionItem(
+                    new SpeedDialActionItem.Builder(answerChoice.getActionId(), R.drawable.check)
+                            .setFabBackgroundColor(ResourcesCompat.getColor(getResources(), answerChoice.getColorId(), getTheme()))
+                            .setLabel(answerChoice.getText())
+                            .create());
+        }
+
+        // other actions
+
+        m_speedDialView.addActionItem(
+                new SpeedDialActionItem.Builder(R.id.reviewer_action_mark, R.drawable.tag)
+                        .setLabel(R.string.reviewer_action_mark)
+                        .create());
+
+        m_speedDialView.addActionItem(
+                new SpeedDialActionItem.Builder(R.id.reviewer_action_mark_suspend, R.drawable.pause)
+                        .setLabel(R.string.reviewer_action_mark_suspend)
+                        .create());
+
+        m_speedDialView.addActionItem(
+                new SpeedDialActionItem.Builder(R.id.reviewer_action_mark_bury, R.drawable.pause)
+                        .setLabel(R.string.reviewer_action_mark_bury)
+                        .create());
+
+
+
     }
 
     private void showAnswerMenu() {
@@ -359,8 +387,9 @@ public class ReviewActivity extends AppCompatActivity {
         prepareAnswerAudio();
 
         m_cardReviewStartTime = System.currentTimeMillis();
-
         m_showingQuestion = true;
+
+        setupSpeedDial();
 
     }
 
@@ -573,6 +602,9 @@ public class ReviewActivity extends AppCompatActivity {
     private ImageView m_correct;
     private ImageView m_incorrect;
     private AnimationSet m_animationSet;
+
+    // speed dial button
+    SpeedDialView m_speedDialView;
 
 
 }

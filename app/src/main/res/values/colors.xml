@@ -5,4 +5,11 @@
     <color name="colorAccent">#1565c0</color>
     <color name="colorProgressBackground">#E0E0E0</color>
     <color name="toolbarTextColor">#E0E0E0</color>
+
+    <!-- answer colors -->
+    <color name="answer_wrong">#EC407A</color>
+    <color name="answer_hard">#BDBDBD</color>
+    <color name="answer_good">#4CAF50</color>
+    <color name="answer_easy">#1976d2</color>
+
 </resources>

@@ -19,20 +19,24 @@ public class AnkiUtils {
     private static final String TAG = "AnkiUtils";
 
     public enum Ease {
-        EASE_1(1),
-        EASE_2(2),
-        EASE_3(3),
-        EASE_4(4);
+        EASE_1(1, R.id.reviewer_action_ease_1),
+        EASE_2(2, R.id.reviewer_action_ease_2),
+        EASE_3(3, R.id.reviewer_action_ease_3),
+        EASE_4(4, R.id.reviewer_action_ease_4);
 
         private int m_value;
+        private int m_actionId;
 
-        Ease(int value) {
+        Ease(int value, int actionId) {
             m_value = value;
+            m_actionId = actionId;
         }
 
         public int getValue() {
             return m_value;
         }
+
+        public int getActionId() { return m_actionId; }
 
         public static Ease fromInt(int value) {
             for (Ease e : Ease.values()) {
@@ -42,6 +46,33 @@ public class AnkiUtils {
             }
             throw new IllegalArgumentException("Not a valid ease value: " + value);
         }
+
+        public static Ease fromActionId(int actionId) {
+            for (Ease e : Ease.values()) {
+                if (e.getActionId() == actionId) {
+                    return e;
+                }
+            }
+            throw new IllegalArgumentException("Not a valid actionId: " + actionId);
+        }
+    }
+
+    public static class AnswerChoice {
+        public AnswerChoice(int actionId, String text, int drawableId, int colorId) {
+            m_actionId = actionId;
+            m_text = text;
+            m_drawableId = drawableId;
+            m_colorId = colorId;
+        }
+        public int getActionId() { return m_actionId; }
+        public String getText() { return m_text; }
+        public int getDrawableId() { return m_drawableId; }
+        public int getColorId() { return m_colorId; }
+
+        private final int m_actionId;
+        private final String m_text;
+        private final int m_drawableId;
+        private final int m_colorId;
     }
 
     public static class DeckDueCounts {
