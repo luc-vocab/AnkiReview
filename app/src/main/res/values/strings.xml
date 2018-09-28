@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">AnkiReview</string>
+    <string name="app_name">AnkiReview Prototype</string>
     <string name="pick_ease">Answer Card</string>
 
     <string name="ease_button_again">Again</string>

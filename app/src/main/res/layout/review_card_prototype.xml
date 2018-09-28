@@ -13,13 +13,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Cantonese"
-            android:textSize="34dp"
+            android:textSize="45dp"
             android:textStyle="bold" />
 
         <ImageView
             android:id="@+id/imageView"
             android:layout_width="match_parent"
-            android:layout_height="400dp"
+            android:layout_height="350dp"
             android:scaleType="centerCrop"
             android:visibility="visible"
             app:srcCompat="@drawable/background2" />
@@ -28,6 +28,25 @@
             android:id="@+id/question"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="This is the Question" />
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:text="to turn one's head; to turn round; to turn about"
+            android:textColor="@android:color/black"
+            android:textSize="38dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:orientation="vertical">
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="diào tóu / 掉头"
+            android:textColor="@android:color/black"
+            android:textSize="58dp" />
     </LinearLayout>
 </ScrollView>
