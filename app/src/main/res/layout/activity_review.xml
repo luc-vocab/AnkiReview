@@ -25,31 +25,47 @@
             app:rcProgressColor="@color/colorAccent"
             app:rcRadius="20dp" />
 
-        <FrameLayout
-            android:id="@+id/flashcard_frame"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-            <android.support.v4.view.ViewPager
-                android:id="@+id/flashcard_answer_pager"
+            <FrameLayout
+                android:id="@+id/flashcard_frame"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:layout_weight="1">
 
-            </android.support.v4.view.ViewPager>
+                <android.support.v4.view.ViewPager
+                    android:id="@+id/flashcard_answer_pager"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
 
-            <android.support.v4.view.ViewPager
-                android:id="@+id/flashcard_question_pager"
+                </android.support.v4.view.ViewPager>
+
+                <android.support.v4.view.ViewPager
+                    android:id="@+id/flashcard_question_pager"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                </android.support.v4.view.ViewPager>
+
+                <com.leinardi.android.speeddial.SpeedDialOverlayLayout
+                    android:id="@+id/overlay"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+            </FrameLayout>
+
+            <ImageView
+                android:id="@+id/imageView2"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                app:srcCompat="@drawable/background2" />
 
-            </android.support.v4.view.ViewPager>
+        </LinearLayout>
 
-            <com.leinardi.android.speeddial.SpeedDialOverlayLayout
-                android:id="@+id/overlay"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-
-        </FrameLayout>
     </LinearLayout>
 
     <FrameLayout
