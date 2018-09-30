@@ -16,7 +16,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <android.support.v7.widget.CardView
+        <com.luc.ankireview.QuestionCard
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="40dp"
@@ -32,7 +32,7 @@
                 android:paddingTop="20dp"
                 android:text="closed (a business)"
                 android:textSize="40dp" />
-        </android.support.v7.widget.CardView>
+        </com.luc.ankireview.QuestionCard>
 
         <ScrollView
             android:layout_width="match_parent"
@@ -48,7 +48,7 @@
                     android:layout_height="800dp">
                 </FrameLayout>
 
-                <android.support.v7.widget.CardView
+                <com.luc.ankireview.AnswerCard
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="40dp"
@@ -78,7 +78,7 @@
                             android:textColor="@android:color/holo_orange_dark"
                             android:textSize="40dp" />
                     </LinearLayout>
-                </android.support.v7.widget.CardView>
+                </com.luc.ankireview.AnswerCard>
 
                 <FrameLayout
                     android:layout_width="match_parent"
