@@ -71,7 +71,7 @@ public class QuestionCardBehavior extends CoordinatorLayout.Behavior<CardView> {
                               View target,
                               float velocityX,
                               float velocityY) {
-        Log.v(TAG, "onNestedPreFling");
+        Log.v(TAG, "onNestedPreFling velocityY: " + velocityY);
         return false;
     }
 
