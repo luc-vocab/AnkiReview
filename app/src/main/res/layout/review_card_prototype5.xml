@@ -79,6 +79,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:gravity="center"
+                                android:paddingTop="20dp"
                                 android:text="不营业"
                                 android:textColor="@android:color/holo_blue_dark"
                                 android:textSize="40dp" />
@@ -88,6 +89,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:gravity="center"
+                                android:paddingBottom="30dp"
                                 android:text="bù yíng yè"
                                 android:textColor="@android:color/holo_orange_dark"
                                 android:textSize="40dp" />
