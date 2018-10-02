@@ -159,6 +159,25 @@ public class QuestionCardBehavior extends CoordinatorLayout.Behavior<QuestionCar
     }
 
 
+    @Override
+    public void onStopNestedScroll (CoordinatorLayout coordinatorLayout,
+                                    QuestionCard child,
+                                    View target,
+                                    int type) {
+
+        // check whether the NestedScrollView is scrolled all the way to the top
+        NestedScrollView nestedScrollView = (NestedScrollView) target;
+        if( ! nestedScrollView.canScrollVertically(-1)) {
+            // scrolled all the way to the top
+
+            ReviewActivity reviewActivity = (ReviewActivity) coordinatorLayout.getContext();
+            reviewActivity.showAnswer();
+
+        }
+
+    }
+
+
     private boolean m_initialLayoutDone = false;
 
 

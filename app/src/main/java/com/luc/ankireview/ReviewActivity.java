@@ -336,8 +336,9 @@ public class ReviewActivity extends AppCompatActivity {
         setupSpeedDial();
     }
 
-    private void showAnswer()
+    public void showAnswer()
     {
+        Log.v(TAG,"showAnswer");
 
         m_showingQuestion = false;
         playAnswerAudio();
