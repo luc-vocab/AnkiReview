@@ -53,8 +53,9 @@
                     android:orientation="vertical">
 
                     <FrameLayout
+                        android:id="@+id/answer_top_spacer"
                         android:layout_width="match_parent"
-                        android:layout_height="700dp">
+                        android:layout_height="wrap_content">
 
                     </FrameLayout>
 
@@ -94,8 +95,11 @@
                     </com.luc.ankireview.AnswerCard>
 
                     <FrameLayout
+                        android:id="@+id/answer_bottom_spacer"
                         android:layout_width="match_parent"
-                        android:layout_height="300dp"></FrameLayout>
+                        android:layout_height="wrap_content">
+
+                    </FrameLayout>
 
                 </LinearLayout>
 
