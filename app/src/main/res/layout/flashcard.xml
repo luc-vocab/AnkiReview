@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<android.support.design.widget.CoordinatorLayout android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".CardPrototypeActivity"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+        <com.luc.ankireview.QuestionCard
+            android:id="@+id/question_card"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            app:cardCornerRadius="5dp"
+            app:layout_behavior="com.luc.ankireview.QuestionCardBehavior">
+
+            <TextView
+                android:id="@+id/textView6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:paddingBottom="30dp"
+                android:paddingTop="20dp"
+                android:text="closed (a business)"
+                android:textSize="40dp" />
+        </com.luc.ankireview.QuestionCard>
+
+
+        <android.support.v4.widget.NestedScrollView
+            android:id="@+id/inner_scrollview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <FrameLayout
+                    android:id="@+id/answer_top_spacer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                </FrameLayout>
+
+                <com.luc.ankireview.AnswerCard
+                    android:id="@+id/answer_card"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="40dp"
+                    android:layout_marginRight="40dp"
+                    app:cardCornerRadius="5dp"
+
+                    >
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/textView8"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:paddingTop="20dp"
+                            android:text="不营业"
+                            android:textColor="@android:color/holo_blue_dark"
+                            android:textSize="40dp" />
+
+                        <TextView
+                            android:id="@+id/textView7"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:paddingBottom="30dp"
+                            android:text="bù yíng yè"
+                            android:textColor="@android:color/holo_orange_dark"
+                            android:textSize="40dp" />
+                    </LinearLayout>
+                </com.luc.ankireview.AnswerCard>
+
+                <FrameLayout
+                    android:id="@+id/answer_bottom_spacer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                </FrameLayout>
+
+            </LinearLayout>
+
+        </android.support.v4.widget.NestedScrollView>
+
+    </android.support.design.widget.CoordinatorLayout>
+

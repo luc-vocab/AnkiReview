@@ -14,7 +14,7 @@ public class CardPrototypeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.review_card_prototype5);
+        setContentView(R.layout.review_card_prototype6);
 
     }
 
