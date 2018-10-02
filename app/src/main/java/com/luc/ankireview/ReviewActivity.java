@@ -331,6 +331,8 @@ public class ReviewActivity extends AppCompatActivity {
         m_cardReviewStartTime = System.currentTimeMillis();
         m_showingQuestion = true;
 
+        m_flashcardPager.disableSwipe();
+
         setupSpeedDial();
     }
 
@@ -340,6 +342,7 @@ public class ReviewActivity extends AppCompatActivity {
         m_showingQuestion = false;
         playAnswerAudio();
         setupSpeedDial();
+        m_flashcardPager.enableSwipe();
     }
 
     private void prepareAnswerAudio() {
@@ -507,7 +510,7 @@ public class ReviewActivity extends AppCompatActivity {
     // layout elements
     private FrameLayout m_frame;
     private FrameLayout m_flashcardFrame;
-    private ViewPager m_flashcardPager;
+    private FlashcardViewPager m_flashcardPager;
     private FrameLayout m_touchLayer;
 
     private RoundCornerProgressBar m_progressBar;

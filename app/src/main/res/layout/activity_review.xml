@@ -32,12 +32,12 @@
             android:layout_height="match_parent"
             android:layout_weight="1">
 
-            <android.support.v4.view.ViewPager
+            <com.luc.ankireview.FlashcardViewPager
                 android:id="@+id/flashcard_pager"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-            </android.support.v4.view.ViewPager>
+            </com.luc.ankireview.FlashcardViewPager>
 
             <com.leinardi.android.speeddial.SpeedDialOverlayLayout
                 android:id="@+id/overlay"
