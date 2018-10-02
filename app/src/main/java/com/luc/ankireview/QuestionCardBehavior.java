@@ -94,6 +94,7 @@ public class QuestionCardBehavior extends CoordinatorLayout.Behavior<QuestionCar
                                         int type) {
 
         // Log.v(TAG, "onStartNestedScroll ");
+
         return true;
 
     }
@@ -105,6 +106,11 @@ public class QuestionCardBehavior extends CoordinatorLayout.Behavior<QuestionCar
                               float velocityX,
                               float velocityY) {
         // Log.v(TAG, "onNestedPreFling velocityY: " + velocityY);
+
+        if( m_showingAnswer ) {
+            // consume the fling
+            return true;
+        }
 
         return false;
     }
@@ -119,6 +125,11 @@ public class QuestionCardBehavior extends CoordinatorLayout.Behavior<QuestionCar
                                    int[] consumed,
                                    int type) {
         // Log.v(TAG, "onNestedPreScroll ");
+
+        if( m_showingAnswer ) {
+            // consume the scroll
+            consumed[1] = dy;
+        }
     }
 
     @Override
@@ -154,6 +165,8 @@ public class QuestionCardBehavior extends CoordinatorLayout.Behavior<QuestionCar
             float originalY = child.getY();
             float newY = originalY + diff;
             child.setY(newY);
+
+            m_touchingQuestion = true;
         }
 
     }
@@ -165,20 +178,21 @@ public class QuestionCardBehavior extends CoordinatorLayout.Behavior<QuestionCar
                                     View target,
                                     int type) {
 
-        // check whether the NestedScrollView is scrolled all the way to the top
-        NestedScrollView nestedScrollView = (NestedScrollView) target;
-        if( ! nestedScrollView.canScrollVertically(-1)) {
-            // scrolled all the way to the top
+        if( m_touchingQuestion) {
 
             ReviewActivity reviewActivity = (ReviewActivity) coordinatorLayout.getContext();
             reviewActivity.showAnswer();
+            m_showingAnswer = true;
 
         }
+
 
     }
 
 
     private boolean m_initialLayoutDone = false;
+    private boolean m_showingAnswer = false;
+    private boolean m_touchingQuestion = false;
 
 
 }
