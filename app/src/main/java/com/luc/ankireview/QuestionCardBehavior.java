@@ -70,6 +70,20 @@ public class QuestionCardBehavior extends CoordinatorLayout.Behavior<QuestionCar
             LinearLayout.LayoutParams bottomSpacerLayoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, bottomSpacerHeight);
             bottomSpacer.setLayoutParams(bottomSpacerLayoutParams);
 
+
+            // subscribe to scrollview events
+            NestedScrollView nestedScrollView = parent.findViewById(R.id.inner_scrollview);
+            nestedScrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
+                @Override
+                public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                    // Log.v(TAG, "scrolling, scrollY: " + scrollY);
+                    if (scrollY == v.getChildAt(0).getMeasuredHeight() - v.getMeasuredHeight()) {
+                        Log.v(TAG, "scrolled all the way up");
+                        stopScroll(v.getContext());
+                    }
+                }
+            });
+
             m_initialLayoutDone = true;
 
             return true;
@@ -95,6 +109,8 @@ public class QuestionCardBehavior extends CoordinatorLayout.Behavior<QuestionCar
 
         // Log.v(TAG, "onStartNestedScroll ");
 
+        // start listening to NestedScrollEvents
+
         return true;
 
     }
@@ -107,7 +123,7 @@ public class QuestionCardBehavior extends CoordinatorLayout.Behavior<QuestionCar
                               float velocityY) {
         // Log.v(TAG, "onNestedPreFling velocityY: " + velocityY);
 
-        if( m_showingAnswer ) {
+        if( ! m_acceptTouchEvents ) {
             // consume the fling
             return true;
         }
@@ -126,7 +142,7 @@ public class QuestionCardBehavior extends CoordinatorLayout.Behavior<QuestionCar
                                    int type) {
         // Log.v(TAG, "onNestedPreScroll ");
 
-        if( m_showingAnswer ) {
+        if( ! m_acceptTouchEvents ) {
             // consume the scroll
             consumed[1] = dy;
         }
@@ -166,33 +182,20 @@ public class QuestionCardBehavior extends CoordinatorLayout.Behavior<QuestionCar
             float newY = originalY + diff;
             child.setY(newY);
 
-            m_touchingQuestion = true;
         }
 
     }
 
+    public void stopScroll(Context context) {
+        m_acceptTouchEvents = false;
 
-    @Override
-    public void onStopNestedScroll (CoordinatorLayout coordinatorLayout,
-                                    QuestionCard child,
-                                    View target,
-                                    int type) {
-
-        if( m_touchingQuestion) {
-
-            ReviewActivity reviewActivity = (ReviewActivity) coordinatorLayout.getContext();
-            reviewActivity.showAnswer();
-            m_showingAnswer = true;
-
-        }
-
-
+        ReviewActivity reviewActivity = (ReviewActivity) context;
+        reviewActivity.showAnswer();
     }
 
 
     private boolean m_initialLayoutDone = false;
-    private boolean m_showingAnswer = false;
-    private boolean m_touchingQuestion = false;
+    private boolean m_acceptTouchEvents = true;
 
 
 }

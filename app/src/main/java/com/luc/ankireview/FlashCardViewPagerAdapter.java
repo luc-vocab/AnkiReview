@@ -99,6 +99,12 @@ public class FlashCardViewPagerAdapter extends PagerAdapter {
             m_left = null;
             m_right = null;
 
+        } else if (currentPage == 1 ) {
+            //regenerate everything
+            m_center = null;
+            m_left = null;
+            m_right = null;
+
         } else {
             throw new IllegalArgumentException("currentPage " + currentPage + " is impossible");
         }
