@@ -182,28 +182,53 @@ public class AnkiUtils {
                 Log.v(TAG, "noteId: " + noteId + " cardOrd: " + cardOrd);
 
                 // retrieve card information
+                // -------------------------
+
+                String question = null;
+                String answer = null;
 
                 Uri noteUri = Uri.withAppendedPath(FlashCardsContract.Note.CONTENT_URI, Long.toString(noteId));
                 Uri cardsUri = Uri.withAppendedPath(noteUri, "cards");
                 Uri specificCardUri = Uri.withAppendedPath(cardsUri, Integer.toString(cardOrd));
                 final Cursor cardCursor = contentResolver.query(specificCardUri,
-                        null,  // projection
+                        new String[]{FlashCardsContract.Card.QUESTION, FlashCardsContract.Card.ANSWER},  // projection
                         null,  // selection is ignored for this URI
                         null,  // selectionArgs is ignored for this URI
                         null   // sortOrder is ignored for this URI
                 );
                 if(cardCursor.moveToFirst()) {
-                    String question = cardCursor.getString(cardCursor.getColumnIndex(FlashCardsContract.Card.QUESTION));
-                    String answer = cardCursor.getString(cardCursor.getColumnIndex(FlashCardsContract.Card.ANSWER));
+                    question = cardCursor.getString(cardCursor.getColumnIndex(FlashCardsContract.Card.QUESTION));
+                    answer = cardCursor.getString(cardCursor.getColumnIndex(FlashCardsContract.Card.ANSWER));
 
-                    String questionSimple = cardCursor.getString(cardCursor.getColumnIndex(FlashCardsContract.Card.QUESTION_SIMPLE));
-                    String answerSimple = cardCursor.getString(cardCursor.getColumnIndex(FlashCardsContract.Card.ANSWER_SIMPLE));
-
-                    // Log.v(TAG, "question: " + question);
-
-                    Card card = new Card(noteId, cardOrd, question, answer, questionSimple, answerSimple, buttonCount, nextReviewTimes);
-                    cardList.add(card);
                 }
+
+                // retrieve note information
+                // -------------------------
+
+                String questionSimple = null;
+                String answerSimple = null;
+
+                Uri noteInfoUri = Uri.withAppendedPath(FlashCardsContract.Note.CONTENT_URI, Long.toString(noteId));
+                final Cursor noteCursor = contentResolver.query(noteInfoUri,
+                        null,  // projection
+                        null,  // selection is ignored for this URI
+                        null,  // selectionArgs is ignored for this URI
+                        null   // sortOrder is ignored for this URI
+                );
+
+                if(noteCursor.moveToFirst()) {
+                    String fields = noteCursor.getString(noteCursor.getColumnIndex(FlashCardsContract.Note.FLDS));
+                    Log.v(TAG, "fields: " + fields);
+
+                    String[] fieldArray = fields.split("\\x1f");
+
+                    questionSimple = fieldArray[0];
+                    answerSimple = fieldArray[1] + " " + fieldArray[2];
+
+                }
+
+                Card card = new Card(noteId, cardOrd, question, answer, questionSimple, answerSimple, buttonCount, nextReviewTimes);
+                cardList.add(card);
 
             } while (cur.moveToNext());
         }

@@ -1,18 +1,12 @@
 package com.luc.ankireview;
 
 import android.animation.ObjectAnimator;
-import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.Dialog;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v4.view.GestureDetectorCompat;
 import android.support.v4.view.ViewPager;
@@ -95,8 +89,7 @@ public class ReviewActivity extends AppCompatActivity {
         m_frame = findViewById(R.id.review_frame);
         m_flashcardFrame = findViewById(R.id.flashcard_frame);
         m_touchLayer = findViewById(R.id.touch_layer);
-        m_questionPager = findViewById(R.id.flashcard_question_pager);
-        m_answerPager = findViewById(R.id.flashcard_answer_pager);
+        m_flashcardPager = findViewById(R.id.flashcard_pager);
 
         m_progressBar = findViewById(R.id.review_progressbar);
 
@@ -104,36 +97,10 @@ public class ReviewActivity extends AppCompatActivity {
         m_detector = new GestureDetectorCompat(this, new ReviewerGestureDetector());
         m_touchLayer.setOnTouchListener(m_gestureListener);
 
+        m_flashcardAdapter = new FlashCardViewPagerAdapter(this, this );
+        m_flashcardPager.setAdapter(m_flashcardAdapter);
 
-        m_questionAdapter = new FlashCardViewPagerAdapter(this, m_baseUrl,this );
-        m_answerAdapter = new FlashCardViewPagerAdapter(this, m_baseUrl,this );
-
-        m_questionPager.setAdapter(m_questionAdapter);
-        m_answerPager.setAdapter(m_answerAdapter);
-
-        m_questionPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-            }
-            @Override
-            public void onPageSelected(int position) {
-                mCurrentPosition = position;
-            }
-            @Override
-            public void onPageScrollStateChanged(int state) {
-                if(ViewPager.SCROLL_STATE_IDLE == state){
-                    if(mCurrentPosition != 1)
-                    {
-                        // user scrolled to one of the sides
-                        showAnswer();
-                    }
-                }
-            }
-            private int mCurrentPosition = 1;
-        });
-
-
-        m_answerPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+        m_flashcardPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
             }
@@ -359,10 +326,11 @@ public class ReviewActivity extends AppCompatActivity {
         // if we've never shown a question before, do some first time setup
 
         // show question in the middle
-        m_questionAdapter.setCardContent(m_currentCard.getQuestion(), true);
-        m_questionPager.setCurrentItem(1);
+        m_flashcardAdapter.setCurrentCard(m_currentCard);
+        m_flashcardAdapter.setNextCard(m_nextCard);
+        m_flashcardPager.setCurrentItem(1);
 
-        m_questionPager.bringToFront();
+        m_flashcardPager.bringToFront();
 
     }
 
@@ -373,15 +341,17 @@ public class ReviewActivity extends AppCompatActivity {
             m_isFirstCard = false;
         }
 
+        /*
         // load current answer onto the sides (should not create visual disruption)
         m_questionAdapter.setCardContent(m_currentCard.getAnswer(), false);
 
         // the question pager data is already loaded. we only need to bring it to the front
-        m_questionPager.bringToFront();
+        m_flashcardPager.bringToFront();
 
         // the question pager is now on top, we can make visual changes to the answer pager
-        m_answerAdapter.setCardContent(m_currentCard.getAnswer(), true);
+        m_flashcardAdapter.setCardContent(m_currentCard.getAnswer(), true);
         m_answerPager.setCurrentItem(1);
+        */
 
         prepareAnswerAudio();
 
@@ -399,16 +369,19 @@ public class ReviewActivity extends AppCompatActivity {
         if( m_nextCard != null)
             nextCardQuestion = m_nextCard.getQuestion();
 
-        m_answerAdapter.setCardContent(nextCardQuestion, false);
+
+        /*
+        m_flashcardAdapter.setCardContent(nextCardQuestion, false);
 
         // the answer pager data is already loaded. we only need to bring it to the front
         m_answerPager.bringToFront();
 
         // load next question onto the middle page of the question pager
         m_questionAdapter.setCardContent(nextCardQuestion, true);
+        */
 
         // center the question adapter ( not visible currently)
-        m_questionPager.setCurrentItem(1);
+        m_flashcardPager.setCurrentItem(1);
 
 
         m_showingQuestion = false;
@@ -584,8 +557,7 @@ public class ReviewActivity extends AppCompatActivity {
     // layout elements
     private FrameLayout m_frame;
     private FrameLayout m_flashcardFrame;
-    private ViewPager m_questionPager;
-    private ViewPager m_answerPager;
+    private ViewPager m_flashcardPager;
     private FrameLayout m_touchLayer;
 
     private RoundCornerProgressBar m_progressBar;
@@ -604,8 +576,7 @@ public class ReviewActivity extends AppCompatActivity {
     int m_cardsDone; // not due anymore
 
     // adapters
-    private FlashCardViewPagerAdapter m_questionAdapter;
-    private FlashCardViewPagerAdapter m_answerAdapter;
+    private FlashCardViewPagerAdapter m_flashcardAdapter;
     // where to load file assets
     private String m_baseUrl;
     // for playing audio

@@ -20,6 +20,7 @@ public class CardPrototypeActivity extends AppCompatActivity {
 
         Card card = new Card(0, 0, "", "", "closed (a business)", "bù yíng yè / 不营业",0, new Vector<String>());
 
+        Log.v(TAG, "setting card");
         FlashcardLayout flashcardLayout = findViewById(R.id.flashcard_layout);
         flashcardLayout.setCard(card);
 

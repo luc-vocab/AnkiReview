@@ -12,6 +12,12 @@ public class FlashcardLayout extends CoordinatorLayout {
         init(context);
     }
 
+    public FlashcardLayout(Context context, Card card ) {
+        super(context);
+        init(context);
+        setCard(card);
+    }
+
     public FlashcardLayout (Context context,
                        AttributeSet attrs) {
         super(context, attrs);
