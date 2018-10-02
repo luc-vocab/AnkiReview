@@ -66,6 +66,19 @@ public class FlashCardViewPagerAdapter extends PagerAdapter {
         return view == o;
     }
 
+    @Override
+    public int getItemPosition (Object object) {
+        if( object == m_center ) {
+            return 1;
+        } else if( object == m_left ) {
+            return 0;
+        } else if( object == m_right ) {
+            return 2;
+        }
+
+        // view doesn't exist anymore
+        return POSITION_NONE;
+    }
 
     public void setCurrentCard(Card card) {
         m_currentCard = card;
@@ -73,6 +86,35 @@ public class FlashCardViewPagerAdapter extends PagerAdapter {
 
     public void setNextCard(Card card) {
         m_nextCard = card;
+    }
+
+
+    public void moveToNextQuestion(int currentPage, Card currentCard, Card nextCard) {
+        m_currentCard = currentCard;
+        m_nextCard = nextCard;
+
+        if( currentPage == 0) {
+            // answered bad on the question before
+            m_center = m_left;
+
+            // other views should be regenerated
+            m_left = null;
+            m_right = null;
+
+
+        } else if (currentPage == 2 ) {
+            // answered good on the previous question
+            m_center = m_right;
+            // other views should be regenerated
+            m_left = null;
+            m_right = null;
+
+        } else {
+            throw new IllegalArgumentException("currentPage " + currentPage + " is impossible");
+        }
+
+        notifyDataSetChanged();
+
     }
 
 

@@ -527,6 +527,10 @@ public class ReviewActivity extends AppCompatActivity {
                 }
             }
 
+
+            int currentPage = m_flashcardPager.getCurrentItem();
+            m_flashcardAdapter.moveToNextQuestion(currentPage, m_currentCard, m_nextCard);
+
             showQuestion();
         }
 
