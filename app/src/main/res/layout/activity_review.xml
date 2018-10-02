@@ -32,6 +32,14 @@
             android:layout_height="match_parent"
             android:layout_weight="1">
 
+            <FrameLayout
+                android:id="@+id/background"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/colorProgressBackground">
+
+            </FrameLayout>
+
             <com.luc.ankireview.FlashcardViewPager
                 android:id="@+id/flashcard_pager"
                 android:layout_width="match_parent"

@@ -3,7 +3,7 @@
     <color name="colorPrimary">#1976d2</color>
     <color name="colorPrimaryDark">#0D47A1</color>
     <color name="colorAccent">#1565c0</color>
-    <color name="colorProgressBackground">#E0E0E0</color>
+    <color name="colorProgressBackground">#e0e0e0</color>
     <color name="toolbarTextColor">#E0E0E0</color>
 
     <!-- answer colors -->
