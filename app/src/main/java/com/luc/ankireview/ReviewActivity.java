@@ -80,8 +80,6 @@ public class ReviewActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_review);
 
-        m_firstTimeInitDone = false;
-
         String mediaDir = Environment.getExternalStorageDirectory().getAbsolutePath() + "/AnkiDroid/collection.media/";
         Uri mediaDirUri = Uri.fromFile(new File(mediaDir));
         m_baseUrl = mediaDirUri.toString() +"/";
@@ -279,17 +277,6 @@ public class ReviewActivity extends AppCompatActivity {
 
     }
 
-    public void pageLoaded() {
-        if( ! m_firstTimeInitDone) {
-            // WebView seems to have a hardtime loading assets from the collection.media directory on first run
-            // we reload the first question card once to get around this issue.
-            Log.v(TAG, "reloading question for first time init");
-            loadFirstQuestion();
-            showQuestion();
-            m_firstTimeInitDone = true;
-        }
-    }
-
     private void loadCards() {
 
         AnkiUtils.DeckDueCounts deckDueCounts = AnkiUtils.getDeckDueCount(getContentResolver(), m_deckId);
@@ -330,8 +317,6 @@ public class ReviewActivity extends AppCompatActivity {
         m_flashcardAdapter.setNextCard(m_nextCard);
         m_flashcardPager.setCurrentItem(1);
 
-        m_flashcardPager.bringToFront();
-
     }
 
     private void showQuestion() {
@@ -341,55 +326,20 @@ public class ReviewActivity extends AppCompatActivity {
             m_isFirstCard = false;
         }
 
-        /*
-        // load current answer onto the sides (should not create visual disruption)
-        m_questionAdapter.setCardContent(m_currentCard.getAnswer(), false);
-
-        // the question pager data is already loaded. we only need to bring it to the front
-        m_flashcardPager.bringToFront();
-
-        // the question pager is now on top, we can make visual changes to the answer pager
-        m_flashcardAdapter.setCardContent(m_currentCard.getAnswer(), true);
-        m_answerPager.setCurrentItem(1);
-        */
-
         prepareAnswerAudio();
 
         m_cardReviewStartTime = System.currentTimeMillis();
         m_showingQuestion = true;
 
         setupSpeedDial();
-
     }
 
     private void showAnswer()
     {
-        // load next question onto the sides (should not create visual disruption)
-        String nextCardQuestion = "";
-        if( m_nextCard != null)
-            nextCardQuestion = m_nextCard.getQuestion();
-
-
-        /*
-        m_flashcardAdapter.setCardContent(nextCardQuestion, false);
-
-        // the answer pager data is already loaded. we only need to bring it to the front
-        m_answerPager.bringToFront();
-
-        // load next question onto the middle page of the question pager
-        m_questionAdapter.setCardContent(nextCardQuestion, true);
-        */
-
-        // center the question adapter ( not visible currently)
-        m_flashcardPager.setCurrentItem(1);
-
 
         m_showingQuestion = false;
-        
         playAnswerAudio();
-
         setupSpeedDial();
-
     }
 
     private void prepareAnswerAudio() {
@@ -411,8 +361,8 @@ public class ReviewActivity extends AppCompatActivity {
         long timeTaken = Math.min(System.currentTimeMillis() - m_cardReviewStartTime, 60000);
         AnkiUtils.answerCard(getContentResolver(), m_currentCard, ease, timeTaken);
 
-        //String msg = String.format("ease: %d time: %.1fs", ease.getValue(), timeTaken / 1000.0);
-        //showToast(msg);
+        String msg = String.format("ease: %d time: %.1fs", ease.getValue(), timeTaken / 1000.0);
+        showToast(msg);
     }
 
     private void playAnswerAudio()
@@ -551,10 +501,6 @@ public class ReviewActivity extends AppCompatActivity {
 
     private long m_deckId;
 
-    private boolean m_firstTimeInitDone;
-
-
-    public Card getCurrentCard() { return m_currentCard; }
     private Card m_currentCard;
     private Card m_nextCard;
 

@@ -1,19 +1,9 @@
 package com.luc.ankireview;
 
 import android.content.Context;
-import android.net.Uri;
-import android.os.Environment;
 import android.support.v4.view.PagerAdapter;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebResourceError;
-import android.webkit.WebResourceRequest;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
-
-import java.io.File;
-import java.io.IOException;
 
 public class FlashCardViewPagerAdapter extends PagerAdapter {
     private static final String TAG = "FlashCardViewPagerAdapter";
@@ -125,6 +115,5 @@ public class FlashCardViewPagerAdapter extends PagerAdapter {
     Card m_currentCard;
     Card m_nextCard;
 
-    private ReviewActivity m_reviewActivity;
 
 }
