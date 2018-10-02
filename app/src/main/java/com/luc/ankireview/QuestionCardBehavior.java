@@ -7,6 +7,7 @@ import android.support.v7.widget.CardView;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 
 public class QuestionCardBehavior extends CoordinatorLayout.Behavior<QuestionCard> {
     private static final String TAG = "QuestionCardBehavior";
@@ -104,10 +105,15 @@ public class QuestionCardBehavior extends CoordinatorLayout.Behavior<QuestionCar
         int questionLocation[] = new int[2];
         int answerLocation[] = new int[2];
         child.getLocationOnScreen(questionLocation);
-        target.findViewById(R.id.answer_card).getLocationOnScreen(answerLocation);
+        View answer = target.findViewById(R.id.answer_card);
+        answer.getLocationOnScreen(answerLocation);
 
-        int questionBottom = questionLocation[1] + child.getHeight();
-        int answerTop = answerLocation[1];
+        // get margins
+        ViewGroup.MarginLayoutParams questionMarginParams = (ViewGroup.MarginLayoutParams) child.getLayoutParams();
+        ViewGroup.MarginLayoutParams answerMarginParams = (ViewGroup.MarginLayoutParams) answer.getLayoutParams();
+
+        int questionBottom = questionLocation[1] + child.getHeight() + questionMarginParams.bottomMargin;
+        int answerTop = answerLocation[1] - answerMarginParams.topMargin;
 
         int diff = answerTop - questionBottom;
 
