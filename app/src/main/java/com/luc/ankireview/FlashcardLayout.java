@@ -3,6 +3,7 @@ package com.luc.ankireview;
 import android.content.Context;
 import android.support.design.widget.CoordinatorLayout;
 import android.util.AttributeSet;
+import android.widget.TextView;
 
 public class FlashcardLayout extends CoordinatorLayout {
 
@@ -28,4 +29,15 @@ public class FlashcardLayout extends CoordinatorLayout {
     private void init(Context context) {
         inflate(context, R.layout.flashcard, this);
     }
+
+    public void setCard(Card card) {
+
+        TextView questionText = this.findViewById(R.id.question_text);
+        TextView answerText = this.findViewById(R.id.answer_text);
+
+        questionText.setText(card.getQuestionSimple());
+        answerText.setText(card.getAnswerSimple());
+
+    }
+
 }

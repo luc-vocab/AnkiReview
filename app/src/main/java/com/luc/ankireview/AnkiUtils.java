@@ -196,9 +196,12 @@ public class AnkiUtils {
                     String question = cardCursor.getString(cardCursor.getColumnIndex(FlashCardsContract.Card.QUESTION));
                     String answer = cardCursor.getString(cardCursor.getColumnIndex(FlashCardsContract.Card.ANSWER));
 
+                    String questionSimple = cardCursor.getString(cardCursor.getColumnIndex(FlashCardsContract.Card.QUESTION_SIMPLE));
+                    String answerSimple = cardCursor.getString(cardCursor.getColumnIndex(FlashCardsContract.Card.ANSWER_SIMPLE));
+
                     // Log.v(TAG, "question: " + question);
 
-                    Card card = new Card(noteId, cardOrd, question, answer, buttonCount, nextReviewTimes);
+                    Card card = new Card(noteId, cardOrd, question, answer, questionSimple, answerSimple, buttonCount, nextReviewTimes);
                     cardList.add(card);
                 }
 

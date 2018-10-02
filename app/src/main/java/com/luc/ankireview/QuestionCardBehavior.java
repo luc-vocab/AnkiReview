@@ -93,7 +93,7 @@ public class QuestionCardBehavior extends CoordinatorLayout.Behavior<QuestionCar
                                         int axes,
                                         int type) {
 
-        Log.v(TAG, "onStartNestedScroll ");
+        // Log.v(TAG, "onStartNestedScroll ");
         return true;
 
     }
@@ -104,7 +104,7 @@ public class QuestionCardBehavior extends CoordinatorLayout.Behavior<QuestionCar
                               View target,
                               float velocityX,
                               float velocityY) {
-        Log.v(TAG, "onNestedPreFling velocityY: " + velocityY);
+        // Log.v(TAG, "onNestedPreFling velocityY: " + velocityY);
 
         return false;
     }
@@ -118,7 +118,7 @@ public class QuestionCardBehavior extends CoordinatorLayout.Behavior<QuestionCar
                                    int dy,
                                    int[] consumed,
                                    int type) {
-        Log.v(TAG, "onNestedPreScroll ");
+        // Log.v(TAG, "onNestedPreScroll ");
     }
 
     @Override
@@ -130,7 +130,7 @@ public class QuestionCardBehavior extends CoordinatorLayout.Behavior<QuestionCar
                                  int dxUnconsumed,
                                  int dyUnconsumed,
                                  int type) {
-        Log.v(TAG, "onNestedScroll");
+        // Log.v(TAG, "onNestedScroll");
 
         // see if question and answer overlap
 

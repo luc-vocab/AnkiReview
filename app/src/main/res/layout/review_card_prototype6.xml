@@ -13,10 +13,9 @@
         app:srcCompat="@drawable/background2" />
 
     <com.luc.ankireview.FlashcardLayout
+        android:id="@+id/flashcard_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        >
-    </com.luc.ankireview.FlashcardLayout>
+        android:layout_height="match_parent"></com.luc.ankireview.FlashcardLayout>
 
 
 </FrameLayout>

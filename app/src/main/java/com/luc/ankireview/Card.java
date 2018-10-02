@@ -15,7 +15,7 @@ public class Card {
     private static final String TAG = "Card";
 
 
-    public Card(long noteId, int cardOrd, String question, String answer, int buttonCount, Vector<String> nextReviewTimes) {
+    public Card(long noteId, int cardOrd, String question, String answer, String questionSimple, String answerSimple, int buttonCount, Vector<String> nextReviewTimes) {
         m_noteId = noteId;
         m_cardOrd = cardOrd;
         m_question = question;
@@ -25,6 +25,9 @@ public class Card {
         m_answer = filterSound(answer);
 
         m_nextReviewTimes = nextReviewTimes;
+
+        m_questionSimple = questionSimple;
+        m_answerSimple = answerSimple;
     }
 
     private String filterSound( String content ) {
@@ -48,6 +51,10 @@ public class Card {
     public String getAnswer() {
         return m_answer;
     }
+
+    public String getQuestionSimple() { return m_questionSimple; }
+
+    public String getAnswerSimple() { return m_answerSimple; }
 
     public String getAnswerAudio()
     {
@@ -180,6 +187,10 @@ public class Card {
     private int m_cardOrd;
     private String m_question;
     private String m_answer;
+
+    private String m_questionSimple;
+    private String m_answerSimple;
+
     private String m_answerSound;
     private int m_buttonCount;
     private Vector<String> m_nextReviewTimes;
