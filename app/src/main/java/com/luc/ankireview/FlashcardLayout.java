@@ -16,6 +16,8 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
+import static java.lang.Math.abs;
+
 public class FlashcardLayout extends FrameLayout  implements View.OnTouchListener{
     private static final String TAG = "FlashcardLayout";
 
@@ -110,7 +112,6 @@ public class FlashcardLayout extends FrameLayout  implements View.OnTouchListene
 
         int index = event.getActionIndex();
         int action = event.getActionMasked();
-        int pointerId = event.getPointerId(index);
 
         switch(action) {
             case MotionEvent.ACTION_DOWN:
@@ -127,6 +128,7 @@ public class FlashcardLayout extends FrameLayout  implements View.OnTouchListene
                 m_velocityTracker.addMovement(event);
 
                 m_lastPointerY = event.getY();
+
                 break;
             case MotionEvent.ACTION_MOVE:
                 m_velocityTracker.addMovement(event);
@@ -213,8 +215,10 @@ public class FlashcardLayout extends FrameLayout  implements View.OnTouchListene
     private void checkAnimationsDone() {
         if( m_questionAnimationDone && m_answerAnimationDone ) {
             Log.v(TAG, "animations done");
+            if( ! m_animationsTriggeredOnce) {
+                m_reviewActivity.showAnswer();
+            }
             m_animationsTriggeredOnce = true;
-            m_reviewActivity.showAnswer();
         }
     }
 
@@ -237,6 +241,8 @@ public class FlashcardLayout extends FrameLayout  implements View.OnTouchListene
     // track velocity of pointer
     private VelocityTracker m_velocityTracker;
     private float m_lastPointerY;
+
+
 
     // link back
     ReviewActivity m_reviewActivity;
