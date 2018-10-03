@@ -186,7 +186,7 @@ public class FlashcardLayout extends FrameLayout  implements View.OnTouchListene
                     m_questionCard.setY(originalQuestionY + questionToAnswerDistance);
                 }
             } else {
-                if( questionToRestingDistance < 1.0) {
+                if( questionToRestingDistance < 0.1) {
                     // allow dragging of the question card down, before animations are triggered
                     m_questionCard.setY(originalQuestionY + dy);
                 }
