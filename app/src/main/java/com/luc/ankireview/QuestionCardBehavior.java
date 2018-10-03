@@ -22,7 +22,7 @@ public class QuestionCardBehavior extends CoordinatorLayout.Behavior<QuestionCar
 
     @Override
     public boolean layoutDependsOn(CoordinatorLayout parent, QuestionCard child, View dependency) {
-        Log.v(TAG, "layoutDependsOn " + dependency.getClass().toString());
+        // Log.v(TAG, "layoutDependsOn " + dependency.getClass().toString());
         if( dependency.getId() == R.id.answer_card) {
             return true;
         }
@@ -69,12 +69,6 @@ public class QuestionCardBehavior extends CoordinatorLayout.Behavior<QuestionCar
             return true;
         }
 
-        return false;
-    }
-
-    @Override
-    public boolean onDependentViewChanged(CoordinatorLayout parent, QuestionCard child, View dependency) {
-        Log.v(TAG, "dependency.getY(): " + dependency.getY());
         return false;
     }
 

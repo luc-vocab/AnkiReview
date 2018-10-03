@@ -85,6 +85,8 @@ public class FlashcardLayout extends CoordinatorLayout {
         m_questionCard = findViewById(R.id.question_card);
         m_answerCard = findViewById(R.id.answer_card);
 
+        m_reviewActivity = (ReviewActivity) context;
+
     }
 
     public void setCard(Card card) {
@@ -102,11 +104,42 @@ public class FlashcardLayout extends CoordinatorLayout {
         m_questionSpringAnimation = new SpringAnimation(m_questionCard, DynamicAnimation.TRANSLATION_Y, questionTargetY);
         m_answerSpringAnimation = new SpringAnimation(m_answerCard, DynamicAnimation.TRANSLATION_Y, answerTargetY);
 
+
+        m_questionSpringAnimation.addEndListener(new DynamicAnimation.OnAnimationEndListener() {
+            @Override
+            public void onAnimationEnd(DynamicAnimation animation, boolean canceled, float value, float velocity) {
+                questionAnimationDone();
+            }
+        });
+        m_answerSpringAnimation.addEndListener(new DynamicAnimation.OnAnimationEndListener() {
+            @Override
+            public void onAnimationEnd(DynamicAnimation animation, boolean canceled, float value, float velocity) {
+                answerAnimationDone();
+            }
+        });
+
     }
 
     public void startSpringAnimations() {
         m_questionSpringAnimation.start();
         m_answerSpringAnimation.start();
+    }
+
+    protected void questionAnimationDone() {
+        m_questionAnimationDone = true;
+        checkAnimationsDone();
+    }
+
+    protected void answerAnimationDone() {
+        m_answerAnimationDone = true;
+        checkAnimationsDone();
+    }
+
+    private void checkAnimationsDone() {
+        if( m_questionAnimationDone && m_answerAnimationDone ) {
+            Log.v(TAG, "animations done");
+            m_reviewActivity.showAnswer();
+        }
     }
 
     // question and answer cards
@@ -116,7 +149,13 @@ public class FlashcardLayout extends CoordinatorLayout {
     SpringAnimation m_questionSpringAnimation;
     SpringAnimation m_answerSpringAnimation;
 
+    boolean m_questionAnimationDone = false;
+    boolean m_answerAnimationDone = false;
+
     // gesture detection
     private GestureDetectorCompat m_detector;
+
+    // link back
+    ReviewActivity m_reviewActivity;
 
 }
