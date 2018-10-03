@@ -150,10 +150,16 @@ public class FlashcardLayout extends FrameLayout  implements View.OnTouchListene
             case MotionEvent.ACTION_UP:
             case MotionEvent.ACTION_CANCEL:
                 // Return a VelocityTracker object back to be re-used by others.
+
+                m_velocityTracker.computeCurrentVelocity(1000);
+                float velocity = m_velocityTracker.getYVelocity();
+
+
                 m_velocityTracker.recycle();
                 m_velocityTracker = null;
 
-                startSpringAnimations();
+                Log.v(TAG, "starting spring animations with velocity " + velocity);
+                startSpringAnimations(velocity);
 
                 break;
         }
@@ -197,7 +203,9 @@ public class FlashcardLayout extends FrameLayout  implements View.OnTouchListene
 
     }
 
-    public void startSpringAnimations() {
+    public void startSpringAnimations(float velocity) {
+        m_questionSpringAnimation.setStartVelocity(velocity);
+        m_answerSpringAnimation.setStartVelocity(velocity);
         m_questionSpringAnimation.start();
         m_answerSpringAnimation.start();
     }
