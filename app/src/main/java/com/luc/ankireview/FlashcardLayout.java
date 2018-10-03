@@ -178,7 +178,9 @@ public class FlashcardLayout extends FrameLayout  implements View.OnTouchListene
             m_questionCard.setY(originalQuestionY + diff);
         } else {
             float originalQuestionY = m_questionCard.getY();
-            if( originalQuestionY <= m_questionOriginalY) {
+            float diff2 = m_questionOriginalY - originalQuestionY;
+            if( diff2 > 1.0) { // only trigger when close
+                Log.v(TAG,"dragging question card " + originalQuestionY + " " +m_questionOriginalY + " " + diff);
                 m_questionCard.setY(originalQuestionY + diff);
             }
         }
@@ -213,6 +215,7 @@ public class FlashcardLayout extends FrameLayout  implements View.OnTouchListene
 
     SpringAnimation m_questionSpringAnimation;
     SpringAnimation m_answerSpringAnimation;
+
 
     boolean m_questionAnimationDone = false;
     boolean m_answerAnimationDone = false;
