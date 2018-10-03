@@ -170,18 +170,26 @@ public class FlashcardLayout extends FrameLayout  implements View.OnTouchListene
         ViewGroup.MarginLayoutParams questionMarginParams = (ViewGroup.MarginLayoutParams) m_questionCard.getLayoutParams();
         ViewGroup.MarginLayoutParams answerMarginParams = (ViewGroup.MarginLayoutParams) m_answerCard.getLayoutParams();
 
-        float diff = (m_answerCard.getY() - answerMarginParams.topMargin) - (m_questionCard.getY() + m_questionCard.getHeight() + questionMarginParams.bottomMargin);
+        float questionToAnswerDistance = (m_answerCard.getY() - answerMarginParams.topMargin) - (m_questionCard.getY() + m_questionCard.getHeight() + questionMarginParams.bottomMargin);
+        float questionToRestingDistance = m_questionOriginalY - m_questionCard.getY();
 
-        if (diff < 0.0) {
-            // answer card is overlapping with question card
+        if (questionToAnswerDistance < 0.0) {
+            // answer card is overlapping with question card, need to drag it up
             float originalQuestionY = m_questionCard.getY();
-            m_questionCard.setY(originalQuestionY + diff);
+            m_questionCard.setY(originalQuestionY + questionToAnswerDistance);
         } else {
             float originalQuestionY = m_questionCard.getY();
-            float diff2 = m_questionOriginalY - originalQuestionY;
-            if( diff2 > 1.0) { // only trigger when close
-                Log.v(TAG,"dragging question card " + originalQuestionY + " " +m_questionOriginalY + " " + diff);
-                m_questionCard.setY(originalQuestionY + diff);
+
+            if( m_animationsTriggeredOnce) {
+                if (questionToRestingDistance > 1.0) { // only trigger when questionToAnswerDistance is above a certain threshold
+                    // answer card is far away from question card, drag question card down
+                    m_questionCard.setY(originalQuestionY + questionToAnswerDistance);
+                }
+            } else {
+                if( questionToRestingDistance < 1.0) {
+                    // allow dragging of the question card down, before animations are triggered
+                    m_questionCard.setY(originalQuestionY + dy);
+                }
             }
         }
 
@@ -205,6 +213,7 @@ public class FlashcardLayout extends FrameLayout  implements View.OnTouchListene
     private void checkAnimationsDone() {
         if( m_questionAnimationDone && m_answerAnimationDone ) {
             Log.v(TAG, "animations done");
+            m_animationsTriggeredOnce = true;
             m_reviewActivity.showAnswer();
         }
     }
@@ -216,6 +225,7 @@ public class FlashcardLayout extends FrameLayout  implements View.OnTouchListene
     SpringAnimation m_questionSpringAnimation;
     SpringAnimation m_answerSpringAnimation;
 
+    boolean m_animationsTriggeredOnce = false;
 
     boolean m_questionAnimationDone = false;
     boolean m_answerAnimationDone = false;
