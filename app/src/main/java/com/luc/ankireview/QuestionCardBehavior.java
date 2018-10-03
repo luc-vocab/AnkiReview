@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
-public class QuestionCardBehavior extends CoordinatorLayout.Behavior<QuestionCard> {
+public class QuestionCardBehavior extends CoordinatorLayout.Behavior<QuestionCard>  {
     private static final String TAG = "QuestionCardBehavior";
 
     public QuestionCardBehavior(Context context, AttributeSet attrs) {
@@ -73,16 +73,7 @@ public class QuestionCardBehavior extends CoordinatorLayout.Behavior<QuestionCar
 
             // subscribe to scrollview events
             NestedScrollView nestedScrollView = parent.findViewById(R.id.inner_scrollview);
-            nestedScrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
-                @Override
-                public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-                    // Log.v(TAG, "scrolling, scrollY: " + scrollY);
-                    if (scrollY == v.getChildAt(0).getMeasuredHeight() - v.getMeasuredHeight()) {
-                        Log.v(TAG, "scrolled all the way up");
-                        stopScroll(v.getContext());
-                    }
-                }
-            });
+            //nestedScrollView.setOnScrollChangeListener(this);
 
             m_initialLayoutDone = true;
 
@@ -192,6 +183,17 @@ public class QuestionCardBehavior extends CoordinatorLayout.Behavior<QuestionCar
         ReviewActivity reviewActivity = (ReviewActivity) context;
         reviewActivity.showAnswer();
     }
+
+    /*
+    @Override
+    public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+        // Log.v(TAG, "onScrollChange scrollY: " + scrollY + " targetScrollY: " + m_targetScrollY);
+        int targetScrollY = v.getChildAt(0).getMeasuredHeight() - v.getMeasuredHeight();
+        if( scrollY == targetScrollY ) {
+            stopScroll(v.getContext());
+        }
+    }
+    */
 
 
     private boolean m_initialLayoutDone = false;
