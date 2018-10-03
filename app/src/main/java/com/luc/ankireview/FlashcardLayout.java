@@ -82,13 +82,11 @@ public class FlashcardLayout extends FrameLayout  implements View.OnTouchListene
         m_questionSpringAnimation = new SpringAnimation(m_questionCard, DynamicAnimation.TRANSLATION_Y, questionTargetY);
         m_answerSpringAnimation = new SpringAnimation(m_answerCard, DynamicAnimation.TRANSLATION_Y, answerTargetY);
 
-        /*
-        m_questionSpringAnimation .getSpring().setDampingRatio(SpringForce.DAMPING_RATIO_HIGH_BOUNCY);
-        m_answerSpringAnimation .getSpring().setDampingRatio(SpringForce.DAMPING_RATIO_MEDIUM_BOUNCY);
+        //m_questionSpringAnimation .getSpring().setDampingRatio(SpringForce.DAMPING_RATIO_HIGH_BOUNCY);
+        //m_answerSpringAnimation .getSpring().setDampingRatio(SpringForce.DAMPING_RATIO_MEDIUM_BOUNCY);
 
-        m_questionSpringAnimation.getSpring().setStiffness(SpringForce.STIFFNESS_LOW);
-        m_answerSpringAnimation.getSpring().setStiffness(SpringForce.STIFFNESS_LOW);
-        */
+        // m_questionSpringAnimation.getSpring().setStiffness(SpringForce.STIFFNESS_LOW);
+        // m_answerSpringAnimation.getSpring().setStiffness(SpringForce.STIFFNESS_LOW);
 
 
         m_questionSpringAnimation.addEndListener(new DynamicAnimation.OnAnimationEndListener() {
