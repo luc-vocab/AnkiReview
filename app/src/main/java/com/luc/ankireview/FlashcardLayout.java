@@ -3,6 +3,7 @@ package com.luc.ankireview;
 import android.content.Context;
 import android.support.animation.DynamicAnimation;
 import android.support.animation.SpringAnimation;
+import android.support.animation.SpringForce;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.view.GestureDetectorCompat;
 import android.util.AttributeSet;
@@ -11,6 +12,7 @@ import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.VelocityTracker;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
@@ -70,10 +72,21 @@ public class FlashcardLayout extends FrameLayout  implements View.OnTouchListene
 
     }
 
-    public void setSpringAnimation(int questionTargetY, int answerTargetY) {
+    public void setSpringAnimation(int originalQuestionY, int questionTargetY, int answerTargetY) {
+
+        m_questionOriginalY = originalQuestionY;
+        m_questionRestingY = questionTargetY;
 
         m_questionSpringAnimation = new SpringAnimation(m_questionCard, DynamicAnimation.TRANSLATION_Y, questionTargetY);
         m_answerSpringAnimation = new SpringAnimation(m_answerCard, DynamicAnimation.TRANSLATION_Y, answerTargetY);
+
+        /*
+        m_questionSpringAnimation .getSpring().setDampingRatio(SpringForce.DAMPING_RATIO_HIGH_BOUNCY);
+        m_answerSpringAnimation .getSpring().setDampingRatio(SpringForce.DAMPING_RATIO_MEDIUM_BOUNCY);
+
+        m_questionSpringAnimation.getSpring().setStiffness(SpringForce.STIFFNESS_LOW);
+        m_answerSpringAnimation.getSpring().setStiffness(SpringForce.STIFFNESS_LOW);
+        */
 
 
         m_questionSpringAnimation.addEndListener(new DynamicAnimation.OnAnimationEndListener() {
@@ -152,6 +165,24 @@ public class FlashcardLayout extends FrameLayout  implements View.OnTouchListene
         // move answer card by this much
         float originalAnswerY = m_answerCard.getY();
         m_answerCard.setY(originalAnswerY + dy);
+
+        // do we need to move question card ?
+        ViewGroup.MarginLayoutParams questionMarginParams = (ViewGroup.MarginLayoutParams) m_questionCard.getLayoutParams();
+        ViewGroup.MarginLayoutParams answerMarginParams = (ViewGroup.MarginLayoutParams) m_answerCard.getLayoutParams();
+
+        float diff = (m_answerCard.getY() - answerMarginParams.topMargin) - (m_questionCard.getY() + m_questionCard.getHeight() + questionMarginParams.bottomMargin);
+
+        if (diff < 0.0) {
+            // answer card is overlapping with question card
+            float originalQuestionY = m_questionCard.getY();
+            m_questionCard.setY(originalQuestionY + diff);
+        } else {
+            float originalQuestionY = m_questionCard.getY();
+            if( originalQuestionY <= m_questionOriginalY) {
+                m_questionCard.setY(originalQuestionY + diff);
+            }
+        }
+
     }
 
     public void startSpringAnimations() {
@@ -185,6 +216,10 @@ public class FlashcardLayout extends FrameLayout  implements View.OnTouchListene
 
     boolean m_questionAnimationDone = false;
     boolean m_answerAnimationDone = false;
+
+    // animation data
+    int m_questionOriginalY; // Y position of question before answer is shown( centered)
+    int m_questionRestingY; // resting Y position of question after animation (centered when taking into account combined height of question+answer)
 
     // track velocity of pointer
     private VelocityTracker m_velocityTracker;

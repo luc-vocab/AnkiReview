@@ -62,7 +62,7 @@ public class QuestionCardBehavior extends CoordinatorLayout.Behavior<QuestionCar
             int answerTargetY = questionTargetY + child.getHeight() + questionMarginParams.bottomMargin + answerMarginParams.topMargin;
 
             FlashcardLayout flashcardLayout = (FlashcardLayout) parent.getParent();
-            flashcardLayout.setSpringAnimation(questionTargetY, answerTargetY);
+            flashcardLayout.setSpringAnimation(yPosition, questionTargetY, answerTargetY);
 
             m_initialLayoutDone = true;
 
