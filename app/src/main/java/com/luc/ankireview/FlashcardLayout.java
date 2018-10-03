@@ -9,11 +9,12 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
+import android.view.VelocityTracker;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
-public class FlashcardLayout extends CoordinatorLayout {
+public class FlashcardLayout extends FrameLayout  implements View.OnTouchListener{
     private static final String TAG = "FlashcardLayout";
 
     public FlashcardLayout(Context context) {
@@ -40,37 +41,6 @@ public class FlashcardLayout extends CoordinatorLayout {
         init(context);
     }
 
-    class FlingGestureDetector extends GestureDetector.SimpleOnGestureListener {
-
-        @Override
-        public boolean onDown(MotionEvent event) {
-            // need to return true to indicate interest in the event, otherwise the
-            // remaining events won't be sent to us
-
-            Log.v(TAG, "FlingGestureDetector.onDown");
-
-            return true;
-        }
-
-        @Override
-        public boolean onSingleTapConfirmed(MotionEvent e)
-        {
-            startSpringAnimations();
-            return true; // consume single tap event
-        }
-
-    }
-
-    private View.OnTouchListener m_gestureListener = new View.OnTouchListener() {
-        @Override
-        public boolean onTouch(View v, MotionEvent event) {
-            // run through gesture detector
-            if (m_detector.onTouchEvent(event)) {
-                return true;
-            }
-            return false;
-        }
-    };
 
     private void init(Context context) {
         inflate(context, R.layout.flashcard, this);
@@ -78,8 +48,9 @@ public class FlashcardLayout extends CoordinatorLayout {
         FrameLayout touchLayer = findViewById(R.id.flashcard_touch_layer);
 
         // set touch listener
-        m_detector = new GestureDetectorCompat(context, new FlashcardLayout.FlingGestureDetector());
-        touchLayer.setOnTouchListener(m_gestureListener);
+        // m_detector = new GestureDetectorCompat(context, new FlashcardLayout.FlingGestureDetector());
+        // touchLayer.setOnTouchListener(this);
+        touchLayer.setOnTouchListener(this);
 
 
         m_questionCard = findViewById(R.id.question_card);
@@ -120,6 +91,69 @@ public class FlashcardLayout extends CoordinatorLayout {
 
     }
 
+    @Override
+    public boolean onTouch(View v, MotionEvent event) {
+        // Log.v(TAG, "onTouch");
+
+        int index = event.getActionIndex();
+        int action = event.getActionMasked();
+        int pointerId = event.getPointerId(index);
+
+        switch(action) {
+            case MotionEvent.ACTION_DOWN:
+                if(m_velocityTracker == null) {
+                    // Retrieve a new VelocityTracker object to watch the
+                    // velocity of a motion.
+                    m_velocityTracker = VelocityTracker.obtain();
+                }
+                else {
+                    // Reset the velocity tracker back to its initial state.
+                    m_velocityTracker.clear();
+                }
+                // Add  movement to the tracker.
+                m_velocityTracker.addMovement(event);
+
+                m_lastPointerY = event.getY();
+                break;
+            case MotionEvent.ACTION_MOVE:
+                m_velocityTracker.addMovement(event);
+                // When you want to determine the velocity, call
+                // computeCurrentVelocity(). Then call getXVelocity()
+                // and getYVelocity() to retrieve the velocity for each pointer ID.
+                m_velocityTracker.computeCurrentVelocity(1000);
+                // Log velocity of pixels per second
+                // Best practice to use VelocityTrackerCompat where possible.
+                // Log.d(&#34;&#34;, &#34;X velocity: &#34; + mVelocityTracker.getXVelocity(pointerId));
+                // Log.d(&#34;&#34;, &#34;Y velocity: &#34; + mVelocityTracker.getYVelocity(pointerId));
+
+                float dy = event.getY() - m_lastPointerY;
+                dragAnswerCard(dy);
+                m_lastPointerY = event.getY();
+
+
+                break;
+            case MotionEvent.ACTION_UP:
+            case MotionEvent.ACTION_CANCEL:
+                // Return a VelocityTracker object back to be re-used by others.
+                m_velocityTracker.recycle();
+                m_velocityTracker = null;
+
+                startSpringAnimations();
+
+                break;
+        }
+
+
+
+        return true;
+    }
+
+    public void dragAnswerCard(float dy) {
+        // move answer card by this much
+        float originalAnswerY = m_answerCard.getY();
+        m_answerCard.setY(originalAnswerY + dy);
+    }
+
     public void startSpringAnimations() {
         m_questionSpringAnimation.start();
         m_answerSpringAnimation.start();
@@ -152,8 +186,9 @@ public class FlashcardLayout extends CoordinatorLayout {
     boolean m_questionAnimationDone = false;
     boolean m_answerAnimationDone = false;
 
-    // gesture detection
-    private GestureDetectorCompat m_detector;
+    // track velocity of pointer
+    private VelocityTracker m_velocityTracker;
+    private float m_lastPointerY;
 
     // link back
     ReviewActivity m_reviewActivity;
