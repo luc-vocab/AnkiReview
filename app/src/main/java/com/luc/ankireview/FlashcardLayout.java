@@ -1,6 +1,8 @@
 package com.luc.ankireview;
 
 import android.content.Context;
+import android.support.animation.DynamicAnimation;
+import android.support.animation.SpringAnimation;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.view.GestureDetectorCompat;
 import android.util.AttributeSet;
@@ -50,6 +52,12 @@ public class FlashcardLayout extends CoordinatorLayout {
             return true;
         }
 
+        @Override
+        public boolean onSingleTapConfirmed(MotionEvent e)
+        {
+            startSpringAnimations();
+            return true; // consume single tap event
+        }
 
     }
 
@@ -73,6 +81,10 @@ public class FlashcardLayout extends CoordinatorLayout {
         m_detector = new GestureDetectorCompat(context, new FlashcardLayout.FlingGestureDetector());
         touchLayer.setOnTouchListener(m_gestureListener);
 
+
+        m_questionCard = findViewById(R.id.question_card);
+        m_answerCard = findViewById(R.id.answer_card);
+
     }
 
     public void setCard(Card card) {
@@ -84,6 +96,25 @@ public class FlashcardLayout extends CoordinatorLayout {
         answerText.setText(card.getAnswerSimple());
 
     }
+
+    public void setSpringAnimation(int questionTargetY, int answerTargetY) {
+
+        m_questionSpringAnimation = new SpringAnimation(m_questionCard, DynamicAnimation.TRANSLATION_Y, questionTargetY);
+        m_answerSpringAnimation = new SpringAnimation(m_answerCard, DynamicAnimation.TRANSLATION_Y, answerTargetY);
+
+    }
+
+    public void startSpringAnimations() {
+        m_questionSpringAnimation.start();
+        m_answerSpringAnimation.start();
+    }
+
+    // question and answer cards
+    QuestionCard m_questionCard;
+    AnswerCard m_answerCard;
+
+    SpringAnimation m_questionSpringAnimation;
+    SpringAnimation m_answerSpringAnimation;
 
     // gesture detection
     private GestureDetectorCompat m_detector;

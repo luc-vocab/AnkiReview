@@ -29,64 +29,27 @@
                 android:textSize="40dp" />
         </com.luc.ankireview.QuestionCard>
 
-
-        <android.support.v4.widget.NestedScrollView
-            android:id="@+id/inner_scrollview"
+        <com.luc.ankireview.AnswerCard
+            android:id="@+id/answer_card"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            app:cardCornerRadius="5dp"
             >
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <FrameLayout
-                    android:id="@+id/answer_top_spacer"
+                <TextView
+                    android:id="@+id/answer_text"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:paddingBottom="30dp"
+                    android:paddingTop="20dp"
+                    android:text="answer"
+                    android:textColor="@android:color/holo_blue_dark"
+                    android:textSize="40dp" />
 
-                </FrameLayout>
-
-                <com.luc.ankireview.AnswerCard
-                    android:id="@+id/answer_card"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="40dp"
-                    android:layout_marginRight="40dp"
-                    app:cardCornerRadius="5dp"
-
-                    >
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/answer_text"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:paddingBottom="30dp"
-                            android:paddingTop="20dp"
-                            android:text="answer"
-                            android:textColor="@android:color/holo_blue_dark"
-                            android:textSize="40dp" />
-
-                    </LinearLayout>
-                </com.luc.ankireview.AnswerCard>
-
-                <FrameLayout
-                    android:id="@+id/answer_bottom_spacer"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                </FrameLayout>
-
-            </LinearLayout>
-
-        </android.support.v4.widget.NestedScrollView>
+        </com.luc.ankireview.AnswerCard>
 
     <FrameLayout
         android:id="@+id/flashcard_touch_layer"

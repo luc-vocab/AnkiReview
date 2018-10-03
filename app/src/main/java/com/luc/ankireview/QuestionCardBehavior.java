@@ -23,7 +23,7 @@ public class QuestionCardBehavior extends CoordinatorLayout.Behavior<QuestionCar
     @Override
     public boolean layoutDependsOn(CoordinatorLayout parent, QuestionCard child, View dependency) {
         Log.v(TAG, "layoutDependsOn " + dependency.getClass().toString());
-        if( dependency.getId() == R.id.inner_scrollview) {
+        if( dependency.getId() == R.id.answer_card) {
             return true;
         }
         return false;
@@ -36,44 +36,33 @@ public class QuestionCardBehavior extends CoordinatorLayout.Behavior<QuestionCar
         parent.onLayoutChild(child, layoutDirection);
 
         if( ! m_initialLayoutDone) {
+
             // center the question vertically
 
             int totalWindowHeight = parent.getHeight();
-            int questionHeight = child.getHeight();
 
+            int questionHeight = child.getHeight();
             int yPosition = totalWindowHeight/2 - questionHeight/2;
 
             Log.v(TAG,"onLayoutChild, setting Y position to " + yPosition + " totalHeight: " + totalWindowHeight);
             child.setY(yPosition);
 
-            // place the answer just below the screen threshold
-            FrameLayout topSpacer = (FrameLayout) parent.findViewById(R.id.answer_top_spacer);
+            // position the answer card outside of the screen
 
-            //LinearLayout.LayoutParams
-            LinearLayout.LayoutParams topSpacerLayoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, totalWindowHeight);
-            //topSpacer.setMinimumHeight(totalWindowHeight);
-            topSpacer.setLayoutParams(topSpacerLayoutParams);
+            AnswerCard answerCard = parent.findViewById(R.id.answer_card);
+            answerCard.setY(totalWindowHeight);
 
-            // calculate how much the answer can scroll up
-            AnswerCard answer = parent.findViewById(R.id.answer_card);
-            int answerHeight = answer.getHeight();
+            // calculate ending position after spring animation
 
-            // get margins
             ViewGroup.MarginLayoutParams questionMarginParams = (ViewGroup.MarginLayoutParams) child.getLayoutParams();
-            ViewGroup.MarginLayoutParams answerMarginParams = (ViewGroup.MarginLayoutParams) answer.getLayoutParams();
+            ViewGroup.MarginLayoutParams answerMarginParams = (ViewGroup.MarginLayoutParams) answerCard.getLayoutParams();
 
-            int combinedHeight = questionHeight + questionMarginParams.bottomMargin + answerMarginParams.topMargin + answerHeight;
-            int bottomSpacerHeight = totalWindowHeight / 2 - combinedHeight / 2;
+            int combinedHeight = (int)( child.getHeight() + questionMarginParams.bottomMargin + answerMarginParams.topMargin + answerCard.getHeight());
+            int questionTargetY = totalWindowHeight/2 - combinedHeight/2;
+            int answerTargetY = questionTargetY + child.getHeight() + questionMarginParams.bottomMargin + answerMarginParams.topMargin;
 
-
-            FrameLayout bottomSpacer = (FrameLayout) parent.findViewById(R.id.answer_bottom_spacer);
-            LinearLayout.LayoutParams bottomSpacerLayoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, bottomSpacerHeight);
-            bottomSpacer.setLayoutParams(bottomSpacerLayoutParams);
-
-
-            // subscribe to scrollview events
-            NestedScrollView nestedScrollView = parent.findViewById(R.id.inner_scrollview);
-            //nestedScrollView.setOnScrollChangeListener(this);
+            FlashcardLayout flashcardLayout = (FlashcardLayout) parent.getParent();
+            flashcardLayout.setSpringAnimation(questionTargetY, answerTargetY);
 
             m_initialLayoutDone = true;
 
@@ -90,114 +79,7 @@ public class QuestionCardBehavior extends CoordinatorLayout.Behavior<QuestionCar
     }
 
 
-    @Override
-    public boolean onStartNestedScroll (CoordinatorLayout coordinatorLayout,
-                                        QuestionCard child,
-                                        View directTargetChild,
-                                        View target,
-                                        int axes,
-                                        int type) {
-
-        // Log.v(TAG, "onStartNestedScroll ");
-
-        // start listening to NestedScrollEvents
-
-        return true;
-
-    }
-
-    @Override
-    public boolean onNestedPreFling (CoordinatorLayout coordinatorLayout,
-                                     QuestionCard child,
-                              View target,
-                              float velocityX,
-                              float velocityY) {
-        // Log.v(TAG, "onNestedPreFling velocityY: " + velocityY);
-
-        if( ! m_acceptTouchEvents ) {
-            // consume the fling
-            return true;
-        }
-
-        return false;
-    }
-
-
-    @Override
-    public void onNestedPreScroll (CoordinatorLayout coordinatorLayout,
-                                   QuestionCard child,
-                                   View target,
-                                   int dx,
-                                   int dy,
-                                   int[] consumed,
-                                   int type) {
-        // Log.v(TAG, "onNestedPreScroll ");
-
-        if( ! m_acceptTouchEvents ) {
-            // consume the scroll
-            consumed[1] = dy;
-        }
-    }
-
-    @Override
-    public void onNestedScroll (CoordinatorLayout coordinatorLayout,
-                                QuestionCard child,
-                                 View target,
-                                 int dxConsumed,
-                                 int dyConsumed,
-                                 int dxUnconsumed,
-                                 int dyUnconsumed,
-                                 int type) {
-        // Log.v(TAG, "onNestedScroll");
-
-        // see if question and answer overlap
-
-        int questionLocation[] = new int[2];
-        int answerLocation[] = new int[2];
-        child.getLocationOnScreen(questionLocation);
-        View answer = target.findViewById(R.id.answer_card);
-        answer.getLocationOnScreen(answerLocation);
-
-        // get margins
-        ViewGroup.MarginLayoutParams questionMarginParams = (ViewGroup.MarginLayoutParams) child.getLayoutParams();
-        ViewGroup.MarginLayoutParams answerMarginParams = (ViewGroup.MarginLayoutParams) answer.getLayoutParams();
-
-        int questionBottom = questionLocation[1] + child.getHeight() + questionMarginParams.bottomMargin;
-        int answerTop = answerLocation[1] - answerMarginParams.topMargin;
-
-        int diff = answerTop - questionBottom;
-
-        if( diff < 0) {
-            // adjust question Y by diff
-            float originalY = child.getY();
-            float newY = originalY + diff;
-            child.setY(newY);
-
-        }
-
-    }
-
-    public void stopScroll(Context context) {
-        m_acceptTouchEvents = false;
-
-        ReviewActivity reviewActivity = (ReviewActivity) context;
-        reviewActivity.showAnswer();
-    }
-
-    /*
-    @Override
-    public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-        // Log.v(TAG, "onScrollChange scrollY: " + scrollY + " targetScrollY: " + m_targetScrollY);
-        int targetScrollY = v.getChildAt(0).getMeasuredHeight() - v.getMeasuredHeight();
-        if( scrollY == targetScrollY ) {
-            stopScroll(v.getContext());
-        }
-    }
-    */
-
-
     private boolean m_initialLayoutDone = false;
-    private boolean m_acceptTouchEvents = true;
 
 
 }
