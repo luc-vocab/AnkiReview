@@ -25,6 +25,8 @@
                 android:gravity="center"
                 android:paddingBottom="30dp"
                 android:paddingTop="20dp"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
                 android:text="question"
                 android:textSize="40dp" />
         </com.luc.ankireview.QuestionCard>
@@ -45,8 +47,9 @@
                     android:gravity="center"
                     android:paddingBottom="30dp"
                     android:paddingTop="20dp"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="15dp"
                     android:text="answer"
-                    android:textColor="@android:color/holo_blue_dark"
                     android:textSize="40dp" />
 
         </com.luc.ankireview.AnswerCard>

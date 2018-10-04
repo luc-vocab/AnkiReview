@@ -6,6 +6,9 @@
     <color name="colorProgressBackground">#e0e0e0</color>
     <color name="toolbarTextColor">#E0E0E0</color>
 
+    <!-- text colors -->
+
+
     <!-- answer colors -->
     <color name="answer_wrong">#EC407A</color>
     <color name="answer_hard">#BA68C8</color>
