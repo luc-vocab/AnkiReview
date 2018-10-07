@@ -65,13 +65,8 @@ public class FlashcardLayout extends FrameLayout  implements View.OnTouchListene
     }
 
     public void setCard(Card card) {
-
-        TextView questionText = this.findViewById(R.id.question_text);
-        TextView answerText = this.findViewById(R.id.answer_text);
-
-        questionText.setText(card.getQuestionSimple());
-        answerText.setText(card.getAnswerSimple());
-
+        CardStyle cardStyle = m_reviewActivity.getCardStyle();
+        cardStyle.renderCard(card, this, m_reviewActivity);
     }
 
     public void setSpringAnimation(int originalQuestionY, int questionTargetY, int answerTargetY) {

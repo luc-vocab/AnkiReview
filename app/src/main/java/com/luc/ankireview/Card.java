@@ -4,6 +4,7 @@ import android.content.res.Resources;
 import android.util.Log;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Objects;
 import java.util.Vector;
 import java.util.regex.Matcher;
@@ -15,19 +16,29 @@ public class Card {
     private static final String TAG = "Card";
 
 
-    public Card(long noteId, int cardOrd, String question, String answer, String questionSimple, String answerSimple, int buttonCount, Vector<String> nextReviewTimes) {
+    public Card(long noteId, int cardOrd, long modelId, HashMap<String,String> fieldMap, int buttonCount, Vector<String> nextReviewTimes) {
         m_noteId = noteId;
         m_cardOrd = cardOrd;
-        m_question = question;
+        m_modelId = modelId;
+        m_fieldMap = fieldMap;
         m_buttonCount = buttonCount;
-
-        // does the answer content have a sound ?
-        m_answer = filterSound(answer);
 
         m_nextReviewTimes = nextReviewTimes;
 
-        m_questionSimple = questionSimple;
-        m_answerSimple = answerSimple;
+    }
+
+    public String extractSoundFile( String content ) {
+        String result = "";
+
+        Matcher matcher = s_soundPattern.matcher(content);
+        // While there is matches of the pattern for sound markers
+        while (matcher.find()) {
+            String sound = matcher.group(1);
+            Log.v(TAG, "sound: " + sound);
+            result = sound;
+        }
+
+        return result;
     }
 
     private String filterSound( String content ) {
@@ -44,23 +55,6 @@ public class Card {
         return content;
     }
 
-    public String getQuestion() {
-        return m_question;
-    }
-
-    public String getAnswer() {
-        return m_answer;
-    }
-
-    public String getQuestionSimple() { return m_questionSimple; }
-
-    public String getAnswerSimple() { return m_answerSimple; }
-
-    public String getAnswerAudio()
-    {
-        return m_answerSound;
-    }
-
     public int getButtonCount()
     {
         return m_buttonCount;
@@ -74,6 +68,7 @@ public class Card {
         return m_cardOrd;
     }
 
+    public String getFieldValue(String fieldName) { return m_fieldMap.get(fieldName); }
 
     public AnkiUtils.Ease getEaseBad() {
         return AnkiUtils.Ease.EASE_1;
@@ -185,11 +180,9 @@ public class Card {
 
     private long m_noteId;
     private int m_cardOrd;
-    private String m_question;
-    private String m_answer;
+    private long m_modelId;
 
-    private String m_questionSimple;
-    private String m_answerSimple;
+    HashMap<String,String> m_fieldMap;
 
     private String m_answerSound;
     private int m_buttonCount;

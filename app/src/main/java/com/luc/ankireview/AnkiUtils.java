@@ -12,6 +12,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.HashMap;
 import java.util.Vector;
 
 public class AnkiUtils {
@@ -205,8 +206,8 @@ public class AnkiUtils {
                 // retrieve note information
                 // -------------------------
 
-                String questionSimple = null;
-                String answerSimple = null;
+                String[] fieldValues = {};
+                long modelId = 0;
 
                 Uri noteInfoUri = Uri.withAppendedPath(FlashCardsContract.Note.CONTENT_URI, Long.toString(noteId));
                 final Cursor noteCursor = contentResolver.query(noteInfoUri,
@@ -217,17 +218,44 @@ public class AnkiUtils {
                 );
 
                 if(noteCursor.moveToFirst()) {
+                    modelId = noteCursor.getLong(noteCursor.getColumnIndex(FlashCardsContract.Note.MID));
+
                     String fields = noteCursor.getString(noteCursor.getColumnIndex(FlashCardsContract.Note.FLDS));
                     Log.v(TAG, "fields: " + fields);
 
-                    String[] fieldArray = fields.split("\\x1f");
-
-                    questionSimple = fieldArray[0];
-                    answerSimple = fieldArray[1] + " " + fieldArray[2];
+                    fieldValues = fields.split("\\x1f");
 
                 }
 
-                Card card = new Card(noteId, cardOrd, question, answer, questionSimple, answerSimple, buttonCount, nextReviewTimes);
+                // retrieve model information
+                // --------------------------
+
+                String[] fieldNames = {};
+
+                Uri modelUri = Uri.withAppendedPath(FlashCardsContract.Model.CONTENT_URI, Long.toString(modelId));
+                final Cursor modelCursor = contentResolver.query(modelUri,
+                        null,  // projection
+                        null,  // selection is ignored for this URI
+                        null,  // selectionArgs is ignored for this URI
+                        null   // sortOrder is ignored for this URI
+                );
+
+                if ( modelCursor.moveToFirst() ) {
+                    String fieldNamesStr = modelCursor.getString(modelCursor.getColumnIndex(FlashCardsContract.Model.FIELD_NAMES));
+                    fieldNames = fieldNamesStr.split("\\x1f");
+                }
+
+
+                // create field name/value map
+                HashMap<String,String> fieldMap = new HashMap<String,String>();
+                for(int i = 0; i < fieldNames.length; i++) {
+                    String fieldName = fieldNames[i];
+                    String fieldValue = fieldValues[i];
+
+                    fieldMap.put(fieldName, fieldValue);
+                }
+
+                Card card = new Card(noteId, cardOrd, modelId, fieldMap, buttonCount, nextReviewTimes);
                 cardList.add(card);
 
             } while (cur.moveToNext());

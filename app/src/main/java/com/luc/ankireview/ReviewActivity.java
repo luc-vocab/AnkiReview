@@ -222,6 +222,9 @@ public class ReviewActivity extends AppCompatActivity {
         ab.setTitle(deckName);
 
         getSupportActionBar().setElevation(0);
+
+        m_cardStyle = new CardStyle();
+
         loadCards();
     }
 
@@ -320,13 +323,14 @@ public class ReviewActivity extends AppCompatActivity {
     }
 
     private void showQuestion() {
+        m_answerAudio = false;
+        prepareAnswerAudio(m_cardStyle.getAnswerAudio(m_currentCard));
+
         if(m_isFirstCard)
         {
             loadFirstQuestion();
             m_isFirstCard = false;
         }
-
-        prepareAnswerAudio();
 
         m_cardReviewStartTime = System.currentTimeMillis();
         m_showingQuestion = true;
@@ -346,17 +350,17 @@ public class ReviewActivity extends AppCompatActivity {
         m_flashcardPager.enableSwipe();
     }
 
-    private void prepareAnswerAudio() {
-        if( m_currentCard.getAnswerAudio() != null)
-        {
-            Uri uri = Uri.parse(m_baseUrl + m_currentCard.getAnswerAudio());
-            try {
-                m_mediaPlayer.reset();
-                m_mediaPlayer.setDataSource(getApplicationContext(), uri);
-                m_mediaPlayer.prepare();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+    private void prepareAnswerAudio(String audioFile) {
+
+        Uri uri = Uri.parse(m_baseUrl + audioFile);
+        try {
+            m_mediaPlayer.reset();
+            m_mediaPlayer.setDataSource(getApplicationContext(), uri);
+            m_mediaPlayer.prepare();
+
+            m_answerAudio = true;
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
@@ -371,7 +375,7 @@ public class ReviewActivity extends AppCompatActivity {
 
     private void playAnswerAudio()
     {
-        if( m_currentCard.getAnswerAudio() != null && ! m_showingQuestion) {
+        if( m_answerAudio && ! m_showingQuestion) {
             m_mediaPlayer.start();
         }
     }
@@ -507,6 +511,11 @@ public class ReviewActivity extends AppCompatActivity {
 
     private Card m_currentCard;
     private Card m_nextCard;
+
+    private boolean m_answerAudio = false;
+
+    private CardStyle m_cardStyle;
+    public CardStyle getCardStyle() { return m_cardStyle; }
 
     // layout elements
     private FrameLayout m_frame;
