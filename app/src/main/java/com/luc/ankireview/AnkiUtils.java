@@ -249,8 +249,11 @@ public class AnkiUtils {
                 // create field name/value map
                 HashMap<String,String> fieldMap = new HashMap<String,String>();
                 for(int i = 0; i < fieldNames.length; i++) {
-                    String fieldName = fieldNames[i];
-                    String fieldValue = fieldValues[i];
+                    String fieldName = fieldName = fieldNames[i];
+                    String fieldValue = "";
+                    if (i < fieldValues.length ) {
+                        fieldValue = fieldValues[i];
+                    }
 
                     fieldMap.put(fieldName, fieldValue);
                 }
