@@ -30,6 +30,7 @@ public class CardStyle {
             int questionColor = ContextCompat.getColor(layout.getContext(), R.color.text_question);
             int romanizationColor = ContextCompat.getColor(layout.getContext(), R.color.text_romanization);
             int chineseColor = ContextCompat.getColor(layout.getContext(), R.color.text_chinese);
+            int cantoneseColor = ContextCompat.getColor(layout.getContext(), R.color.text_cantonese);
 
             // question fields
             String englishText = card.getFieldValue("English");
@@ -43,13 +44,31 @@ public class CardStyle {
             answerBuilder.append(romanization);
             answerBuilder.setSpan(new ForegroundColorSpan(romanizationColor),0, romanization.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
             answerBuilder.append(chinese);
-            answerBuilder.setSpan(new ForegroundColorSpan(chineseColor),romanization.length(), romanization.length() + chinese.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            answerBuilder.setSpan(new ForegroundColorSpan(cantoneseColor),romanization.length(), romanization.length() + chinese.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 
         }
 
-        if( card.getModelId() == 1423381647288l && card.getCardOrd() == 0) {
+        if( (card.getModelId() == 1423381647288l || card.getModelId() == 1423381647288l) && card.getCardOrd() == 0) {
             // Hanzi
 
+            int questionColor = ContextCompat.getColor(layout.getContext(), R.color.text_question);
+            int romanizationColor = ContextCompat.getColor(layout.getContext(), R.color.text_romanization);
+            int chineseColor = ContextCompat.getColor(layout.getContext(), R.color.text_chinese);
+            int cantoneseColor = ContextCompat.getColor(layout.getContext(), R.color.text_cantonese);
+
+            String character = card.getFieldValue("Character");
+            String pinyin = card.getFieldValue("Pinyin");
+            String cantonese = card.getFieldValue("Cantonese");
+
+            questionBuilder.append(character);
+            questionBuilder.setSpan(new ForegroundColorSpan(questionColor),0, character.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            questionBuilder.setSpan(new RelativeSizeSpan(3.0f),0, character.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+            answerBuilder.append(pinyin);
+            answerBuilder.setSpan(new ForegroundColorSpan(romanizationColor),0, pinyin.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            answerBuilder.append(" ");
+            answerBuilder.append(cantonese);
+            answerBuilder.setSpan(new ForegroundColorSpan(cantoneseColor), pinyin.length() + 1, 1 + pinyin.length() + cantonese.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 
         }
 
