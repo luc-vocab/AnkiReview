@@ -20,11 +20,11 @@ public class CardStyle {
         TextView questionText = layout.findViewById(R.id.question_text);
         TextView answerText = layout.findViewById(R.id.answer_text);
 
-        // Log.v(TAG, "modelId: " + card.getModelId());
+        Log.v(TAG, "modelId: " + card.getModelId());
         SpannableStringBuilder questionBuilder = new SpannableStringBuilder();
         SpannableStringBuilder answerBuilder = new SpannableStringBuilder();
 
-        if( card.getModelId() == 1354424015761l && card.getCardOrd() == 0) {
+        if( (card.getModelId() == 1354424015761l || card.getModelId() == 1354424015760l) && card.getCardOrd() == 0) {
             // Chinese Words
 
             int questionColor = ContextCompat.getColor(layout.getContext(), R.color.text_question);

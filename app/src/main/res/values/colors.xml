@@ -9,7 +9,7 @@
     <!-- text colors -->
     <color name="text_question">#1E88E5</color>
     <color name="text_romanization">#E91E63</color>
-    <color name="text_chinese">#FF8A65</color>
+    <color name="text_chinese">#9E9E9E</color>
 
     <!-- answer colors -->
     <color name="answer_wrong">#EC407A</color>
