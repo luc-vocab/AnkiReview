@@ -16,10 +16,11 @@ public class Card {
     private static final String TAG = "Card";
 
 
-    public Card(long noteId, int cardOrd, long modelId, HashMap<String,String> fieldMap, int buttonCount, Vector<String> nextReviewTimes) {
+    public Card(long noteId, int cardOrd, long modelId, String cardTemplateName, HashMap<String,String> fieldMap, int buttonCount, Vector<String> nextReviewTimes) {
         m_noteId = noteId;
         m_cardOrd = cardOrd;
         m_modelId = modelId;
+        m_cardTemplateName = cardTemplateName;
         m_fieldMap = fieldMap;
         m_buttonCount = buttonCount;
 
@@ -64,9 +65,13 @@ public class Card {
         return m_noteId;
     }
 
+    public long getModelId() { return m_modelId; }
+
     public int getCardOrd() {
         return m_cardOrd;
     }
+
+    public String getCardTemplateName() { return m_cardTemplateName; }
 
     public String getFieldValue(String fieldName) { return m_fieldMap.get(fieldName); }
 
@@ -181,6 +186,7 @@ public class Card {
     private long m_noteId;
     private int m_cardOrd;
     private long m_modelId;
+    private String m_cardTemplateName;
 
     HashMap<String,String> m_fieldMap;
 

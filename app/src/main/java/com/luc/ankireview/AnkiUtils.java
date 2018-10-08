@@ -245,7 +245,6 @@ public class AnkiUtils {
                     fieldNames = fieldNamesStr.split("\\x1f");
                 }
 
-
                 // create field name/value map
                 HashMap<String,String> fieldMap = new HashMap<String,String>();
                 for(int i = 0; i < fieldNames.length; i++) {
@@ -258,7 +257,26 @@ public class AnkiUtils {
                     fieldMap.put(fieldName, fieldValue);
                 }
 
-                Card card = new Card(noteId, cardOrd, modelId, fieldMap, buttonCount, nextReviewTimes);
+                // retrieve card template information
+                // ----------------------------------
+                String cardTemplateName = "";
+
+                Uri uri1 = Uri.withAppendedPath(FlashCardsContract.Model.CONTENT_URI, Long.toString(modelId));
+                Uri uri2 = Uri.withAppendedPath(uri1 , "templates");
+                Uri cardTemplateUri = Uri.withAppendedPath(uri2 , Integer.toString(cardOrd));
+                final Cursor cardTemplateCursor = contentResolver.query(cardTemplateUri,
+                        null,  // projection
+                        null,  // selection is ignored for this URI
+                        null,  // selectionArgs is ignored for this URI
+                        null   // sortOrder is ignored for this URI
+                );
+
+                if ( cardTemplateCursor.moveToFirst() ) {
+                    cardTemplateName = cardTemplateCursor.getString(cardTemplateCursor.getColumnIndex(FlashCardsContract.CardTemplate.NAME));
+                    // Log.v(TAG, "card template name: " + cardTemplateName);
+                }
+
+                Card card = new Card(noteId, cardOrd, modelId, cardTemplateName, fieldMap, buttonCount, nextReviewTimes);
                 cardList.add(card);
 
             } while (cur.moveToNext());
