@@ -90,12 +90,12 @@ public class CardStyle {
                                   2 + pinyin.length() + cantonese.length() + convertedDefinition.length(),
                                   Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
             answerBuilder.setSpan(new AlignmentSpan.Standard(Layout.Alignment.ALIGN_NORMAL),
-                    1 + pinyin.length() + cantonese.length(),
-                    1 + pinyin.length() + cantonese.length() + convertedDefinition.length(),
+                    2 + pinyin.length() + cantonese.length(),
+                    2 + pinyin.length() + cantonese.length() + convertedDefinition.length(),
                     Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-            answerBuilder.setSpan(new LeadingMarginSpan.Standard(250),
-                    1 + pinyin.length() + cantonese.length(),
-                    1 + pinyin.length() + cantonese.length() + convertedDefinition.length(),
+            answerBuilder.setSpan(new LeadingMarginSpan.Standard(120),
+                    2 + pinyin.length() + cantonese.length(),
+                    2 + pinyin.length() + cantonese.length() + convertedDefinition.length(),
                     Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         }
 
