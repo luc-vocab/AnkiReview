@@ -43,8 +43,9 @@ public class CardStyle {
 
             answerBuilder.append(romanization);
             answerBuilder.setSpan(new ForegroundColorSpan(romanizationColor),0, romanization.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            answerBuilder.append(" ");
             answerBuilder.append(chinese);
-            answerBuilder.setSpan(new ForegroundColorSpan(cantoneseColor),romanization.length(), romanization.length() + chinese.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            answerBuilder.setSpan(new ForegroundColorSpan(cantoneseColor),romanization.length() + 1, romanization.length() + chinese.length() + 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 
         }
 
