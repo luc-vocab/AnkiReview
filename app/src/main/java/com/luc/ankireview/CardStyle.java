@@ -4,9 +4,15 @@ import android.content.res.ColorStateList;
 import android.graphics.Typeface;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.res.ResourcesCompat;
+import android.text.Html;
+import android.text.Layout;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
+import android.text.SpannedString;
+import android.text.style.AlignmentSpan;
 import android.text.style.ForegroundColorSpan;
+import android.text.style.LeadingMarginSpan;
+import android.text.style.QuoteSpan;
 import android.text.style.RelativeSizeSpan;
 import android.text.style.TextAppearanceSpan;
 import android.text.style.TypefaceSpan;
@@ -60,16 +66,35 @@ public class CardStyle {
             String character = card.getFieldValue("Character");
             String pinyin = card.getFieldValue("Pinyin");
             String cantonese = card.getFieldValue("Cantonese");
+            String definition = card.getFieldValue("Definition");
+
 
             questionBuilder.append(character);
             questionBuilder.setSpan(new ForegroundColorSpan(questionColor),0, character.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
             questionBuilder.setSpan(new RelativeSizeSpan(3.0f),0, character.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 
             answerBuilder.append(pinyin);
-            answerBuilder.setSpan(new ForegroundColorSpan(romanizationColor),0, pinyin.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            answerBuilder.setSpan(new ForegroundColorSpan(romanizationColor), 0, pinyin.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
             answerBuilder.append(" ");
             answerBuilder.append(cantonese);
             answerBuilder.setSpan(new ForegroundColorSpan(cantoneseColor), pinyin.length() + 1, 1 + pinyin.length() + cantonese.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+            answerBuilder.append("\n");
+            Spanned convertedDefinition = Html.fromHtml(definition, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            answerBuilder.append(convertedDefinition);
+            answerBuilder.setSpan(new RelativeSizeSpan(0.5f),
+                                  1 + pinyin.length() + cantonese.length(),
+                                  1 + pinyin.length() + cantonese.length() + convertedDefinition.length(),
+                                  Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            answerBuilder.setSpan(new AlignmentSpan.Standard(Layout.Alignment.ALIGN_NORMAL),
+                    1 + pinyin.length() + cantonese.length(),
+                    1 + pinyin.length() + cantonese.length() + convertedDefinition.length(),
+                    Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            answerBuilder.setSpan(new LeadingMarginSpan.Standard(250),
+                    1 + pinyin.length() + cantonese.length(),
+                    1 + pinyin.length() + cantonese.length() + convertedDefinition.length(),
+                    Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+
 
         }
 
