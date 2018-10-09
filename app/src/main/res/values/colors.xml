@@ -6,6 +6,7 @@
     <color name="colorProgressBackground">#e0e0e0</color>
     <color name="toolbarTextColor">#E0E0E0</color>
 
+    <!-- https://www.materialui.co/colors -->
     <!-- text colors -->
     <color name="text_question">#1E88E5</color>
     <color name="text_romanization">#E91E63</color>

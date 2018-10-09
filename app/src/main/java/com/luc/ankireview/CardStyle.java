@@ -10,6 +10,7 @@ import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.SpannedString;
 import android.text.style.AlignmentSpan;
+import android.text.style.BackgroundColorSpan;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.LeadingMarginSpan;
 import android.text.style.QuoteSpan;
@@ -80,11 +81,13 @@ public class CardStyle {
             answerBuilder.setSpan(new ForegroundColorSpan(cantoneseColor), pinyin.length() + 1, 1 + pinyin.length() + cantonese.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 
             answerBuilder.append("\n");
-            Spanned convertedDefinition = Html.fromHtml(definition, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            Log.v(TAG, "definition: " + definition);
+            CharSequence convertedDefinition = removeTrailingLineReturns(Html.fromHtml(definition, Html.FROM_HTML_MODE_LEGACY));
             answerBuilder.append(convertedDefinition);
+
             answerBuilder.setSpan(new RelativeSizeSpan(0.5f),
-                                  1 + pinyin.length() + cantonese.length(),
-                                  1 + pinyin.length() + cantonese.length() + convertedDefinition.length(),
+                                  2 + pinyin.length() + cantonese.length(),
+                                  2 + pinyin.length() + cantonese.length() + convertedDefinition.length(),
                                   Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
             answerBuilder.setSpan(new AlignmentSpan.Standard(Layout.Alignment.ALIGN_NORMAL),
                     1 + pinyin.length() + cantonese.length(),
@@ -94,14 +97,20 @@ public class CardStyle {
                     1 + pinyin.length() + cantonese.length(),
                     1 + pinyin.length() + cantonese.length() + convertedDefinition.length(),
                     Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-
-
         }
 
         questionText.setText(questionBuilder, TextView.BufferType.SPANNABLE);
         answerText.setText(answerBuilder, TextView.BufferType.SPANNABLE);
 
 
+    }
+
+    private CharSequence removeTrailingLineReturns(CharSequence text) {
+
+        while (text.charAt(text.length() - 1) == '\n') {
+            text = text.subSequence(0, text.length() - 1);
+        }
+        return text;
     }
 
     public String getAnswerAudio(Card card) {
