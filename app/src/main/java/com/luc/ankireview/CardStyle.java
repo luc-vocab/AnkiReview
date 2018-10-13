@@ -56,6 +56,40 @@ public class CardStyle {
         m_cardTemplateMap.put(key1, cardTemplate);
         m_cardTemplateMap.put(key2, cardTemplate);
 
+        // build CardTemplate for Hanzi
+        // ----------------------------
+
+        cardTemplate = new CardTemplate();
+        cardTemplate.setTypeface(typeface);
+
+        // question
+        CardField characterField = new CardField("Character");
+        characterField.setColor(ContextCompat.getColor(context, R.color.text_question));
+        characterField.setRelativeSize(3.0f);
+        cardTemplate.addQuestionCardField(characterField);
+
+        // answer
+        CardField pinyinField = new CardField("Pinyin");
+        pinyinField.setColor(ContextCompat.getColor(context, R.color.text_romanization));
+        cardTemplate.addAnswerCardField(pinyinField);
+
+        CardField cantoneseField = new CardField("Cantonese");
+        cantoneseField.setColor(ContextCompat.getColor(context, R.color.text_cantonese));
+        cardTemplate.addAnswerCardField(cantoneseField);
+
+        CardField definitionField = new CardField("Definition");
+        definitionField.setIsHtml(true);
+        definitionField.setAlignment(Layout.Alignment.ALIGN_NORMAL);
+        definitionField.setLeftMargin(120);
+        definitionField.setRelativeSize(0.5f);
+        definitionField.setLineReturn(true);
+        cardTemplate.addAnswerCardField(definitionField);
+
+        key1 = new CardTemplateKey(1423381647288l, 0);
+        key2 = new CardTemplateKey(1423381647288l, 0);
+        m_cardTemplateMap.put(key1, cardTemplate);
+        m_cardTemplateMap.put(key2, cardTemplate);
+
     }
 
     public void renderCard(Card card, FlashcardLayout layout) {
@@ -83,17 +117,46 @@ public class CardStyle {
         SpannableStringBuilder builder = new SpannableStringBuilder();
         int currentIndex = 0;
         for( CardField cardField : fields) {
-            String textValue = card.getFieldValue(cardField.getFieldName());
+            CharSequence textValue = card.getFieldValue(cardField.getFieldName());
+
+            if(cardField.getIsHtml()) {
+                // convert from HTML
+                textValue = removeTrailingLineReturns(Html.fromHtml(textValue.toString(), Html.FROM_HTML_MODE_LEGACY));
+            }
+
             int currentFieldLength = textValue.length();
             if( currentFieldLength > 0) {
                 if( currentIndex > 0) {
-                    // not the first field, append a space first
-                    builder.append(" ");
+                    // not the first field, append a space or line return first
+                    if (cardField.getLineReturn()) {
+                        builder.append("\n");
+                    } else {
+                        builder.append(" ");
+                    }
                     currentIndex += 1;
                 }
 
                 builder.append(textValue);
-                builder.setSpan(new ForegroundColorSpan(cardField.getColor()),currentIndex, currentIndex + currentFieldLength, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                if( cardField.getColor() != cardField.DEFAULT_COLOR ) {
+                    builder.setSpan(new ForegroundColorSpan(cardField.getColor()), currentIndex, currentIndex + currentFieldLength, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                }
+
+                if(cardField.getRelativeSize() != cardField.RELATIVE_SIZE_DEFAULT) {
+                    // add relative size span
+                    builder.setSpan(new RelativeSizeSpan(cardField.getRelativeSize()),currentIndex, currentIndex + currentFieldLength, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                }
+
+                if(cardField.getAlignment() != cardField.DEFAULT_ALIGNMENT) {
+                    // add alignment span
+                    builder.setSpan(new AlignmentSpan.Standard(cardField.getAlignment()),currentIndex, currentIndex + currentFieldLength, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                }
+
+                if (cardField.getLeftMargin() > 0)  {
+                    // add left margin span
+                    // new LeadingMarginSpan.Standard(120),
+                    builder.setSpan(new LeadingMarginSpan.Standard(cardField.getLeftMargin()),currentIndex, currentIndex + currentFieldLength, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                }
+
                 currentIndex += currentFieldLength;
             }
         }
