@@ -223,7 +223,7 @@ public class ReviewActivity extends AppCompatActivity {
 
         getSupportActionBar().setElevation(0);
 
-        m_cardStyle = new CardStyle();
+        m_cardStyle = new CardStyle(this);
 
         loadCards();
     }

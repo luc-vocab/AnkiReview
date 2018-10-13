@@ -1,5 +1,6 @@
 package com.luc.ankireview;
 
+import android.content.Context;
 import android.content.res.ColorStateList;
 import android.graphics.Typeface;
 import android.support.v4.content.ContextCompat;
@@ -20,10 +21,87 @@ import android.text.style.TypefaceSpan;
 import android.util.Log;
 import android.widget.TextView;
 
+import java.util.HashMap;
+import java.util.Vector;
+
 public class CardStyle {
     private static final String TAG = "CardStyle";
 
-    public void renderCard(Card card, FlashcardLayout layout, ReviewActivity reviewActivity) {
+    public CardStyle(Context context) {
+
+        m_cardTemplateMap = new HashMap<>();
+
+        Typeface typeface = ResourcesCompat.getFont(context, R.font.fira_sans_condensed);
+
+        // build CardTemplate for Chinese-Words
+        // ------------------------------------
+
+        CardTemplate cardTemplate = new CardTemplate();
+        cardTemplate.setTypeface(typeface);
+        // question
+        CardField englishField = new CardField("English");
+        englishField.setColor(ContextCompat.getColor(context, R.color.text_question));
+        cardTemplate.addQuestionCardField(englishField);
+        // answer
+        CardField romanizationField = new CardField("Romanization");
+        romanizationField.setColor(ContextCompat.getColor(context, R.color.text_romanization));
+        cardTemplate.addAnswerCardField(romanizationField);
+        CardField chineseField = new CardField("Chinese");
+        chineseField.setColor(ContextCompat.getColor(context, R.color.text_cantonese));
+        cardTemplate.addAnswerCardField(chineseField);
+
+        CardTemplateKey key1 = new CardTemplateKey(1354424015761l, 0);
+        CardTemplateKey key2 = new CardTemplateKey(1354424015760l, 0);
+
+        m_cardTemplateMap.put(key1, cardTemplate);
+        m_cardTemplateMap.put(key2, cardTemplate);
+
+    }
+
+    public void renderCard(Card card, FlashcardLayout layout) {
+
+        // look for the card template
+        CardTemplateKey templateKey = new CardTemplateKey(card.getModelId(), card.getCardOrd());
+        CardTemplate cardTemplate = m_cardTemplateMap.get(templateKey);
+
+        SpannableStringBuilder questionBuilder = buildString(cardTemplate.getQuestionCardFields(), card);
+        SpannableStringBuilder answerBuilder = buildString(cardTemplate.getAnswerCardFields(), card);
+
+        TextView questionText = layout.findViewById(R.id.question_text);
+        TextView answerText = layout.findViewById(R.id.answer_text);
+
+        questionText.setTypeface(cardTemplate.getTypeface());
+        answerText.setTypeface(cardTemplate.getTypeface());
+
+        questionText.setText(questionBuilder, TextView.BufferType.SPANNABLE);
+        answerText.setText(answerBuilder, TextView.BufferType.SPANNABLE);
+
+
+    }
+
+    private SpannableStringBuilder buildString(Vector<CardField> fields, Card card) {
+        SpannableStringBuilder builder = new SpannableStringBuilder();
+        int currentIndex = 0;
+        for( CardField cardField : fields) {
+            String textValue = card.getFieldValue(cardField.getFieldName());
+            int currentFieldLength = textValue.length();
+            if( currentFieldLength > 0) {
+                if( currentIndex > 0) {
+                    // not the first field, append a space first
+                    builder.append(" ");
+                    currentIndex += 1;
+                }
+
+                builder.append(textValue);
+                builder.setSpan(new ForegroundColorSpan(cardField.getColor()),currentIndex, currentIndex + currentFieldLength, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                currentIndex += currentFieldLength;
+            }
+        }
+
+        return builder;
+    }
+
+    public void renderCardOld(Card card, FlashcardLayout layout, ReviewActivity reviewActivity) {
         TextView questionText = layout.findViewById(R.id.question_text);
         TextView answerText = layout.findViewById(R.id.answer_text);
 
@@ -99,6 +177,12 @@ public class CardStyle {
                     Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         }
 
+
+        Typeface typeface = ResourcesCompat.getFont(layout.getContext(), R.font.fira_sans_condensed);
+
+        questionText.setTypeface(typeface);
+        answerText.setTypeface(typeface);
+
         questionText.setText(questionBuilder, TextView.BufferType.SPANNABLE);
         answerText.setText(answerBuilder, TextView.BufferType.SPANNABLE);
 
@@ -117,5 +201,9 @@ public class CardStyle {
         String soundFile = card.extractSoundFile(card.getFieldValue("Sound"));
         return soundFile;
     }
+
+
+
+    private HashMap<CardTemplateKey, CardTemplate> m_cardTemplateMap;
 
 }

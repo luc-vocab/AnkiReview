@@ -3,6 +3,8 @@
     <array name="preloaded_fonts" translatable="false">
         <item>@font/abel</item>
         <item>@font/archivo_narrow</item>
+        <item>@font/contrail_one</item>
         <item>@font/fira_sans_condensed</item>
+        <item>@font/sarpanch</item>
     </array>
 </resources>
