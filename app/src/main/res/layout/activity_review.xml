@@ -4,32 +4,36 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/review_frame"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="?attr/background"
+    >
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
         <android.support.v7.widget.Toolbar
             android:id="@+id/review_toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
-            android:elevation="4dp"
+            android:elevation="0dp"
             android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
         <com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar
             android:id="@+id/review_progressbar"
             android:layout_width="match_parent"
             android:layout_height="36dp"
-            android:background="@color/colorPrimary"
+            android:background="?attr/colorPrimary"
+            android:elevation="4dp"
             android:paddingBottom="8dp"
             android:paddingLeft="16dp"
             android:paddingRight="16dp"
             android:paddingTop="6dp"
-            app:rcBackgroundColor="@color/colorProgressBackground"
+            app:rcBackgroundColor="?attr/background"
             app:rcBackgroundPadding="2dp"
-            app:rcProgressColor="@color/colorAccent"
+            app:rcProgressColor="?attr/colorAccent"
             app:rcRadius="20dp" />
 
     </android.support.design.widget.AppBarLayout>
@@ -41,8 +45,6 @@
         android:orientation="vertical">
 
 
-
-
         <FrameLayout
             android:id="@+id/flashcard_frame"
             android:layout_width="match_parent"
@@ -52,8 +54,7 @@
             <FrameLayout
                 android:id="@+id/background"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/colorProgressBackground">
+                android:layout_height="match_parent">
 
             </FrameLayout>
 
@@ -101,8 +102,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
-        app:sdOverlayLayout="@id/overlay"
         app:sdMainFabClosedSrc="@drawable/check"
-        app:sdMainFabOpenedSrc="@drawable/close"/>
+        app:sdMainFabOpenedSrc="@drawable/close"
+        app:sdOverlayLayout="@id/overlay" />
 
 </FrameLayout>

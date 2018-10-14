@@ -5,7 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".DeckPickerActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="?attr/background"
+    >
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -15,10 +17,7 @@
             android:id="@+id/deckpicker_toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            android:elevation="4dp"
-            android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+            android:elevation="4dp" />
     </android.support.design.widget.AppBarLayout>
 
 
