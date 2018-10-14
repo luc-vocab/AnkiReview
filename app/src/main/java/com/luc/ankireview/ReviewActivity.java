@@ -87,7 +87,6 @@ public class ReviewActivity extends AppCompatActivity {
         Uri mediaDirUri = Uri.fromFile(new File(mediaDir));
         m_baseUrl = mediaDirUri.toString() +"/";
 
-        m_frame = findViewById(R.id.review_frame);
         m_flashcardFrame = findViewById(R.id.flashcard_frame);
         m_touchLayer = findViewById(R.id.touch_layer);
         m_flashcardPager = findViewById(R.id.flashcard_pager);
@@ -545,7 +544,6 @@ public class ReviewActivity extends AppCompatActivity {
 
     // layout elements
     private Toolbar m_toolbar;
-    private FrameLayout m_frame;
     private FrameLayout m_flashcardFrame;
     private FlashcardViewPager m_flashcardPager;
     private FrameLayout m_touchLayer;

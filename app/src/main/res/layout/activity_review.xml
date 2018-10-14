@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/review_frame"
@@ -36,42 +36,36 @@
 
     </android.support.design.widget.AppBarLayout>
 
-
-    <LinearLayout
+    <FrameLayout
+        android:id="@+id/flashcard_frame"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
-
+        android:layout_weight="1"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        >
 
         <FrameLayout
-            android:id="@+id/flashcard_frame"
+            android:id="@+id/background"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1">
-
-            <FrameLayout
-                android:id="@+id/background"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-            </FrameLayout>
-
-            <com.luc.ankireview.FlashcardViewPager
-                android:id="@+id/flashcard_pager"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-            </com.luc.ankireview.FlashcardViewPager>
-
-            <com.leinardi.android.speeddial.SpeedDialOverlayLayout
-                android:id="@+id/overlay"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+            android:layout_height="match_parent">
 
         </FrameLayout>
 
+        <com.luc.ankireview.FlashcardViewPager
+            android:id="@+id/flashcard_pager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-    </LinearLayout>
+        </com.luc.ankireview.FlashcardViewPager>
+
+        <com.leinardi.android.speeddial.SpeedDialOverlayLayout
+            android:id="@+id/overlay"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </FrameLayout>
+
+
 
     <FrameLayout
         android:id="@+id/touch_layer"
@@ -104,4 +98,4 @@
         app:sdMainFabOpenedSrc="@drawable/close"
         app:sdOverlayLayout="@id/overlay" />
 
-</FrameLayout>
+</android.support.design.widget.CoordinatorLayout>
