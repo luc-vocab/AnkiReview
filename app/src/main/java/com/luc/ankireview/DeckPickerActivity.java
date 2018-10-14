@@ -127,11 +127,23 @@ public class DeckPickerActivity extends AppCompatActivity implements AdapterView
 
     }
 
+    private void listDecksIfPermissionsGranted() {
+        if( permissionsGranted() ) {
+            listDecks();
+        }
+    }
+
+    private boolean permissionsGranted() {
+        if ( ContextCompat.checkSelfPermission(this, ANKI_PERMISSIONS ) != PackageManager.PERMISSION_GRANTED ||
+                ContextCompat.checkSelfPermission(this, READ_STORAGE_PERMISSION ) != PackageManager.PERMISSION_GRANTED) {
+            return false;
+        }
+        return true;
+    }
 
     private void checkAllPermissions() {
         // Here, thisActivity is the current activity
-        if ( ContextCompat.checkSelfPermission(this, ANKI_PERMISSIONS ) != PackageManager.PERMISSION_GRANTED ||
-                ContextCompat.checkSelfPermission(this, READ_STORAGE_PERMISSION ) != PackageManager.PERMISSION_GRANTED) {
+        if ( ! permissionsGranted() ) {
 
             Log.d(TAG, "permissions not granted yet");
 
@@ -188,7 +200,7 @@ public class DeckPickerActivity extends AppCompatActivity implements AdapterView
         super.onStart();
 
         // refresh deck list
-        listDecks();
+        listDecksIfPermissionsGranted();
     }
 
     private void listDecks() {

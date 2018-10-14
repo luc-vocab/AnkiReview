@@ -218,10 +218,12 @@ public class ReviewActivity extends AppCompatActivity {
 
         // load deck name
         String deckName = AnkiUtils.getDeckName(getContentResolver(), m_deckId);
+
+        /*
         ActionBar ab = getSupportActionBar();
         ab.setTitle(deckName);
-
         getSupportActionBar().setElevation(0);
+        */
 
         m_cardStyle = new CardStyle(this);
 
