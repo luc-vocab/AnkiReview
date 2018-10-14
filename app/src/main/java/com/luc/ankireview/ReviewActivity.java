@@ -12,6 +12,7 @@ import android.support.v4.view.GestureDetectorCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
@@ -219,11 +220,11 @@ public class ReviewActivity extends AppCompatActivity {
         // load deck name
         String deckName = AnkiUtils.getDeckName(getContentResolver(), m_deckId);
 
-        /*
-        ActionBar ab = getSupportActionBar();
-        ab.setTitle(deckName);
-        getSupportActionBar().setElevation(0);
-        */
+        // action bar
+        m_toolbar = (Toolbar) findViewById(R.id.review_toolbar);
+        m_toolbar.setTitle(deckName);
+        setSupportActionBar(m_toolbar);
+
 
         m_cardStyle = new CardStyle(this);
 
@@ -425,8 +426,7 @@ public class ReviewActivity extends AppCompatActivity {
     }
 
     private void updateDueCountSubtitle(AnkiUtils.DeckDueCounts deckDueCounts) {
-        ActionBar ab = getSupportActionBar();
-        ab.setSubtitle("Cards due: learn: " + deckDueCounts.learnCount + " review: " + deckDueCounts.reviewCount + " new: " + deckDueCounts.newCount);
+        m_toolbar.setSubtitle("Cards due: learn: " + deckDueCounts.learnCount + " review: " + deckDueCounts.reviewCount + " new: " + deckDueCounts.newCount);
     }
 
 
@@ -520,6 +520,7 @@ public class ReviewActivity extends AppCompatActivity {
     public CardStyle getCardStyle() { return m_cardStyle; }
 
     // layout elements
+    private Toolbar m_toolbar;
     private FrameLayout m_frame;
     private FrameLayout m_flashcardFrame;
     private FlashcardViewPager m_flashcardPager;
