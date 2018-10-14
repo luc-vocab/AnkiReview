@@ -15,20 +15,20 @@ public class FlashCardViewPagerAdapter extends PagerAdapter {
     public Object instantiateItem(ViewGroup container, int position) {
         // add the correct webview to the viewgroup, based on position
 
-        FlashcardLayout cardLayout = null;
+        ReviewerFlashcardLayout cardLayout = null;
 
         switch( position)
         {
             case 0:
-                cardLayout = new FlashcardLayout(container.getContext(), m_nextCard);
+                cardLayout = new ReviewerFlashcardLayout(container.getContext(), m_nextCard);
                 m_left = cardLayout;
                 break;
             case 1:
-                cardLayout = new FlashcardLayout(container.getContext(), m_currentCard);
+                cardLayout = new ReviewerFlashcardLayout(container.getContext(), m_currentCard);
                 m_center = cardLayout;
                 break;
             case 2:
-                cardLayout = new FlashcardLayout(container.getContext(), m_nextCard);
+                cardLayout = new ReviewerFlashcardLayout(container.getContext(), m_nextCard);
                 m_right = cardLayout;
                 break;
             default:
@@ -114,9 +114,9 @@ public class FlashCardViewPagerAdapter extends PagerAdapter {
     }
 
 
-    FlashcardLayout m_left;
-    FlashcardLayout m_right;
-    FlashcardLayout m_center;
+    ReviewerFlashcardLayout m_left;
+    ReviewerFlashcardLayout m_right;
+    ReviewerFlashcardLayout m_center;
 
     Card m_currentCard;
     Card m_nextCard;

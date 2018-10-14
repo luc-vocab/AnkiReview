@@ -2,14 +2,10 @@ package com.luc.ankireview;
 
 import android.content.Context;
 import android.support.design.widget.CoordinatorLayout;
-import android.support.v4.widget.NestedScrollView;
-import android.support.v7.widget.CardView;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 
 public class QuestionCardBehavior extends CoordinatorLayout.Behavior<QuestionCard>  {
     private static final String TAG = "QuestionCardBehavior";
@@ -61,8 +57,10 @@ public class QuestionCardBehavior extends CoordinatorLayout.Behavior<QuestionCar
             int questionTargetY = totalWindowHeight/2 - combinedHeight/2;
             int answerTargetY = questionTargetY + child.getHeight() + questionMarginParams.bottomMargin + answerMarginParams.topMargin;
 
-            FlashcardLayout flashcardLayout = (FlashcardLayout) parent.getParent();
-            flashcardLayout.setSpringAnimation(yPosition, questionTargetY, answerTargetY);
+            if ( parent.getParent() instanceof  ReviewerFlashcardLayout) {
+                ReviewerFlashcardLayout reviewerFlashcardLayout = (ReviewerFlashcardLayout) parent.getParent();
+                reviewerFlashcardLayout.setSpringAnimation(yPosition, questionTargetY, answerTargetY);
+            }
 
             m_initialLayoutDone = true;
 

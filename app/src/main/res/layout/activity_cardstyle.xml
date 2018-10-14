@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cardstyle_frame"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?attr/background"
+    >
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/review_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            android:elevation="4dp" />
+
+    </android.support.design.widget.AppBarLayout>
+
+
+
+    <FrameLayout
+        android:id="@+id/flashcard_frame"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        >
+
+        <FrameLayout
+            android:id="@+id/background"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </FrameLayout>
+
+        <com.luc.ankireview.CardStyleFlashcardLayout
+            android:id="@+id/flashcard_style"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </com.luc.ankireview.CardStyleFlashcardLayout>
+
+
+    </FrameLayout>
+
+</android.support.design.widget.CoordinatorLayout>

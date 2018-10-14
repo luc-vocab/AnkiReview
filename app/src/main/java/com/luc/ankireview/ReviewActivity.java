@@ -244,6 +244,7 @@ public class ReviewActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.cardstyle:
                 Log.v(TAG, "card style selected");
+                launchCardStyle();
                 return true;
 
             default:
@@ -252,6 +253,14 @@ public class ReviewActivity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
 
         }
+    }
+
+    private void launchCardStyle() {
+        // launch review activity
+        Intent intent = new Intent(ReviewActivity.this, CardStyleActivity.class);
+        intent.putExtra("noteId", m_currentCard.getNoteId());
+        intent.putExtra("cardOrd", m_currentCard.getCardOrd());
+        this.startActivity(intent);
     }
 
     private void singleTapHandler() {

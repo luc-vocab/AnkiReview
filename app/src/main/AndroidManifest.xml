@@ -22,6 +22,8 @@
         </activity>
         <activity android:name=".ReviewActivity">
         </activity>
+        <activity android:name=".CardStyleActivity">
+        </activity>
 
         <meta-data
             android:name="preloaded_fonts"

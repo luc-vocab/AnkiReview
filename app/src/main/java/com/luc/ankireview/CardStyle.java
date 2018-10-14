@@ -1,7 +1,6 @@
 package com.luc.ankireview;
 
 import android.content.Context;
-import android.content.res.ColorStateList;
 import android.graphics.Typeface;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.res.ResourcesCompat;
@@ -9,16 +8,11 @@ import android.text.Html;
 import android.text.Layout;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
-import android.text.SpannedString;
 import android.text.style.AlignmentSpan;
-import android.text.style.BackgroundColorSpan;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.LeadingMarginSpan;
-import android.text.style.QuoteSpan;
 import android.text.style.RelativeSizeSpan;
-import android.text.style.TextAppearanceSpan;
-import android.text.style.TypefaceSpan;
-import android.util.Log;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import java.util.HashMap;
@@ -92,7 +86,7 @@ public class CardStyle {
 
     }
 
-    public void renderCard(Card card, FlashcardLayout layout) {
+    public void renderCard(Card card, FrameLayout layout) {
 
         // look for the card template
         CardTemplateKey templateKey = new CardTemplateKey(card.getModelId(), card.getCardOrd());

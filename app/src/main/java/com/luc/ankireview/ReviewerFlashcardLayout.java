@@ -18,29 +18,29 @@ import android.widget.TextView;
 
 import static java.lang.Math.abs;
 
-public class FlashcardLayout extends FrameLayout  implements View.OnTouchListener{
+public class ReviewerFlashcardLayout extends FrameLayout  implements View.OnTouchListener{
     private static final String TAG = "FlashcardLayout";
 
-    public FlashcardLayout(Context context) {
+    public ReviewerFlashcardLayout(Context context) {
         super(context);
         init(context);
     }
 
-    public FlashcardLayout(Context context, Card card ) {
+    public ReviewerFlashcardLayout(Context context, Card card ) {
         super(context);
         init(context);
         setCard(card);
     }
 
-    public FlashcardLayout (Context context,
-                       AttributeSet attrs) {
+    public ReviewerFlashcardLayout(Context context,
+                                   AttributeSet attrs) {
         super(context, attrs);
         init(context);
     }
 
-    public FlashcardLayout(Context context,
-                    AttributeSet attrs,
-                    int defStyleAttr) {
+    public ReviewerFlashcardLayout(Context context,
+                                   AttributeSet attrs,
+                                   int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init(context);
     }
