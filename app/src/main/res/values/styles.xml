@@ -10,6 +10,7 @@
         <item name="background">@color/colorBackground</item>
 
         <!-- Toolbar -->
+        <item name="android:textColorSecondary">@color/toolbarTextColor</item>
         <item name="titleTextColor">@color/toolbarTextColor</item>
         <item name="subtitleTextColor">@color/toolbarTextColor</item>
 
