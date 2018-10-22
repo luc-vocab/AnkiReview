@@ -127,6 +127,8 @@ public class ReviewActivity extends AppCompatActivity {
             private int mCurrentPosition = 1;
         });
 
+        m_flashcardPager.setPageTransformer(true, new PageTransformer());
+
         // setup audio
         // -----------
 
