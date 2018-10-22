@@ -60,6 +60,9 @@ public class QuestionCardBehavior extends CoordinatorLayout.Behavior<QuestionCar
             if ( parent.getParent() instanceof  ReviewerFlashcardLayout) {
                 ReviewerFlashcardLayout reviewerFlashcardLayout = (ReviewerFlashcardLayout) parent.getParent();
                 reviewerFlashcardLayout.setSpringAnimation(yPosition, questionTargetY, answerTargetY);
+            } else if ( parent.getParent() instanceof  ReviewerFlashcardLayout ) {
+                // editing style
+                // ans
             }
 
             m_initialLayoutDone = true;

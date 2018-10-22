@@ -41,7 +41,9 @@
         <com.luc.ankireview.CardStyleFlashcardLayout
             android:id="@+id/flashcard_style"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:scaleX=".50"
+            android:scaleY=".50">
 
         </com.luc.ankireview.CardStyleFlashcardLayout>
 
