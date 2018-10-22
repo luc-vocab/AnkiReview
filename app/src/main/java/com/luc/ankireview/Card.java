@@ -16,16 +16,20 @@ public class Card {
     private static final String TAG = "Card";
 
 
-    public Card(long noteId, int cardOrd, long modelId, String cardTemplateName, HashMap<String,String> fieldMap, int buttonCount, Vector<String> nextReviewTimes) {
+    public Card(long noteId, int cardOrd, long modelId, String cardTemplateName, HashMap<String,String> fieldMap) {
         m_noteId = noteId;
         m_cardOrd = cardOrd;
         m_modelId = modelId;
         m_cardTemplateName = cardTemplateName;
         m_fieldMap = fieldMap;
+
+        m_buttonCount = 0;
+        m_nextReviewTimes = null;
+    }
+
+    public void setReviewData(int buttonCount, Vector<String> nextReviewTimes) {
         m_buttonCount = buttonCount;
-
         m_nextReviewTimes = nextReviewTimes;
-
     }
 
     public String extractSoundFile( String content ) {
