@@ -33,6 +33,7 @@ import com.leinardi.android.speeddial.SpeedDialActionItem;
 import com.leinardi.android.speeddial.SpeedDialView;
 import com.luc.ankireview.animation.DepthPageTransformer;
 import com.luc.ankireview.animation.ReviewPageTransformer;
+import com.squareup.picasso.Picasso;
 
 import java.io.File;
 import java.io.IOException;
@@ -179,6 +180,12 @@ public class ReviewActivity extends AppCompatActivity {
 
             }
         });
+
+
+        // background image
+        ImageView backgroundImage = findViewById(R.id.background_image);
+        Picasso.get().setLoggingEnabled(true);
+        Picasso.get().load("https://res.cloudinary.com/photozzap/image/upload/c_fill,h_2280,w_1080/v1540301931/ankireview_backgrounds/chinese_women/dreamstimemaximum_52491159.jpg").into(backgroundImage);
 
 
         Intent intent = getIntent();

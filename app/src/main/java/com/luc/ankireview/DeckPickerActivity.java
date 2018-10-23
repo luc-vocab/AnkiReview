@@ -1,5 +1,6 @@
 package com.luc.ankireview;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -34,6 +35,7 @@ public class DeckPickerActivity extends AppCompatActivity implements AdapterView
     private static final String TAG = "DeckPickerActivity";
     private static final String ANKI_PERMISSIONS = "com.ichi2.anki.permission.READ_WRITE_DATABASE";
     private static final String READ_STORAGE_PERMISSION = android.Manifest.permission.READ_EXTERNAL_STORAGE;
+    private static final String INTERNET_PERMISSION = Manifest.permission.INTERNET;
 
 
     private class AnkiDeck {
@@ -136,7 +138,8 @@ public class DeckPickerActivity extends AppCompatActivity implements AdapterView
 
     private boolean permissionsGranted() {
         if ( ContextCompat.checkSelfPermission(this, ANKI_PERMISSIONS ) != PackageManager.PERMISSION_GRANTED ||
-                ContextCompat.checkSelfPermission(this, READ_STORAGE_PERMISSION ) != PackageManager.PERMISSION_GRANTED) {
+                ContextCompat.checkSelfPermission(this, READ_STORAGE_PERMISSION ) != PackageManager.PERMISSION_GRANTED ||
+                ContextCompat.checkSelfPermission(this, INTERNET_PERMISSION ) != PackageManager.PERMISSION_GRANTED) {
             return false;
         }
         return true;
@@ -151,7 +154,8 @@ public class DeckPickerActivity extends AppCompatActivity implements AdapterView
             // Permission is not granted
             // Should we show an explanation?
             if (ActivityCompat.shouldShowRequestPermissionRationale(this, ANKI_PERMISSIONS ) ||
-                    ActivityCompat.shouldShowRequestPermissionRationale(this, READ_STORAGE_PERMISSION )   ) {
+                    ActivityCompat.shouldShowRequestPermissionRationale(this, READ_STORAGE_PERMISSION ) ||
+                    ActivityCompat.shouldShowRequestPermissionRationale(this, INTERNET_PERMISSION)  ) {
                 // Show an explanation to the user *asynchronously* -- don't block
                 // this thread waiting for the user's response! After the user
                 // sees the explanation, try again to request the permission.
@@ -159,7 +163,7 @@ public class DeckPickerActivity extends AppCompatActivity implements AdapterView
                 Log.d(TAG, "show explanation ?");
 
                 ActivityCompat.requestPermissions(this,
-                        new String[]{ANKI_PERMISSIONS, READ_STORAGE_PERMISSION },
+                        new String[]{ANKI_PERMISSIONS, READ_STORAGE_PERMISSION, INTERNET_PERMISSION },
                         0);
 
             } else {
@@ -167,7 +171,7 @@ public class DeckPickerActivity extends AppCompatActivity implements AdapterView
 
                 // No explanation needed, we can request the permission.
                 ActivityCompat.requestPermissions(this,
-                        new String[]{ANKI_PERMISSIONS, READ_STORAGE_PERMISSION },
+                        new String[]{ANKI_PERMISSIONS, READ_STORAGE_PERMISSION, INTERNET_PERMISSION},
                         0);
 
                 // we're going to get a callback later

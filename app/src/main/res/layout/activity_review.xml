@@ -44,12 +44,13 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         >
 
-        <FrameLayout
-            android:id="@+id/background"
+        <ImageView
+            android:id="@+id/background_image"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-        </FrameLayout>
+            android:layout_height="match_parent"
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop"
+            app:srcCompat="@drawable/background2"></ImageView>
 
         <com.luc.ankireview.FlashcardViewPager
             android:id="@+id/flashcard_pager"
