@@ -183,9 +183,19 @@ public class ReviewActivity extends AppCompatActivity {
 
 
         // background image
+        //int backgroundImageWidth = Math.round(m_flashcardFrame.getWidth());
+        // int backgroundImageHeight = Math.round(m_flashcardFrame.getHeight());
+        int backgroundImageWidth = 2000;
+        int backgroundImageHeight = 4000;
+
         ImageView backgroundImage = findViewById(R.id.background_image);
         Picasso.get().setLoggingEnabled(true);
-        Picasso.get().load("https://res.cloudinary.com/photozzap/image/upload/c_fill,h_2280,w_1080/v1540301931/ankireview_backgrounds/chinese_women/dreamstimemaximum_52491159.jpg").into(backgroundImage);
+
+        String imgUrl = String.format("https://res.cloudinary.com/photozzap/image/upload/c_fill,h_%d,w_%d/v1540301931/ankireview_backgrounds/chinese_women/dreamstimemaximum_52491159.jpg", backgroundImageHeight, backgroundImageWidth);
+
+        // Picasso.get().load(imgUrl).resize(backgroundImageWidth, backgroundImageHeight).centerInside().into(backgroundImage);
+
+        Picasso.get().load(imgUrl).into(backgroundImage);
 
 
         Intent intent = getIntent();
