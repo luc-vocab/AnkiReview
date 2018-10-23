@@ -31,6 +31,8 @@ import android.widget.Toast;
 import com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar;
 import com.leinardi.android.speeddial.SpeedDialActionItem;
 import com.leinardi.android.speeddial.SpeedDialView;
+import com.luc.ankireview.animation.DepthPageTransformer;
+import com.luc.ankireview.animation.ReviewPageTransformer;
 
 import java.io.File;
 import java.io.IOException;
@@ -127,7 +129,7 @@ public class ReviewActivity extends AppCompatActivity {
             private int mCurrentPosition = 1;
         });
 
-        m_flashcardPager.setPageTransformer(true, new PageTransformer());
+        m_flashcardPager.setPageTransformer(true, new ReviewPageTransformer());
 
         // setup audio
         // -----------

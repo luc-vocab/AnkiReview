@@ -1,9 +1,9 @@
-package com.luc.ankireview;
+package com.luc.ankireview.animation;
 
 import android.support.v4.view.ViewPager;
 import android.view.View;
 
-public class PageTransformer implements ViewPager.PageTransformer {
+public class ZoomOutPageTransformer implements ViewPager.PageTransformer {
     private static final float MIN_SCALE = 0.85f;
     private static final float MIN_ALPHA = 0.5f;
 
@@ -40,6 +40,4 @@ public class PageTransformer implements ViewPager.PageTransformer {
             view.setAlpha(0f);
         }
     }
-
-
 }
