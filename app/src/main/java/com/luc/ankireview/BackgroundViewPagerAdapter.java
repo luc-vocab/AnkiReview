@@ -8,21 +8,17 @@ import android.widget.ImageView;
 
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Random;
+import java.util.Vector;
 
 public class BackgroundViewPagerAdapter extends PagerAdapter {
 
     public BackgroundViewPagerAdapter(Context context) {
+
         m_context = context;
-    }
-
-    @Override
-    public Object instantiateItem(ViewGroup container, int position) {
-        // add the correct webview to the viewgroup, based on position
-
-        ImageView imageView = new ImageView(m_context);
-        imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-
 
         String[] backgroundImageUrls = {
                 "https://res.cloudinary.com/photozzap/image/upload/c_scale,h_2000/v1540301931/ankireview_backgrounds/chinese_women/dreamstimemaximum_52491159.jpg",
@@ -44,8 +40,24 @@ public class BackgroundViewPagerAdapter extends PagerAdapter {
                 "https://res.cloudinary.com/photozzap/image/upload/c_scale,h_2000/v1540301900/ankireview_backgrounds/chinese_women/dreamstimeextralarge_51136341.jpg"
         };
 
-        int rnd = new Random().nextInt(backgroundImageUrls.length);
-        String imgUrl = backgroundImageUrls[rnd];
+        m_backgroundUrlList = new Vector<String>(Arrays.asList(backgroundImageUrls));
+        Collections.shuffle(m_backgroundUrlList);
+
+    }
+
+    @Override
+    public Object instantiateItem(ViewGroup container, int position) {
+
+        ImageView imageView = new ImageView(m_context);
+        imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+
+        // get current URL
+        m_currentBackgroundIndex++;
+        if(m_currentBackgroundIndex > m_backgroundUrlList.size() - 1) {
+            m_currentBackgroundIndex = 0;
+        }
+        String imgUrl = m_backgroundUrlList.get(m_currentBackgroundIndex);
+
         Picasso.get().setLoggingEnabled(true);
         Picasso.get().load(imgUrl).into(imageView);
 
@@ -130,9 +142,12 @@ public class BackgroundViewPagerAdapter extends PagerAdapter {
     }
 
 
-    ImageView m_left;
-    ImageView m_center;
-    ImageView m_right;
+    private ImageView m_left;
+    private ImageView m_center;
+    private ImageView m_right;
 
-    Context m_context;
+    private Context m_context;
+
+    private Vector<String> m_backgroundUrlList;
+    private int m_currentBackgroundIndex = 0;
 }
