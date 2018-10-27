@@ -33,6 +33,8 @@ import com.leinardi.android.speeddial.SpeedDialActionItem;
 import com.leinardi.android.speeddial.SpeedDialView;
 import com.luc.ankireview.animation.DepthPageTransformer;
 import com.luc.ankireview.animation.ReviewPageTransformer;
+import com.luc.ankireview.animation.ZoomOutPageTransformer;
+import com.luc.ankireview.animation.AlphaPageTransformer;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
@@ -174,6 +176,7 @@ public class ReviewActivity extends AppCompatActivity {
             }
             private int mCurrentPosition = 1;
         });
+        // m_backgroundPager.setPageTransformer(true, new AlphaPageTransformer());
 
         // setup audio
         // -----------
