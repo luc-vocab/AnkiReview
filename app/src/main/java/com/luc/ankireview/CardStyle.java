@@ -52,9 +52,11 @@ public class CardStyle {
 
         CardTemplateKey key1 = new CardTemplateKey(1354424015761l, 0);
         CardTemplateKey key2 = new CardTemplateKey(1354424015760l, 0);
+        CardTemplateKey key3 = new CardTemplateKey(1400993365602l, 0);
 
         m_cardTemplateMap.put(key1, cardTemplate);
         m_cardTemplateMap.put(key2, cardTemplate);
+        m_cardTemplateMap.put(key3, cardTemplate);
 
         // build CardTemplate for Hanzi
         // ----------------------------
@@ -97,6 +99,9 @@ public class CardStyle {
         // look for the card template
         CardTemplateKey templateKey = new CardTemplateKey(card.getModelId(), card.getCardOrd());
         CardTemplate cardTemplate = m_cardTemplateMap.get(templateKey);
+        if(cardTemplate == null) {
+            Log.e(TAG, "could not find cardtemplate for " + templateKey);
+        }
 
         SpannableStringBuilder questionBuilder = buildString(cardTemplate.getQuestionCardFields(), card);
         SpannableStringBuilder answerBuilder = buildString(cardTemplate.getAnswerCardFields(), card);
