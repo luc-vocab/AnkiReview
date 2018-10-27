@@ -28,6 +28,9 @@ public class FlashcardViewPager extends ViewPager {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
+        if(m_backgroundSwipingEnabled) {
+            m_backgroundPager.onTouchEvent(event);
+        }
         if( m_swipeEnabled)
             return super.onTouchEvent(event);
         return false;
@@ -35,10 +38,27 @@ public class FlashcardViewPager extends ViewPager {
 
     @Override
     public boolean onInterceptTouchEvent(MotionEvent event) {
+        if( m_backgroundSwipingEnabled) {
+            m_backgroundPager.onInterceptTouchEvent(event);
+        }
         if( m_swipeEnabled )
             return super.onInterceptTouchEvent(event);
         return false;
     }
 
+    public void setBackgroundPager(ViewPager backgroundPager) {
+        m_backgroundPager = backgroundPager;
+    }
+
+    public void enableBackgroundSwiping() {
+        m_backgroundSwipingEnabled = true;
+    }
+
+    public void disableBackgroundSwiping() {
+        m_backgroundSwipingEnabled = false;
+    }
+
     private boolean m_swipeEnabled = false;
+    private boolean m_backgroundSwipingEnabled = false;
+    private ViewPager m_backgroundPager;
 }

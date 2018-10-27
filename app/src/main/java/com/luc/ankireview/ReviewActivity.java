@@ -141,8 +141,39 @@ public class ReviewActivity extends AppCompatActivity {
         // setup ViewPager for backgrounds
         // -------------------------------
 
-        BackgroundViewPagerAdapter backgroundAdapter = new BackgroundViewPagerAdapter(this);
-        m_backgroundPager.setAdapter(backgroundAdapter);
+        m_backgroundAdapter = new BackgroundViewPagerAdapter(this);
+        m_backgroundPager.setAdapter(m_backgroundAdapter);
+        m_backgroundPager.setCurrentItem(1); // center
+
+        // the flashcardpager will forward touch events to the backgroundpager
+        m_flashcardPager.setBackgroundPager(m_backgroundPager);
+
+        // when we move to one of the side pages, reload
+        m_backgroundPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            }
+            @Override
+            public void onPageSelected(int position) {
+                mCurrentPosition = position;
+            }
+            @Override
+            public void onPageScrollStateChanged(int state) {
+                if(ViewPager.SCROLL_STATE_IDLE == state){
+                    //Scrolling finished. Do something.
+                    if(mCurrentPosition == 0)
+                    {
+                        m_backgroundAdapter.moveToNextBackground(mCurrentPosition);
+                        m_flashcardPager.disableBackgroundSwiping();
+                    } else if(mCurrentPosition == 2)
+                    {
+                        m_backgroundAdapter.moveToNextBackground(mCurrentPosition);
+                        m_flashcardPager.disableBackgroundSwiping();
+                    }
+                }
+            }
+            private int mCurrentPosition = 1;
+        });
 
         // setup audio
         // -----------
@@ -494,6 +525,12 @@ public class ReviewActivity extends AppCompatActivity {
         AnkiUtils.DeckDueCounts deckDueCounts = AnkiUtils.getDeckDueCount(getContentResolver(), m_deckId);
         updateDueCountSubtitle(deckDueCounts);
 
+        m_reviewCount++;
+        if(m_reviewCount % 3 == 0) {
+            // enable background swiping
+            m_flashcardPager.enableBackgroundSwiping();
+        }
+
         int currentDueCount = deckDueCounts.getTotalWithWeights();
         int numCardsDone = m_initialDueCount - currentDueCount;
         Log.v(TAG,"current due count: " + currentDueCount);
@@ -580,9 +617,11 @@ public class ReviewActivity extends AppCompatActivity {
     // keep track of due counts
     int m_initialDueCount;
     int m_cardsDone; // not due anymore
+    int m_reviewCount = 0;
 
     // adapters
     private FlashCardViewPagerAdapter m_flashcardAdapter;
+    private BackgroundViewPagerAdapter m_backgroundAdapter;
     // where to load file assets
     private String m_baseUrl;
     // for playing audio
