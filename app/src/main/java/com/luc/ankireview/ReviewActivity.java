@@ -94,6 +94,7 @@ public class ReviewActivity extends AppCompatActivity {
         m_flashcardFrame = findViewById(R.id.flashcard_frame);
         m_touchLayer = findViewById(R.id.touch_layer);
         m_flashcardPager = findViewById(R.id.flashcard_pager);
+        m_backgroundPager = findViewById(R.id.background_pager);
 
         m_progressBar = findViewById(R.id.review_progressbar);
 
@@ -132,6 +133,9 @@ public class ReviewActivity extends AppCompatActivity {
         });
 
         m_flashcardPager.setPageTransformer(true, new ReviewPageTransformer());
+
+        BackgroundViewPagerAdapter backgroundAdapter = new BackgroundViewPagerAdapter(this);
+        m_backgroundPager.setAdapter(backgroundAdapter);
 
         // setup audio
         // -----------
@@ -181,42 +185,6 @@ public class ReviewActivity extends AppCompatActivity {
 
             }
         });
-
-
-
-        ImageView backgroundImage = findViewById(R.id.background_image);
-        Picasso.get().setLoggingEnabled(true);
-
-        String[] backgroundImageUrls = {
-                "https://res.cloudinary.com/photozzap/image/upload/c_scale,h_2000/v1540301931/ankireview_backgrounds/chinese_women/dreamstimemaximum_52491159.jpg",
-                "https://res.cloudinary.com/photozzap/image/upload/c_scale,h_2000/v1540301930/ankireview_backgrounds/chinese_women/dreamstimemaximum_51242767.jpg",
-                "https://res.cloudinary.com/photozzap/image/upload/c_scale,h_2000/v1540301928/ankireview_backgrounds/chinese_women/dreamstimemaximum_46084453.jpg",
-                "https://res.cloudinary.com/photozzap/image/upload/c_scale,h_2000/v1540301927/ankireview_backgrounds/chinese_women/dreamstimemaximum_45547181.jpg",
-                "https://res.cloudinary.com/photozzap/image/upload/c_scale,h_2000/v1540301925/ankireview_backgrounds/chinese_women/dreamstimemaximum_45193806.jpg",
-                "https://res.cloudinary.com/photozzap/image/upload/c_scale,h_2000/v1540301923/ankireview_backgrounds/chinese_women/dreamstimemaximum_41211514.jpg",
-                "https://res.cloudinary.com/photozzap/image/upload/c_scale,h_2000/v1540301922/ankireview_backgrounds/chinese_women/dreamstimemaximum_41171330.jpg",
-                "https://res.cloudinary.com/photozzap/image/upload/c_scale,h_2000/v1540301921/ankireview_backgrounds/chinese_women/dreamstimemaximum_40065466.jpg",
-                "https://res.cloudinary.com/photozzap/image/upload/c_scale,h_2000/v1540301920/ankireview_backgrounds/chinese_women/dreamstimemaximum_33367818.jpg",
-                "https://res.cloudinary.com/photozzap/image/upload/c_scale,h_2000/v1540301917/ankireview_backgrounds/chinese_women/dreamstimemaximum_33112734.jpg",
-                "https://res.cloudinary.com/photozzap/image/upload/c_scale,h_2000/v1540301912/ankireview_backgrounds/chinese_women/dreamstimeextralarge_54834109.jpg",
-                "https://res.cloudinary.com/photozzap/image/upload/c_scale,h_2000/v1540301911/ankireview_backgrounds/chinese_women/dreamstimeextralarge_53686849.jpg",
-                "https://res.cloudinary.com/photozzap/image/upload/c_scale,h_2000/v1540301911/ankireview_backgrounds/chinese_women/dreamstimeextralarge_54833749.jpg",
-                "https://res.cloudinary.com/photozzap/image/upload/c_scale,h_2000/v1540301909/ankireview_backgrounds/chinese_women/dreamstimeextralarge_53686790.jpg",
-                "https://res.cloudinary.com/photozzap/image/upload/c_scale,h_2000/v1540301900/ankireview_backgrounds/chinese_women/dreamstimeextralarge_48563750.jpg",
-                "https://res.cloudinary.com/photozzap/image/upload/c_scale,h_2000/v1540301900/ankireview_backgrounds/chinese_women/dreamstimeextralarge_51136353.jpg",
-                "https://res.cloudinary.com/photozzap/image/upload/c_scale,h_2000/v1540301900/ankireview_backgrounds/chinese_women/dreamstimeextralarge_51136341.jpg"
-        };
-
-        int rnd = new Random().nextInt(backgroundImageUrls.length);
-
-        // String imgUrl = String.format("https://res.cloudinary.com/photozzap/image/upload/c_fill,h_%d,w_%d/v1540301931/ankireview_backgrounds/chinese_women/dreamstimemaximum_52491159.jpg", backgroundImageHeight, backgroundImageWidth);
-        // String imgUrl = String.format("https://res.cloudinary.com/photozzap/image/upload/v1540301931/ankireview_backgrounds/chinese_women/dreamstimemaximum_52491159.jpg", backgroundImageHeight, backgroundImageWidth);
-
-        String imgUrl = backgroundImageUrls[rnd];
-
-        // Picasso.get().load(imgUrl).resize(backgroundImageWidth, backgroundImageHeight).centerInside().into(backgroundImage);
-
-        Picasso.get().load(imgUrl).into(backgroundImage);
 
 
         Intent intent = getIntent();
@@ -588,6 +556,7 @@ public class ReviewActivity extends AppCompatActivity {
     private Toolbar m_toolbar;
     private FrameLayout m_flashcardFrame;
     private FlashcardViewPager m_flashcardPager;
+    private ViewPager m_backgroundPager;
     private FrameLayout m_touchLayer;
 
     private RoundCornerProgressBar m_progressBar;
