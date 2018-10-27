@@ -102,6 +102,10 @@ public class ReviewActivity extends AppCompatActivity {
         m_detector = new GestureDetectorCompat(this, new ReviewerGestureDetector());
         m_touchLayer.setOnTouchListener(m_gestureListener);
 
+
+        // setup ViewPager for flashcards
+        // ------------------------------
+
         m_flashcardAdapter = new FlashCardViewPagerAdapter(this, this );
         m_flashcardPager.setAdapter(m_flashcardAdapter);
 
@@ -133,6 +137,9 @@ public class ReviewActivity extends AppCompatActivity {
         });
 
         m_flashcardPager.setPageTransformer(true, new ReviewPageTransformer());
+
+        // setup ViewPager for backgrounds
+        // -------------------------------
 
         BackgroundViewPagerAdapter backgroundAdapter = new BackgroundViewPagerAdapter(this);
         m_backgroundPager.setAdapter(backgroundAdapter);
