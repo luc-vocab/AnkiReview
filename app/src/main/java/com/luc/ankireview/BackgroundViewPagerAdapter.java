@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.luc.ankireview.backgrounds.BackgroundManager;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -16,33 +17,11 @@ import java.util.Vector;
 
 public class BackgroundViewPagerAdapter extends PagerAdapter {
 
-    public BackgroundViewPagerAdapter(Context context) {
+    public BackgroundViewPagerAdapter(Context context, long deckId) {
 
         m_context = context;
 
-        String[] backgroundImageUrls = {
-                "https://res.cloudinary.com/photozzap/image/upload/c_scale,h_2000/v1540301931/ankireview_backgrounds/chinese_women/dreamstimemaximum_52491159.jpg",
-                "https://res.cloudinary.com/photozzap/image/upload/c_scale,h_2000/v1540301930/ankireview_backgrounds/chinese_women/dreamstimemaximum_51242767.jpg",
-                "https://res.cloudinary.com/photozzap/image/upload/c_scale,h_2000/v1540301928/ankireview_backgrounds/chinese_women/dreamstimemaximum_46084453.jpg",
-                "https://res.cloudinary.com/photozzap/image/upload/c_scale,h_2000/v1540301927/ankireview_backgrounds/chinese_women/dreamstimemaximum_45547181.jpg",
-                "https://res.cloudinary.com/photozzap/image/upload/c_scale,h_2000/v1540301925/ankireview_backgrounds/chinese_women/dreamstimemaximum_45193806.jpg",
-                "https://res.cloudinary.com/photozzap/image/upload/c_scale,h_2000/v1540301923/ankireview_backgrounds/chinese_women/dreamstimemaximum_41211514.jpg",
-                "https://res.cloudinary.com/photozzap/image/upload/c_scale,h_2000/v1540301922/ankireview_backgrounds/chinese_women/dreamstimemaximum_41171330.jpg",
-                "https://res.cloudinary.com/photozzap/image/upload/c_scale,h_2000/v1540301921/ankireview_backgrounds/chinese_women/dreamstimemaximum_40065466.jpg",
-                "https://res.cloudinary.com/photozzap/image/upload/c_scale,h_2000/v1540301920/ankireview_backgrounds/chinese_women/dreamstimemaximum_33367818.jpg",
-                "https://res.cloudinary.com/photozzap/image/upload/c_scale,h_2000/v1540301917/ankireview_backgrounds/chinese_women/dreamstimemaximum_33112734.jpg",
-                "https://res.cloudinary.com/photozzap/image/upload/c_scale,h_2000/v1540301912/ankireview_backgrounds/chinese_women/dreamstimeextralarge_54834109.jpg",
-                "https://res.cloudinary.com/photozzap/image/upload/c_scale,h_2000/v1540301911/ankireview_backgrounds/chinese_women/dreamstimeextralarge_53686849.jpg",
-                "https://res.cloudinary.com/photozzap/image/upload/c_scale,h_2000/v1540301911/ankireview_backgrounds/chinese_women/dreamstimeextralarge_54833749.jpg",
-                "https://res.cloudinary.com/photozzap/image/upload/c_scale,h_2000/v1540301909/ankireview_backgrounds/chinese_women/dreamstimeextralarge_53686790.jpg",
-                "https://res.cloudinary.com/photozzap/image/upload/c_scale,h_2000/v1540301900/ankireview_backgrounds/chinese_women/dreamstimeextralarge_48563750.jpg",
-                "https://res.cloudinary.com/photozzap/image/upload/c_scale,h_2000/v1540301900/ankireview_backgrounds/chinese_women/dreamstimeextralarge_51136353.jpg",
-                "https://res.cloudinary.com/photozzap/image/upload/c_scale,h_2000/v1540301900/ankireview_backgrounds/chinese_women/dreamstimeextralarge_51136341.jpg"
-        };
-
-        m_backgroundUrlList = new Vector<String>(Arrays.asList(backgroundImageUrls));
-        Collections.shuffle(m_backgroundUrlList);
-
+        m_backgroundManager = new BackgroundManager(deckId);
     }
 
     @Override
@@ -51,12 +30,7 @@ public class BackgroundViewPagerAdapter extends PagerAdapter {
         ImageView imageView = new ImageView(m_context);
         imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
 
-        // get current URL
-        m_currentBackgroundIndex++;
-        if(m_currentBackgroundIndex > m_backgroundUrlList.size() - 1) {
-            m_currentBackgroundIndex = 0;
-        }
-        String imgUrl = m_backgroundUrlList.get(m_currentBackgroundIndex);
+        String imgUrl = m_backgroundManager.getBackgroundUrl();
 
         Picasso.get().setLoggingEnabled(true);
         Picasso.get().load(imgUrl).into(imageView);
@@ -148,6 +122,5 @@ public class BackgroundViewPagerAdapter extends PagerAdapter {
 
     private Context m_context;
 
-    private Vector<String> m_backgroundUrlList;
-    private int m_currentBackgroundIndex = 0;
+    private BackgroundManager m_backgroundManager;
 }

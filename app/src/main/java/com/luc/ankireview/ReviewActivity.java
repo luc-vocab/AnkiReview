@@ -93,6 +93,10 @@ public class ReviewActivity extends AppCompatActivity {
         Uri mediaDirUri = Uri.fromFile(new File(mediaDir));
         m_baseUrl = mediaDirUri.toString() +"/";
 
+        Intent intent = getIntent();
+        m_deckId = intent.getLongExtra("deckId", 0);
+        Log.d(TAG, "ReviewActivity.onCreate, deckId: "  + m_deckId);
+
         m_flashcardFrame = findViewById(R.id.flashcard_frame);
         m_touchLayer = findViewById(R.id.touch_layer);
         m_flashcardPager = findViewById(R.id.flashcard_pager);
@@ -143,7 +147,7 @@ public class ReviewActivity extends AppCompatActivity {
         // setup ViewPager for backgrounds
         // -------------------------------
 
-        m_backgroundAdapter = new BackgroundViewPagerAdapter(this);
+        m_backgroundAdapter = new BackgroundViewPagerAdapter(this, m_deckId);
         m_backgroundPager.setAdapter(m_backgroundAdapter);
         m_backgroundPager.setCurrentItem(1); // center
 
@@ -228,9 +232,7 @@ public class ReviewActivity extends AppCompatActivity {
         });
 
 
-        Intent intent = getIntent();
-        m_deckId = intent.getLongExtra("deckId", 0);
-        Log.d(TAG, "ReviewActivity.onCreate, deckId: "  + m_deckId);
+
 
         // setup speed dial
         m_speedDialView = findViewById(R.id.speedDial);
