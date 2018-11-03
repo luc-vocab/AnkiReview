@@ -23,11 +23,13 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.ichi2.anki.FlashCardsContract;
-
+import com.luc.ankireview.backgrounds.BackgroundManager;
+import com.squareup.picasso.Picasso;
 
 
 public class DeckPickerActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
@@ -97,6 +99,13 @@ public class DeckPickerActivity extends AppCompatActivity implements AdapterView
                 view.findViewById(R.id.deck_due_counts).setVisibility(View.GONE);
                 view.findViewById(R.id.no_cards_due).setVisibility(View.VISIBLE);
             }
+
+            BackgroundManager backgroundManager = new BackgroundManager(deck.deckId);
+            String imgUrl = backgroundManager.getBackgroundUrl();
+            ImageView backgroundImageView = view.findViewById(R.id.deck_backgroundimage);
+
+            Picasso.get().setLoggingEnabled(true);
+            Picasso.get().load(imgUrl).into(backgroundImageView);
 
             return view;
         }
