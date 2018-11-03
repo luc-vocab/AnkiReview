@@ -37,7 +37,9 @@
                     android:id="@+id/deck_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
                     android:layout_weight="1"
+                    android:baselineAligned="false"
                     android:fontFamily="@font/fira_sans_condensed"
                     android:shadowColor="@color/deckpicker_deckname_shadow"
                     android:shadowDx="0"
@@ -49,39 +51,40 @@
                     android:textStyle="bold" />
 
 
-                    <LinearLayout
-                        android:id="@+id/deck_due_counts"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                <LinearLayout
+                    android:id="@+id/deck_due_counts"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2"
+                    android:orientation="horizontal">
+
+
+                    <TextView
+                        android:id="@+id/deck_new_count"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:layout_marginLeft="40dp"
-                        android:layout_marginRight="40dp"
-                        android:orientation="horizontal">
+                        android:textColor="@color/colorAccent"
+                        android:textSize="20dp" />
 
+                    <TextView
+                        android:id="@+id/deck_review_count"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="TextView"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="20dp" />
 
-                        <TextView
-                            android:id="@+id/deck_new_count"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:textColor="@color/colorAccent" />
+                    <TextView
+                        android:id="@+id/deck_learn_count"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="20dp" />
 
-                        <TextView
-                            android:id="@+id/deck_review_count"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="TextView"
-                            android:textColor="@color/colorAccent" />
-
-                        <TextView
-                            android:id="@+id/deck_learn_count"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:textColor="@color/colorAccent" />
-
-                    </LinearLayout>
+                </LinearLayout>
 
 
             </LinearLayout>
