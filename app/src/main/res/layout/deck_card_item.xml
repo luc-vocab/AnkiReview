@@ -31,13 +31,13 @@
                 android:layout_height="match_parent"
                 android:layout_alignBottom="@+id/deck_backgroundimage"
                 android:layout_alignParentBottom="false"
-                android:orientation="vertical">
+                android:orientation="horizontal">
 
                 <TextView
                     android:id="@+id/deck_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="2"
+                    android:layout_weight="1"
                     android:fontFamily="@font/fira_sans_condensed"
                     android:shadowColor="@color/deckpicker_deckname_shadow"
                     android:shadowDx="0"
@@ -48,40 +48,22 @@
                     android:textSize="50dp"
                     android:textStyle="bold" />
 
-                <FrameLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="2dp"
-                    android:layout_weight="1">
 
                     <LinearLayout
                         android:id="@+id/deck_due_counts"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:layout_weight="1"
                         android:layout_marginLeft="40dp"
                         android:layout_marginRight="40dp"
                         android:orientation="horizontal">
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="New:"
-                            android:textColor="@color/colorAccent" />
 
                         <TextView
                             android:id="@+id/deck_new_count"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:textColor="@color/colorAccent" />
-
-                        <TextView
-                            android:id="@+id/textView4"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="Review:"
                             android:textColor="@color/colorAccent" />
 
                         <TextView
@@ -93,13 +75,6 @@
                             android:textColor="@color/colorAccent" />
 
                         <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="Learn:"
-                            android:textColor="@color/colorAccent" />
-
-                        <TextView
                             android:id="@+id/deck_learn_count"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -107,18 +82,6 @@
                             android:textColor="@color/colorAccent" />
 
                     </LinearLayout>
-
-                    <TextView
-                        android:id="@+id/no_cards_due"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="40dp"
-                        android:layout_marginRight="40dp"
-                        android:layout_weight="2"
-                        android:text="No cards due" />
-
-
-                </FrameLayout>
 
 
             </LinearLayout>

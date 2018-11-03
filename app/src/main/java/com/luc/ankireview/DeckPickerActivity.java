@@ -93,11 +93,9 @@ public class DeckPickerActivity extends AppCompatActivity implements AdapterView
                 deckLearnCount.setText(Integer.toString(deck.deckDueCounts.learnCount));
 
                 view.findViewById(R.id.deck_due_counts).setVisibility(View.VISIBLE);
-                view.findViewById(R.id.no_cards_due).setVisibility(View.GONE);
 
             } else {
                 view.findViewById(R.id.deck_due_counts).setVisibility(View.GONE);
-                view.findViewById(R.id.no_cards_due).setVisibility(View.VISIBLE);
             }
 
             BackgroundManager backgroundManager = new BackgroundManager(deck.deckId);
