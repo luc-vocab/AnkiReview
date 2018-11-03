@@ -67,6 +67,10 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:fontFamily="@font/fira_sans_condensed"
+                        android:shadowColor="@color/colorBackground"
+                        android:shadowDx="0"
+                        android:shadowDy="0"
+                        android:shadowRadius="15"
                         android:textColor="@color/answer_easy"
                         android:textSize="40dp" />
 
