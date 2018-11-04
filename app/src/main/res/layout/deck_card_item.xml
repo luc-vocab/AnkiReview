@@ -22,7 +22,7 @@
             <ImageView
                 android:id="@+id/deck_backgroundimage"
                 android:layout_width="match_parent"
-                android:layout_height="160dp"
+                android:layout_height="235dp"
                 android:scaleType="centerCrop"
                 app:srcCompat="@drawable/background2" />
 
