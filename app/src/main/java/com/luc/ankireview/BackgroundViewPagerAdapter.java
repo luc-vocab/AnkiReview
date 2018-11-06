@@ -6,6 +6,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.facebook.drawee.drawable.ScalingUtils;
+import com.facebook.drawee.generic.GenericDraweeHierarchy;
+import com.facebook.drawee.generic.GenericDraweeHierarchyBuilder;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.luc.ankireview.backgrounds.BackgroundManager;
 
@@ -20,8 +23,12 @@ public class BackgroundViewPagerAdapter extends PagerAdapter {
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
 
+        GenericDraweeHierarchy hierarchy =
+                GenericDraweeHierarchyBuilder.newInstance(container.getResources())
+                .setActualImageScaleType(ScalingUtils.ScaleType.FIT_CENTER).build();
+
         SimpleDraweeView imageView = new SimpleDraweeView(m_context);
-        imageView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+        imageView.setHierarchy(hierarchy);
 
         m_backgroundManager.fillImageView(imageView);
 
