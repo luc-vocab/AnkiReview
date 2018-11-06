@@ -22,7 +22,8 @@
             <com.facebook.drawee.view.SimpleDraweeView
                 android:id="@+id/deck_backgroundimage"
                 android:layout_width="match_parent"
-                android:layout_height="235dp" />
+                android:layout_height="235dp"
+                android:scaleType="centerInside" />
 
 
             <LinearLayout

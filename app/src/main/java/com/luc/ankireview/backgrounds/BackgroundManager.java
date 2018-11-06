@@ -63,9 +63,9 @@ public class BackgroundManager {
         Url baseUrl = MediaManager.get().url().secure(true).transformation(new Transformation().quality("auto").fetchFormat("webp")).publicId(imagePublicId);
 
         MediaManager.get().responsiveUrl(true, true, "imagga_scale", null)
-                .stepSize(1)
-                .minDimension(500)
-                .maxDimension(2000)
+                .stepSize(100)
+                .minDimension(100)
+                .maxDimension(2500)
                 .generate(baseUrl, imageView, new ResponsiveUrl.Callback() {
                     @Override
                     public void onUrlReady(Url url) {

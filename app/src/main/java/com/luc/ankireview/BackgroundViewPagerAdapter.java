@@ -21,6 +21,7 @@ public class BackgroundViewPagerAdapter extends PagerAdapter {
     public Object instantiateItem(ViewGroup container, int position) {
 
         SimpleDraweeView imageView = new SimpleDraweeView(m_context);
+        imageView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
 
         m_backgroundManager.fillImageView(imageView);
 
