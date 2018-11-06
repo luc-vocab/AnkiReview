@@ -1,5 +1,6 @@
 package com.luc.ankireview.backgrounds;
 
+import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.cloudinary.Transformation;
@@ -7,6 +8,11 @@ import com.cloudinary.Url;
 import com.cloudinary.android.MediaManager;
 import com.cloudinary.android.ResponsiveUrl;
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -18,7 +24,26 @@ public class BackgroundManager {
     private static final String TAG = "BackgroundManager";
 
     public BackgroundManager(long deckId) {
+        m_firestoreDb = FirebaseFirestore.getInstance();
+
         m_deckId = deckId;
+
+
+        m_firestoreDb.collection("backgrounds").document("9JMXEtYV1J9UYCKPvxWv").collection("images")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (DocumentSnapshot document : task.getResult()) {
+                                Log.d(TAG, document.getId() + " => " + document.getData());
+                            }
+                        } else {
+                            Log.w(TAG, "Error getting documents.", task.getException());
+                        }
+                    }
+                });
+
 
         String[] backgroundImageUrls = {
                 "v1540301931/ankireview_backgrounds/chinese_women/dreamstimemaximum_52491159.jpg",
@@ -81,5 +106,6 @@ public class BackgroundManager {
 
     private Vector<String> m_backgroundUrlList;
     private int m_currentBackgroundIndex = 0;
+    private FirebaseFirestore m_firestoreDb;
 
 }
