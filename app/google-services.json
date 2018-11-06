@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "1032580874480",
+    "firebase_url": "https://ankireview-dev.firebaseio.com",
+    "project_id": "ankireview-dev",
+    "storage_bucket": "ankireview-dev.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1032580874480:android:7c462aee9198387a",
+        "android_client_info": {
+          "package_name": "com.luc.ankireview"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1032580874480-djb5id1as4dajald0pjh2r70dqa6b9ua.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.luc.ankireview",
+            "certificate_hash": "4a6a32f04c05868ec60dbfe8e9adcd2bcf183106"
+          }
+        },
+        {
+          "client_id": "1032580874480-3dl4jc5hvq6hhf25d2deuqp5ntq7jq7o.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCMGvLCUx9SUkX2nnGLQ8JfZIFtaqUU23M"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1032580874480-3dl4jc5hvq6hhf25d2deuqp5ntq7jq7o.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
