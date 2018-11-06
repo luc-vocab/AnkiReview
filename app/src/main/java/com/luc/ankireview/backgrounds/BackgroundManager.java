@@ -60,10 +60,7 @@ public class BackgroundManager {
     public void fillImageView(final SimpleDraweeView imageView)
     {
         String imagePublicId = getImage();
-        Url baseUrl = MediaManager.get().url().transformation(new Transformation().quality("auto").fetchFormat("webp")).publicId(imagePublicId);
-
-                //.generate(imageUrl);
-        // baseUrl.transformation(new Transformation().quality("auto").fetchFormat("webp")).generate(imageUrl);
+        Url baseUrl = MediaManager.get().url().secure(true).transformation(new Transformation().quality("auto").fetchFormat("webp")).publicId(imagePublicId);
 
         MediaManager.get().responsiveUrl(true, true, "imagga_scale", null)
                 .stepSize(1)
@@ -73,6 +70,8 @@ public class BackgroundManager {
                     @Override
                     public void onUrlReady(Url url) {
                         String finalUrl = url.generate();
+                        // hack because cloudinary doesn't seem to support secure in responsive urls
+                        finalUrl = finalUrl.replace("http://", "https://");
                         Log.v(TAG, "final URL: " + finalUrl);
                         imageView.setImageURI(finalUrl);
                     }

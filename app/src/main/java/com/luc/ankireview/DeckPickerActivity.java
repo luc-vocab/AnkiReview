@@ -8,6 +8,9 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.database.Cursor;
+
+import java.util.HashSet;
+import java.util.Set;
 import java.util.Vector;
 
 import org.json.JSONArray;
@@ -26,8 +29,12 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.cloudinary.android.MediaManager;
+import com.facebook.common.logging.FLog;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.facebook.imagepipeline.core.ImagePipelineConfig;
+import com.facebook.imagepipeline.listener.RequestListener;
+import com.facebook.imagepipeline.listener.RequestLoggingListener;
 import com.ichi2.anki.FlashCardsContract;
 import com.luc.ankireview.backgrounds.BackgroundManager;
 
@@ -194,7 +201,17 @@ public class DeckPickerActivity extends AppCompatActivity implements AdapterView
         setContentView(R.layout.activity_deck_picker);
 
         MediaManager.init(this);
-        Fresco.initialize(this);
+
+        Set<RequestListener> requestListeners = new HashSet<>();
+        requestListeners.add(new RequestLoggingListener());
+        ImagePipelineConfig config = ImagePipelineConfig.newBuilder(this)
+                // other setters
+                .setRequestListeners(requestListeners)
+                .build();
+        Fresco.initialize(this, config);
+        FLog.setMinimumLoggingLevel(FLog.VERBOSE);
+
+        //Fresco.initialize(this);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.deckpicker_toolbar);
         setSupportActionBar(toolbar);
