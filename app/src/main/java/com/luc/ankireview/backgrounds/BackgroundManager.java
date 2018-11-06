@@ -70,8 +70,6 @@ public class BackgroundManager {
                     @Override
                     public void onUrlReady(Url url) {
                         String finalUrl = url.generate();
-                        // hack because cloudinary doesn't seem to support secure in responsive urls
-                        finalUrl = finalUrl.replace("http://", "https://");
                         Log.v(TAG, "final URL: " + finalUrl);
                         imageView.setImageURI(finalUrl);
                     }

@@ -13,7 +13,9 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        android:name=".AnkiReviewApp"
+        >
         <activity android:name=".DeckPickerActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,10 +25,6 @@
         </activity>
         <activity android:name=".ReviewActivity">
         </activity>
-
-        <meta-data
-            android:name="CLOUDINARY_URL"
-            android:value="cloudinary://@photozzap"/>
 
         <meta-data
             android:name="preloaded_fonts"
