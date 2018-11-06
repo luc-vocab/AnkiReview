@@ -54,6 +54,7 @@ public class BackgroundManager {
                             }
                             m_fillImageQueue.clear();
                             m_backgroundListReady = true;
+                            Log.v(TAG, "retrieved " + m_backgroundUrlList.size() + " backgrounds");
 
                         } else {
                             Log.w(TAG, "Error getting documents.", task.getException());
