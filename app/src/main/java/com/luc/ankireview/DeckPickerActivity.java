@@ -202,6 +202,8 @@ public class DeckPickerActivity extends AppCompatActivity implements AdapterView
 
         MediaManager.init(this);
 
+        // enable logging on fresco
+        /*
         Set<RequestListener> requestListeners = new HashSet<>();
         requestListeners.add(new RequestLoggingListener());
         ImagePipelineConfig config = ImagePipelineConfig.newBuilder(this)
@@ -210,8 +212,9 @@ public class DeckPickerActivity extends AppCompatActivity implements AdapterView
                 .build();
         Fresco.initialize(this, config);
         FLog.setMinimumLoggingLevel(FLog.VERBOSE);
+        */
 
-        //Fresco.initialize(this);
+        Fresco.initialize(this);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.deckpicker_toolbar);
         setSupportActionBar(toolbar);
