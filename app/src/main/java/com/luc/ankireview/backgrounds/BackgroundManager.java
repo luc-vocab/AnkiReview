@@ -1,7 +1,6 @@
 package com.luc.ankireview.backgrounds;
 
 import android.util.Log;
-import android.widget.ImageView;
 
 import com.cloudinary.Transformation;
 import com.cloudinary.Url;
@@ -16,6 +15,7 @@ import java.util.Vector;
 import static android.support.constraint.Constraints.TAG;
 
 public class BackgroundManager {
+    private static final String TAG = "BackgroundManager";
 
     public BackgroundManager(long deckId) {
         m_deckId = deckId;
