@@ -12,6 +12,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreSettings;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
@@ -26,7 +27,12 @@ public class BackgroundManager {
     private static final String TAG = "BackgroundManager";
 
     public BackgroundManager() {
+        FirebaseFirestoreSettings settings = new FirebaseFirestoreSettings.Builder()
+                .setPersistenceEnabled(true)
+                .build();
         m_firestoreDb = FirebaseFirestore.getInstance();
+        m_firestoreDb.setFirestoreSettings(settings);
+
 
         m_fillImageQueue = new ArrayList<SimpleDraweeView>();
         m_backgroundUrlList = new Vector<String>();

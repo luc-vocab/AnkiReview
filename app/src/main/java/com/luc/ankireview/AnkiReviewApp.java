@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.cloudinary.android.MediaManager;
 import com.facebook.drawee.backends.pipeline.Fresco;
+import com.google.firebase.firestore.FirebaseFirestoreSettings;
 
 import java.util.HashMap;
 import java.util.Map;
