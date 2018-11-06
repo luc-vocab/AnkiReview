@@ -27,6 +27,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.cloudinary.android.MediaManager;
 import com.ichi2.anki.FlashCardsContract;
 import com.luc.ankireview.backgrounds.BackgroundManager;
 import com.squareup.picasso.Picasso;
@@ -99,11 +100,8 @@ public class DeckPickerActivity extends AppCompatActivity implements AdapterView
             }
 
             BackgroundManager backgroundManager = new BackgroundManager(deck.deckId);
-            String imgUrl = backgroundManager.getBackgroundUrl();
             ImageView backgroundImageView = view.findViewById(R.id.deck_backgroundimage);
-
-            Picasso.get().setLoggingEnabled(true);
-            Picasso.get().load(imgUrl).into(backgroundImageView);
+            backgroundManager.fillImageView(backgroundImageView);
 
             return view;
         }
@@ -195,6 +193,8 @@ public class DeckPickerActivity extends AppCompatActivity implements AdapterView
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_deck_picker);
+
+        MediaManager.init(this);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.deckpicker_toolbar);
         setSupportActionBar(toolbar);

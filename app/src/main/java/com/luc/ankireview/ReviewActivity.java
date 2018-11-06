@@ -29,6 +29,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar;
+import com.cloudinary.android.MediaManager;
 import com.leinardi.android.speeddial.SpeedDialActionItem;
 import com.leinardi.android.speeddial.SpeedDialView;
 import com.luc.ankireview.animation.DepthPageTransformer;
@@ -92,6 +93,8 @@ public class ReviewActivity extends AppCompatActivity {
         String mediaDir = Environment.getExternalStorageDirectory().getAbsolutePath() + "/AnkiDroid/collection.media/";
         Uri mediaDirUri = Uri.fromFile(new File(mediaDir));
         m_baseUrl = mediaDirUri.toString() +"/";
+
+        MediaManager.init(this);
 
         Intent intent = getIntent();
         m_deckId = intent.getLongExtra("deckId", 0);
