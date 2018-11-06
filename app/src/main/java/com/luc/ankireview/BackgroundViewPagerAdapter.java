@@ -6,14 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.luc.ankireview.backgrounds.BackgroundManager;
-import com.squareup.picasso.Picasso;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Random;
-import java.util.Vector;
 
 public class BackgroundViewPagerAdapter extends PagerAdapter {
 
@@ -26,8 +20,7 @@ public class BackgroundViewPagerAdapter extends PagerAdapter {
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
 
-        ImageView imageView = new ImageView(m_context);
-        imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+        SimpleDraweeView imageView = new SimpleDraweeView(m_context);
 
         m_backgroundManager.fillImageView(imageView);
 

@@ -7,7 +7,7 @@ import com.cloudinary.Transformation;
 import com.cloudinary.Url;
 import com.cloudinary.android.MediaManager;
 import com.cloudinary.android.ResponsiveUrl;
-import com.squareup.picasso.Picasso;
+import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -19,8 +19,6 @@ public class BackgroundManager {
 
     public BackgroundManager(long deckId) {
         m_deckId = deckId;
-
-        Picasso.get().setLoggingEnabled(true);
 
         String[] backgroundImageUrls = {
                 "v1540301931/ankireview_backgrounds/chinese_women/dreamstimemaximum_52491159.jpg",
@@ -59,7 +57,7 @@ public class BackgroundManager {
         return imgUrl;
     }
 
-    public void fillImageView(final ImageView imageView)
+    public void fillImageView(final SimpleDraweeView imageView)
     {
         String imagePublicId = getImage();
         Url baseUrl = MediaManager.get().url().transformation(new Transformation().quality("auto").fetchFormat("webp")).publicId(imagePublicId);
@@ -76,7 +74,7 @@ public class BackgroundManager {
                     public void onUrlReady(Url url) {
                         String finalUrl = url.generate();
                         Log.v(TAG, "final URL: " + finalUrl);
-                        Picasso.get().load(finalUrl).into(imageView);
+                        imageView.setImageURI(finalUrl);
                     }
                 });
     }
