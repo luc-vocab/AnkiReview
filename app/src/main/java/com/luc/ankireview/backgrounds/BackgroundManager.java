@@ -14,8 +14,10 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 import java.util.Vector;
 
 import static android.support.constraint.Constraints.TAG;
@@ -28,6 +30,8 @@ public class BackgroundManager {
 
         m_deckId = deckId;
 
+        m_fillImageQueue = new ArrayList<SimpleDraweeView>();
+        m_backgroundUrlList = new Vector<String>();
 
         m_firestoreDb.collection("backgrounds").document("9JMXEtYV1J9UYCKPvxWv").collection("images")
                 .get()
@@ -37,7 +41,16 @@ public class BackgroundManager {
                         if (task.isSuccessful()) {
                             for (DocumentSnapshot document : task.getResult()) {
                                 Log.d(TAG, document.getId() + " => " + document.getData());
+                                m_backgroundUrlList.add(document.getString("image"));
                             }
+                            Collections.shuffle(m_backgroundUrlList);
+                            // process backlog of "fillImageView"
+                            for( SimpleDraweeView imageView : m_fillImageQueue) {
+                                fillImageViewComplete(imageView);
+                            }
+                            m_fillImageQueue.clear();
+                            m_backgroundListReady = true;
+
                         } else {
                             Log.w(TAG, "Error getting documents.", task.getException());
                         }
@@ -45,6 +58,7 @@ public class BackgroundManager {
                 });
 
 
+        /*
         String[] backgroundImageUrls = {
                 "v1540301931/ankireview_backgrounds/chinese_women/dreamstimemaximum_52491159.jpg",
                 "v1540301930/ankireview_backgrounds/chinese_women/dreamstimemaximum_51242767.jpg",
@@ -64,9 +78,10 @@ public class BackgroundManager {
                 "v1540301900/ankireview_backgrounds/chinese_women/dreamstimeextralarge_51136353.jpg",
                 "v1540301900/ankireview_backgrounds/chinese_women/dreamstimeextralarge_51136341.jpg"
         };
-
         m_backgroundUrlList = new Vector<String>(Arrays.asList(backgroundImageUrls));
-        Collections.shuffle(m_backgroundUrlList);
+        */
+
+        //Collections.shuffle(m_backgroundUrlList);
     }
 
 
@@ -82,8 +97,7 @@ public class BackgroundManager {
         return imgUrl;
     }
 
-    public void fillImageView(final SimpleDraweeView imageView)
-    {
+    private void fillImageViewComplete(final SimpleDraweeView imageView) {
         String imagePublicId = getImage();
         Url baseUrl = MediaManager.get().url().secure(true).transformation(new Transformation().quality("auto").fetchFormat("webp")).publicId(imagePublicId);
 
@@ -101,11 +115,25 @@ public class BackgroundManager {
                 });
     }
 
+    public void fillImageView(final SimpleDraweeView imageView)
+    {
+        if( m_backgroundListReady ) {
+            // we have the backgrounds, go ahead
+            fillImageViewComplete(imageView);
+        } else {
+            // need to queue up this action
+            m_fillImageQueue.add(imageView);
+        }
+
+    }
+
 
     private long m_deckId;
 
+    private boolean m_backgroundListReady = false;
     private Vector<String> m_backgroundUrlList;
     private int m_currentBackgroundIndex = 0;
     private FirebaseFirestore m_firestoreDb;
+    private List<SimpleDraweeView> m_fillImageQueue;
 
 }
