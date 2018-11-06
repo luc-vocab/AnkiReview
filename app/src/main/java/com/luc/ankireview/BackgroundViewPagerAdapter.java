@@ -17,7 +17,7 @@ public class BackgroundViewPagerAdapter extends PagerAdapter {
     public BackgroundViewPagerAdapter(Context context, long deckId) {
 
         m_context = context;
-        m_backgroundManager = new BackgroundManager(deckId);
+        m_backgroundManager = new BackgroundManager();
     }
 
     @Override

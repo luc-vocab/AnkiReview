@@ -105,9 +105,8 @@ public class DeckPickerActivity extends AppCompatActivity implements AdapterView
                 view.findViewById(R.id.deck_due_counts).setVisibility(View.GONE);
             }
 
-            BackgroundManager backgroundManager = new BackgroundManager(deck.deckId);
             SimpleDraweeView backgroundImageView = view.findViewById(R.id.deck_backgroundimage);
-            backgroundManager.fillImageView(backgroundImageView);
+            m_backgroundManager.fillImageView(backgroundImageView);
 
             return view;
         }
@@ -200,6 +199,7 @@ public class DeckPickerActivity extends AppCompatActivity implements AdapterView
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_deck_picker);
 
+        m_backgroundManager = new BackgroundManager();
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.deckpicker_toolbar);
         setSupportActionBar(toolbar);
@@ -277,5 +277,7 @@ public class DeckPickerActivity extends AppCompatActivity implements AdapterView
         this.startActivity(intent);
     }
     //private List<String> m_decks = new LinkedList<String>();
+
+    private BackgroundManager m_backgroundManager;
 
 }

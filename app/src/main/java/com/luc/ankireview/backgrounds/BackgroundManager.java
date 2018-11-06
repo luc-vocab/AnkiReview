@@ -25,10 +25,8 @@ import static android.support.constraint.Constraints.TAG;
 public class BackgroundManager {
     private static final String TAG = "BackgroundManager";
 
-    public BackgroundManager(long deckId) {
+    public BackgroundManager() {
         m_firestoreDb = FirebaseFirestore.getInstance();
-
-        m_deckId = deckId;
 
         m_fillImageQueue = new ArrayList<SimpleDraweeView>();
         m_backgroundUrlList = new Vector<String>();
@@ -127,8 +125,6 @@ public class BackgroundManager {
 
     }
 
-
-    private long m_deckId;
 
     private boolean m_backgroundListReady = false;
     private Vector<String> m_backgroundUrlList;
