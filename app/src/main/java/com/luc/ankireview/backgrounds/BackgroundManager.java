@@ -11,8 +11,6 @@ import com.squareup.picasso.Picasso;
 
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Vector;
 
 import static android.support.constraint.Constraints.TAG;
@@ -63,16 +61,17 @@ public class BackgroundManager {
 
     public void fillImageView(final ImageView imageView)
     {
-        String imageUrl = getImage();
+        String imagePublicId = getImage();
+        Url baseUrl = MediaManager.get().url().transformation(new Transformation().quality("auto").fetchFormat("webp")).publicId(imagePublicId);
 
-        Url baseUrl = MediaManager.get().url();
-        baseUrl.transformation(new Transformation().quality("auto").fetchFormat("webp"));
+                //.generate(imageUrl);
+        // baseUrl.transformation(new Transformation().quality("auto").fetchFormat("webp")).generate(imageUrl);
 
         MediaManager.get().responsiveUrl(true, true, "imagga_scale", null)
                 .stepSize(1)
                 .minDimension(500)
                 .maxDimension(2000)
-                .generate(imageUrl, imageView, new ResponsiveUrl.Callback() {
+                .generate(baseUrl, imageView, new ResponsiveUrl.Callback() {
                     @Override
                     public void onUrlReady(Url url) {
                         String finalUrl = url.generate();
