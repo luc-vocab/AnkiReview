@@ -94,8 +94,6 @@ public class ReviewActivity extends AppCompatActivity {
         Uri mediaDirUri = Uri.fromFile(new File(mediaDir));
         m_baseUrl = mediaDirUri.toString() +"/";
 
-        MediaManager.init(this);
-
         Intent intent = getIntent();
         m_deckId = intent.getLongExtra("deckId", 0);
         Log.d(TAG, "ReviewActivity.onCreate, deckId: "  + m_deckId);

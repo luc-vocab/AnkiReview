@@ -29,12 +29,7 @@ public class BackgroundViewPagerAdapter extends PagerAdapter {
         ImageView imageView = new ImageView(m_context);
         imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
 
-        /*
-        String imgUrl = m_backgroundManager.getBackgroundUrl();
-
-        Picasso.get().setLoggingEnabled(true);
-        Picasso.get().load(imgUrl).into(imageView);
-        */
+        m_backgroundManager.fillImageView(imageView);
 
         switch( position)
         {

@@ -3,6 +3,7 @@ package com.luc.ankireview.backgrounds;
 import android.util.Log;
 import android.widget.ImageView;
 
+import com.cloudinary.Transformation;
 import com.cloudinary.Url;
 import com.cloudinary.android.MediaManager;
 import com.cloudinary.android.ResponsiveUrl;
@@ -63,7 +64,14 @@ public class BackgroundManager {
     public void fillImageView(final ImageView imageView)
     {
         String imageUrl = getImage();
+
+        Url baseUrl = MediaManager.get().url();
+        baseUrl.transformation(new Transformation().quality("auto").fetchFormat("webp"));
+
         MediaManager.get().responsiveUrl(true, true, "imagga_scale", null)
+                .stepSize(1)
+                .minDimension(500)
+                .maxDimension(2000)
                 .generate(imageUrl, imageView, new ResponsiveUrl.Callback() {
                     @Override
                     public void onUrlReady(Url url) {
