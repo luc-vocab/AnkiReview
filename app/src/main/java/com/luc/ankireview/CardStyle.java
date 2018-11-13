@@ -12,6 +12,7 @@ import android.text.style.AlignmentSpan;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.LeadingMarginSpan;
 import android.text.style.RelativeSizeSpan;
+import android.util.Log;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
