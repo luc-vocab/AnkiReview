@@ -1,5 +1,6 @@
 package com.luc.ankireview;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -7,7 +8,9 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.database.Cursor;
-import java.util.HashMap;
+
+import java.util.HashSet;
+import java.util.Set;
 import java.util.Vector;
 
 import org.json.JSONArray;
@@ -20,13 +23,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.ichi2.anki.FlashCardsContract;
-
+import com.luc.ankireview.backgrounds.BackgroundManager;
 
 
 public class DeckPickerActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
@@ -34,6 +37,7 @@ public class DeckPickerActivity extends AppCompatActivity implements AdapterView
     private static final String TAG = "DeckPickerActivity";
     private static final String ANKI_PERMISSIONS = "com.ichi2.anki.permission.READ_WRITE_DATABASE";
     private static final String READ_STORAGE_PERMISSION = android.Manifest.permission.READ_EXTERNAL_STORAGE;
+    private static final String INTERNET_PERMISSION = Manifest.permission.INTERNET;
 
 
     private class AnkiDeck {
@@ -89,12 +93,13 @@ public class DeckPickerActivity extends AppCompatActivity implements AdapterView
                 deckLearnCount.setText(Integer.toString(deck.deckDueCounts.learnCount));
 
                 view.findViewById(R.id.deck_due_counts).setVisibility(View.VISIBLE);
-                view.findViewById(R.id.no_cards_due).setVisibility(View.GONE);
 
             } else {
                 view.findViewById(R.id.deck_due_counts).setVisibility(View.GONE);
-                view.findViewById(R.id.no_cards_due).setVisibility(View.VISIBLE);
             }
+
+            ImageView backgroundImageView = view.findViewById(R.id.deck_backgroundimage);
+            m_backgroundManager.fillImageView(backgroundImageView);
 
             return view;
         }
@@ -136,7 +141,8 @@ public class DeckPickerActivity extends AppCompatActivity implements AdapterView
 
     private boolean permissionsGranted() {
         if ( ContextCompat.checkSelfPermission(this, ANKI_PERMISSIONS ) != PackageManager.PERMISSION_GRANTED ||
-                ContextCompat.checkSelfPermission(this, READ_STORAGE_PERMISSION ) != PackageManager.PERMISSION_GRANTED) {
+                ContextCompat.checkSelfPermission(this, READ_STORAGE_PERMISSION ) != PackageManager.PERMISSION_GRANTED ||
+                ContextCompat.checkSelfPermission(this, INTERNET_PERMISSION ) != PackageManager.PERMISSION_GRANTED) {
             return false;
         }
         return true;
@@ -151,7 +157,8 @@ public class DeckPickerActivity extends AppCompatActivity implements AdapterView
             // Permission is not granted
             // Should we show an explanation?
             if (ActivityCompat.shouldShowRequestPermissionRationale(this, ANKI_PERMISSIONS ) ||
-                    ActivityCompat.shouldShowRequestPermissionRationale(this, READ_STORAGE_PERMISSION )   ) {
+                    ActivityCompat.shouldShowRequestPermissionRationale(this, READ_STORAGE_PERMISSION ) ||
+                    ActivityCompat.shouldShowRequestPermissionRationale(this, INTERNET_PERMISSION)  ) {
                 // Show an explanation to the user *asynchronously* -- don't block
                 // this thread waiting for the user's response! After the user
                 // sees the explanation, try again to request the permission.
@@ -159,7 +166,7 @@ public class DeckPickerActivity extends AppCompatActivity implements AdapterView
                 Log.d(TAG, "show explanation ?");
 
                 ActivityCompat.requestPermissions(this,
-                        new String[]{ANKI_PERMISSIONS, READ_STORAGE_PERMISSION },
+                        new String[]{ANKI_PERMISSIONS, READ_STORAGE_PERMISSION, INTERNET_PERMISSION },
                         0);
 
             } else {
@@ -167,7 +174,7 @@ public class DeckPickerActivity extends AppCompatActivity implements AdapterView
 
                 // No explanation needed, we can request the permission.
                 ActivityCompat.requestPermissions(this,
-                        new String[]{ANKI_PERMISSIONS, READ_STORAGE_PERMISSION },
+                        new String[]{ANKI_PERMISSIONS, READ_STORAGE_PERMISSION, INTERNET_PERMISSION},
                         0);
 
                 // we're going to get a callback later
@@ -184,6 +191,8 @@ public class DeckPickerActivity extends AppCompatActivity implements AdapterView
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_deck_picker);
+
+        m_backgroundManager = new BackgroundManager();
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.deckpicker_toolbar);
         setSupportActionBar(toolbar);
@@ -261,5 +270,7 @@ public class DeckPickerActivity extends AppCompatActivity implements AdapterView
         this.startActivity(intent);
     }
     //private List<String> m_decks = new LinkedList<String>();
+
+    private BackgroundManager m_backgroundManager;
 
 }

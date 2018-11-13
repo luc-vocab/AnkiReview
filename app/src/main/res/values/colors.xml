@@ -4,7 +4,9 @@
     <color name="colorPrimaryDark">#0D47A1</color>
     <color name="colorAccent">#1565c0</color>
     <color name="colorBackground">#e0e0e0</color>
-    <color name="toolbarTextColor">#FFFFFF</color>
+    <color name="toolbarTextColor">#ffffff</color>
+
+    <color name="deckpicker_deckname_shadow">#000000</color>
 
     <!-- https://www.materialui.co/colors -->
     <!-- text colors -->
@@ -14,9 +16,9 @@
     <color name="text_cantonese">#9575CD</color>
 
     <!-- answer colors -->
-    <color name="answer_wrong">#EC407A</color>
+    <color name="answer_wrong">#ec407a</color>
     <color name="answer_hard">#BA68C8</color>
-    <color name="answer_good">#4CAF50</color>
+    <color name="answer_good">#4caf50</color>
     <color name="answer_easy">#1976d2</color>
 
     <color name="answer_tag_suspend">#EF6C00</color>

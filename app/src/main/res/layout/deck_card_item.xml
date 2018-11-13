@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     >
@@ -15,95 +16,96 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
             <ImageView
-                android:id="@+id/deck_icon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                android:paddingTop="12dp"
-                app:srcCompat="@drawable/card_stack" />
+                android:id="@+id/deck_backgroundimage"
+                android:layout_width="match_parent"
+                android:layout_height="235dp"
+                android:scaleType="centerCrop" />
+
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_margin="12dp"
-                android:layout_toRightOf="@+id/deck_icon"
-                android:orientation="vertical">
+                android:layout_alignBottom="@+id/deck_backgroundimage"
+                android:layout_alignParentBottom="false"
+                android:orientation="horizontal">
 
                 <TextView
                     android:id="@+id/deck_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="25dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="1"
+                    android:baselineAligned="false"
+                    android:fontFamily="@font/fira_sans_condensed"
+                    android:shadowColor="@color/deckpicker_deckname_shadow"
+                    android:shadowDx="0"
+                    android:shadowDy="0"
+                    android:shadowRadius="20"
                     android:text="TextView"
-                    android:textSize="24sp"
+                    android:textColor="@color/toolbarTextColor"
+                    android:textSize="50dp"
                     android:textStyle="bold" />
+
 
                 <LinearLayout
                     android:id="@+id/deck_due_counts"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginLeft="40dp"
-                    android:layout_marginRight="40dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_weight="2"
                     android:orientation="horizontal">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="New:"
-                        android:textColor="@color/colorAccent" />
 
                     <TextView
                         android:id="@+id/deck_new_count"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:textColor="@color/colorAccent" />
-
-                    <TextView
-                        android:id="@+id/textView4"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Review:"
-                        android:textColor="@color/colorAccent" />
+                        android:fontFamily="@font/fira_sans_condensed"
+                        android:shadowColor="@color/colorBackground"
+                        android:shadowDx="0"
+                        android:shadowDy="0"
+                        android:shadowRadius="20"
+                        android:textColor="@color/answer_easy"
+                        android:textSize="40dp" />
 
                     <TextView
                         android:id="@+id/deck_review_count"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:fontFamily="@font/fira_sans_condensed"
                         android:text="TextView"
-                        android:textColor="@color/colorAccent" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Learn:"
-                        android:textColor="@color/colorAccent" />
+                        android:shadowColor="@color/colorBackground"
+                        android:shadowDx="0"
+                        android:shadowDy="0"
+                        android:shadowRadius="20"
+                        android:textColor="@color/answer_good"
+                        android:textSize="40dp" />
 
                     <TextView
                         android:id="@+id/deck_learn_count"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:textColor="@color/colorAccent" />
+                        android:fontFamily="@font/fira_sans_condensed"
+                        android:shadowColor="@color/colorBackground"
+                        android:shadowDx="0"
+                        android:shadowDy="0"
+                        android:shadowRadius="20"
+                        android:textColor="@color/answer_wrong"
+                        android:textSize="40dp" />
 
                 </LinearLayout>
 
-                <TextView
-                    android:id="@+id/no_cards_due"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="40dp"
-                    android:layout_marginRight="40dp"
-                    android:layout_weight="1"
-                    android:text="No cards due" />
+
             </LinearLayout>
+
+
         </RelativeLayout>
 
     </android.support.v7.widget.CardView>

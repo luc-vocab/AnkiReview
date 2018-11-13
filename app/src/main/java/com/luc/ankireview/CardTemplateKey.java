@@ -24,6 +24,10 @@ public class CardTemplateKey {
         return Objects.hash(m_modelId, m_cardOrd);
     }
 
+    public String toString() {
+        return " modelId: " + Long.toString(m_modelId);
+    }
+
     private long m_modelId;
     private int m_cardOrd;
 }

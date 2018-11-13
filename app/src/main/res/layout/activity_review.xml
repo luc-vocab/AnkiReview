@@ -44,12 +44,10 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         >
 
-        <FrameLayout
-            android:id="@+id/background"
+        <android.support.v4.view.ViewPager
+            android:id="@+id/background_pager"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-        </FrameLayout>
+            android:layout_height="match_parent"></android.support.v4.view.ViewPager>
 
         <com.luc.ankireview.FlashcardViewPager
             android:id="@+id/flashcard_pager"
