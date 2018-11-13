@@ -4,11 +4,12 @@ import android.app.Application;
 import android.util.Log;
 
 import com.cloudinary.android.MediaManager;
-import com.facebook.drawee.backends.pipeline.Fresco;
 import com.google.firebase.firestore.FirebaseFirestoreSettings;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 public class AnkiReviewApp extends Application {
     private static final String TAG = "AnkiReviewApp";
@@ -27,25 +28,6 @@ public class AnkiReviewApp extends Application {
         config.put("cloud_name", "photozzap");
         config.put("secure", true);
         MediaManager.init(this, config);
-
-
-        // fresco initialization
-        // ---------------------
-
-        // enable logging on fresco
-        /*
-        Set<RequestListener> requestListeners = new HashSet<>();
-        requestListeners.add(new RequestLoggingListener());
-        ImagePipelineConfig config = ImagePipelineConfig.newBuilder(this)
-                // other setters
-                .setRequestListeners(requestListeners)
-                .build();
-        Fresco.initialize(this, config);
-        FLog.setMinimumLoggingLevel(FLog.VERBOSE);
-        */
-
-        Fresco.initialize(this);
-
 
     }
 }

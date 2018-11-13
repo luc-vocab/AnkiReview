@@ -2,26 +2,25 @@ package com.luc.ankireview.backgrounds;
 
 import android.support.annotation.NonNull;
 import android.util.Log;
+import android.widget.ImageView;
 
 import com.cloudinary.Transformation;
 import com.cloudinary.Url;
 import com.cloudinary.android.MediaManager;
 import com.cloudinary.android.ResponsiveUrl;
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreSettings;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Vector;
 
-import static android.support.constraint.Constraints.TAG;
 
 public class BackgroundManager {
     private static final String TAG = "BackgroundManager";
@@ -34,7 +33,7 @@ public class BackgroundManager {
         m_firestoreDb.setFirestoreSettings(settings);
 
 
-        m_fillImageQueue = new ArrayList<SimpleDraweeView>();
+        m_fillImageQueue = new ArrayList<ImageView>();
         m_backgroundUrlList = new Vector<String>();
 
         m_firestoreDb.collection("backgrounds").document("9JMXEtYV1J9UYCKPvxWv").collection("images")
@@ -49,7 +48,7 @@ public class BackgroundManager {
                             }
                             Collections.shuffle(m_backgroundUrlList);
                             // process backlog of "fillImageView"
-                            for( SimpleDraweeView imageView : m_fillImageQueue) {
+                            for( ImageView imageView : m_fillImageQueue) {
                                 fillImageViewComplete(imageView);
                             }
                             m_fillImageQueue.clear();
@@ -77,7 +76,7 @@ public class BackgroundManager {
         return imgUrl;
     }
 
-    private void fillImageViewComplete(final SimpleDraweeView imageView) {
+    private void fillImageViewComplete(final ImageView imageView) {
         String imagePublicId = getImage();
         Url baseUrl = MediaManager.get().url().secure(true).transformation(new Transformation().quality("auto").fetchFormat("webp")).publicId(imagePublicId);
 
@@ -90,12 +89,12 @@ public class BackgroundManager {
                     public void onUrlReady(Url url) {
                         String finalUrl = url.generate();
                         Log.v(TAG, "final URL: " + finalUrl);
-                        imageView.setImageURI(finalUrl);
+                        Picasso.get().load(finalUrl ).into(imageView);
                     }
                 });
     }
 
-    public void fillImageView(final SimpleDraweeView imageView)
+    public void fillImageView(final ImageView imageView)
     {
         if( m_backgroundListReady ) {
             // we have the backgrounds, go ahead
@@ -112,6 +111,6 @@ public class BackgroundManager {
     private Vector<String> m_backgroundUrlList;
     private int m_currentBackgroundIndex = 0;
     private FirebaseFirestore m_firestoreDb;
-    private List<SimpleDraweeView> m_fillImageQueue;
+    private List<ImageView> m_fillImageQueue;
 
 }

@@ -28,13 +28,6 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.cloudinary.android.MediaManager;
-import com.facebook.common.logging.FLog;
-import com.facebook.drawee.backends.pipeline.Fresco;
-import com.facebook.drawee.view.SimpleDraweeView;
-import com.facebook.imagepipeline.core.ImagePipelineConfig;
-import com.facebook.imagepipeline.listener.RequestListener;
-import com.facebook.imagepipeline.listener.RequestLoggingListener;
 import com.ichi2.anki.FlashCardsContract;
 import com.luc.ankireview.backgrounds.BackgroundManager;
 
@@ -105,7 +98,7 @@ public class DeckPickerActivity extends AppCompatActivity implements AdapterView
                 view.findViewById(R.id.deck_due_counts).setVisibility(View.GONE);
             }
 
-            SimpleDraweeView backgroundImageView = view.findViewById(R.id.deck_backgroundimage);
+            ImageView backgroundImageView = view.findViewById(R.id.deck_backgroundimage);
             m_backgroundManager.fillImageView(backgroundImageView);
 
             return view;

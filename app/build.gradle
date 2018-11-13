@@ -36,8 +36,7 @@ dependencies {
     implementation 'com.akexorcist:RoundCornerProgressBar:2.0.3'
     implementation "com.leinardi.android:speed-dial:2.0.0"
     implementation 'com.android.support:support-dynamic-animation:28.0.0'
-    implementation 'com.facebook.fresco:fresco:1.11.0'
-    implementation 'com.facebook.fresco:webpsupport:1.11.0'
+    implementation 'com.squareup.picasso:picasso:2.71828'
     api group: 'com.cloudinary', name: 'cloudinary-android', version: '1.25.0'
 }
 
