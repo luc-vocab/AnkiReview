@@ -6,6 +6,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 
+import com.luc.ankireview.style.CardStyle;
+
 public class CardStyleActivity extends AppCompatActivity {
     private static final String TAG = "CardStyleActivity";
 

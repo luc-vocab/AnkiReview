@@ -4,17 +4,15 @@ import android.content.Context;
 import android.support.animation.DynamicAnimation;
 import android.support.animation.SpringAnimation;
 import android.support.animation.SpringForce;
-import android.support.design.widget.CoordinatorLayout;
-import android.support.v4.view.GestureDetectorCompat;
 import android.util.AttributeSet;
 import android.util.Log;
-import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.VelocityTracker;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
-import android.widget.TextView;
+
+import com.luc.ankireview.style.CardStyle;
 
 import static java.lang.Math.abs;
 

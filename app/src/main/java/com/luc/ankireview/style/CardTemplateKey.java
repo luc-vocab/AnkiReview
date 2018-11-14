@@ -1,4 +1,4 @@
-package com.luc.ankireview;
+package com.luc.ankireview.style;
 
 
 import java.util.Objects;

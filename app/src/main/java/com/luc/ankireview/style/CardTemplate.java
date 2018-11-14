@@ -1,6 +1,8 @@
-package com.luc.ankireview;
+package com.luc.ankireview.style;
 
 import android.graphics.Typeface;
+
+import com.luc.ankireview.style.CardField;
 
 import java.util.Vector;
 

@@ -10,7 +10,6 @@ import android.os.Environment;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v4.view.GestureDetectorCompat;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -29,19 +28,15 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar;
-import com.cloudinary.android.MediaManager;
 import com.leinardi.android.speeddial.SpeedDialActionItem;
 import com.leinardi.android.speeddial.SpeedDialView;
-import com.luc.ankireview.animation.DepthPageTransformer;
 import com.luc.ankireview.animation.ReviewPageTransformer;
-import com.luc.ankireview.animation.ZoomOutPageTransformer;
-import com.luc.ankireview.animation.AlphaPageTransformer;
+import com.luc.ankireview.style.CardStyle;
 
 import java.io.File;
 import java.io.IOException;
 
 import java.util.Collections;
-import java.util.Random;
 import java.util.Vector;
 
 public class ReviewActivity extends AppCompatActivity {

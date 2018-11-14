@@ -4,6 +4,8 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.FrameLayout;
 
+import com.luc.ankireview.style.CardStyle;
+
 public class CardStyleFlashcardLayout extends FrameLayout {
     private static final String TAG = "CardStyleFlashcardLayout";
 

@@ -1,4 +1,4 @@
-package com.luc.ankireview;
+package com.luc.ankireview.style;
 
 import android.content.Context;
 import android.graphics.Typeface;
@@ -15,6 +15,9 @@ import android.text.style.RelativeSizeSpan;
 import android.util.Log;
 import android.widget.FrameLayout;
 import android.widget.TextView;
+
+import com.luc.ankireview.Card;
+import com.luc.ankireview.R;
 
 import java.util.HashMap;
 import java.util.Vector;
