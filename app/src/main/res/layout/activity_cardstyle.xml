@@ -39,6 +39,8 @@
             android:id="@+id/cardstyle_editor_question_fields"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:divider="@null"
+            android:dividerHeight="0dp"
             android:orientation="vertical"></ListView>
 
         <TextView
@@ -51,6 +53,8 @@
             android:id="@+id/cardstyle_editor_answer_fields"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:divider="@null"
+            android:dividerHeight="0dp"
             android:orientation="vertical"></ListView>
     </LinearLayout>
 
