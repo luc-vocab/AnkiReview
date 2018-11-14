@@ -35,11 +35,11 @@
             android:text="Question Fields"
             android:textSize="35dp"></TextView>
 
-        <LinearLayout
+        <ListView
             android:id="@+id/cardstyle_editor_question_fields"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"></LinearLayout>
+            android:orientation="vertical"></ListView>
 
         <TextView
             android:layout_width="match_parent"
@@ -47,11 +47,11 @@
             android:text="Answer Fields"
             android:textSize="35dp"></TextView>
 
-        <LinearLayout
+        <ListView
             android:id="@+id/cardstyle_editor_answer_fields"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"></LinearLayout>
+            android:orientation="vertical"></ListView>
     </LinearLayout>
 
 

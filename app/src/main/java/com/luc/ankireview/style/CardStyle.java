@@ -182,6 +182,11 @@ public class CardStyle {
     }
 
 
+    public CardTemplate getCardTemplate(CardTemplateKey cardTemplateKey)
+    {
+        return m_cardTemplateMap.get(cardTemplateKey);
+    }
+
 
     private HashMap<CardTemplateKey, CardTemplate> m_cardTemplateMap;
 
