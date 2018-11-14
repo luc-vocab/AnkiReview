@@ -32,22 +32,26 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Question Fields"></TextView>
+            android:text="Question Fields"
+            android:textSize="35dp"></TextView>
 
         <LinearLayout
             android:id="@+id/cardstyle_editor_question_fields"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"></LinearLayout>
+            android:layout_height="wrap_content"
+            android:orientation="vertical"></LinearLayout>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Answer Fields"></TextView>
+            android:text="Answer Fields"
+            android:textSize="35dp"></TextView>
 
         <LinearLayout
             android:id="@+id/cardstyle_editor_answer_fields"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"></LinearLayout>
+            android:layout_height="wrap_content"
+            android:orientation="vertical"></LinearLayout>
     </LinearLayout>
 
 
