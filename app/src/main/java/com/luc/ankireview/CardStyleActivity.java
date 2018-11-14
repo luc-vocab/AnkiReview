@@ -15,7 +15,6 @@ public class CardStyleActivity extends AppCompatActivity {
         setContentView(R.layout.activity_cardstyle);
 
         m_cardStyle = new CardStyle(this);
-        m_cardStyleLayout = findViewById(R.id.flashcard_style);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.review_toolbar);
         toolbar.setTitle(R.string.card_style);
@@ -29,7 +28,6 @@ public class CardStyleActivity extends AppCompatActivity {
 
         // retrieve the appropriate card
         Card card = AnkiUtils.retrieveCard(getContentResolver(), noteId, cardOrd);
-        m_cardStyleLayout.setCard(card);
     }
 
     public CardStyle getCardStyle() {
@@ -37,6 +35,5 @@ public class CardStyleActivity extends AppCompatActivity {
     }
 
     private CardStyle m_cardStyle;
-    private CardStyleFlashcardLayout m_cardStyleLayout;
 
 }
