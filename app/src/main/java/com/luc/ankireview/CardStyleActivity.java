@@ -12,11 +12,13 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.databinding.DataBindingUtil;
 
 import com.luc.ankireview.style.CardField;
 import com.luc.ankireview.style.CardStyle;
 import com.luc.ankireview.style.CardTemplate;
 import com.luc.ankireview.style.CardTemplateKey;
+import com.luc.ankireview.databinding.CardFieldItemBinding;
 
 import java.util.Vector;
 
@@ -47,17 +49,21 @@ public class CardStyleActivity extends AppCompatActivity {
 
         @Override
         public View getView(int i, View view, ViewGroup viewGroup) {
+            CardFieldItemBinding binding;
+
             if(view==null)
             {
                 view = LayoutInflater.from(m_context).inflate(R.layout.card_field_item,viewGroup,false);
+                binding = DataBindingUtil.bind(view);
+                view.setTag(binding);
+            } else {
+                binding = (CardFieldItemBinding) view.getTag();
             }
 
             CardField cardField = (CardField) this.getItem(i);
+            binding.setField(cardField);
 
-            TextView fieldNameTextView = (TextView) view.findViewById(R.id.field_name);
-            fieldNameTextView.setText(cardField.getFieldName());
-
-            return view;
+            return binding.getRoot();
         }
 
         private Context m_context;
