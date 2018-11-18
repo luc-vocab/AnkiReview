@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -22,7 +23,7 @@ import com.luc.ankireview.databinding.CardFieldItemBinding;
 
 import java.util.Vector;
 
-public class CardStyleActivity extends AppCompatActivity {
+public class CardStyleActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
     private static final String TAG = "CardStyleActivity";
 
 
@@ -99,10 +100,24 @@ public class CardStyleActivity extends AppCompatActivity {
         m_questionFieldsListView = findViewById(R.id.cardstyle_editor_question_fields);
         m_questionFieldsAdapter = new CardFieldAdapter(this, cardTemplate.getQuestionCardFields());
         m_questionFieldsListView.setAdapter(m_questionFieldsAdapter);
+        m_questionFieldsListView.setOnItemClickListener(this);
 
         m_answerFieldsListView = findViewById(R.id.cardstyle_editor_answer_fields);
         m_answerFieldsAdapter = new CardFieldAdapter(this, cardTemplate.getAnswerCardFields());
         m_answerFieldsListView.setAdapter(m_answerFieldsAdapter);
+        m_answerFieldsListView.setOnItemClickListener(this);
+
+
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+        if( adapterView == m_questionFieldsListView) {
+            Log.d(TAG, "click question field: " + i);
+        } else if( adapterView == m_answerFieldsListView) {
+            Log.d(TAG, "click answer field: " + i);
+        }
+
     }
 
     public CardStyle getCardStyle() {
