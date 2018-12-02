@@ -40,6 +40,11 @@ public class CardStyleActivity extends AppCompatActivity implements AdapterView.
     private class SideFieldDragListener implements View.OnDragListener {
         private static final String TAG = "SideFieldDragListener";
 
+        public SideFieldDragListener(CardFieldAdapter cardFieldAdapter) {
+            super();
+            m_cardFieldAdapter = cardFieldAdapter;
+        }
+
         @Override
         public boolean onDrag(View view, DragEvent dragEvent) {
             Log.v(TAG, "onDrag");
@@ -54,9 +59,14 @@ public class CardStyleActivity extends AppCompatActivity implements AdapterView.
             if( dragEvent.getAction() == DragEvent.ACTION_DRAG_EXITED ) {
                 Log.v(TAG,"drag exited");
             }
+            if( dragEvent.getAction() == DragEvent.ACTION_DRAG_LOCATION ) {
+                Log.v(TAG, "drag location: " + dragEvent.getX() + " "  + dragEvent.getY());
+            }
 
             return false;
         }
+
+        CardFieldAdapter m_cardFieldAdapter;
     }
 
     private static class FieldShadowBuilder extends View.DragShadowBuilder {
@@ -235,6 +245,10 @@ public class CardStyleActivity extends AppCompatActivity implements AdapterView.
             return binding.getRoot();
         }
 
+        public Vector<CardField> getCardFields() {
+            return m_cardFields;
+        }
+
         private Context m_context;
         private Vector<CardField> m_cardFields;
     }
@@ -271,15 +285,16 @@ public class CardStyleActivity extends AppCompatActivity implements AdapterView.
         m_questionFieldsAdapter = new CardFieldAdapter(this, m_cardTemplate.getQuestionCardFields());
         m_questionFieldsListView.setAdapter(m_questionFieldsAdapter);
         m_questionFieldsListView.setOnItemClickListener(this);
-
         // add drag listener
-        m_questionFieldsListView.setOnDragListener(new SideFieldDragListener());
+        m_questionFieldsListView.setOnDragListener(new SideFieldDragListener(m_questionFieldsAdapter));
 
         // setup the AnswerFields ListView
         m_answerFieldsListView = findViewById(R.id.cardstyle_editor_answer_fields);
         m_answerFieldsAdapter = new CardFieldAdapter(this, m_cardTemplate.getAnswerCardFields());
         m_answerFieldsListView.setAdapter(m_answerFieldsAdapter);
         m_answerFieldsListView.setOnItemClickListener(this);
+        // add drag listener
+        m_answerFieldsListView.setOnDragListener(new SideFieldDragListener(m_answerFieldsAdapter));
 
         // setup the full Field list ListView
         m_fullFieldListView = findViewById(R.id.cardstyle_editor_all_fields);
