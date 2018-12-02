@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <variable name="editorField" type="com.luc.ankireview.style.CardField"/>
+    </data>
+
+    <LinearLayout
+        android:id="@+id/cardstyle_editor"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+
+        <TextView
+            android:id="@+id/editor_field_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@{editorField.fieldName}"
+            android:textSize="20dp" />
+    </LinearLayout>
+
+</layout>

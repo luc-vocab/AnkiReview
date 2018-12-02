@@ -8,6 +8,7 @@
     android:background="?attr/background"
     >
 
+
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -29,33 +30,61 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         >
 
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Question Fields"
-            android:textSize="35dp"></TextView>
+            android:orientation="vertical"
+            >
 
-        <ListView
-            android:id="@+id/cardstyle_editor_question_fields"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:divider="@null"
-            android:dividerHeight="0dp"
-            android:orientation="vertical"></ListView>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="All Fields"
+                android:textSize="35dp"></TextView>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Answer Fields"
-            android:textSize="35dp"></TextView>
+            <ListView
+                android:id="@+id/cardstyle_editor_all_fields"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:divider="@null"
+                android:dividerHeight="0dp"
+                android:orientation="vertical"></ListView>
 
-        <ListView
-            android:id="@+id/cardstyle_editor_answer_fields"
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Question Fields"
+                android:textSize="35dp"></TextView>
+
+            <ListView
+                android:id="@+id/cardstyle_editor_question_fields"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:divider="@null"
+                android:dividerHeight="0dp"
+                android:orientation="vertical"></ListView>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Answer Fields"
+                android:textSize="35dp"></TextView>
+
+            <ListView
+                android:id="@+id/cardstyle_editor_answer_fields"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:divider="@null"
+                android:dividerHeight="0dp"
+                android:orientation="vertical"></ListView>
+
+        </LinearLayout>
+
+        <include
+            layout="@layout/card_field_editor"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:divider="@null"
-            android:dividerHeight="0dp"
-            android:orientation="vertical"></ListView>
+            android:layout_height="wrap_content" />
+
     </LinearLayout>
 
 

@@ -79,6 +79,8 @@ public class Card {
 
     public String getFieldValue(String fieldName) { return m_fieldMap.get(fieldName); }
 
+    public HashMap<String,String> getFieldMap() { return m_fieldMap; }
+
     public AnkiUtils.Ease getEaseBad() {
         return AnkiUtils.Ease.EASE_1;
     }
