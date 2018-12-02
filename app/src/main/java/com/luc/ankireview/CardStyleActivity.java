@@ -15,6 +15,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.DragEvent;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -128,35 +129,38 @@ public class CardStyleActivity extends AppCompatActivity implements AdapterView.
                 view.setTag(fieldName);
 
                 // drag and drop listener
-                view.setOnLongClickListener(new View.OnLongClickListener() {
+                //view.setOnClickListener(vew View.OnClickListener);
 
-                    // Defines the one method for the interface, which is called when the View is long-clicked
-                    public boolean onLongClick(View v) {
+                view.setOnTouchListener(new View.OnTouchListener() {
+                    @Override
+                    public boolean onTouch(View v, MotionEvent motionEvent) {
+                        if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
+                            // Create a new ClipData.
+                            // This is done in two steps to provide clarity. The convenience method
+                            // ClipData.newPlainText() can create a plain text ClipData in one step.
 
-                        // Create a new ClipData.
-                        // This is done in two steps to provide clarity. The convenience method
-                        // ClipData.newPlainText() can create a plain text ClipData in one step.
+                            // Create a new ClipData.Item from the ImageView object's tag
+                            ClipData.Item item = new ClipData.Item(fieldName);
 
-                        // Create a new ClipData.Item from the ImageView object's tag
-                        ClipData.Item item = new ClipData.Item(fieldName);
+                            // Create a new ClipData using the tag as a label, the plain text MIME type, and
+                            // the already-created item. This will create a new ClipDescription object within the
+                            // ClipData, and set its MIME type entry to "text/plain"
+                            ClipData dragData = new ClipData(
+                                    fieldName,
+                                    new String[] { ClipDescription.MIMETYPE_TEXT_PLAIN },
+                                    item);
 
-                        // Create a new ClipData using the tag as a label, the plain text MIME type, and
-                        // the already-created item. This will create a new ClipDescription object within the
-                        // ClipData, and set its MIME type entry to "text/plain"
-                        ClipData dragData = new ClipData(
-                                fieldName,
-                                new String[] { ClipDescription.MIMETYPE_TEXT_PLAIN },
-                                item);
+                            // Instantiates the drag shadow builder.
+                            View.DragShadowBuilder myShadow = new FieldShadowBuilder(v);
 
-                        // Instantiates the drag shadow builder.
-                        View.DragShadowBuilder myShadow = new FieldShadowBuilder(v);
-
-                        // Starts the drag
-                        v.startDragAndDrop(dragData, myShadow, null, 0);
-
-                        return true;
+                            // Starts the drag
+                            v.startDragAndDrop(dragData, myShadow, null, 0);
+                            return true;
+                        }
+                        return false;
                     }
                 });
+
             }
 
             TextView textView = (TextView) view;
