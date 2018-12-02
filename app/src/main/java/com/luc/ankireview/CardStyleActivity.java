@@ -37,10 +37,24 @@ import java.util.Vector;
 public class CardStyleActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
     private static final String TAG = "CardStyleActivity";
 
-    private class CardStyleDragListener implements View.OnDragListener {
+    private class SideFieldDragListener implements View.OnDragListener {
+        private static final String TAG = "SideFieldDragListener";
+
         @Override
         public boolean onDrag(View view, DragEvent dragEvent) {
             Log.v(TAG, "onDrag");
+            if( dragEvent.getAction() == DragEvent.ACTION_DRAG_STARTED ) {
+                // drag started
+                // accept the drag and drop
+                return true;
+            }
+            if( dragEvent.getAction() == DragEvent.ACTION_DRAG_ENTERED ) {
+                Log.v(TAG, "drag entered");
+            }
+            if( dragEvent.getAction() == DragEvent.ACTION_DRAG_EXITED ) {
+                Log.v(TAG,"drag exited");
+            }
+
             return false;
         }
     }
@@ -230,8 +244,6 @@ public class CardStyleActivity extends AppCompatActivity implements AdapterView.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cardstyle);
 
-        View rootView = getWindow().getDecorView().getRootView();
-        rootView.setOnDragListener(new CardStyleDragListener());
 
         m_cardStyle = new CardStyle(this);
 
@@ -259,6 +271,9 @@ public class CardStyleActivity extends AppCompatActivity implements AdapterView.
         m_questionFieldsAdapter = new CardFieldAdapter(this, m_cardTemplate.getQuestionCardFields());
         m_questionFieldsListView.setAdapter(m_questionFieldsAdapter);
         m_questionFieldsListView.setOnItemClickListener(this);
+
+        // add drag listener
+        m_questionFieldsListView.setOnDragListener(new SideFieldDragListener());
 
         // setup the AnswerFields ListView
         m_answerFieldsListView = findViewById(R.id.cardstyle_editor_answer_fields);
