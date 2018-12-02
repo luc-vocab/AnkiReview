@@ -68,10 +68,10 @@ public class CardStyleActivity extends AppCompatActivity implements AdapterView.
             int width, height;
 
             // Sets the width of the shadow to half the width of the original View
-            width = getView().getWidth() / 2;
+            width = getView().getWidth();
 
             // Sets the height of the shadow to half the height of the original View
-            height = getView().getHeight() / 2;
+            height = getView().getHeight();
 
             // The drag shadow is a ColorDrawable. This sets its dimensions to be the same as the
             // Canvas that the system will provide. As a result, the drag shadow will fill the
@@ -84,6 +84,7 @@ public class CardStyleActivity extends AppCompatActivity implements AdapterView.
 
             // Sets the touch point's position to be in the middle of the drag shadow
             touch.set(width / 2, height / 2);
+
         }
 
         // Defines a callback that draws the drag shadow in a Canvas that the system constructs
@@ -93,6 +94,7 @@ public class CardStyleActivity extends AppCompatActivity implements AdapterView.
 
             // Draws the ColorDrawable in the Canvas passed in from the system.
             shadow.draw(canvas);
+            getView().draw(canvas);
         }
     }
 
@@ -127,6 +129,12 @@ public class CardStyleActivity extends AppCompatActivity implements AdapterView.
             {
                 view = new TextView(m_context);
                 view.setTag(fieldName);
+                TextView textView = (TextView) view;
+                ViewGroup.LayoutParams params = viewGroup.getLayoutParams();
+                params.height = ViewGroup.LayoutParams.WRAP_CONTENT;
+                params.width = ViewGroup.LayoutParams.WRAP_CONTENT;
+                textView.setLayoutParams(params);
+                textView.setText(fieldName);
 
                 // drag and drop listener
                 //view.setOnClickListener(vew View.OnClickListener);
@@ -151,10 +159,10 @@ public class CardStyleActivity extends AppCompatActivity implements AdapterView.
                                     item);
 
                             // Instantiates the drag shadow builder.
-                            View.DragShadowBuilder myShadow = new FieldShadowBuilder(v);
+                            View.DragShadowBuilder shadow = new FieldShadowBuilder(v);
 
                             // Starts the drag
-                            v.startDragAndDrop(dragData, myShadow, null, 0);
+                            v.startDragAndDrop(dragData, shadow, null, 0);
                             return true;
                         }
                         return false;
