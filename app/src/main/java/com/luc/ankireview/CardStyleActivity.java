@@ -1,11 +1,19 @@
 package com.luc.ankireview;
 
+import android.content.ClipData;
+import android.content.ClipDescription;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Point;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.DragEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +35,66 @@ import java.util.Vector;
 
 public class CardStyleActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
     private static final String TAG = "CardStyleActivity";
+
+    private class CardStyleDragListener implements View.OnDragListener {
+        @Override
+        public boolean onDrag(View view, DragEvent dragEvent) {
+            Log.v(TAG, "onDrag");
+            return false;
+        }
+    }
+
+    private static class FieldShadowBuilder extends View.DragShadowBuilder {
+
+        // The drag shadow image, defined as a drawable thing
+        private static Drawable shadow;
+
+        // Defines the constructor for myDragShadowBuilder
+        public FieldShadowBuilder(View v) {
+
+            // Stores the View parameter passed to myDragShadowBuilder.
+            super(v);
+
+            // Creates a draggable image that will fill the Canvas provided by the system.
+            shadow = new ColorDrawable(Color.LTGRAY);
+        }
+
+        // Defines a callback that sends the drag shadow dimensions and touch point back to the
+        // system.
+        @Override
+        public void onProvideShadowMetrics (Point size, Point touch) {
+            // Defines local variables
+            int width, height;
+
+            // Sets the width of the shadow to half the width of the original View
+            width = getView().getWidth() / 2;
+
+            // Sets the height of the shadow to half the height of the original View
+            height = getView().getHeight() / 2;
+
+            // The drag shadow is a ColorDrawable. This sets its dimensions to be the same as the
+            // Canvas that the system will provide. As a result, the drag shadow will fill the
+            // Canvas.
+            shadow.setBounds(0, 0, width, height);
+
+            // Sets the size parameter's width and height values. These get back to the system
+            // through the size parameter.
+            size.set(width, height);
+
+            // Sets the touch point's position to be in the middle of the drag shadow
+            touch.set(width / 2, height / 2);
+        }
+
+        // Defines a callback that draws the drag shadow in a Canvas that the system constructs
+        // from the dimensions passed in onProvideShadowMetrics().
+        @Override
+        public void onDrawShadow(Canvas canvas) {
+
+            // Draws the ColorDrawable in the Canvas passed in from the system.
+            shadow.draw(canvas);
+        }
+    }
+
 
     private class FieldListAdapter extends BaseAdapter {
         public FieldListAdapter(Context context, Vector<String> cardFields) {
@@ -52,15 +120,46 @@ public class CardStyleActivity extends AppCompatActivity implements AdapterView.
         @Override
         public View getView(int i, View view, ViewGroup viewGroup) {
             // display field name inside TextView
+            final String fieldName = (String) this.getItem(i);
 
             if( view == null )
             {
                 view = new TextView(m_context);
+                view.setTag(fieldName);
+
+                // drag and drop listener
+                view.setOnLongClickListener(new View.OnLongClickListener() {
+
+                    // Defines the one method for the interface, which is called when the View is long-clicked
+                    public boolean onLongClick(View v) {
+
+                        // Create a new ClipData.
+                        // This is done in two steps to provide clarity. The convenience method
+                        // ClipData.newPlainText() can create a plain text ClipData in one step.
+
+                        // Create a new ClipData.Item from the ImageView object's tag
+                        ClipData.Item item = new ClipData.Item(fieldName);
+
+                        // Create a new ClipData using the tag as a label, the plain text MIME type, and
+                        // the already-created item. This will create a new ClipDescription object within the
+                        // ClipData, and set its MIME type entry to "text/plain"
+                        ClipData dragData = new ClipData(
+                                fieldName,
+                                new String[] { ClipDescription.MIMETYPE_TEXT_PLAIN },
+                                item);
+
+                        // Instantiates the drag shadow builder.
+                        View.DragShadowBuilder myShadow = new FieldShadowBuilder(v);
+
+                        // Starts the drag
+                        v.startDragAndDrop(dragData, myShadow, null, 0);
+
+                        return true;
+                    }
+                });
             }
 
             TextView textView = (TextView) view;
-
-            String fieldName = (String) this.getItem(i);
             textView.setText(fieldName);
 
             return view;
@@ -118,6 +217,9 @@ public class CardStyleActivity extends AppCompatActivity implements AdapterView.
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cardstyle);
+
+        View rootView = getWindow().getDecorView().getRootView();
+        rootView.setOnDragListener(new CardStyleDragListener());
 
         m_cardStyle = new CardStyle(this);
 
