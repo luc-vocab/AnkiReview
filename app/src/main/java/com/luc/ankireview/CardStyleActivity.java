@@ -40,9 +40,18 @@ import java.util.Vector;
 public class CardStyleActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
     private static final String TAG = "CardStyleActivity";
 
+    public interface ActionCompletionContract {
+        void onViewMoved(int oldPosition, int newPosition);
+        void onViewSwiped(int position);
+    }
 
     public class ItemTouchCallback extends ItemTouchHelper.Callback {
 
+        private ActionCompletionContract m_contract;
+
+        public ItemTouchCallback(ActionCompletionContract contract) {
+            this.m_contract = contract;
+        }
 
         @Override
         public int getMovementFlags(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
@@ -58,6 +67,7 @@ public class CardStyleActivity extends AppCompatActivity implements AdapterView.
 
         @Override
         public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+            m_contract.onViewMoved(viewHolder.getAdapterPosition(), target.getAdapterPosition());
             return true;
         }
 
@@ -65,9 +75,10 @@ public class CardStyleActivity extends AppCompatActivity implements AdapterView.
         public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
         }
 
+
     }
 
-    public class FieldListAdapter extends RecyclerView.Adapter<FieldListAdapter.FieldViewHolder> {
+    public class FieldListAdapter extends RecyclerView.Adapter<FieldListAdapter.FieldViewHolder> implements ActionCompletionContract {
         private Vector<String> m_fieldList;
 
         // Provide a reference to the views for each data item
@@ -128,6 +139,23 @@ public class CardStyleActivity extends AppCompatActivity implements AdapterView.
         public void setTouchHelper(ItemTouchHelper touchHelper) {
 
             this.m_touchHelper = touchHelper;
+        }
+
+        @Override
+        public void onViewMoved(int oldPosition, int newPosition) {
+            String targetField = m_fieldList.get(oldPosition);
+            String field = new String(targetField);
+            m_fieldList.remove(oldPosition);
+            m_fieldList.add(newPosition, field);
+            notifyItemMoved(oldPosition, newPosition);
+        }
+
+        @Override
+        public void onViewSwiped(int position) {
+            /*
+            usersList.remove(position);
+            notifyItemRemoved(position);
+            */
         }
 
         private ItemTouchHelper m_touchHelper;
@@ -244,7 +272,7 @@ public class CardStyleActivity extends AppCompatActivity implements AdapterView.
         m_fieldListAdapter = new FieldListAdapter(fullFieldList);
         m_fullFieldListView.setAdapter(m_fieldListAdapter);
 
-        ItemTouchCallback itemTouchCallback = new ItemTouchCallback();
+        ItemTouchCallback itemTouchCallback = new ItemTouchCallback(m_fieldListAdapter);
         ItemTouchHelper touchHelper = new ItemTouchHelper(itemTouchCallback);
         m_fieldListAdapter.setTouchHelper(touchHelper);
         touchHelper.attachToRecyclerView(m_fullFieldListView);
