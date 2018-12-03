@@ -14,6 +14,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
 import android.view.DragEvent;
 import android.view.LayoutInflater;
@@ -39,6 +40,32 @@ import java.util.Vector;
 public class CardStyleActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
     private static final String TAG = "CardStyleActivity";
 
+
+    public class ItemTouchCallback extends ItemTouchHelper.Callback {
+
+
+        @Override
+        public int getMovementFlags(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
+            /*
+            if (viewHolder instanceof SectionHeaderViewHolder) {
+                return 0;
+            }
+            */
+            int dragFlags = ItemTouchHelper.UP | ItemTouchHelper.DOWN;
+            int swipeFlags = ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT;
+            return makeMovementFlags(dragFlags, swipeFlags);
+        }
+
+        @Override
+        public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+            return true;
+        }
+
+        @Override
+        public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
+        }
+
+    }
 
     public class FieldListAdapter extends RecyclerView.Adapter<FieldListAdapter.FieldViewHolder> {
         private Vector<String> m_fieldList;
@@ -75,10 +102,20 @@ public class CardStyleActivity extends AppCompatActivity implements AdapterView.
 
         // Replace the contents of a view (invoked by the layout manager)
         @Override
-        public void onBindViewHolder(FieldViewHolder holder, int position) {
+        public void onBindViewHolder(final FieldViewHolder holder, int position) {
             // - get element from your dataset at this position
             // - replace the contents of the view with that element
             holder.mTextView.setText(m_fieldList.get(position));
+
+            ((FieldViewHolder) holder).mTextView.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    if (event.getActionMasked() == MotionEvent.ACTION_DOWN) {
+                        m_touchHelper.startDrag(holder);
+                    }
+                    return false;
+                }
+            });
 
         }
 
@@ -87,6 +124,13 @@ public class CardStyleActivity extends AppCompatActivity implements AdapterView.
         public int getItemCount() {
             return m_fieldList.size();
         }
+
+        public void setTouchHelper(ItemTouchHelper touchHelper) {
+
+            this.m_touchHelper = touchHelper;
+        }
+
+        private ItemTouchHelper m_touchHelper;
     }
 
 
@@ -187,6 +231,10 @@ public class CardStyleActivity extends AppCompatActivity implements AdapterView.
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         m_fullFieldListView.setLayoutManager(linearLayoutManager);
 
+
+
+
+
         // get field list
         Vector<String> fullFieldList = new Vector<String>();
         for(String field: m_card.getFieldMap().keySet())
@@ -195,6 +243,11 @@ public class CardStyleActivity extends AppCompatActivity implements AdapterView.
         }
         m_fieldListAdapter = new FieldListAdapter(fullFieldList);
         m_fullFieldListView.setAdapter(m_fieldListAdapter);
+
+        ItemTouchCallback itemTouchCallback = new ItemTouchCallback();
+        ItemTouchHelper touchHelper = new ItemTouchHelper(itemTouchCallback);
+        m_fieldListAdapter.setTouchHelper(touchHelper);
+        touchHelper.attachToRecyclerView(m_fullFieldListView);
 
 
     }
