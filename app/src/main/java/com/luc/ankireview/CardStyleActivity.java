@@ -11,6 +11,8 @@ import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.DragEvent;
@@ -37,173 +39,56 @@ import java.util.Vector;
 public class CardStyleActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
     private static final String TAG = "CardStyleActivity";
 
-    private class SideFieldDragListener implements View.OnDragListener {
-        private static final String TAG = "SideFieldDragListener";
 
-        public SideFieldDragListener(CardFieldAdapter cardFieldAdapter) {
-            super();
-            m_cardFieldAdapter = cardFieldAdapter;
+    public class FieldListAdapter extends RecyclerView.Adapter<FieldListAdapter.FieldViewHolder> {
+        private Vector<String> m_fieldList;
+
+        // Provide a reference to the views for each data item
+        // Complex data items may need more than one view per item, and
+        // you provide access to all the views for a data item in a view holder
+        public class FieldViewHolder extends RecyclerView.ViewHolder {
+            // each data item is just a string in this case
+            public TextView mTextView;
+            public FieldViewHolder(View v) {
+                super(v);
+
+                mTextView = v.findViewById(R.id.field_name);
+            }
         }
 
+        // Provide a suitable constructor (depends on the kind of dataset)
+        public FieldListAdapter(Vector<String> fieldList) {
+            m_fieldList = fieldList;
+        }
+
+        // Create new views (invoked by the layout manager)
         @Override
-        public boolean onDrag(View view, DragEvent dragEvent) {
-            Log.v(TAG, "onDrag");
-            if( dragEvent.getAction() == DragEvent.ACTION_DRAG_STARTED ) {
-                // drag started
-                // accept the drag and drop
-                return true;
-            }
-            if( dragEvent.getAction() == DragEvent.ACTION_DRAG_ENTERED ) {
-                Log.v(TAG, "drag entered");
-            }
-            if( dragEvent.getAction() == DragEvent.ACTION_DRAG_EXITED ) {
-                Log.v(TAG,"drag exited");
-            }
-            if( dragEvent.getAction() == DragEvent.ACTION_DRAG_LOCATION ) {
-                Log.v(TAG, "drag location: " + dragEvent.getX() + " "  + dragEvent.getY());
-            }
+        public FieldListAdapter.FieldViewHolder onCreateViewHolder(ViewGroup parent,
+                                                         int viewType) {
 
-            return false;
+            View containingView = LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.card_field_item, parent, false);
+
+            FieldViewHolder vh = new FieldViewHolder(containingView);
+            return vh;
         }
 
-        CardFieldAdapter m_cardFieldAdapter;
-    }
-
-    private static class FieldShadowBuilder extends View.DragShadowBuilder {
-
-        // The drag shadow image, defined as a drawable thing
-        private static Drawable shadow;
-
-        // Defines the constructor for myDragShadowBuilder
-        public FieldShadowBuilder(View v) {
-
-            // Stores the View parameter passed to myDragShadowBuilder.
-            super(v);
-
-            // Creates a draggable image that will fill the Canvas provided by the system.
-            shadow = new ColorDrawable(Color.LTGRAY);
-        }
-
-        // Defines a callback that sends the drag shadow dimensions and touch point back to the
-        // system.
+        // Replace the contents of a view (invoked by the layout manager)
         @Override
-        public void onProvideShadowMetrics (Point size, Point touch) {
-            // Defines local variables
-            int width, height;
-
-            // Sets the width of the shadow to half the width of the original View
-            width = getView().getWidth();
-
-            // Sets the height of the shadow to half the height of the original View
-            height = getView().getHeight();
-
-            // The drag shadow is a ColorDrawable. This sets its dimensions to be the same as the
-            // Canvas that the system will provide. As a result, the drag shadow will fill the
-            // Canvas.
-            shadow.setBounds(0, 0, width, height);
-
-            // Sets the size parameter's width and height values. These get back to the system
-            // through the size parameter.
-            size.set(width, height);
-
-            // Sets the touch point's position to be in the middle of the drag shadow
-            touch.set(width / 2, height / 2);
+        public void onBindViewHolder(FieldViewHolder holder, int position) {
+            // - get element from your dataset at this position
+            // - replace the contents of the view with that element
+            holder.mTextView.setText(m_fieldList.get(position));
 
         }
 
-        // Defines a callback that draws the drag shadow in a Canvas that the system constructs
-        // from the dimensions passed in onProvideShadowMetrics().
+        // Return the size of your dataset (invoked by the layout manager)
         @Override
-        public void onDrawShadow(Canvas canvas) {
-
-            // Draws the ColorDrawable in the Canvas passed in from the system.
-            shadow.draw(canvas);
-            getView().draw(canvas);
+        public int getItemCount() {
+            return m_fieldList.size();
         }
     }
 
-
-    private class FieldListAdapter extends BaseAdapter {
-        public FieldListAdapter(Context context, Vector<String> cardFields) {
-            this.m_context = context;
-            this.m_cardFields = cardFields;
-        }
-
-        @Override
-        public int getCount() {
-            return m_cardFields.size();
-        }
-
-        @Override
-        public Object getItem(int i) {
-            return m_cardFields.get(i);
-        }
-
-        @Override
-        public long getItemId(int i) {
-            return i;
-        }
-
-        @Override
-        public View getView(int i, View view, ViewGroup viewGroup) {
-            // display field name inside TextView
-            final String fieldName = (String) this.getItem(i);
-
-            if( view == null )
-            {
-                view = new TextView(m_context);
-                view.setTag(fieldName);
-                TextView textView = (TextView) view;
-                ViewGroup.LayoutParams params = viewGroup.getLayoutParams();
-                params.height = ViewGroup.LayoutParams.WRAP_CONTENT;
-                params.width = ViewGroup.LayoutParams.WRAP_CONTENT;
-                textView.setLayoutParams(params);
-                textView.setText(fieldName);
-
-                // drag and drop listener
-                //view.setOnClickListener(vew View.OnClickListener);
-
-                view.setOnTouchListener(new View.OnTouchListener() {
-                    @Override
-                    public boolean onTouch(View v, MotionEvent motionEvent) {
-                        if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
-                            // Create a new ClipData.
-                            // This is done in two steps to provide clarity. The convenience method
-                            // ClipData.newPlainText() can create a plain text ClipData in one step.
-
-                            // Create a new ClipData.Item from the ImageView object's tag
-                            ClipData.Item item = new ClipData.Item(fieldName);
-
-                            // Create a new ClipData using the tag as a label, the plain text MIME type, and
-                            // the already-created item. This will create a new ClipDescription object within the
-                            // ClipData, and set its MIME type entry to "text/plain"
-                            ClipData dragData = new ClipData(
-                                    fieldName,
-                                    new String[] { ClipDescription.MIMETYPE_TEXT_PLAIN },
-                                    item);
-
-                            // Instantiates the drag shadow builder.
-                            View.DragShadowBuilder shadow = new FieldShadowBuilder(v);
-
-                            // Starts the drag
-                            v.startDragAndDrop(dragData, shadow, null, 0);
-                            return true;
-                        }
-                        return false;
-                    }
-                });
-
-            }
-
-            TextView textView = (TextView) view;
-            textView.setText(fieldName);
-
-            return view;
-        }
-
-        private Context m_context;
-        private Vector<String> m_cardFields;
-    }
 
     private class CardFieldAdapter extends BaseAdapter {
         public CardFieldAdapter(Context context, Vector<CardField> cardFields) {
@@ -286,7 +171,7 @@ public class CardStyleActivity extends AppCompatActivity implements AdapterView.
         m_questionFieldsListView.setAdapter(m_questionFieldsAdapter);
         m_questionFieldsListView.setOnItemClickListener(this);
         // add drag listener
-        m_questionFieldsListView.setOnDragListener(new SideFieldDragListener(m_questionFieldsAdapter));
+        //m_questionFieldsListView.setOnDragListener(new SideFieldDragListener(m_questionFieldsAdapter));
 
         // setup the AnswerFields ListView
         m_answerFieldsListView = findViewById(R.id.cardstyle_editor_answer_fields);
@@ -294,16 +179,21 @@ public class CardStyleActivity extends AppCompatActivity implements AdapterView.
         m_answerFieldsListView.setAdapter(m_answerFieldsAdapter);
         m_answerFieldsListView.setOnItemClickListener(this);
         // add drag listener
-        m_answerFieldsListView.setOnDragListener(new SideFieldDragListener(m_answerFieldsAdapter));
+        //m_answerFieldsListView.setOnDragListener(new SideFieldDragListener(m_answerFieldsAdapter));
 
         // setup the full Field list ListView
         m_fullFieldListView = findViewById(R.id.cardstyle_editor_all_fields);
+        m_fullFieldListView.setHasFixedSize(true);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        m_fullFieldListView.setLayoutManager(linearLayoutManager);
+
+        // get field list
         Vector<String> fullFieldList = new Vector<String>();
         for(String field: m_card.getFieldMap().keySet())
         {
             fullFieldList.add(field);
         }
-        m_fieldListAdapter = new FieldListAdapter(this, fullFieldList);
+        m_fieldListAdapter = new FieldListAdapter(fullFieldList);
         m_fullFieldListView.setAdapter(m_fieldListAdapter);
 
 
@@ -339,10 +229,14 @@ public class CardStyleActivity extends AppCompatActivity implements AdapterView.
 
     private ListView m_questionFieldsListView;
     private ListView m_answerFieldsListView;
-    private ListView m_fullFieldListView;
+
     private CardFieldAdapter m_questionFieldsAdapter;
     private CardFieldAdapter m_answerFieldsAdapter;
+
+    private RecyclerView m_fullFieldListView;
     private FieldListAdapter m_fieldListAdapter;
+
+
 
 
     CardTemplateKey m_cardTemplateKey;

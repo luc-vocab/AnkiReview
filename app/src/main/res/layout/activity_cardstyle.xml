@@ -42,13 +42,11 @@
                 android:text="All Fields"
                 android:textSize="35dp"></TextView>
 
-            <ListView
-                android:id="@+id/cardstyle_editor_all_fields"
+            <android.support.v7.widget.RecyclerView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:divider="@null"
-                android:dividerHeight="0dp"
-                android:orientation="vertical"></ListView>
+                android:id="@+id/cardstyle_editor_all_fields">
+            </android.support.v7.widget.RecyclerView>
 
             <TextView
                 android:layout_width="match_parent"
