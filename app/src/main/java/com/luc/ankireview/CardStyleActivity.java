@@ -216,7 +216,7 @@ public class CardStyleActivity extends AppCompatActivity implements AdapterView.
             if( position < m_position_header_answer) {
                 return VIEWTYPE_FIELD;
             }
-            if( position == m_position_header_question ) {
+            if( position == m_position_header_answer ) {
                 return VIEWTYPE_HEADER_ANSWER;
             }
             if( position < m_position_header_sound ) {
