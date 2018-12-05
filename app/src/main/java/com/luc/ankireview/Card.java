@@ -189,6 +189,15 @@ public class Card {
         return Objects.hash(m_noteId, m_cardOrd);
     }
 
+    public Vector<String> getFullFieldList() {
+        Vector<String> fieldList = new Vector<String>();
+        for(String field: getFieldMap().keySet())
+        {
+            fieldList.add(field);
+        }
+        return fieldList;
+    }
+
     private long m_noteId;
     private int m_cardOrd;
     private long m_modelId;

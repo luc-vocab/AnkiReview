@@ -11,7 +11,9 @@ public class CardTemplate {
     public CardTemplate() {
         m_questionCardFields = new Vector<CardField>();
         m_answerCardFields = new Vector<CardField>();
+        m_soundField = null;
     }
+
 
     public void setTypeface(Typeface typeface) {
         m_typeface = typeface;
@@ -38,9 +40,13 @@ public class CardTemplate {
         return m_answerCardFields;
     }
 
+
+    public String getSoundField() { return m_soundField; }
+
     private Typeface m_typeface;
 
     private Vector<CardField> m_questionCardFields;
     private Vector<CardField> m_answerCardFields;
+    private String m_soundField;
 
 }

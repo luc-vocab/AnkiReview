@@ -15,6 +15,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.DragEvent;
 import android.view.LayoutInflater;
@@ -79,7 +80,12 @@ public class CardStyleActivity extends AppCompatActivity implements AdapterView.
     }
 
     public class FieldListAdapter extends RecyclerView.Adapter<FieldListAdapter.FieldViewHolder> implements ActionCompletionContract {
-        private Vector<String> m_fieldList;
+
+        private static final int VIEWTYPE_FIELD = 1;
+        private static final int VIEWTYPE_HEADER_ALLFIELDS = 2;
+        private static final int VIEWTYPE_HEADER_QUESTION = 3;
+        private static final int VIEWTYPE_HEADER_ANSWER = 4;
+        private static final int VIEWTYPE_HEADER_SOUND = 5;
 
         // Provide a reference to the views for each data item
         // Complex data items may need more than one view per item, and
@@ -95,8 +101,10 @@ public class CardStyleActivity extends AppCompatActivity implements AdapterView.
         }
 
         // Provide a suitable constructor (depends on the kind of dataset)
-        public FieldListAdapter(Vector<String> fieldList) {
-            m_fieldList = fieldList;
+        public FieldListAdapter(CardTemplate cardTemplate, Vector<String> fullFieldList) {
+            m_cardTemplate = cardTemplate;
+            m_fullFieldList = fullFieldList;
+            rebuildFieldCache();
         }
 
         // Create new views (invoked by the layout manager)
@@ -114,39 +122,126 @@ public class CardStyleActivity extends AppCompatActivity implements AdapterView.
         // Replace the contents of a view (invoked by the layout manager)
         @Override
         public void onBindViewHolder(final FieldViewHolder holder, int position) {
+            int viewType = getItemViewType(position);
             // - get element from your dataset at this position
             // - replace the contents of the view with that element
-            holder.mTextView.setText(m_fieldList.get(position));
 
-            ((FieldViewHolder) holder).mTextView.setOnTouchListener(new View.OnTouchListener() {
-                @Override
-                public boolean onTouch(View v, MotionEvent event) {
-                    if (event.getActionMasked() == MotionEvent.ACTION_DOWN) {
-                        m_touchHelper.startDrag(holder);
+            if(viewType == VIEWTYPE_FIELD) {
+                String fieldName = getFieldNameForPosition(position);
+                holder.mTextView.setText(fieldName);
+                ((FieldViewHolder) holder).mTextView.setOnTouchListener(new View.OnTouchListener() {
+                    @Override
+                    public boolean onTouch(View v, MotionEvent event) {
+                        if (event.getActionMasked() == MotionEvent.ACTION_DOWN) {
+                            m_touchHelper.startDrag(holder);
+                        }
+                        return false;
                     }
-                    return false;
-                }
-            });
+                });
+            } else {
+                holder.mTextView.setText("Header");
+            }
 
+        }
+
+
+        private void rebuildFieldCache() {
+            int fieldCount = m_fullFieldList.size();
+            int numQuestionFields = m_cardTemplate.getQuestionCardFields().size();
+            int numAnswerFields = m_cardTemplate.getAnswerCardFields().size();
+            int numSoundFields = m_cardTemplate.getSoundField() != null ? 1 : 0;
+
+            m_position_header_question = fieldCount - numQuestionFields - numAnswerFields - numSoundFields + 1;
+            m_position_header_answer = fieldCount - numAnswerFields - numSoundFields + 2;
+            m_position_header_sound = fieldCount - numSoundFields + 3;
+
+            m_unassignedFields = new Vector<String>();
+
+            m_unassignedFields = new Vector<String>();
+            for( String field : m_fullFieldList) {
+                boolean isUnassigned = true;
+                for( CardField cardField : m_cardTemplate.getQuestionCardFields() ) {
+                    if( cardField.getFieldName().equals(field)) {
+                        isUnassigned = false;
+                    }
+                }
+                for( CardField cardField : m_cardTemplate.getAnswerCardFields() ) {
+                    if( cardField.getFieldName().equals(field)) {
+                        isUnassigned = false;
+                    }
+                }
+
+                if(isUnassigned) {
+                    m_unassignedFields.add(field);
+                }
+            }
+        }
+
+        private String getFieldNameForPosition(int position) {
+            if( position > 0 && position < m_position_header_question ) {
+                // within the range of unassigned fields
+                return  m_unassignedFields.get(position - 1);
+            }
+            if( position > m_position_header_question && position < m_position_header_answer ) {
+                return m_cardTemplate.getQuestionCardFields().get(position - m_position_header_question - 1).getFieldName();
+            }
+            if( position > m_position_header_answer && position < m_position_header_sound) {
+                return m_cardTemplate.getAnswerCardFields().get(position - m_position_header_answer - 1).getFieldName();
+            }
+            if ( position > m_position_header_sound ) {
+                return m_cardTemplate.getSoundField();
+            }
+            return null;
         }
 
         // Return the size of your dataset (invoked by the layout manager)
         @Override
         public int getItemCount() {
-            return m_fieldList.size();
+            return m_fullFieldList.size() + 4; // number of fields + headers
+        }
+
+        @Override
+        public int getItemViewType(int position) {
+            int position_header_allfields = 0;
+
+            if (position == position_header_allfields) {
+                return VIEWTYPE_HEADER_ALLFIELDS;
+            }
+            if (position < m_position_header_question) {
+                return VIEWTYPE_FIELD;
+            }
+            if (position == m_position_header_question) {
+                return VIEWTYPE_HEADER_QUESTION;
+            }
+            if( position < m_position_header_answer) {
+                return VIEWTYPE_FIELD;
+            }
+            if( position == m_position_header_question ) {
+                return VIEWTYPE_HEADER_ANSWER;
+            }
+            if( position < m_position_header_sound ) {
+                return VIEWTYPE_FIELD;
+            }
+            if( position == m_position_header_sound) {
+                return VIEWTYPE_HEADER_SOUND;
+            }
+
+            return VIEWTYPE_FIELD;
         }
 
         public void setTouchHelper(ItemTouchHelper touchHelper) {
-
             this.m_touchHelper = touchHelper;
         }
 
         @Override
         public void onViewMoved(int oldPosition, int newPosition) {
+            /*
             String targetField = m_fieldList.get(oldPosition);
             String field = new String(targetField);
+
             m_fieldList.remove(oldPosition);
             m_fieldList.add(newPosition, field);
+            */
             notifyItemMoved(oldPosition, newPosition);
         }
 
@@ -158,7 +253,15 @@ public class CardStyleActivity extends AppCompatActivity implements AdapterView.
             */
         }
 
+        private Vector<String> m_fullFieldList;
+        private CardTemplate m_cardTemplate;
         private ItemTouchHelper m_touchHelper;
+
+        // cached data
+        Vector<String> m_unassignedFields;
+        int m_position_header_question;
+        int m_position_header_answer;
+        int m_position_header_sound;
     }
 
 
@@ -269,7 +372,7 @@ public class CardStyleActivity extends AppCompatActivity implements AdapterView.
         {
             fullFieldList.add(field);
         }
-        m_fieldListAdapter = new FieldListAdapter(fullFieldList);
+        m_fieldListAdapter = new FieldListAdapter(m_cardTemplate, fullFieldList);
         m_fullFieldListView.setAdapter(m_fieldListAdapter);
 
         ItemTouchCallback itemTouchCallback = new ItemTouchCallback(m_fieldListAdapter);
