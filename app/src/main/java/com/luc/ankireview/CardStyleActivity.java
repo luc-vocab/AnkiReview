@@ -80,6 +80,7 @@ public class CardStyleActivity extends AppCompatActivity implements AdapterView.
     }
 
     public class FieldListAdapter extends RecyclerView.Adapter<FieldListAdapter.FieldViewHolder> implements ActionCompletionContract {
+        private static final String TAG = "FieldListAdapter";
 
         private static final int VIEWTYPE_FIELD = 1;
         private static final int VIEWTYPE_HEADER_ALLFIELDS = 2;
@@ -104,6 +105,7 @@ public class CardStyleActivity extends AppCompatActivity implements AdapterView.
         public FieldListAdapter(CardTemplate cardTemplate, Vector<String> fullFieldList) {
             m_cardTemplate = cardTemplate;
             m_fullFieldList = fullFieldList;
+            buildUnassignedFields();
             rebuildFieldCache();
         }
 
@@ -144,19 +146,7 @@ public class CardStyleActivity extends AppCompatActivity implements AdapterView.
 
         }
 
-
-        private void rebuildFieldCache() {
-            int fieldCount = m_fullFieldList.size();
-            int numQuestionFields = m_cardTemplate.getQuestionCardFields().size();
-            int numAnswerFields = m_cardTemplate.getAnswerCardFields().size();
-            int numSoundFields = m_cardTemplate.getSoundField() != null ? 1 : 0;
-
-            m_position_header_question = fieldCount - numQuestionFields - numAnswerFields - numSoundFields + 1;
-            m_position_header_answer = fieldCount - numAnswerFields - numSoundFields + 2;
-            m_position_header_sound = fieldCount - numSoundFields + 3;
-
-            m_unassignedFields = new Vector<String>();
-
+        private void buildUnassignedFields() {
             m_unassignedFields = new Vector<String>();
             for( String field : m_fullFieldList) {
                 boolean isUnassigned = true;
@@ -175,6 +165,20 @@ public class CardStyleActivity extends AppCompatActivity implements AdapterView.
                     m_unassignedFields.add(field);
                 }
             }
+        }
+
+
+        private void rebuildFieldCache() {
+            int unassignedFields = m_unassignedFields.size();
+            int numQuestionFields = m_cardTemplate.getQuestionCardFields().size();
+            int numAnswerFields = m_cardTemplate.getAnswerCardFields().size();
+            int numSoundFields = m_cardTemplate.getSoundField() != null ? 1 : 0;
+
+            m_position_header_question = unassignedFields + 1;
+            m_position_header_answer = m_position_header_question + numQuestionFields + 1;
+            m_position_header_sound = m_position_header_answer + numAnswerFields + 1;
+
+            Log.v(TAG, "rebuildFieldCache: " + m_position_header_question + " " + m_position_header_answer + " " + m_position_header_answer);
         }
 
         private String getFieldNameForPosition(int position) {
@@ -202,31 +206,35 @@ public class CardStyleActivity extends AppCompatActivity implements AdapterView.
 
         @Override
         public int getItemViewType(int position) {
+            int result = VIEWTYPE_FIELD;
+
             int position_header_allfields = 0;
 
             if (position == position_header_allfields) {
-                return VIEWTYPE_HEADER_ALLFIELDS;
-            }
+                result = VIEWTYPE_HEADER_ALLFIELDS;
+            } else
             if (position < m_position_header_question) {
-                return VIEWTYPE_FIELD;
-            }
+                result = VIEWTYPE_FIELD;
+            } else
             if (position == m_position_header_question) {
-                return VIEWTYPE_HEADER_QUESTION;
-            }
+                result = VIEWTYPE_HEADER_QUESTION;
+            } else
             if( position < m_position_header_answer) {
-                return VIEWTYPE_FIELD;
-            }
+                result = VIEWTYPE_FIELD;
+            } else
             if( position == m_position_header_answer ) {
-                return VIEWTYPE_HEADER_ANSWER;
-            }
+                result = VIEWTYPE_HEADER_ANSWER;
+            } else
             if( position < m_position_header_sound ) {
-                return VIEWTYPE_FIELD;
-            }
+                result = VIEWTYPE_FIELD;
+            } else
             if( position == m_position_header_sound) {
-                return VIEWTYPE_HEADER_SOUND;
+                result = VIEWTYPE_HEADER_SOUND;
             }
 
-            return VIEWTYPE_FIELD;
+            Log.v(TAG, "getItemViewType position: " + position + " viewType: " + result);
+
+            return result;
         }
 
         public void setTouchHelper(ItemTouchHelper touchHelper) {
@@ -235,6 +243,46 @@ public class CardStyleActivity extends AppCompatActivity implements AdapterView.
 
         @Override
         public void onViewMoved(int oldPosition, int newPosition) {
+
+            String fieldName = null;
+            // process remove
+            if( oldPosition> 0 && oldPosition < m_position_header_question ) {
+                // within the range of unassigned fields
+                int localPosition = oldPosition - 1;
+                fieldName = m_unassignedFields.get(localPosition);
+                m_unassignedFields.remove(localPosition);
+            } else if( oldPosition > m_position_header_question && oldPosition < m_position_header_answer ) {
+                int localPosition = oldPosition - m_position_header_question - 1;
+                fieldName = m_cardTemplate.getQuestionCardFields().get(localPosition).getFieldName();
+                m_cardTemplate.getQuestionCardFields().remove(localPosition);
+            } else if( oldPosition > m_position_header_answer && oldPosition < m_position_header_sound) {
+                int localPosition = oldPosition - m_position_header_answer - 1;
+                fieldName =  m_cardTemplate.getAnswerCardFields().get(localPosition).getFieldName();
+                m_cardTemplate.getAnswerCardFields().remove(localPosition);
+            } else if ( oldPosition > m_position_header_sound ) {
+                fieldName = m_cardTemplate.getSoundField();
+                // add the remove later
+            }
+
+            rebuildFieldCache();
+
+            // process add
+            if( newPosition> 0 && newPosition < m_position_header_question ) {
+                // within the range of unassigned fields
+                int localPosition = newPosition - 1;
+                m_unassignedFields.add(localPosition, fieldName);
+            } else if( newPosition > m_position_header_question && newPosition  < m_position_header_answer ) {
+                int localPosition = newPosition - m_position_header_question - 1;
+                m_cardTemplate.getQuestionCardFields().add(localPosition, new CardField(fieldName));
+            } else if( newPosition  > m_position_header_answer && newPosition  < m_position_header_sound) {
+                int localPosition = newPosition - m_position_header_answer - 1;
+                m_cardTemplate.getAnswerCardFields().add(localPosition, new CardField(fieldName));
+            } else if ( newPosition  > m_position_header_sound ) {
+                m_cardTemplate.setSoundField(fieldName);
+            }
+
+            rebuildFieldCache();
+
             /*
             String targetField = m_fieldList.get(oldPosition);
             String field = new String(targetField);

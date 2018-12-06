@@ -43,6 +43,8 @@ public class CardTemplate {
 
     public String getSoundField() { return m_soundField; }
 
+    public void setSoundField(String  soundField) { m_soundField = soundField; }
+
     private Typeface m_typeface;
 
     private Vector<CardField> m_questionCardFields;
