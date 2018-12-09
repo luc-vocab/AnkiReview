@@ -78,7 +78,7 @@ public class FieldListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         m_fieldList = new Vector<FieldListItem>();
 
         // add the "all fields" header
-        m_fieldList.add(new FieldListItem(null, FieldListItem.VIEWTYPE_HEADER, "All Fields"));
+        m_fieldList.add(new FieldListItem(null, FieldListItem.VIEWTYPE_HEADER, FieldListItem.HEADER_ALLFIELDS));
 
         // add the unassigned fields
         for( String field : m_fullFieldList) {
@@ -101,13 +101,13 @@ public class FieldListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         }
 
         // add the "question" items
-        m_fieldList.add(new FieldListItem(null, FieldListItem.VIEWTYPE_HEADER, "Question Fields"));
+        m_fieldList.add(new FieldListItem(null, FieldListItem.VIEWTYPE_HEADER, FieldListItem.HEADER_QUESTION));
         for( CardField cardField : m_cardTemplate.getQuestionCardFields() ) {
             m_fieldList.add(new FieldListItem(cardField, FieldListItem.VIEWTYPE_FIELD, null));
         }
 
         // add the "answer" items
-        m_fieldList.add(new FieldListItem(null, FieldListItem.VIEWTYPE_HEADER, "Answer Fields"));
+        m_fieldList.add(new FieldListItem(null, FieldListItem.VIEWTYPE_HEADER, FieldListItem.HEADER_ANSWER));
         for( CardField cardField : m_cardTemplate.getAnswerCardFields() ) {
             m_fieldList.add(new FieldListItem(cardField, FieldListItem.VIEWTYPE_FIELD, null));
         }
@@ -143,6 +143,35 @@ public class FieldListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         notifyItemMoved(oldPosition, newPosition);
 
         Log.v(TAG, "onViewMoved oldPosition: " + oldPosition + " newPosition: " + newPosition);
+
+        updateCardTemplate();
+    }
+
+    private void updateCardTemplate() {
+
+        boolean insideQuestionFields = false;
+        boolean insideAnswerFields = false;
+
+        m_cardTemplate.getQuestionCardFields().clear();
+        m_cardTemplate.getAnswerCardFields().clear();
+
+        for( FieldListItem fieldListItem : m_fieldList) {
+            if( fieldListItem.getViewType() == FieldListItem.VIEWTYPE_FIELD ) {
+                if(insideQuestionFields) {
+                    m_cardTemplate.addQuestionCardField(fieldListItem.getCardField());
+                } else if( insideAnswerFields) {
+                    m_cardTemplate.addAnswerCardField(fieldListItem.getCardField());
+                }
+            } else {
+                if( fieldListItem.getHeader().equals(FieldListItem.HEADER_QUESTION)) {
+                    insideQuestionFields = true;
+                    insideAnswerFields = false;
+                } else if (fieldListItem.getHeader().equals(FieldListItem.HEADER_ANSWER)) {
+                    insideQuestionFields = false;
+                    insideAnswerFields = true;
+                }
+            }
+        }
     }
 
     @Override
