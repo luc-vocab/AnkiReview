@@ -68,7 +68,7 @@ public class FieldListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             });
         } else {
             HeaderViewHolder headerViewHolder = (HeaderViewHolder) holder;
-            headerViewHolder.mTextView.setText("Header");
+            headerViewHolder.mTextView.setText(item.getHeader());
         }
 
     }
