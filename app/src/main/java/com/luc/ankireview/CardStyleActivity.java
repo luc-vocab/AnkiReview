@@ -40,57 +40,9 @@ import com.luc.ankireview.style.ItemTouchCallback;
 
 import java.util.Vector;
 
-public class CardStyleActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
+public class CardStyleActivity extends AppCompatActivity {
     private static final String TAG = "CardStyleActivity";
 
-
-    private class CardFieldAdapter extends BaseAdapter {
-        public CardFieldAdapter(Context context, Vector<CardField> cardFields) {
-            this.m_context = context;
-            this.m_cardFields = cardFields;
-        }
-
-        @Override
-        public int getCount() {
-            return m_cardFields.size();
-        }
-
-        @Override
-        public Object getItem(int i) {
-            return m_cardFields.get(i);
-        }
-
-        @Override
-        public long getItemId(int i) {
-            return i;
-        }
-
-        @Override
-        public View getView(int i, View view, ViewGroup viewGroup) {
-            CardFieldItemBinding binding;
-
-            if(view==null)
-            {
-                view = LayoutInflater.from(m_context).inflate(R.layout.card_field_item,viewGroup,false);
-                binding = DataBindingUtil.bind(view);
-                view.setTag(binding);
-            } else {
-                binding = (CardFieldItemBinding) view.getTag();
-            }
-
-            CardField cardField = (CardField) this.getItem(i);
-            binding.setField(cardField);
-
-            return binding.getRoot();
-        }
-
-        public Vector<CardField> getCardFields() {
-            return m_cardFields;
-        }
-
-        private Context m_context;
-        private Vector<CardField> m_cardFields;
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -119,30 +71,11 @@ public class CardStyleActivity extends AppCompatActivity implements AdapterView.
 
         Log.v(TAG, "num question card fields: " + m_cardTemplate.getQuestionCardFields().size());
 
-        // setup the Question Fields ListView
-        m_questionFieldsListView = findViewById(R.id.cardstyle_editor_question_fields);
-        m_questionFieldsAdapter = new CardFieldAdapter(this, m_cardTemplate.getQuestionCardFields());
-        m_questionFieldsListView.setAdapter(m_questionFieldsAdapter);
-        m_questionFieldsListView.setOnItemClickListener(this);
-        // add drag listener
-        //m_questionFieldsListView.setOnDragListener(new SideFieldDragListener(m_questionFieldsAdapter));
-
-        // setup the AnswerFields ListView
-        m_answerFieldsListView = findViewById(R.id.cardstyle_editor_answer_fields);
-        m_answerFieldsAdapter = new CardFieldAdapter(this, m_cardTemplate.getAnswerCardFields());
-        m_answerFieldsListView.setAdapter(m_answerFieldsAdapter);
-        m_answerFieldsListView.setOnItemClickListener(this);
-        // add drag listener
-        //m_answerFieldsListView.setOnDragListener(new SideFieldDragListener(m_answerFieldsAdapter));
-
         // setup the full Field list ListView
         m_fullFieldListView = findViewById(R.id.cardstyle_editor_all_fields);
         m_fullFieldListView.setHasFixedSize(true);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         m_fullFieldListView.setLayoutManager(linearLayoutManager);
-
-
-
 
 
         // get field list
@@ -162,21 +95,6 @@ public class CardStyleActivity extends AppCompatActivity implements AdapterView.
 
     }
 
-    @Override
-    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        if( adapterView == m_questionFieldsListView) {
-            Log.d(TAG, "click question field: " + i);
-            CardField cardField = m_cardTemplate.getQuestionCardFields().get(i);
-            displayFieldEditor(cardField);
-
-        } else if( adapterView == m_answerFieldsListView) {
-            Log.d(TAG, "click answer field: " + i);
-            CardField cardField = m_cardTemplate.getAnswerCardFields().get(i);
-            displayFieldEditor(cardField);
-        }
-
-    }
-
     private void displayFieldEditor(CardField cardField) {
         LinearLayout fieldEditor = findViewById(R.id.cardstyle_editor);
         CardFieldEditorBinding binding = DataBindingUtil.bind(fieldEditor);
@@ -189,17 +107,8 @@ public class CardStyleActivity extends AppCompatActivity implements AdapterView.
 
     private CardStyle m_cardStyle;
 
-
-    private ListView m_questionFieldsListView;
-    private ListView m_answerFieldsListView;
-
-    private CardFieldAdapter m_questionFieldsAdapter;
-    private CardFieldAdapter m_answerFieldsAdapter;
-
     private RecyclerView m_fullFieldListView;
     private FieldListAdapter m_fieldListAdapter;
-
-
 
 
     CardTemplateKey m_cardTemplateKey;
