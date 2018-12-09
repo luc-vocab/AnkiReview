@@ -132,10 +132,17 @@ public class FieldListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     @Override
     public void onViewMoved(int oldPosition, int newPosition) {
 
+        if( newPosition == 0 ) {
+            // don't allow a field to be moved above the top header
+            return;
+        }
+
         FieldListItem fieldListItem = m_fieldList.get(oldPosition);
         m_fieldList.remove(oldPosition);
         m_fieldList.add(newPosition, fieldListItem);
         notifyItemMoved(oldPosition, newPosition);
+
+        Log.v(TAG, "onViewMoved oldPosition: " + oldPosition + " newPosition: " + newPosition);
     }
 
     @Override
