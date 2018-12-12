@@ -25,31 +25,28 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        >
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <LinearLayout
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            >
+            android:layout_height="0dp"
+            android:layout_weight="1">
 
-
-            <android.support.v7.widget.RecyclerView
-                android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/cardstyle_editor_all_fields">
-            </android.support.v7.widget.RecyclerView>
+                android:text="TextView" />
+        </FrameLayout>
 
-
-        </LinearLayout>
-
-        <include
-            layout="@layout/card_field_editor"
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/cardstyle_editor_all_fields"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="0dp"
+            android:layout_weight="2"></android.support.v7.widget.RecyclerView>
+
 
     </LinearLayout>
 
