@@ -17,7 +17,7 @@ import com.luc.ankireview.style.CardStyle;
 import static java.lang.Math.abs;
 
 public class ReviewerFlashcardLayout extends FrameLayout  implements View.OnTouchListener{
-    private static final String TAG = "FlashcardLayout";
+    private static final String TAG = "ReviewerFlashcardLayout";
 
     public ReviewerFlashcardLayout(Context context) {
         super(context);
