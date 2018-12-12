@@ -11,6 +11,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/round_corner_progress_bar_progress_default"
-            android:textSize="35dp" />
+            android:textSize="30dp" />
     </LinearLayout>
 </layout>
