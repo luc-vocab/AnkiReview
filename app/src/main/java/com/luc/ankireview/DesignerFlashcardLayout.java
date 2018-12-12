@@ -57,6 +57,18 @@ public class DesignerFlashcardLayout extends FrameLayout {
         cardStyle.renderCard(card, this);
     }
 
+    public void relayoutCards()
+    {
+
+        ViewGroup.MarginLayoutParams questionMarginParams = (ViewGroup.MarginLayoutParams) m_questionCard.getLayoutParams();
+        ViewGroup.MarginLayoutParams answerMarginParams = (ViewGroup.MarginLayoutParams) m_answerCard.getLayoutParams();
+
+        m_questionCard.setY(questionMarginParams.topMargin);
+
+        int answerHeight = questionMarginParams.topMargin + m_questionCard.getHeight() + questionMarginParams.bottomMargin + answerMarginParams.topMargin;
+
+        m_answerCard.setY(answerHeight);
+    }
 
     // question and answer cards
     private QuestionCard m_questionCard;

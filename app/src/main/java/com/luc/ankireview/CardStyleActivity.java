@@ -100,6 +100,7 @@ public class CardStyleActivity extends AppCompatActivity {
 
     public void updateCardPreview() {
         m_designerFlashcardLayout.setCard(m_card);
+        m_designerFlashcardLayout.relayoutCards();
     }
 
     public CardStyle getCardStyle() {

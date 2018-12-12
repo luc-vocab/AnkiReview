@@ -31,55 +31,49 @@ public class QuestionCardBehavior extends CoordinatorLayout.Behavior<QuestionCar
                                   int layoutDirection) {
         parent.onLayoutChild(child, layoutDirection);
 
-        if( ! m_initialLayoutDone) {
 
-            // center the question vertically
-            if ( parent.getParent() instanceof  ReviewerFlashcardLayout) {
+        if ( parent.getParent() instanceof  DesignerFlashcardLayout) {
 
-                int totalWindowHeight = parent.getHeight();
+            DesignerFlashcardLayout layout = (DesignerFlashcardLayout) parent.getParent();
+            layout.relayoutCards();
 
-                int questionHeight = child.getHeight();
-                int yPosition = totalWindowHeight / 2 - questionHeight / 2;
+        } else {
 
-                Log.v(TAG, "onLayoutChild, setting Y position to " + yPosition + " totalHeight: " + totalWindowHeight);
-                child.setY(yPosition);
+            if( ! m_initialLayoutDone) {
 
-                // position the answer card outside of the screen
+                // center the question vertically
+                if ( parent.getParent() instanceof  ReviewerFlashcardLayout) {
 
-                AnswerCard answerCard = parent.findViewById(R.id.answer_card);
-                answerCard.setY(totalWindowHeight);
+                    int totalWindowHeight = parent.getHeight();
 
-                // calculate ending position after spring animation
+                    int questionHeight = child.getHeight();
+                    int yPosition = totalWindowHeight / 2 - questionHeight / 2;
 
-                ViewGroup.MarginLayoutParams questionMarginParams = (ViewGroup.MarginLayoutParams) child.getLayoutParams();
-                ViewGroup.MarginLayoutParams answerMarginParams = (ViewGroup.MarginLayoutParams) answerCard.getLayoutParams();
+                    Log.v(TAG, "onLayoutChild, setting Y position to " + yPosition + " totalHeight: " + totalWindowHeight);
+                    child.setY(yPosition);
 
-                int combinedHeight = (int) (child.getHeight() + questionMarginParams.bottomMargin + answerMarginParams.topMargin + answerCard.getHeight());
-                int questionTargetY = totalWindowHeight / 2 - combinedHeight / 2;
-                int answerTargetY = questionTargetY + child.getHeight() + questionMarginParams.bottomMargin + answerMarginParams.topMargin;
+                    // position the answer card outside of the screen
 
-                ReviewerFlashcardLayout reviewerFlashcardLayout = (ReviewerFlashcardLayout) parent.getParent();
-                reviewerFlashcardLayout.setSpringAnimation(yPosition, questionTargetY, answerTargetY);
-            } else if ( parent.getParent() instanceof  DesignerFlashcardLayout) {
+                    AnswerCard answerCard = parent.findViewById(R.id.answer_card);
+                    answerCard.setY(totalWindowHeight);
 
+                    // calculate ending position after spring animation
 
+                    ViewGroup.MarginLayoutParams questionMarginParams = (ViewGroup.MarginLayoutParams) child.getLayoutParams();
+                    ViewGroup.MarginLayoutParams answerMarginParams = (ViewGroup.MarginLayoutParams) answerCard.getLayoutParams();
 
-                AnswerCard answerCard = parent.findViewById(R.id.answer_card);
+                    int combinedHeight = (int) (child.getHeight() + questionMarginParams.bottomMargin + answerMarginParams.topMargin + answerCard.getHeight());
+                    int questionTargetY = totalWindowHeight / 2 - combinedHeight / 2;
+                    int answerTargetY = questionTargetY + child.getHeight() + questionMarginParams.bottomMargin + answerMarginParams.topMargin;
 
-                ViewGroup.MarginLayoutParams questionMarginParams = (ViewGroup.MarginLayoutParams) child.getLayoutParams();
-                ViewGroup.MarginLayoutParams answerMarginParams = (ViewGroup.MarginLayoutParams) answerCard.getLayoutParams();
+                    ReviewerFlashcardLayout reviewerFlashcardLayout = (ReviewerFlashcardLayout) parent.getParent();
+                    reviewerFlashcardLayout.setSpringAnimation(yPosition, questionTargetY, answerTargetY);
+                }
 
-                child.setY(questionMarginParams.topMargin);
+                m_initialLayoutDone = true;
 
-                int answerHeight = questionMarginParams.topMargin + child.getHeight() + questionMarginParams.bottomMargin + answerMarginParams.topMargin;
-
-                answerCard.setY(answerHeight);
-
+                return true;
             }
-
-            m_initialLayoutDone = true;
-
-            return true;
         }
 
         return false;
