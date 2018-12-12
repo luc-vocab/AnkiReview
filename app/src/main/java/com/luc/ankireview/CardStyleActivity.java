@@ -87,7 +87,7 @@ public class CardStyleActivity extends AppCompatActivity {
         {
             fullFieldList.add(field);
         }
-        m_fieldListAdapter = new FieldListAdapter(m_cardTemplate, fullFieldList);
+        m_fieldListAdapter = new FieldListAdapter(this, m_cardTemplate, fullFieldList);
         m_fullFieldListView.setAdapter(m_fieldListAdapter);
 
         ItemTouchCallback itemTouchCallback = new ItemTouchCallback(m_fieldListAdapter);
@@ -98,10 +98,8 @@ public class CardStyleActivity extends AppCompatActivity {
 
     }
 
-    private void displayFieldEditor(CardField cardField) {
-        LinearLayout fieldEditor = findViewById(R.id.cardstyle_editor);
-        CardFieldEditorBinding binding = DataBindingUtil.bind(fieldEditor);
-        binding.setEditorField(cardField);
+    public void updateCardPreview() {
+        m_designerFlashcardLayout.setCard(m_card);
     }
 
     public CardStyle getCardStyle() {

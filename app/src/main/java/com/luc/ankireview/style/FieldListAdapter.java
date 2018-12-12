@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.luc.ankireview.CardStyleActivity;
 import com.luc.ankireview.R;
 
 import java.util.Vector;
@@ -20,7 +21,8 @@ public class FieldListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public FieldListAdapter(CardTemplate cardTemplate, Vector<String> fullFieldList) {
+    public FieldListAdapter(CardStyleActivity activity, CardTemplate cardTemplate, Vector<String> fullFieldList) {
+        m_activity = activity;
         m_cardTemplate = cardTemplate;
         m_fullFieldList = fullFieldList;
         buildFieldList();
@@ -172,12 +174,16 @@ public class FieldListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                 }
             }
         }
+
+        m_activity.updateCardPreview();
     }
 
     @Override
     public void onViewSwiped(int position) {
         // swiping is not allowed
     }
+
+    private CardStyleActivity m_activity;
 
     private Vector<String> m_fullFieldList;
     private CardTemplate m_cardTemplate;
