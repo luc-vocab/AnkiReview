@@ -25,6 +25,7 @@ public class QuestionCardBehavior extends CoordinatorLayout.Behavior<QuestionCar
         return false;
     }
 
+
     @Override
     public boolean onLayoutChild (CoordinatorLayout parent,
                                   QuestionCard child,
@@ -36,6 +37,8 @@ public class QuestionCardBehavior extends CoordinatorLayout.Behavior<QuestionCar
 
             DesignerFlashcardLayout layout = (DesignerFlashcardLayout) parent.getParent();
             layout.relayoutCards();
+
+            return true;
 
         } else {
 
