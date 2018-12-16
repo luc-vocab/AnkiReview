@@ -137,7 +137,7 @@ public class CardStyle {
         } else if ( questionCard.getLayoutParams() instanceof LinearLayout.LayoutParams )
         {
             LinearLayout.LayoutParams questionLayoutParams = (LinearLayout.LayoutParams) questionCard.getLayoutParams();
-            questionLayoutParams.setMargins(leftRightMargin_px, 0,  leftRightMargin_px, bottomMargin_px);
+            questionLayoutParams.setMargins(leftRightMargin_px, 20,  leftRightMargin_px, bottomMargin_px);
             questionCard.setLayoutParams(questionLayoutParams);
 
             LinearLayout.LayoutParams answerLayoutParams = (LinearLayout.LayoutParams) answerCard.getLayoutParams();
