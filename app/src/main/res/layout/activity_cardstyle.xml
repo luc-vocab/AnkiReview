@@ -35,11 +35,23 @@
             android:layout_weight="1"
             >
 
-            <com.luc.ankireview.DesignerFlashcardLayout
-                android:id="@+id/cardstyle_editor_card_preview"
+            <LinearLayout
+                android:id="@+id/cardstyle_editor_cards"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-            </com.luc.ankireview.DesignerFlashcardLayout>
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <include
+                    layout="@layout/questioncard"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <include
+                    layout="@layout/answercard"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
 
         </android.support.v4.widget.NestedScrollView>
 

@@ -99,7 +99,7 @@ public class CardStyle {
 
     }
 
-    public void renderCard(Card card, FrameLayout layout) {
+    public void renderCard(Card card, ViewGroup layout) {
 
         // look for the card template
         CardTemplateKey templateKey = new CardTemplateKey(card.getModelId(), card.getCardOrd());
@@ -126,13 +126,26 @@ public class CardStyle {
                 TypedValue.COMPLEX_UNIT_DIP, bottomMargin_dp, layout.getResources()
                         .getDisplayMetrics());
 
-        CoordinatorLayout.LayoutParams questionLayoutParams = (CoordinatorLayout.LayoutParams) questionCard.getLayoutParams();
-        questionLayoutParams.setMargins(leftRightMargin_px, 0,  leftRightMargin_px, bottomMargin_px);
-        questionCard.setLayoutParams(questionLayoutParams);
+        if( questionCard.getLayoutParams() instanceof  CoordinatorLayout.LayoutParams ) {
+            CoordinatorLayout.LayoutParams questionLayoutParams = (CoordinatorLayout.LayoutParams) questionCard.getLayoutParams();
+            questionLayoutParams.setMargins(leftRightMargin_px, 0,  leftRightMargin_px, bottomMargin_px);
+            questionCard.setLayoutParams(questionLayoutParams);
 
-        CoordinatorLayout.LayoutParams answerLayoutParams = (CoordinatorLayout.LayoutParams) answerCard.getLayoutParams();
-        answerLayoutParams.setMargins(leftRightMargin_px, 0,  leftRightMargin_px, bottomMargin_px);
-        answerCard.setLayoutParams(answerLayoutParams);
+            CoordinatorLayout.LayoutParams answerLayoutParams = (CoordinatorLayout.LayoutParams) answerCard.getLayoutParams();
+            answerLayoutParams.setMargins(leftRightMargin_px, 0,  leftRightMargin_px, bottomMargin_px);
+            answerCard.setLayoutParams(answerLayoutParams);
+        } else if ( questionCard.getLayoutParams() instanceof LinearLayout.LayoutParams )
+        {
+            LinearLayout.LayoutParams questionLayoutParams = (LinearLayout.LayoutParams) questionCard.getLayoutParams();
+            questionLayoutParams.setMargins(leftRightMargin_px, 0,  leftRightMargin_px, bottomMargin_px);
+            questionCard.setLayoutParams(questionLayoutParams);
+
+            LinearLayout.LayoutParams answerLayoutParams = (LinearLayout.LayoutParams) answerCard.getLayoutParams();
+            answerLayoutParams.setMargins(leftRightMargin_px, 0,  leftRightMargin_px, bottomMargin_px);
+            answerCard.setLayoutParams(answerLayoutParams);
+        }
+
+
 
         TextView questionText = layout.findViewById(R.id.question_text);
         TextView answerText = layout.findViewById(R.id.answer_text);

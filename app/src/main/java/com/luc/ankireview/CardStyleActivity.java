@@ -71,8 +71,8 @@ public class CardStyleActivity extends AppCompatActivity {
 
         Log.v(TAG, "num question card fields: " + m_cardTemplate.getQuestionCardFields().size());
 
-        m_designerFlashcardLayout = findViewById(R.id.cardstyle_editor_card_preview);
-        m_designerFlashcardLayout.setCard(m_card);
+        m_cardstyleEditorCards = findViewById(R.id.cardstyle_editor_cards);
+        m_cardStyle.renderCard(m_card, m_cardstyleEditorCards);
 
         // setup the full Field list ListView
         m_fullFieldListView = findViewById(R.id.cardstyle_editor_all_fields);
@@ -99,8 +99,7 @@ public class CardStyleActivity extends AppCompatActivity {
     }
 
     public void updateCardPreview() {
-        m_designerFlashcardLayout.setCard(m_card);
-        m_designerFlashcardLayout.relayoutCards();
+        m_cardStyle.renderCard(m_card, m_cardstyleEditorCards);
     }
 
     public CardStyle getCardStyle() {
@@ -112,9 +111,8 @@ public class CardStyleActivity extends AppCompatActivity {
     // views
     private RecyclerView m_fullFieldListView;
     private FieldListAdapter m_fieldListAdapter;
-    private DesignerFlashcardLayout m_designerFlashcardLayout;
 
-
+    private LinearLayout m_cardstyleEditorCards;
 
     private CardTemplateKey m_cardTemplateKey;
     private CardTemplate m_cardTemplate;
