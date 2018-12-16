@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.animation.DynamicAnimation;
 import android.support.animation.SpringAnimation;
 import android.support.animation.SpringForce;
+import android.support.design.widget.CoordinatorLayout;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -57,6 +58,10 @@ public class ReviewerFlashcardLayout extends FrameLayout  implements View.OnTouc
 
         m_questionCard = findViewById(R.id.question_card);
         m_answerCard = findViewById(R.id.answer_card);
+
+        QuestionCardBehavior behavior = new QuestionCardBehavior();
+        CoordinatorLayout.LayoutParams layoutParams = (CoordinatorLayout.LayoutParams) m_questionCard.getLayoutParams();
+        layoutParams.setBehavior(behavior);
 
         m_reviewActivity = (ReviewActivity) context;
 

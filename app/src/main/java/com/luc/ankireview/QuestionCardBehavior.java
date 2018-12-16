@@ -10,6 +10,11 @@ import android.view.ViewGroup;
 public class QuestionCardBehavior extends CoordinatorLayout.Behavior<QuestionCard>  {
     private static final String TAG = "QuestionCardBehavior";
 
+
+    public QuestionCardBehavior() {
+
+    }
+
     public QuestionCardBehavior(Context context, AttributeSet attrs) {
         super(context, attrs);
         Log.v(TAG, "constructor");

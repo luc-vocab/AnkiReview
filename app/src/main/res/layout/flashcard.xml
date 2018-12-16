@@ -8,52 +8,15 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
 
-        <com.luc.ankireview.QuestionCard
-            android:id="@+id/question_card"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            android:layout_marginLeft="40dp"
-            android:layout_marginRight="40dp"
-            app:cardCornerRadius="5dp"
-            app:layout_behavior="com.luc.ankireview.QuestionCardBehavior">
+    <include
+        layout="@layout/questioncard"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
-            <TextView
-                android:id="@+id/question_text"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:paddingBottom="30dp"
-                android:paddingLeft="15dp"
-                android:paddingRight="15dp"
-                android:paddingTop="20dp"
-                android:text="question"
-                android:textSize="40dp" />
-        </com.luc.ankireview.QuestionCard>
-
-        <com.luc.ankireview.AnswerCard
-            android:id="@+id/answer_card"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="40dp"
-            android:layout_marginRight="40dp"
-            app:cardCornerRadius="5dp"
-            >
-
-            <TextView
-                android:id="@+id/answer_text"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:includeFontPadding="false"
-                android:paddingBottom="30dp"
-                android:paddingLeft="15dp"
-                android:paddingRight="15dp"
-                android:paddingTop="20dp"
-                android:text="answer"
-                android:textSize="40dp" />
-
-        </com.luc.ankireview.AnswerCard>
+    <include
+        layout="@layout/answercard"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
     <FrameLayout
         android:id="@+id/flashcard_touch_layer"
