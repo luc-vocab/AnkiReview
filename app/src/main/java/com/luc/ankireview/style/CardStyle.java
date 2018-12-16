@@ -1,7 +1,9 @@
 package com.luc.ankireview.style;
 
+import android.app.ActionBar;
 import android.content.Context;
 import android.graphics.Typeface;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.res.ResourcesCompat;
 import android.text.Html;
@@ -13,10 +15,15 @@ import android.text.style.ForegroundColorSpan;
 import android.text.style.LeadingMarginSpan;
 import android.text.style.RelativeSizeSpan;
 import android.util.Log;
+import android.util.TypedValue;
+import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.luc.ankireview.AnswerCard;
 import com.luc.ankireview.Card;
+import com.luc.ankireview.QuestionCard;
 import com.luc.ankireview.R;
 
 import java.util.HashMap;
@@ -103,6 +110,29 @@ public class CardStyle {
 
         SpannableStringBuilder questionBuilder = buildString(cardTemplate.getQuestionCardFields(), card);
         SpannableStringBuilder answerBuilder = buildString(cardTemplate.getAnswerCardFields(), card);
+
+        QuestionCard questionCard = layout.findViewById(R.id.question_card);
+        AnswerCard answerCard = layout.findViewById(R.id.answer_card);
+
+
+
+        int leftRightMargin_dp = 40;
+        int leftRightMargin_px = (int) TypedValue.applyDimension(
+                TypedValue.COMPLEX_UNIT_DIP, leftRightMargin_dp, layout.getResources()
+                        .getDisplayMetrics());
+
+        int bottomMargin_dp = 20;
+        int bottomMargin_px = (int) TypedValue.applyDimension(
+                TypedValue.COMPLEX_UNIT_DIP, bottomMargin_dp, layout.getResources()
+                        .getDisplayMetrics());
+
+        CoordinatorLayout.LayoutParams questionLayoutParams = (CoordinatorLayout.LayoutParams) questionCard.getLayoutParams();
+        questionLayoutParams.setMargins(leftRightMargin_px, 0,  leftRightMargin_px, bottomMargin_px);
+        questionCard.setLayoutParams(questionLayoutParams);
+
+        CoordinatorLayout.LayoutParams answerLayoutParams = (CoordinatorLayout.LayoutParams) answerCard.getLayoutParams();
+        answerLayoutParams.setMargins(leftRightMargin_px, 0,  leftRightMargin_px, bottomMargin_px);
+        answerCard.setLayoutParams(answerLayoutParams);
 
         TextView questionText = layout.findViewById(R.id.question_text);
         TextView answerText = layout.findViewById(R.id.answer_text);
