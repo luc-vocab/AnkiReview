@@ -59,21 +59,24 @@
             android:id="@+id/cardstyle_tabs"
             android:layout_width="match_parent"
             android:layout_height="30dp">
+
             <android.support.design.widget.TabItem
+                android:id="@+id/cardstyle_tab_fields"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Fields"
-                />
+                android:text="Fields" />
+
             <android.support.design.widget.TabItem
+                android:id="@+id/carstyle_tab_font"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Font"
-                />
+                android:text="Font" />
+
             <android.support.design.widget.TabItem
+                android:id="@+id/cardstyle_tab_margins"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Margins"
-                />
+                android:text="Margins" />
         </android.support.design.widget.TabLayout>
 
         <FrameLayout
@@ -86,6 +89,20 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
             </android.support.v7.widget.RecyclerView>
+
+            <FrameLayout
+                android:id="@+id/cardstyle_editor_font"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            </FrameLayout>
+
+            <FrameLayout
+                android:id="@+id/cardstyle_editor_margins"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            </FrameLayout>
 
         </FrameLayout>
 

@@ -25,6 +25,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -78,6 +79,10 @@ public class CardStyleActivity extends AppCompatActivity implements TabLayout.On
         m_cardstyleEditorCards = findViewById(R.id.cardstyle_editor_cards);
         m_cardStyle.renderCard(m_card, m_cardstyleEditorCards);
 
+        // get font view and margins view
+        m_fontView = findViewById(R.id.cardstyle_editor_font);
+        m_marginsView = findViewById(R.id.cardstyle_editor_margins);
+
         // setup the full Field list ListView
         m_fullFieldListView = findViewById(R.id.cardstyle_editor_all_fields);
         m_fullFieldListView.setHasFixedSize(true);
@@ -111,7 +116,21 @@ public class CardStyleActivity extends AppCompatActivity implements TabLayout.On
     @Override
     public void onTabSelected(TabLayout.Tab tab)
     {
-        Log.v(TAG, "onTabSelected");
+        Log.v(TAG, "onTabSelected " + tab.getPosition());
+
+        if( tab.getPosition() == 0 ) {
+            m_fullFieldListView.setVisibility(View.VISIBLE);
+            m_fontView.setVisibility(View.INVISIBLE);
+            m_marginsView.setVisibility(View.INVISIBLE);
+        } else if( tab.getPosition() == 1 ) {
+            m_fullFieldListView.setVisibility(View.INVISIBLE);
+            m_fontView.setVisibility(View.VISIBLE);
+            m_marginsView.setVisibility(View.INVISIBLE);
+        } else if( tab.getPosition() == 2 ) {
+            m_fullFieldListView.setVisibility(View.INVISIBLE);
+            m_fontView.setVisibility(View.INVISIBLE);
+            m_marginsView.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
@@ -129,6 +148,9 @@ public class CardStyleActivity extends AppCompatActivity implements TabLayout.On
     }
 
     private CardStyle m_cardStyle;
+
+    private FrameLayout m_fontView;
+    private FrameLayout m_marginsView;
 
     // views
     private RecyclerView m_fullFieldListView;
