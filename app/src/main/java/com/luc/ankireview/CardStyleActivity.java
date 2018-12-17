@@ -10,6 +10,7 @@ import android.graphics.Point;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -40,7 +41,7 @@ import com.luc.ankireview.style.ItemTouchCallback;
 
 import java.util.Vector;
 
-public class CardStyleActivity extends AppCompatActivity {
+public class CardStyleActivity extends AppCompatActivity implements TabLayout.OnTabSelectedListener {
     private static final String TAG = "CardStyleActivity";
 
 
@@ -71,6 +72,9 @@ public class CardStyleActivity extends AppCompatActivity {
 
         Log.v(TAG, "num question card fields: " + m_cardTemplate.getQuestionCardFields().size());
 
+        m_cardstyleTabs = findViewById(R.id.cardstyle_tabs);
+        m_cardstyleTabs.addOnTabSelectedListener(this);
+
         m_cardstyleEditorCards = findViewById(R.id.cardstyle_editor_cards);
         m_cardStyle.renderCard(m_card, m_cardstyleEditorCards);
 
@@ -98,6 +102,24 @@ public class CardStyleActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onTabReselected(TabLayout.Tab tab)
+    {
+
+    }
+
+    @Override
+    public void onTabSelected(TabLayout.Tab tab)
+    {
+        Log.v(TAG, "onTabSelected");
+    }
+
+    @Override
+    public void onTabUnselected(TabLayout.Tab tab)
+    {
+
+    }
+
     public void updateCardPreview() {
         m_cardStyle.renderCard(m_card, m_cardstyleEditorCards);
     }
@@ -111,6 +133,8 @@ public class CardStyleActivity extends AppCompatActivity {
     // views
     private RecyclerView m_fullFieldListView;
     private FieldListAdapter m_fieldListAdapter;
+
+    private TabLayout m_cardstyleTabs;
 
     private LinearLayout m_cardstyleEditorCards;
 
