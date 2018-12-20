@@ -59,6 +59,12 @@ public class FieldListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         if(viewType == FieldListItem.VIEWTYPE_FIELD) {
             FieldViewHolder fieldViewHolder = (FieldViewHolder) holder;
             fieldViewHolder.mTextView.setText(item.getCardField().getFieldName());
+            ((FieldViewHolder) holder).mTextView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Log.v(TAG, "field click");
+                }
+            });
             ((FieldViewHolder) holder).mTextView.setOnTouchListener(new View.OnTouchListener() {
                 @Override
                 public boolean onTouch(View v, MotionEvent event) {
