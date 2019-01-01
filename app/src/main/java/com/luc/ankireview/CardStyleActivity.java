@@ -47,7 +47,7 @@ import com.warkiz.widget.SeekParams;
 
 import java.util.Vector;
 
-public class CardStyleActivity extends AppCompatActivity implements TabLayout.OnTabSelectedListener {
+public class CardStyleActivity extends AppCompatActivity implements TabLayout.OnTabSelectedListener, OnSeekChangeListener {
     private static final String TAG = "CardStyleActivity";
 
 
@@ -124,40 +124,8 @@ public class CardStyleActivity extends AppCompatActivity implements TabLayout.On
         m_margin_center_isb = findViewById(R.id.cardstyle_margin_center_isb);
         m_margin_center_isb.setProgress(m_cardTemplate.getCenterMargin());
 
-        m_margin_leftright_isb.setOnSeekChangeListener(new OnSeekChangeListener() {
-            @Override
-            public void onSeeking(SeekParams seekParams) {
-                Log.v(TAG, "left/right margin: " + seekParams.progress);
-                m_cardTemplate.setLeftRightMargin(seekParams.progress);
-                updateCardPreview();
-            }
-
-            @Override
-            public void onStartTrackingTouch(IndicatorSeekBar seekBar) {
-            }
-
-            @Override
-            public void onStopTrackingTouch(IndicatorSeekBar seekBar) {
-            }
-        });
-
-
-        m_margin_center_isb.setOnSeekChangeListener(new OnSeekChangeListener() {
-            @Override
-            public void onSeeking(SeekParams seekParams) {
-                Log.v(TAG, "left/right margin: " + seekParams.progress);
-                m_cardTemplate.setCenterMargin(seekParams.progress);
-                updateCardPreview();
-            }
-
-            @Override
-            public void onStartTrackingTouch(IndicatorSeekBar seekBar) {
-            }
-
-            @Override
-            public void onStopTrackingTouch(IndicatorSeekBar seekBar) {
-            }
-        });
+        m_margin_leftright_isb.setOnSeekChangeListener(this);
+        m_margin_center_isb.setOnSeekChangeListener(this);
 
     }
 
@@ -191,6 +159,26 @@ public class CardStyleActivity extends AppCompatActivity implements TabLayout.On
     public void onTabUnselected(TabLayout.Tab tab)
     {
 
+    }
+
+    @Override
+    public void onSeeking(SeekParams seekParams) {
+        if( seekParams.seekBar == m_margin_leftright_isb) {
+            Log.v(TAG, "left/right margin: " + seekParams.progress);
+            m_cardTemplate.setLeftRightMargin(seekParams.progress);
+        } else if( seekParams.seekBar == m_margin_center_isb ) {
+            Log.v(TAG, "left/right margin: " + seekParams.progress);
+            m_cardTemplate.setCenterMargin(seekParams.progress);
+        }
+        updateCardPreview();
+    }
+
+    @Override
+    public void onStartTrackingTouch(IndicatorSeekBar seekBar) {
+    }
+
+    @Override
+    public void onStopTrackingTouch(IndicatorSeekBar seekBar) {
     }
 
     public void updateCardPreview() {
