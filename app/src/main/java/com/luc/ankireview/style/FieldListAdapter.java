@@ -101,6 +101,9 @@ public class FieldListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                     isUnassigned = false;
                 }
             }
+            if( field.equals(m_cardTemplate.getSoundField())) {
+                isUnassigned = false;
+            }
 
             if(isUnassigned) {
                 CardField cardField = new CardField(field);
@@ -122,6 +125,11 @@ public class FieldListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
         // add the "sound" header
         m_fieldList.add(new FieldListItem(null, FieldListItem.VIEWTYPE_HEADER, FieldListItem.HEADER_SOUND));
+        String soundField = m_cardTemplate.getSoundField();
+        if( soundField != null ) {
+            CardField cardField = new CardField(soundField);
+            m_fieldList.add(new FieldListItem(cardField, FieldListItem.VIEWTYPE_FIELD, null));
+        }
 
     }
 
