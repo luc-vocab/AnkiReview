@@ -4,6 +4,7 @@ public class FieldListItem {
     public static final String HEADER_ALLFIELDS = "All Fields";
     public static final String HEADER_QUESTION = "Question Fields";
     public static final String HEADER_ANSWER = "Answer Fields";
+    public static final String HEADER_SOUND = "Sound Fields";
 
     public static final int VIEWTYPE_FIELD = 1;
     public static final int VIEWTYPE_HEADER = 2;

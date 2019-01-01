@@ -54,6 +54,8 @@ public class CardStyle {
         CardField chineseField = new CardField("Chinese");
         chineseField.setColor(ContextCompat.getColor(context, R.color.text_cantonese));
         cardTemplate.addAnswerCardField(chineseField);
+        // set sound field
+        cardTemplate.setSoundField("Sound");
 
         CardTemplateKey key1 = new CardTemplateKey(1354424015761l, 0);
         CardTemplateKey key2 = new CardTemplateKey(1354424015760l, 0);
@@ -91,6 +93,9 @@ public class CardStyle {
         definitionField.setRelativeSize(0.5f);
         definitionField.setLineReturn(true);
         cardTemplate.addAnswerCardField(definitionField);
+
+        // set sound field
+        cardTemplate.setSoundField("Sound");
 
         key1 = new CardTemplateKey(1423381647288l, 0);
         key2 = new CardTemplateKey(1423381647288l, 0);
@@ -220,7 +225,11 @@ public class CardStyle {
     }
 
     public String getAnswerAudio(Card card) {
-        String soundFile = card.extractSoundFile(card.getFieldValue("Sound"));
+        // get card template
+        CardTemplateKey cardTemplateKey = new CardTemplateKey(card.getModelId(), card.getCardOrd());
+        CardTemplate cardTemplate = m_cardTemplateMap.get(cardTemplateKey);
+
+        String soundFile = card.extractSoundFile(card.getFieldValue(cardTemplate.getSoundField()));
         return soundFile;
     }
 

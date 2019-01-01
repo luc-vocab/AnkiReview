@@ -120,6 +120,9 @@ public class FieldListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             m_fieldList.add(new FieldListItem(cardField, FieldListItem.VIEWTYPE_FIELD, null));
         }
 
+        // add the "sound" header
+        m_fieldList.add(new FieldListItem(null, FieldListItem.VIEWTYPE_HEADER, FieldListItem.HEADER_SOUND));
+
     }
 
     // Return the size of your dataset (invoked by the layout manager)
