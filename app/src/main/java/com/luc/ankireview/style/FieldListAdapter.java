@@ -170,6 +170,7 @@ public class FieldListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
         boolean insideQuestionFields = false;
         boolean insideAnswerFields = false;
+        boolean insideSoundFields = false;
 
         m_cardTemplate.getQuestionCardFields().clear();
         m_cardTemplate.getAnswerCardFields().clear();
@@ -180,14 +181,22 @@ public class FieldListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                     m_cardTemplate.addQuestionCardField(fieldListItem.getCardField());
                 } else if( insideAnswerFields) {
                     m_cardTemplate.addAnswerCardField(fieldListItem.getCardField());
+                } else if ( insideSoundFields ) {
+                    m_cardTemplate.setSoundField(fieldListItem.getCardField().getFieldName());
                 }
             } else {
                 if( fieldListItem.getHeader().equals(FieldListItem.HEADER_QUESTION)) {
                     insideQuestionFields = true;
                     insideAnswerFields = false;
+                    insideSoundFields = false;
                 } else if (fieldListItem.getHeader().equals(FieldListItem.HEADER_ANSWER)) {
                     insideQuestionFields = false;
                     insideAnswerFields = true;
+                    insideSoundFields = false;
+                } else if (fieldListItem.getHeader().equals(FieldListItem.HEADER_SOUND)) {
+                    insideQuestionFields = false;
+                    insideAnswerFields = false;
+                    insideSoundFields = true;
                 }
             }
         }
