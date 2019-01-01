@@ -59,6 +59,7 @@ public class CardStyle {
 
         // margins
         // -------
+        cardTemplate.setCenterMargin(20);
         cardTemplate.setLeftRightMargin(40);
 
         CardTemplateKey key1 = new CardTemplateKey(1354424015761l, 0);
@@ -103,6 +104,7 @@ public class CardStyle {
 
         // margins
         // -------
+        cardTemplate.setCenterMargin(20);
         cardTemplate.setLeftRightMargin(40);
 
         key1 = new CardTemplateKey(1423381647288l, 0);
@@ -134,7 +136,7 @@ public class CardStyle {
                 TypedValue.COMPLEX_UNIT_DIP, leftRightMargin_dp, layout.getResources()
                         .getDisplayMetrics());
 
-        int bottomMargin_dp = 20;
+        int bottomMargin_dp = cardTemplate.getCenterMargin();
         int bottomMargin_px = (int) TypedValue.applyDimension(
                 TypedValue.COMPLEX_UNIT_DIP, bottomMargin_dp, layout.getResources()
                         .getDisplayMetrics());

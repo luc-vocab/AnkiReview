@@ -109,7 +109,6 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/textView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Left/Right Margin" />
@@ -119,6 +118,18 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         app:isb_max="120"
+                        app:isb_min="0" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Between Question and Answer Margin" />
+
+                    <com.warkiz.widget.IndicatorSeekBar
+                        android:id="@+id/cardstyle_margin_center_isb"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:isb_max="80"
                         app:isb_min="0" />
 
                 </LinearLayout>

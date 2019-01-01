@@ -121,11 +121,32 @@ public class CardStyleActivity extends AppCompatActivity implements TabLayout.On
         m_margin_leftright_isb = findViewById(R.id.cardstyle_margin_leftright_isb);
         m_margin_leftright_isb.setProgress(m_cardTemplate.getLeftRightMargin());
 
+        m_margin_center_isb = findViewById(R.id.cardstyle_margin_center_isb);
+        m_margin_center_isb.setProgress(m_cardTemplate.getCenterMargin());
+
         m_margin_leftright_isb.setOnSeekChangeListener(new OnSeekChangeListener() {
             @Override
             public void onSeeking(SeekParams seekParams) {
                 Log.v(TAG, "left/right margin: " + seekParams.progress);
                 m_cardTemplate.setLeftRightMargin(seekParams.progress);
+                updateCardPreview();
+            }
+
+            @Override
+            public void onStartTrackingTouch(IndicatorSeekBar seekBar) {
+            }
+
+            @Override
+            public void onStopTrackingTouch(IndicatorSeekBar seekBar) {
+            }
+        });
+
+
+        m_margin_center_isb.setOnSeekChangeListener(new OnSeekChangeListener() {
+            @Override
+            public void onSeeking(SeekParams seekParams) {
+                Log.v(TAG, "left/right margin: " + seekParams.progress);
+                m_cardTemplate.setCenterMargin(seekParams.progress);
                 updateCardPreview();
             }
 
@@ -196,6 +217,7 @@ public class CardStyleActivity extends AppCompatActivity implements TabLayout.On
 
     // margin controls
     private IndicatorSeekBar m_margin_leftright_isb;
+    private IndicatorSeekBar m_margin_center_isb;
 
 
     private CardTemplateKey m_cardTemplateKey;
