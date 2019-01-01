@@ -39,7 +39,7 @@ public class CardStyle {
         Typeface typeface = ResourcesCompat.getFont(context, R.font.fira_sans_condensed);
 
         // build CardTemplate for Chinese-Words
-        // ------------------------------------
+        // ====================================
 
         CardTemplate cardTemplate = new CardTemplate();
         cardTemplate.setTypeface(typeface);
@@ -57,6 +57,10 @@ public class CardStyle {
         // set sound field
         cardTemplate.setSoundField("Sound");
 
+        // margins
+        // -------
+        cardTemplate.setLeftRightMargin(40);
+
         CardTemplateKey key1 = new CardTemplateKey(1354424015761l, 0);
         CardTemplateKey key2 = new CardTemplateKey(1354424015760l, 0);
         CardTemplateKey key3 = new CardTemplateKey(1400993365602l, 0);
@@ -66,7 +70,7 @@ public class CardStyle {
         m_cardTemplateMap.put(key3, cardTemplate);
 
         // build CardTemplate for Hanzi
-        // ----------------------------
+        // ============================
 
         cardTemplate = new CardTemplate();
         cardTemplate.setTypeface(typeface);
@@ -97,6 +101,10 @@ public class CardStyle {
         // set sound field
         cardTemplate.setSoundField("Sound");
 
+        // margins
+        // -------
+        cardTemplate.setLeftRightMargin(40);
+
         key1 = new CardTemplateKey(1423381647288l, 0);
         key2 = new CardTemplateKey(1423381647288l, 0);
         m_cardTemplateMap.put(key1, cardTemplate);
@@ -121,7 +129,7 @@ public class CardStyle {
 
 
 
-        int leftRightMargin_dp = 40;
+        int leftRightMargin_dp = cardTemplate.getLeftRightMargin();
         int leftRightMargin_px = (int) TypedValue.applyDimension(
                 TypedValue.COMPLEX_UNIT_DIP, leftRightMargin_dp, layout.getResources()
                         .getDisplayMetrics());

@@ -28,6 +28,7 @@ import android.widget.BaseAdapter;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.SeekBar;
 import android.widget.TextView;
 import android.databinding.DataBindingUtil;
 
@@ -76,6 +77,8 @@ public class CardStyleActivity extends AppCompatActivity implements TabLayout.On
         m_cardstyleTabs = findViewById(R.id.cardstyle_tabs);
         m_cardstyleTabs.addOnTabSelectedListener(this);
 
+
+
         m_cardstyleEditorCards = findViewById(R.id.cardstyle_editor_cards);
         m_cardStyle.renderCard(m_card, m_cardstyleEditorCards);
 
@@ -88,7 +91,6 @@ public class CardStyleActivity extends AppCompatActivity implements TabLayout.On
         m_fullFieldListView.setHasFixedSize(true);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         m_fullFieldListView.setLayoutManager(linearLayoutManager);
-
 
         // get field list
         Vector<String> fullFieldList = new Vector<String>();
@@ -103,6 +105,11 @@ public class CardStyleActivity extends AppCompatActivity implements TabLayout.On
         ItemTouchHelper touchHelper = new ItemTouchHelper(itemTouchCallback);
         m_fieldListAdapter.setTouchHelper(touchHelper);
         touchHelper.attachToRecyclerView(m_fullFieldListView);
+
+        // set visibility of tabs
+        m_fullFieldListView.setVisibility(View.VISIBLE);
+        m_fontView.setVisibility(View.INVISIBLE);
+        m_marginsView.setVisibility(View.INVISIBLE);
 
 
     }
@@ -159,6 +166,10 @@ public class CardStyleActivity extends AppCompatActivity implements TabLayout.On
     private TabLayout m_cardstyleTabs;
 
     private LinearLayout m_cardstyleEditorCards;
+
+
+    // margin controls
+
 
     private CardTemplateKey m_cardTemplateKey;
     private CardTemplate m_cardTemplate;

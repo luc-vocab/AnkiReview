@@ -12,6 +12,7 @@ public class CardTemplate {
         m_questionCardFields = new Vector<CardField>();
         m_answerCardFields = new Vector<CardField>();
         m_soundField = null;
+        m_leftRightMargin_px = 0;
     }
 
 
@@ -45,10 +46,14 @@ public class CardTemplate {
 
     public void setSoundField(String  soundField) { m_soundField = soundField; }
 
+    public int getLeftRightMargin() { return m_leftRightMargin_px; }
+    public void setLeftRightMargin( int margin ) { m_leftRightMargin_px = margin; }
+
     private Typeface m_typeface;
 
     private Vector<CardField> m_questionCardFields;
     private Vector<CardField> m_answerCardFields;
     private String m_soundField;
+    private int m_leftRightMargin_px;
 
 }

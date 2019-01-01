@@ -102,6 +102,24 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/textView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Left/Right Margin" />
+
+                    <SeekBar
+                        android:id="@+id/cardstyle_margins_leftright"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:visibility="visible" />
+                </LinearLayout>
             </FrameLayout>
 
         </FrameLayout>
