@@ -16,7 +16,6 @@
             android:paddingLeft="15dp"
             android:paddingRight="15dp"
             android:paddingTop="20dp"
-            android:text="question"
-            android:textSize="40dp" />
+            android:text="question" />
     </com.luc.ankireview.QuestionCard>
 </layout>

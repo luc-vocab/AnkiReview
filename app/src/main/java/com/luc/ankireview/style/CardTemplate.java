@@ -12,6 +12,9 @@ public class CardTemplate {
         m_questionCardFields = new Vector<CardField>();
         m_answerCardFields = new Vector<CardField>();
         m_soundField = null;
+
+        m_baseTextSize = 40;
+
         m_leftRightMargin_px = 0;
         m_centerMargin_px = 0;
     }
@@ -47,6 +50,9 @@ public class CardTemplate {
 
     public void setSoundField(String  soundField) { m_soundField = soundField; }
 
+    public int getBaseTextSize() { return m_baseTextSize; }
+    public void setBaseTextSize(int margin) { m_baseTextSize = margin; }
+
     public int getLeftRightMargin() { return m_leftRightMargin_px; }
     public void setLeftRightMargin( int margin ) { m_leftRightMargin_px = margin; }
 
@@ -58,6 +64,11 @@ public class CardTemplate {
     private Vector<CardField> m_questionCardFields;
     private Vector<CardField> m_answerCardFields;
     private String m_soundField;
+
+    // text
+    private int m_baseTextSize;
+
+    // margins
     private int m_leftRightMargin_px;
     private int m_centerMargin_px;
 

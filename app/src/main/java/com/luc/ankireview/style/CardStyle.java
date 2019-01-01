@@ -57,6 +57,10 @@ public class CardStyle {
         // set sound field
         cardTemplate.setSoundField("Sound");
 
+        // text
+        // ----
+        cardTemplate.setBaseTextSize(40);
+
         // margins
         // -------
         cardTemplate.setCenterMargin(20);
@@ -101,6 +105,10 @@ public class CardStyle {
 
         // set sound field
         cardTemplate.setSoundField("Sound");
+
+        // text
+        // ----
+        cardTemplate.setBaseTextSize(40);
 
         // margins
         // -------
@@ -171,6 +179,10 @@ public class CardStyle {
         questionText.setText(questionBuilder, TextView.BufferType.SPANNABLE);
         answerText.setText(answerBuilder, TextView.BufferType.SPANNABLE);
 
+        // compute text size
+        int baseTextSize_dp = cardTemplate.getBaseTextSize();
+        questionText.setTextSize(TypedValue.COMPLEX_UNIT_DIP, baseTextSize_dp);
+        answerText.setTextSize(TypedValue.COMPLEX_UNIT_DIP, baseTextSize_dp);
 
     }
 
