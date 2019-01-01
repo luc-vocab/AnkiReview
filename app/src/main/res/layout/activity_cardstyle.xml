@@ -117,7 +117,9 @@
                     <com.warkiz.widget.IndicatorSeekBar
                         android:id="@+id/cardstyle_margin_leftright_isb"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        app:isb_max="120"
+                        app:isb_min="0" />
 
                 </LinearLayout>
             </FrameLayout>
