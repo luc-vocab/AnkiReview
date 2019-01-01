@@ -115,6 +115,12 @@ public class CardStyleActivity extends AppCompatActivity implements TabLayout.On
         m_fontView.setVisibility(View.INVISIBLE);
         m_marginsView.setVisibility(View.INVISIBLE);
 
+        // text controls
+        // -------------
+        m_text_basesize_isb = findViewById(R.id.cardstyle_text_basesize_isb);
+        m_text_basesize_isb.setOnSeekChangeListener(this);
+        m_text_basesize_isb.setProgress(m_cardTemplate.getBaseTextSize());
+
         // margin controls
         // ---------------
 
@@ -169,6 +175,8 @@ public class CardStyleActivity extends AppCompatActivity implements TabLayout.On
         } else if( seekParams.seekBar == m_margin_center_isb ) {
             Log.v(TAG, "left/right margin: " + seekParams.progress);
             m_cardTemplate.setCenterMargin(seekParams.progress);
+        } else if ( seekParams.seekBar == m_text_basesize_isb) {
+            m_cardTemplate.setBaseTextSize(seekParams.progress);
         }
         updateCardPreview();
     }
@@ -202,6 +210,9 @@ public class CardStyleActivity extends AppCompatActivity implements TabLayout.On
 
     private LinearLayout m_cardstyleEditorCards;
 
+
+    // text controls
+    private IndicatorSeekBar m_text_basesize_isb;
 
     // margin controls
     private IndicatorSeekBar m_margin_leftright_isb;

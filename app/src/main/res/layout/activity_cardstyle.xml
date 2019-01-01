@@ -95,6 +95,25 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Base Text Size" />
+
+                <com.warkiz.widget.IndicatorSeekBar
+                    android:id="@+id/cardstyle_text_basesize_isb"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:isb_max="100"
+                    app:isb_min="10" />
+
+                </LinearLayout>
+
             </FrameLayout>
 
             <FrameLayout
