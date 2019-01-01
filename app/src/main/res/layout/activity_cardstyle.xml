@@ -114,11 +114,11 @@
                         android:layout_height="wrap_content"
                         android:text="Left/Right Margin" />
 
-                    <SeekBar
-                        android:id="@+id/cardstyle_margins_leftright"
+                    <com.warkiz.widget.IndicatorSeekBar
+                        android:id="@+id/cardstyle_margin_leftright_isb"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:visibility="visible" />
+                        android:layout_height="wrap_content" />
+
                 </LinearLayout>
             </FrameLayout>
 

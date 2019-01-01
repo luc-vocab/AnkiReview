@@ -40,6 +40,10 @@ import com.luc.ankireview.style.CardTemplateKey;
 import com.luc.ankireview.databinding.CardFieldItemBinding;
 import com.luc.ankireview.style.FieldListAdapter;
 import com.luc.ankireview.style.ItemTouchCallback;
+import com.warkiz.widget.Indicator;
+import com.warkiz.widget.IndicatorSeekBar;
+import com.warkiz.widget.OnSeekChangeListener;
+import com.warkiz.widget.SeekParams;
 
 import java.util.Vector;
 
@@ -111,6 +115,28 @@ public class CardStyleActivity extends AppCompatActivity implements TabLayout.On
         m_fontView.setVisibility(View.INVISIBLE);
         m_marginsView.setVisibility(View.INVISIBLE);
 
+        // margin controls
+        // ---------------
+
+        m_margin_leftright_isb = findViewById(R.id.cardstyle_margin_leftright_isb);
+        m_margin_leftright_isb.setProgress(m_cardTemplate.getLeftRightMargin());
+
+        m_margin_leftright_isb.setOnSeekChangeListener(new OnSeekChangeListener() {
+            @Override
+            public void onSeeking(SeekParams seekParams) {
+                Log.v(TAG, "left/right margin: " + seekParams.progress);
+                m_cardTemplate.setLeftRightMargin(seekParams.progress);
+                updateCardPreview();
+            }
+
+            @Override
+            public void onStartTrackingTouch(IndicatorSeekBar seekBar) {
+            }
+
+            @Override
+            public void onStopTrackingTouch(IndicatorSeekBar seekBar) {
+            }
+        });
 
     }
 
@@ -169,6 +195,7 @@ public class CardStyleActivity extends AppCompatActivity implements TabLayout.On
 
 
     // margin controls
+    private IndicatorSeekBar m_margin_leftright_isb;
 
 
     private CardTemplateKey m_cardTemplateKey;
