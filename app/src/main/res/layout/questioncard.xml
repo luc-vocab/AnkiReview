@@ -12,10 +12,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:paddingBottom="30dp"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp"
-            android:paddingTop="20dp"
             android:text="question" />
     </com.luc.ankireview.QuestionCard>
 </layout>

@@ -66,6 +66,10 @@ public class CardStyle {
         cardTemplate.setCenterMargin(20);
         cardTemplate.setLeftRightMargin(40);
 
+        cardTemplate.setPaddingTop(20);
+        cardTemplate.setPaddingBottom(30);
+        cardTemplate.setPaddingLeftRight(15);
+
         CardTemplateKey key1 = new CardTemplateKey(1354424015761l, 0);
         CardTemplateKey key2 = new CardTemplateKey(1354424015760l, 0);
         CardTemplateKey key3 = new CardTemplateKey(1400993365602l, 0);
@@ -114,6 +118,10 @@ public class CardStyle {
         // -------
         cardTemplate.setCenterMargin(20);
         cardTemplate.setLeftRightMargin(40);
+
+        cardTemplate.setPaddingTop(20);
+        cardTemplate.setPaddingBottom(30);
+        cardTemplate.setPaddingLeftRight(15);
 
         key1 = new CardTemplateKey(1423381647288l, 0);
         key2 = new CardTemplateKey(1423381647288l, 0);
@@ -183,6 +191,18 @@ public class CardStyle {
         int baseTextSize_dp = cardTemplate.getBaseTextSize();
         questionText.setTextSize(TypedValue.COMPLEX_UNIT_DIP, baseTextSize_dp);
         answerText.setTextSize(TypedValue.COMPLEX_UNIT_DIP, baseTextSize_dp);
+
+        // compute margins
+        int paddingTop_px = (int) TypedValue.applyDimension(
+                TypedValue.COMPLEX_UNIT_DIP, cardTemplate.getPaddingTop(), layout.getResources().getDisplayMetrics());
+        int paddingBottom_px = (int) TypedValue.applyDimension(
+                TypedValue.COMPLEX_UNIT_DIP, cardTemplate.getPaddingBottom(), layout.getResources().getDisplayMetrics());
+        int paddingLeftRight_px = (int) TypedValue.applyDimension(
+                TypedValue.COMPLEX_UNIT_DIP, cardTemplate.getPaddingLeftRight(), layout.getResources().getDisplayMetrics());
+
+        questionText.setPadding(paddingLeftRight_px, paddingTop_px, paddingLeftRight_px, paddingBottom_px);
+        answerText.setPadding(paddingLeftRight_px, paddingTop_px, paddingLeftRight_px, paddingBottom_px);
+
 
     }
 

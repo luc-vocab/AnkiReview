@@ -59,6 +59,15 @@ public class CardTemplate {
     public int getCenterMargin() { return m_centerMargin_px; }
     public void setCenterMargin( int margin ) { m_centerMargin_px = margin; }
 
+    public int getPaddingTop() { return m_paddingTop; }
+    public void setPaddingTop( int padding) { m_paddingTop = padding; }
+
+    public int getPaddingBottom() { return m_paddingBottom; }
+    public void setPaddingBottom( int padding )  { m_paddingBottom = padding; }
+
+    public int getPaddingLeftRight() { return m_paddingLeftRight; }
+    public void setPaddingLeftRight( int padding ) { m_paddingLeftRight = padding; }
+
     private Typeface m_typeface;
 
     private Vector<CardField> m_questionCardFields;
@@ -71,5 +80,10 @@ public class CardTemplate {
     // margins
     private int m_leftRightMargin_px;
     private int m_centerMargin_px;
+
+    private int m_paddingTop;
+    private int m_paddingBottom;
+    private int m_paddingLeftRight;
+
 
 }

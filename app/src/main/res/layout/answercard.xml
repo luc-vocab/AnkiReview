@@ -14,10 +14,6 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:includeFontPadding="false"
-            android:paddingBottom="30dp"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp"
-            android:paddingTop="20dp"
             android:text="answer" />
 
     </com.luc.ankireview.AnswerCard>
