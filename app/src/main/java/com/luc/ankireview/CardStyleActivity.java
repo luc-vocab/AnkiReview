@@ -130,8 +130,18 @@ public class CardStyleActivity extends AppCompatActivity implements TabLayout.On
         m_margin_center_isb = findViewById(R.id.cardstyle_margin_center_isb);
         m_margin_center_isb.setProgress(m_cardTemplate.getCenterMargin());
 
+        m_padding_top_isb = findViewById(R.id.cardstyle_padding_top_isb);
+        m_padding_top_isb.setProgress(m_cardTemplate.getPaddingTop());
+        m_padding_bottom_isb = findViewById(R.id.cardstyle_padding_bottom_isb);
+        m_padding_bottom_isb.setProgress(m_cardTemplate.getPaddingBottom());
+        m_padding_leftright_isb = findViewById(R.id.cardstyle_padding_leftright_isb);
+        m_padding_leftright_isb.setProgress(m_cardTemplate.getPaddingLeftRight());
+
         m_margin_leftright_isb.setOnSeekChangeListener(this);
         m_margin_center_isb.setOnSeekChangeListener(this);
+        m_padding_top_isb.setOnSeekChangeListener(this);
+        m_padding_bottom_isb.setOnSeekChangeListener(this);
+        m_padding_leftright_isb.setOnSeekChangeListener(this);
 
     }
 
@@ -177,6 +187,12 @@ public class CardStyleActivity extends AppCompatActivity implements TabLayout.On
             m_cardTemplate.setCenterMargin(seekParams.progress);
         } else if ( seekParams.seekBar == m_text_basesize_isb) {
             m_cardTemplate.setBaseTextSize(seekParams.progress);
+        } else if ( seekParams.seekBar == m_padding_bottom_isb) {
+            m_cardTemplate.setPaddingBottom(seekParams.progress);
+        } else if ( seekParams.seekBar == m_padding_top_isb) {
+            m_cardTemplate.setPaddingTop(seekParams.progress);
+        } else if ( seekParams.seekBar == m_padding_leftright_isb) {
+            m_cardTemplate.setPaddingLeftRight(seekParams.progress);
         }
         updateCardPreview();
     }
@@ -217,6 +233,10 @@ public class CardStyleActivity extends AppCompatActivity implements TabLayout.On
     // margin controls
     private IndicatorSeekBar m_margin_leftright_isb;
     private IndicatorSeekBar m_margin_center_isb;
+
+    private IndicatorSeekBar m_padding_top_isb;
+    private IndicatorSeekBar m_padding_bottom_isb;
+    private IndicatorSeekBar m_padding_leftright_isb;
 
 
     private CardTemplateKey m_cardTemplateKey;

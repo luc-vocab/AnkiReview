@@ -151,6 +151,42 @@
                         app:isb_max="80"
                         app:isb_min="0" />
 
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Padding Top" />
+
+                    <com.warkiz.widget.IndicatorSeekBar
+                        android:id="@+id/cardstyle_padding_top_isb"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:isb_max="80"
+                        app:isb_min="0" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Padding Bottom" />
+
+                    <com.warkiz.widget.IndicatorSeekBar
+                        android:id="@+id/cardstyle_padding_bottom_isb"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:isb_max="80"
+                        app:isb_min="0" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Padding Left/Right" />
+
+                    <com.warkiz.widget.IndicatorSeekBar
+                        android:id="@+id/cardstyle_padding_leftright_isb"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:isb_max="80"
+                        app:isb_min="0" />
+
                 </LinearLayout>
             </FrameLayout>
 
