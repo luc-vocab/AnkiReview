@@ -184,7 +184,7 @@
                         android:id="@+id/cardstyle_padding_leftright_isb"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:isb_max="80"
+                        app:isb_max="100"
                         app:isb_min="0" />
 
                 </LinearLayout>
