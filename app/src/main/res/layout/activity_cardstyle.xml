@@ -117,6 +117,19 @@
                             app:isb_min="0" />
                     </com.warkiz.widget.IndicatorStayLayout>
 
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Text Color" />
+
+                    <com.thebluealliance.spectrum.SpectrumPalette
+                        android:id="@+id/cardstyle_text_color"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        app:spectrum_autoPadding="true"
+                        app:spectrum_outlineWidth="0dp"
+                        app:spectrum_colors="@array/text_field_colors" />
+
                 </LinearLayout>
 
             </FrameLayout>
