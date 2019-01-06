@@ -49,6 +49,7 @@ import java.util.Vector;
 
 public class CardStyleActivity extends AppCompatActivity implements TabLayout.OnTabSelectedListener, OnSeekChangeListener {
     private static final String TAG = "CardStyleActivity";
+    public static final double TEXT_RELATIVE_SIZE_FACTOR = 10.0;
 
 
     @Override
@@ -82,11 +83,11 @@ public class CardStyleActivity extends AppCompatActivity implements TabLayout.On
         m_cardstyleTabs.addOnTabSelectedListener(this);
 
 
-
         m_cardstyleEditorCards = findViewById(R.id.cardstyle_editor_cards);
         m_cardStyle.renderCard(m_card, m_cardstyleEditorCards);
 
         // get font view and margins view
+        m_fieldSettingsView = findViewById(R.id.cardstyle_editor_fieldsettings);
         m_fontView = findViewById(R.id.cardstyle_editor_font);
         m_marginsView = findViewById(R.id.cardstyle_editor_margins);
 
@@ -98,10 +99,11 @@ public class CardStyleActivity extends AppCompatActivity implements TabLayout.On
 
         // get field list
         Vector<String> fullFieldList = new Vector<String>();
-        for(String field: m_card.getFieldMap().keySet())
+        for (String field : m_card.getFieldMap().keySet())
         {
             fullFieldList.add(field);
         }
+
         m_fieldListAdapter = new FieldListAdapter(this, m_cardTemplate, fullFieldList);
         m_fullFieldListView.setAdapter(m_fieldListAdapter);
 
@@ -112,8 +114,14 @@ public class CardStyleActivity extends AppCompatActivity implements TabLayout.On
 
         // set visibility of tabs
         m_fullFieldListView.setVisibility(View.VISIBLE);
+        m_fieldSettingsView.setVisibility(View.INVISIBLE);
         m_fontView.setVisibility(View.INVISIBLE);
         m_marginsView.setVisibility(View.INVISIBLE);
+
+        // field settings controls
+        // -----------------------
+        m_text_relativesize_isb = findViewById(R.id.cardstyle_text_relativesize_isb);
+
 
         // text controls
         // -------------
@@ -143,6 +151,8 @@ public class CardStyleActivity extends AppCompatActivity implements TabLayout.On
         m_padding_bottom_isb.setOnSeekChangeListener(this);
         m_padding_leftright_isb.setOnSeekChangeListener(this);
 
+        m_text_relativesize_isb.setOnSeekChangeListener(this);
+
     }
 
     @Override
@@ -158,14 +168,17 @@ public class CardStyleActivity extends AppCompatActivity implements TabLayout.On
 
         if( tab.getPosition() == 0 ) {
             m_fullFieldListView.setVisibility(View.VISIBLE);
+            m_fieldSettingsView.setVisibility(View.INVISIBLE);
             m_fontView.setVisibility(View.INVISIBLE);
             m_marginsView.setVisibility(View.INVISIBLE);
         } else if( tab.getPosition() == 1 ) {
             m_fullFieldListView.setVisibility(View.INVISIBLE);
+            m_fieldSettingsView.setVisibility(View.INVISIBLE);
             m_fontView.setVisibility(View.VISIBLE);
             m_marginsView.setVisibility(View.INVISIBLE);
         } else if( tab.getPosition() == 2 ) {
             m_fullFieldListView.setVisibility(View.INVISIBLE);
+            m_fieldSettingsView.setVisibility(View.INVISIBLE);
             m_fontView.setVisibility(View.INVISIBLE);
             m_marginsView.setVisibility(View.VISIBLE);
         }
@@ -193,6 +206,9 @@ public class CardStyleActivity extends AppCompatActivity implements TabLayout.On
             m_cardTemplate.setPaddingTop(seekParams.progress);
         } else if ( seekParams.seekBar == m_padding_leftright_isb) {
             m_cardTemplate.setPaddingLeftRight(seekParams.progress);
+        } else if ( seekParams.seekBar == m_text_relativesize_isb ) {
+            float progress = seekParams.progressFloat;
+            m_currentCardField.setRelativeSize((float) (progress / TEXT_RELATIVE_SIZE_FACTOR));
         }
         updateCardPreview();
     }
@@ -209,12 +225,26 @@ public class CardStyleActivity extends AppCompatActivity implements TabLayout.On
         m_cardStyle.renderCard(m_card, m_cardstyleEditorCards);
     }
 
+    public void openFieldSettings(CardField cardField) {
+        Log.v(TAG, "openFieldSettings " + cardField.getFieldName());
+
+        m_currentCardField = cardField;
+
+        m_fullFieldListView.setVisibility(View.INVISIBLE);
+        m_fieldSettingsView.setVisibility(View.VISIBLE);
+        m_fontView.setVisibility(View.INVISIBLE);
+        m_marginsView.setVisibility(View.INVISIBLE);
+
+        m_text_relativesize_isb.setProgress((float) (cardField.getRelativeSize() * TEXT_RELATIVE_SIZE_FACTOR));
+    }
+
     public CardStyle getCardStyle() {
         return m_cardStyle;
     }
 
     private CardStyle m_cardStyle;
 
+    private FrameLayout m_fieldSettingsView;
     private FrameLayout m_fontView;
     private FrameLayout m_marginsView;
 
@@ -227,12 +257,16 @@ public class CardStyleActivity extends AppCompatActivity implements TabLayout.On
     private LinearLayout m_cardstyleEditorCards;
 
 
+    // field setting controls
+    private IndicatorSeekBar m_text_relativesize_isb;
+
     // text controls
     private IndicatorSeekBar m_text_basesize_isb;
 
     // margin controls
     private IndicatorSeekBar m_margin_leftright_isb;
     private IndicatorSeekBar m_margin_center_isb;
+
 
     private IndicatorSeekBar m_padding_top_isb;
     private IndicatorSeekBar m_padding_bottom_isb;
@@ -242,5 +276,7 @@ public class CardStyleActivity extends AppCompatActivity implements TabLayout.On
     private CardTemplateKey m_cardTemplateKey;
     private CardTemplate m_cardTemplate;
     private Card m_card;
+
+    private CardField m_currentCardField = null;
 
 }

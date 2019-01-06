@@ -54,7 +54,7 @@ public class FieldListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
 
-        FieldListItem item = m_fieldList.get(position);
+        final FieldListItem item = m_fieldList.get(position);
 
         if(viewType == FieldListItem.VIEWTYPE_FIELD) {
             FieldViewHolder fieldViewHolder = (FieldViewHolder) holder;
@@ -62,7 +62,9 @@ public class FieldListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             ((FieldViewHolder) holder).mTextView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Log.v(TAG, "field click");
+                    CardField cardField = item.getCardField();
+                    Log.v(TAG, "field click on field: " + cardField.getFieldName());
+                    m_activity.openFieldSettings(cardField);
                 }
             });
             ((FieldViewHolder) holder).mTextView.setOnTouchListener(new View.OnTouchListener() {
