@@ -1,14 +1,6 @@
 package com.luc.ankireview;
 
-import android.content.ClipData;
-import android.content.ClipDescription;
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Point;
-import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -16,32 +8,20 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.helper.ItemTouchHelper;
-import android.text.TextUtils;
 import android.util.Log;
-import android.view.DragEvent;
-import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.SeekBar;
 import android.widget.TextView;
-import android.databinding.DataBindingUtil;
 
-import com.luc.ankireview.databinding.CardFieldEditorBinding;
 import com.luc.ankireview.style.CardField;
 import com.luc.ankireview.style.CardStyle;
 import com.luc.ankireview.style.CardTemplate;
 import com.luc.ankireview.style.CardTemplateKey;
-import com.luc.ankireview.databinding.CardFieldItemBinding;
 import com.luc.ankireview.style.FieldListAdapter;
 import com.luc.ankireview.style.ItemTouchCallback;
 import com.thebluealliance.spectrum.SpectrumPalette;
-import com.warkiz.widget.Indicator;
 import com.warkiz.widget.IndicatorSeekBar;
 import com.warkiz.widget.OnSeekChangeListener;
 import com.warkiz.widget.SeekParams;
@@ -121,10 +101,19 @@ public class CardStyleActivity extends AppCompatActivity implements TabLayout.On
 
         // field settings controls
         // -----------------------
-        m_text_relativesize_isb = findViewById(R.id.cardstyle_text_relativesize_isb);
+        m_field_fieldName = findViewById(R.id.cardstyle_field_fieldname);
+        m_field_back_fieldlist = findViewById(R.id.cardstyle_field_back_to_fieldlist);
+        m_field_back_fieldlist.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                backToFieldList();
+            }
+        });
 
-        m_text_colorPalette = findViewById(R.id.cardstyle_text_color);
-        m_text_colorPalette.setOnColorSelectedListener(new SpectrumPalette.OnColorSelectedListener() {
+        m_field_relativesize_isb = findViewById(R.id.cardstyle_text_relativesize_isb);
+
+        m_field_colorPalette = findViewById(R.id.cardstyle_text_color);
+        m_field_colorPalette.setOnColorSelectedListener(new SpectrumPalette.OnColorSelectedListener() {
             @Override
             public void onColorSelected(int color) {
                 Log.v(TAG, "color selected: " + color);
@@ -161,7 +150,7 @@ public class CardStyleActivity extends AppCompatActivity implements TabLayout.On
         m_padding_bottom_isb.setOnSeekChangeListener(this);
         m_padding_leftright_isb.setOnSeekChangeListener(this);
 
-        m_text_relativesize_isb.setOnSeekChangeListener(this);
+        m_field_relativesize_isb.setOnSeekChangeListener(this);
 
     }
 
@@ -216,7 +205,7 @@ public class CardStyleActivity extends AppCompatActivity implements TabLayout.On
             m_cardTemplate.setPaddingTop(seekParams.progress);
         } else if ( seekParams.seekBar == m_padding_leftright_isb) {
             m_cardTemplate.setPaddingLeftRight(seekParams.progress);
-        } else if ( seekParams.seekBar == m_text_relativesize_isb ) {
+        } else if ( seekParams.seekBar == m_field_relativesize_isb) {
             float progress = seekParams.progressFloat;
             m_currentCardField.setRelativeSize((float) (progress / TEXT_RELATIVE_SIZE_FACTOR));
         }
@@ -245,7 +234,16 @@ public class CardStyleActivity extends AppCompatActivity implements TabLayout.On
         m_fontView.setVisibility(View.INVISIBLE);
         m_marginsView.setVisibility(View.INVISIBLE);
 
-        m_text_relativesize_isb.setProgress((float) (cardField.getRelativeSize() * TEXT_RELATIVE_SIZE_FACTOR));
+        m_field_fieldName.setText(cardField.getFieldName());
+
+        m_field_relativesize_isb.setProgress((float) (cardField.getRelativeSize() * TEXT_RELATIVE_SIZE_FACTOR));
+    }
+
+    public void backToFieldList() {
+        m_fullFieldListView.setVisibility(View.VISIBLE);
+        m_fieldSettingsView.setVisibility(View.INVISIBLE);
+        m_fontView.setVisibility(View.INVISIBLE);
+        m_marginsView.setVisibility(View.INVISIBLE);
     }
 
     public CardStyle getCardStyle() {
@@ -268,8 +266,10 @@ public class CardStyleActivity extends AppCompatActivity implements TabLayout.On
 
 
     // field setting controls
-    private IndicatorSeekBar m_text_relativesize_isb;
-    private SpectrumPalette m_text_colorPalette;
+    private TextView m_field_fieldName;
+    private Button m_field_back_fieldlist;
+    private IndicatorSeekBar m_field_relativesize_isb;
+    private SpectrumPalette m_field_colorPalette;
 
     // text controls
     private IndicatorSeekBar m_text_basesize_isb;
