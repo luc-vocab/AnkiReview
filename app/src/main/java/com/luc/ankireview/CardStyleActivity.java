@@ -40,6 +40,7 @@ import com.luc.ankireview.style.CardTemplateKey;
 import com.luc.ankireview.databinding.CardFieldItemBinding;
 import com.luc.ankireview.style.FieldListAdapter;
 import com.luc.ankireview.style.ItemTouchCallback;
+import com.thebluealliance.spectrum.SpectrumPalette;
 import com.warkiz.widget.Indicator;
 import com.warkiz.widget.IndicatorSeekBar;
 import com.warkiz.widget.OnSeekChangeListener;
@@ -122,6 +123,15 @@ public class CardStyleActivity extends AppCompatActivity implements TabLayout.On
         // -----------------------
         m_text_relativesize_isb = findViewById(R.id.cardstyle_text_relativesize_isb);
 
+        m_text_colorPalette = findViewById(R.id.cardstyle_text_color);
+        m_text_colorPalette.setOnColorSelectedListener(new SpectrumPalette.OnColorSelectedListener() {
+            @Override
+            public void onColorSelected(int color) {
+                Log.v(TAG, "color selected: " + color);
+                m_currentCardField.setColor(color);
+                updateCardPreview();
+            }
+        });
 
         // text controls
         // -------------
@@ -259,6 +269,7 @@ public class CardStyleActivity extends AppCompatActivity implements TabLayout.On
 
     // field setting controls
     private IndicatorSeekBar m_text_relativesize_isb;
+    private SpectrumPalette m_text_colorPalette;
 
     // text controls
     private IndicatorSeekBar m_text_basesize_isb;

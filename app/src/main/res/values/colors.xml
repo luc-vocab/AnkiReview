@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <!--
+    choose from colors here https://github.com/wada811/Android-Material-Design-Colors/blob/master/library/src/main/res/values/colors.xml
+    see how colors match https://material.io/tools/color/
+    -->
+
     <color name="colorPrimary">#1976d2</color>
     <color name="colorPrimaryDark">#0D47A1</color>
     <color name="colorAccent">#1565c0</color>
