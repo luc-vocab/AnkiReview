@@ -20,113 +20,136 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.luc.ankireview.AnswerCard;
 import com.luc.ankireview.Card;
 import com.luc.ankireview.QuestionCard;
 import com.luc.ankireview.R;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Vector;
 
-public class CardStyle {
+public class CardStyle implements Serializable {
     private static final String TAG = "CardStyle";
+    public static final String CARDSTYLE_DATA_FILENAME = "cardstyle";
 
     public CardStyle(Context context) {
 
-        m_cardTemplateMap = new HashMap<>();
+        m_context = context;
 
-        Typeface typeface = ResourcesCompat.getFont(context, R.font.fira_sans_condensed);
+        boolean loadData = true;
 
-        // build CardTemplate for Chinese-Words
-        // ====================================
+        if (loadData) {
 
-        CardTemplate cardTemplate = new CardTemplate();
-        cardTemplate.setTypeface(typeface);
-        // question
-        CardField englishField = new CardField("English");
-        englishField.setColor(ContextCompat.getColor(context, R.color.text_question));
-        cardTemplate.addQuestionCardField(englishField);
-        // answer
-        CardField romanizationField = new CardField("Romanization");
-        romanizationField.setColor(ContextCompat.getColor(context, R.color.text_romanization));
-        cardTemplate.addAnswerCardField(romanizationField);
-        CardField chineseField = new CardField("Chinese");
-        chineseField.setColor(ContextCompat.getColor(context, R.color.text_cantonese));
-        cardTemplate.addAnswerCardField(chineseField);
-        // set sound field
-        cardTemplate.setSoundField("Sound");
 
-        // text
-        // ----
-        cardTemplate.setBaseTextSize(40);
+            loadCardStyleData();
 
-        // margins
-        // -------
-        cardTemplate.setCenterMargin(20);
-        cardTemplate.setLeftRightMargin(40);
+        } else {
 
-        cardTemplate.setPaddingTop(20);
-        cardTemplate.setPaddingBottom(30);
-        cardTemplate.setPaddingLeftRight(15);
 
-        CardTemplateKey key1 = new CardTemplateKey(1354424015761l, 0);
-        CardTemplateKey key2 = new CardTemplateKey(1354424015760l, 0);
-        CardTemplateKey key3 = new CardTemplateKey(1400993365602l, 0);
+            m_cardStyleStorage = new CardStyleStorage();
+            m_cardStyleStorage.cardTemplateMap = new HashMap<>();
 
-        m_cardTemplateMap.put(key1, cardTemplate);
-        m_cardTemplateMap.put(key2, cardTemplate);
-        m_cardTemplateMap.put(key3, cardTemplate);
+            Typeface typeface = ResourcesCompat.getFont(context, R.font.fira_sans_condensed);
 
-        // build CardTemplate for Hanzi
-        // ============================
+            // build CardTemplate for Chinese-Words
+            // ====================================
 
-        cardTemplate = new CardTemplate();
-        cardTemplate.setTypeface(typeface);
+            CardTemplate cardTemplate = new CardTemplate();
+            cardTemplate.setTypeface(typeface);
+            // question
+            CardField englishField = new CardField("English");
+            englishField.setColor(ContextCompat.getColor(context, R.color.text_question));
+            cardTemplate.addQuestionCardField(englishField);
+            // answer
+            CardField romanizationField = new CardField("Romanization");
+            romanizationField.setColor(ContextCompat.getColor(context, R.color.text_romanization));
+            cardTemplate.addAnswerCardField(romanizationField);
+            CardField chineseField = new CardField("Chinese");
+            chineseField.setColor(ContextCompat.getColor(context, R.color.text_cantonese));
+            cardTemplate.addAnswerCardField(chineseField);
+            // set sound field
+            cardTemplate.setSoundField("Sound");
 
-        // question
-        CardField characterField = new CardField("Character");
-        characterField.setColor(ContextCompat.getColor(context, R.color.text_question));
-        characterField.setRelativeSize(3.0f);
-        cardTemplate.addQuestionCardField(characterField);
+            // text
+            // ----
+            cardTemplate.setBaseTextSize(40);
 
-        // answer
-        CardField pinyinField = new CardField("Pinyin");
-        pinyinField.setColor(ContextCompat.getColor(context, R.color.text_romanization));
-        cardTemplate.addAnswerCardField(pinyinField);
+            // margins
+            // -------
+            cardTemplate.setCenterMargin(20);
+            cardTemplate.setLeftRightMargin(40);
 
-        CardField cantoneseField = new CardField("Cantonese");
-        cantoneseField.setColor(ContextCompat.getColor(context, R.color.text_cantonese));
-        cardTemplate.addAnswerCardField(cantoneseField);
+            cardTemplate.setPaddingTop(20);
+            cardTemplate.setPaddingBottom(30);
+            cardTemplate.setPaddingLeftRight(15);
 
-        CardField definitionField = new CardField("Definition");
-        definitionField.setIsHtml(true);
-        definitionField.setAlignment(Layout.Alignment.ALIGN_NORMAL);
-        definitionField.setLeftMargin(120);
-        definitionField.setRelativeSize(0.5f);
-        definitionField.setLineReturn(true);
-        cardTemplate.addAnswerCardField(definitionField);
+            CardTemplateKey key1 = new CardTemplateKey(1354424015761l, 0);
+            CardTemplateKey key2 = new CardTemplateKey(1354424015760l, 0);
+            CardTemplateKey key3 = new CardTemplateKey(1400993365602l, 0);
 
-        // set sound field
-        cardTemplate.setSoundField("Sound");
+            m_cardStyleStorage.cardTemplateMap.put(key1, cardTemplate);
+            m_cardStyleStorage.cardTemplateMap.put(key2, cardTemplate);
+            m_cardStyleStorage.cardTemplateMap.put(key3, cardTemplate);
 
-        // text
-        // ----
-        cardTemplate.setBaseTextSize(40);
+            // build CardTemplate for Hanzi
+            // ============================
 
-        // margins
-        // -------
-        cardTemplate.setCenterMargin(20);
-        cardTemplate.setLeftRightMargin(40);
+            cardTemplate = new CardTemplate();
+            cardTemplate.setTypeface(typeface);
 
-        cardTemplate.setPaddingTop(20);
-        cardTemplate.setPaddingBottom(30);
-        cardTemplate.setPaddingLeftRight(15);
+            // question
+            CardField characterField = new CardField("Character");
+            characterField.setColor(ContextCompat.getColor(context, R.color.text_question));
+            characterField.setRelativeSize(3.0f);
+            cardTemplate.addQuestionCardField(characterField);
 
-        key1 = new CardTemplateKey(1423381647288l, 0);
-        key2 = new CardTemplateKey(1423381647288l, 0);
-        m_cardTemplateMap.put(key1, cardTemplate);
-        m_cardTemplateMap.put(key2, cardTemplate);
+            // answer
+            CardField pinyinField = new CardField("Pinyin");
+            pinyinField.setColor(ContextCompat.getColor(context, R.color.text_romanization));
+            cardTemplate.addAnswerCardField(pinyinField);
+
+            CardField cantoneseField = new CardField("Cantonese");
+            cantoneseField.setColor(ContextCompat.getColor(context, R.color.text_cantonese));
+            cardTemplate.addAnswerCardField(cantoneseField);
+
+            CardField definitionField = new CardField("Definition");
+            definitionField.setIsHtml(true);
+            definitionField.setAlignment(Layout.Alignment.ALIGN_NORMAL);
+            definitionField.setLeftMargin(120);
+            definitionField.setRelativeSize(0.5f);
+            definitionField.setLineReturn(true);
+            cardTemplate.addAnswerCardField(definitionField);
+
+            // set sound field
+            cardTemplate.setSoundField("Sound");
+
+            // text
+            // ----
+            cardTemplate.setBaseTextSize(40);
+
+            // margins
+            // -------
+            cardTemplate.setCenterMargin(20);
+            cardTemplate.setLeftRightMargin(40);
+
+            cardTemplate.setPaddingTop(20);
+            cardTemplate.setPaddingBottom(30);
+            cardTemplate.setPaddingLeftRight(15);
+
+            key1 = new CardTemplateKey(1423381647288l, 0);
+            key2 = new CardTemplateKey(1423381647288l, 0);
+            m_cardStyleStorage.cardTemplateMap.put(key1, cardTemplate);
+            m_cardStyleStorage.cardTemplateMap.put(key2, cardTemplate);
+
+        }
 
     }
 
@@ -134,7 +157,7 @@ public class CardStyle {
 
         // look for the card template
         CardTemplateKey templateKey = new CardTemplateKey(card.getModelId(), card.getCardOrd());
-        CardTemplate cardTemplate = m_cardTemplateMap.get(templateKey);
+        CardTemplate cardTemplate = m_cardStyleStorage.cardTemplateMap.get(templateKey);
         if(cardTemplate == null) {
             Log.e(TAG, "could not find cardtemplate for " + templateKey);
         }
@@ -181,8 +204,13 @@ public class CardStyle {
         TextView questionText = layout.findViewById(R.id.question_text);
         TextView answerText = layout.findViewById(R.id.answer_text);
 
-        questionText.setTypeface(cardTemplate.getTypeface());
-        answerText.setTypeface(cardTemplate.getTypeface());
+        Typeface typeface = ResourcesCompat.getFont(m_context, R.font.fira_sans_condensed);
+
+        //questionText.setTypeface(cardTemplate.getTypeface());
+        //answerText.setTypeface(cardTemplate.getTypeface());
+
+        questionText.setTypeface(typeface);
+        answerText.setTypeface(typeface);
 
         questionText.setText(questionBuilder, TextView.BufferType.SPANNABLE);
         answerText.setText(answerBuilder, TextView.BufferType.SPANNABLE);
@@ -269,7 +297,7 @@ public class CardStyle {
     public String getAnswerAudio(Card card) {
         // get card template
         CardTemplateKey cardTemplateKey = new CardTemplateKey(card.getModelId(), card.getCardOrd());
-        CardTemplate cardTemplate = m_cardTemplateMap.get(cardTemplateKey);
+        CardTemplate cardTemplate = m_cardStyleStorage.cardTemplateMap.get(cardTemplateKey);
 
         String soundFile = card.extractSoundFile(card.getFieldValue(cardTemplate.getSoundField()));
         return soundFile;
@@ -278,10 +306,42 @@ public class CardStyle {
 
     public CardTemplate getCardTemplate(CardTemplateKey cardTemplateKey)
     {
-        return m_cardTemplateMap.get(cardTemplateKey);
+        return m_cardStyleStorage.cardTemplateMap.get(cardTemplateKey);
+    }
+
+    public void loadCardStyleData() {
+        Log.v(TAG, "loading card data from " + CARDSTYLE_DATA_FILENAME);
+        try {
+            FileInputStream fis = m_context.openFileInput(CARDSTYLE_DATA_FILENAME);
+            ObjectInputStream is = new ObjectInputStream(fis);
+            m_cardStyleStorage = (CardStyleStorage) is.readObject();
+            is.close();
+            fis.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void saveCardStyleData()
+    {
+
+        try {
+            FileOutputStream fos = m_context.openFileOutput(CARDSTYLE_DATA_FILENAME, Context.MODE_PRIVATE);
+            ObjectOutputStream os = new ObjectOutputStream(fos);
+            os.writeObject(m_cardStyleStorage);
+            os.close();
+            fos.close();
+            Log.v(TAG, "saved card style to file " + CARDSTYLE_DATA_FILENAME);
+        } catch (Exception e) {
+            e.printStackTrace();
+
+            Toast toast = Toast.makeText(m_context, "Could not save Card Style", Toast.LENGTH_LONG);
+            toast.show();
+        }
+
     }
 
 
-    private HashMap<CardTemplateKey, CardTemplate> m_cardTemplateMap;
-
+    private Context m_context;
+    private CardStyleStorage m_cardStyleStorage;
 }

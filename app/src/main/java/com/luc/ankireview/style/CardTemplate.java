@@ -4,9 +4,10 @@ import android.graphics.Typeface;
 
 import com.luc.ankireview.style.CardField;
 
+import java.io.Serializable;
 import java.util.Vector;
 
-public class CardTemplate {
+public class CardTemplate implements Serializable {
 
     public CardTemplate() {
         m_questionCardFields = new Vector<CardField>();
@@ -21,11 +22,12 @@ public class CardTemplate {
 
 
     public void setTypeface(Typeface typeface) {
-        m_typeface = typeface;
+        /* m_typeface = typeface;*/
     }
 
     public Typeface getTypeface() {
-        return m_typeface;
+        // return m_typeface;
+        return null;
     }
 
     public void addQuestionCardField(CardField cardField) {
@@ -68,7 +70,7 @@ public class CardTemplate {
     public int getPaddingLeftRight() { return m_paddingLeftRight; }
     public void setPaddingLeftRight( int padding ) { m_paddingLeftRight = padding; }
 
-    private Typeface m_typeface;
+    // private Typeface m_typeface;
 
     private Vector<CardField> m_questionCardFields;
     private Vector<CardField> m_answerCardFields;

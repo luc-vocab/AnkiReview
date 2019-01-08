@@ -2,7 +2,9 @@ package com.luc.ankireview.style;
 
 import android.text.Layout;
 
-public class CardField {
+import java.io.Serializable;
+
+public class CardField implements Serializable {
     public static final int DEFAULT_COLOR = -1;
     public static final float RELATIVE_SIZE_DEFAULT = 1.0f;
     public static final Layout.Alignment DEFAULT_ALIGNMENT = Layout.Alignment.ALIGN_CENTER;

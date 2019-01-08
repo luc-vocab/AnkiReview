@@ -1,9 +1,10 @@
 package com.luc.ankireview.style;
 
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class CardTemplateKey {
+public class CardTemplateKey implements Serializable {
     public CardTemplateKey(long modelId, int cardOrd) {
         m_modelId = modelId;
         m_cardOrd = cardOrd;
