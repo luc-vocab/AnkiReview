@@ -3,9 +3,13 @@ package com.luc.ankireview.style;
 import android.app.ActionBar;
 import android.content.Context;
 import android.graphics.Typeface;
+import android.os.Handler;
+import android.os.HandlerThread;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.res.ResourcesCompat;
+import android.support.v4.provider.FontRequest;
+import android.support.v4.provider.FontsContractCompat;
 import android.text.Html;
 import android.text.Layout;
 import android.text.SpannableStringBuilder;
@@ -16,6 +20,7 @@ import android.text.style.LeadingMarginSpan;
 import android.text.style.RelativeSizeSpan;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
@@ -44,7 +49,7 @@ public class CardStyle implements Serializable {
 
         m_context = context;
 
-        boolean loadData = true;
+        boolean loadData = false;
 
         if (loadData) {
 
@@ -149,8 +154,44 @@ public class CardStyle implements Serializable {
             m_cardStyleStorage.cardTemplateMap.put(key1, cardTemplate);
             m_cardStyleStorage.cardTemplateMap.put(key2, cardTemplate);
 
+
+
+            // retrieve fonts
+
+            String fontRequested = "Source Sans Pro";
+            Log.v(TAG, "requesting typeface " + fontRequested);
+
+            FontRequest request = new FontRequest(
+                    "com.google.android.gms.fonts",
+                    "com.google.android.gms",
+                    fontRequested,
+                    R.array.com_google_android_gms_fonts_certs);
+
+            FontsContractCompat.FontRequestCallback callback = new FontsContractCompat
+                    .FontRequestCallback() {
+                @Override
+                public void onTypefaceRetrieved(Typeface typeface) {
+                    Log.v(TAG, "retrieved typeface" + typeface);
+                }
+
+                @Override
+                public void onTypefaceRequestFailed(int reason) {
+                    Log.e(TAG, "Typeface request failed: " +  reason);
+                }
+            };
+            FontsContractCompat.requestFont(m_context, request, callback, getHandlerThreadHandler());
+
         }
 
+    }
+
+    private Handler getHandlerThreadHandler() {
+        if (m_handler == null) {
+            HandlerThread handlerThread = new HandlerThread("fonts");
+            handlerThread.start();
+            m_handler = new Handler(handlerThread.getLooper());
+        }
+        return m_handler;
     }
 
     public void renderCard(Card card, ViewGroup layout) {
@@ -344,4 +385,7 @@ public class CardStyle implements Serializable {
 
     private Context m_context;
     private CardStyleStorage m_cardStyleStorage;
+
+    // thread for downloading fonts
+    private Handler m_handler = null;
 }
