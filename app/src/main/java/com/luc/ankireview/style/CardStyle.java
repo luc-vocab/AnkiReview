@@ -63,7 +63,7 @@ public class CardStyle implements Serializable {
             m_cardStyleStorage.cardTemplateMap = new HashMap<>();
 
             // Typeface typeface = ResourcesCompat.getFont(context, R.font.fira_sans_condensed);
-            String font = "Fira";
+            String font = "Dosis";
 
             // build CardTemplate for Chinese-Words
             // ====================================
@@ -220,15 +220,10 @@ public class CardStyle implements Serializable {
         TextView questionText = layout.findViewById(R.id.question_text);
         TextView answerText = layout.findViewById(R.id.answer_text);
 
-        Typeface typeface = ResourcesCompat.getFont(m_context, R.font.fira_sans_condensed);
-
-        //questionText.setTypeface(cardTemplate.getTypeface());
-        //answerText.setTypeface(cardTemplate.getTypeface());
-
-        requestTypeface( cardTemplate.getFont(), questionText, answerText );
-
-        questionText.setTypeface(typeface);
-        answerText.setTypeface(typeface);
+        String font = cardTemplate.getFont();
+        if( font != null && font.length() > 0) {
+            requestTypeface( font, questionText, answerText );
+        }
 
         questionText.setText(questionBuilder, TextView.BufferType.SPANNABLE);
         answerText.setText(answerBuilder, TextView.BufferType.SPANNABLE);
@@ -252,7 +247,7 @@ public class CardStyle implements Serializable {
 
     }
 
-    private void requestTypeface(String fontRequested, final TextView questionText, final TextView answerText ) {
+    private void requestTypeface(final String fontRequested, final TextView questionText, final TextView answerText ) {
         // retrieve fonts
 
         Log.v(TAG, "requesting typeface " + fontRequested);
@@ -274,7 +269,7 @@ public class CardStyle implements Serializable {
 
             @Override
             public void onTypefaceRequestFailed(int reason) {
-                Log.e(TAG, "Typeface request failed: " +  reason);
+                Log.e(TAG, "Typeface request for " + fontRequested + " failed: " +  reason);
             }
         };
         FontsContractCompat.requestFont(m_context, request, callback, getHandlerThreadHandler());
