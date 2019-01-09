@@ -20,14 +20,12 @@ public class CardTemplate implements Serializable {
         m_centerMargin_px = 0;
     }
 
-
-    public void setTypeface(Typeface typeface) {
-        /* m_typeface = typeface;*/
+    public void setFont(String font) {
+        m_font = font;
     }
 
-    public Typeface getTypeface() {
-        // return m_typeface;
-        return null;
+    public String getFont() {
+        return m_font;
     }
 
     public void addQuestionCardField(CardField cardField) {
@@ -70,7 +68,8 @@ public class CardTemplate implements Serializable {
     public int getPaddingLeftRight() { return m_paddingLeftRight; }
     public void setPaddingLeftRight( int padding ) { m_paddingLeftRight = padding; }
 
-    // private Typeface m_typeface;
+
+    private String m_font;
 
     private Vector<CardField> m_questionCardFields;
     private Vector<CardField> m_answerCardFields;

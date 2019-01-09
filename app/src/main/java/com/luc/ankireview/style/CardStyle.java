@@ -62,13 +62,14 @@ public class CardStyle implements Serializable {
             m_cardStyleStorage = new CardStyleStorage();
             m_cardStyleStorage.cardTemplateMap = new HashMap<>();
 
-            Typeface typeface = ResourcesCompat.getFont(context, R.font.fira_sans_condensed);
+            // Typeface typeface = ResourcesCompat.getFont(context, R.font.fira_sans_condensed);
+            String font = "Fira";
 
             // build CardTemplate for Chinese-Words
             // ====================================
 
             CardTemplate cardTemplate = new CardTemplate();
-            cardTemplate.setTypeface(typeface);
+            cardTemplate.setFont(font);
             // question
             CardField englishField = new CardField("English");
             englishField.setColor(ContextCompat.getColor(context, R.color.text_question));
@@ -108,7 +109,7 @@ public class CardStyle implements Serializable {
             // ============================
 
             cardTemplate = new CardTemplate();
-            cardTemplate.setTypeface(typeface);
+            cardTemplate.setFont(font);
 
             // question
             CardField characterField = new CardField("Character");
@@ -154,32 +155,6 @@ public class CardStyle implements Serializable {
             m_cardStyleStorage.cardTemplateMap.put(key1, cardTemplate);
             m_cardStyleStorage.cardTemplateMap.put(key2, cardTemplate);
 
-
-
-            // retrieve fonts
-
-            String fontRequested = "Source Sans Pro";
-            Log.v(TAG, "requesting typeface " + fontRequested);
-
-            FontRequest request = new FontRequest(
-                    "com.google.android.gms.fonts",
-                    "com.google.android.gms",
-                    fontRequested,
-                    R.array.com_google_android_gms_fonts_certs);
-
-            FontsContractCompat.FontRequestCallback callback = new FontsContractCompat
-                    .FontRequestCallback() {
-                @Override
-                public void onTypefaceRetrieved(Typeface typeface) {
-                    Log.v(TAG, "retrieved typeface" + typeface);
-                }
-
-                @Override
-                public void onTypefaceRequestFailed(int reason) {
-                    Log.e(TAG, "Typeface request failed: " +  reason);
-                }
-            };
-            FontsContractCompat.requestFont(m_context, request, callback, getHandlerThreadHandler());
 
         }
 
@@ -250,6 +225,8 @@ public class CardStyle implements Serializable {
         //questionText.setTypeface(cardTemplate.getTypeface());
         //answerText.setTypeface(cardTemplate.getTypeface());
 
+        requestTypeface( cardTemplate.getFont(), questionText, answerText );
+
         questionText.setTypeface(typeface);
         answerText.setTypeface(typeface);
 
@@ -273,6 +250,34 @@ public class CardStyle implements Serializable {
         answerText.setPadding(paddingLeftRight_px, paddingTop_px, paddingLeftRight_px, paddingBottom_px);
 
 
+    }
+
+    private void requestTypeface(String fontRequested, final TextView questionText, final TextView answerText ) {
+        // retrieve fonts
+
+        Log.v(TAG, "requesting typeface " + fontRequested);
+
+        FontRequest request = new FontRequest(
+                "com.google.android.gms.fonts",
+                "com.google.android.gms",
+                fontRequested,
+                R.array.com_google_android_gms_fonts_certs);
+
+        FontsContractCompat.FontRequestCallback callback = new FontsContractCompat
+                .FontRequestCallback() {
+            @Override
+            public void onTypefaceRetrieved(Typeface typeface) {
+                Log.v(TAG, "retrieved typeface ");
+                questionText.setTypeface(typeface);
+                answerText.setTypeface(typeface);
+            }
+
+            @Override
+            public void onTypefaceRequestFailed(int reason) {
+                Log.e(TAG, "Typeface request failed: " +  reason);
+            }
+        };
+        FontsContractCompat.requestFont(m_context, request, callback, getHandlerThreadHandler());
     }
 
     private SpannableStringBuilder buildString(Vector<CardField> fields, Card card) {
