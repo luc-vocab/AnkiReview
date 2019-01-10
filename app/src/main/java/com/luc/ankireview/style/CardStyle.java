@@ -49,7 +49,7 @@ public class CardStyle implements Serializable {
 
         m_context = context;
 
-        boolean loadData = false;
+        boolean loadData = true;
 
         if (loadData) {
 
@@ -63,7 +63,7 @@ public class CardStyle implements Serializable {
             m_cardStyleStorage.cardTemplateMap = new HashMap<>();
 
             // Typeface typeface = ResourcesCompat.getFont(context, R.font.fira_sans_condensed);
-            String font = "Dosis";
+            String font = "Fira Sans Condensed";
 
             // build CardTemplate for Chinese-Words
             // ====================================
@@ -270,6 +270,8 @@ public class CardStyle implements Serializable {
             @Override
             public void onTypefaceRequestFailed(int reason) {
                 Log.e(TAG, "Typeface request for " + fontRequested + " failed: " +  reason);
+                Toast toast = Toast.makeText(m_context, "Could not find font family " + fontRequested, Toast.LENGTH_LONG);
+                toast.show();
             }
         };
         FontsContractCompat.requestFont(m_context, request, callback, getHandlerThreadHandler());
@@ -373,6 +375,8 @@ public class CardStyle implements Serializable {
             os.close();
             fos.close();
             Log.v(TAG, "saved card style to file " + CARDSTYLE_DATA_FILENAME);
+            Toast toast = Toast.makeText(m_context, "Saved Card Style", Toast.LENGTH_LONG);
+            toast.show();
         } catch (Exception e) {
             e.printStackTrace();
 

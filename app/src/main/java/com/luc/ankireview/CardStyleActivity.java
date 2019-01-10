@@ -129,6 +129,17 @@ public class CardStyleActivity extends AppCompatActivity implements TabLayout.On
         m_text_basesize_isb = findViewById(R.id.cardstyle_text_basesize_isb);
         m_text_basesize_isb.setOnSeekChangeListener(this);
         m_text_basesize_isb.setProgress(m_cardTemplate.getBaseTextSize());
+        m_text_font_family = findViewById(R.id.cardstyle_editor_font_family);
+        m_text_font_family.setText(m_cardTemplate.getFont());
+        m_text_font_lookup = findViewById(R.id.cardstyle_editor_font_lookup);
+        m_text_font_lookup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String fontFamily = m_text_font_family.getText().toString();
+                m_cardTemplate.setFont(fontFamily);
+                updateCardPreview();
+            }
+        });
 
         // margin controls
         // ---------------
@@ -301,6 +312,8 @@ public class CardStyleActivity extends AppCompatActivity implements TabLayout.On
     private SpectrumPalette m_field_colorPalette;
 
     // text controls
+    private TextView m_text_font_family;
+    private Button m_text_font_lookup;
     private IndicatorSeekBar m_text_basesize_isb;
 
     // margin controls
