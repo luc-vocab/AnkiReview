@@ -49,7 +49,7 @@ public class CardStyle implements Serializable {
 
         m_context = context;
 
-        boolean loadData = true;
+        boolean loadData = false;
 
         if (loadData) {
 
