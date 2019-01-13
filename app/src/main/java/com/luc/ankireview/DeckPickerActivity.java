@@ -9,8 +9,6 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.database.Cursor;
 
-import java.util.HashSet;
-import java.util.Set;
 import java.util.Vector;
 
 import org.json.JSONArray;
@@ -74,7 +72,12 @@ public class DeckPickerActivity extends AppCompatActivity implements AdapterView
         public View getView(int i, View view, ViewGroup viewGroup) {
             if(view==null)
             {
-                view = LayoutInflater.from(m_context).inflate(R.layout.deck_card_item,viewGroup,false);
+                if(Settings.ENABLE_BACKGROUNDS) {
+                    view = LayoutInflater.from(m_context).inflate(R.layout.deck_card_item_with_background,viewGroup,false);
+                } else {
+                    view = LayoutInflater.from(m_context).inflate(R.layout.deck_card_item,viewGroup,false);
+                }
+
             }
 
             AnkiDeck deck = (AnkiDeck) this.getItem(i);

@@ -9,49 +9,53 @@
     <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_margin="8dp"
         app:cardCornerRadius="4dp">
 
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/deck_name"
+            <ImageView
+                android:id="@+id/deck_backgroundimage"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_weight="1"
-                android:baselineAligned="false"
-                android:fontFamily="@font/fira_sans_condensed"
-                android:text="TextView"
-                android:textSize="40dp"
-                android:textColor="@color/md_blue_700" />
+                android:layout_height="235dp"
+                android:scaleType="centerCrop" />
 
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_weight="1"
-                android:layout_marginTop="15dp"
-                >
+                android:layout_height="match_parent"
+                android:layout_alignBottom="@+id/deck_backgroundimage"
+                android:layout_alignParentBottom="false"
+                android:orientation="horizontal">
 
-                <FrameLayout
+                <TextView
+                    android:id="@+id/deck_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="2"
-                    ></FrameLayout>
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="1"
+                    android:baselineAligned="false"
+                    android:fontFamily="@font/fira_sans_condensed"
+                    android:shadowDx="0"
+                    android:shadowDy="0"
+                    android:shadowRadius="20"
+                    android:text="TextView"
+                    android:textSize="50dp"
+                    android:textColor="@color/md_white"
+                    android:textStyle="bold" />
 
 
                 <LinearLayout
                     android:id="@+id/deck_due_counts"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="4"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="15dp"
+                    android:layout_weight="2"
                     android:orientation="horizontal">
 
 
@@ -61,8 +65,11 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:fontFamily="@font/fira_sans_condensed"
+                        android:shadowDx="0"
+                        android:shadowDy="0"
+                        android:shadowRadius="20"
                         android:textColor="@color/answer_easy"
-                        android:textSize="25dp" />
+                        android:textSize="40dp" />
 
                     <TextView
                         android:id="@+id/deck_review_count"
@@ -71,8 +78,11 @@
                         android:layout_weight="1"
                         android:fontFamily="@font/fira_sans_condensed"
                         android:text="TextView"
+                        android:shadowDx="0"
+                        android:shadowDy="0"
+                        android:shadowRadius="20"
                         android:textColor="@color/answer_good"
-                        android:textSize="25dp" />
+                        android:textSize="40dp" />
 
                     <TextView
                         android:id="@+id/deck_learn_count"
@@ -80,8 +90,11 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:fontFamily="@font/fira_sans_condensed"
+                        android:shadowDx="0"
+                        android:shadowDy="0"
+                        android:shadowRadius="20"
                         android:textColor="@color/answer_wrong"
-                        android:textSize="25dp" />
+                        android:textSize="40dp" />
 
                 </LinearLayout>
 
@@ -89,10 +102,7 @@
             </LinearLayout>
 
 
-
-
-        </LinearLayout>
-
+        </RelativeLayout>
 
     </android.support.v7.widget.CardView>
 
