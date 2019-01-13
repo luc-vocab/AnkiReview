@@ -242,11 +242,12 @@
                         android:orientation="vertical">
 
                         <com.luc.ankireview.style.ValueSlider
+                            android:id="@+id/cardstyle_margin_leftright_valueslider"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            app:titleText="Test Value Slider"
-                            app:minValue="10"
-                            app:maxValue="100"
+                            app:titleText="Left/Right Margin"
+                            app:minValue="0"
+                            app:maxValue="120"
                             />
 
                         <TextView

@@ -12,8 +12,10 @@ import android.widget.TextView;
 import com.luc.ankireview.R;
 import com.warkiz.widget.IndicatorSeekBar;
 import com.warkiz.widget.IndicatorStayLayout;
+import com.warkiz.widget.OnSeekChangeListener;
+import com.warkiz.widget.SeekParams;
 
-public class ValueSlider extends LinearLayout {
+public class ValueSlider extends LinearLayout implements  OnSeekChangeListener {
     private static final String TAG = "ValueSlider";
 
     public ValueSlider(Context context) {
@@ -58,16 +60,51 @@ public class ValueSlider extends LinearLayout {
         TextView title = findViewById(R.id.value_slider_title);
         title.setText(m_titleText);
 
-        IndicatorSeekBar indicatorSeekBar = findViewById(R.id.built_in_isb);
-        indicatorSeekBar.setMin(m_minValue);
-        indicatorSeekBar.setMax(m_maxValue);
+        m_valueTextView = findViewById(R.id.value_slider_value);
+
+        m_indicatorSeekBar = findViewById(R.id.built_in_isb);
+        m_indicatorSeekBar.setMin(m_minValue);
+        m_indicatorSeekBar.setMax(m_maxValue);
+
+        m_indicatorSeekBar.setOnSeekChangeListener(this);
+    }
+
+    public void setListener(ValueSliderUpdate listener) {
+        m_listener = listener;
+    }
+
+    public void setCurrentValue(int currentValue) {
+        m_indicatorSeekBar.setProgress(currentValue);
+        m_valueTextView.setText(Integer.toString(currentValue));
+    }
+
+    @Override
+    public void onSeeking(SeekParams seekParams) {
+        int currentValue = seekParams.progress;
+        m_valueTextView.setText(Integer.toString(currentValue));
+
+        if(m_listener != null ) {
+            m_listener.valueUpdate(currentValue);
+        }
+    }
+
+    @Override
+    public void onStartTrackingTouch(IndicatorSeekBar seekBar) {
+    }
+
+    @Override
+    public void onStopTrackingTouch(IndicatorSeekBar seekBar) {
     }
 
     private boolean m_sliderVisible = false;
     private IndicatorStayLayout m_slider;
+    private IndicatorSeekBar m_indicatorSeekBar;
+    private TextView m_valueTextView;
 
     private String m_titleText;
     private int m_minValue;
     private int m_maxValue;
+
+    private ValueSliderUpdate m_listener;
 
 }

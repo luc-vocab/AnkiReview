@@ -23,6 +23,8 @@ import com.luc.ankireview.style.CardTemplate;
 import com.luc.ankireview.style.CardTemplateKey;
 import com.luc.ankireview.style.FieldListAdapter;
 import com.luc.ankireview.style.ItemTouchCallback;
+import com.luc.ankireview.style.ValueSlider;
+import com.luc.ankireview.style.ValueSliderUpdate;
 import com.thebluealliance.spectrum.SpectrumPalette;
 import com.warkiz.widget.IndicatorSeekBar;
 import com.warkiz.widget.OnSeekChangeListener;
@@ -143,6 +145,16 @@ public class CardStyleActivity extends AppCompatActivity implements TabLayout.On
 
         // margin controls
         // ---------------
+
+        ValueSlider valueSliderMarginLeftRight = findViewById(R.id.cardstyle_margin_leftright_valueslider);
+        valueSliderMarginLeftRight.setCurrentValue(m_cardTemplate.getLeftRightMargin());
+        valueSliderMarginLeftRight.setListener(new ValueSliderUpdate() {
+            @Override
+            public void valueUpdate(int currentValue) {
+                m_cardTemplate.setLeftRightMargin(currentValue);
+                updateCardPreview();
+            }
+        });
 
         m_margin_leftright_isb = findViewById(R.id.cardstyle_margin_leftright_isb);
         m_margin_leftright_isb.setProgress(m_cardTemplate.getLeftRightMargin());
