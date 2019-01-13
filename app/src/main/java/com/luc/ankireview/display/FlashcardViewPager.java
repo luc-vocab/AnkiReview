@@ -6,6 +6,8 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
 
+import com.luc.ankireview.Settings;
+
 public class FlashcardViewPager extends ViewPager {
     private static final String TAG = "FlashcardViewPager";
 
@@ -28,7 +30,7 @@ public class FlashcardViewPager extends ViewPager {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        if(m_backgroundSwipingEnabled) {
+        if(Settings.ENABLE_BACKGROUNDS && m_backgroundSwipingEnabled) {
             m_backgroundPager.onTouchEvent(event);
         }
         if( m_swipeEnabled)
@@ -38,7 +40,7 @@ public class FlashcardViewPager extends ViewPager {
 
     @Override
     public boolean onInterceptTouchEvent(MotionEvent event) {
-        if( m_backgroundSwipingEnabled) {
+        if(Settings.ENABLE_BACKGROUNDS && m_backgroundSwipingEnabled) {
             m_backgroundPager.onInterceptTouchEvent(event);
         }
         if( m_swipeEnabled )

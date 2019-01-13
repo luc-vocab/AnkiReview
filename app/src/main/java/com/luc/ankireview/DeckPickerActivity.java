@@ -98,8 +98,10 @@ public class DeckPickerActivity extends AppCompatActivity implements AdapterView
                 view.findViewById(R.id.deck_due_counts).setVisibility(View.GONE);
             }
 
-            ImageView backgroundImageView = view.findViewById(R.id.deck_backgroundimage);
-            m_backgroundManager.fillImageView(backgroundImageView);
+            if( Settings.ENABLE_BACKGROUNDS) {
+                ImageView backgroundImageView = view.findViewById(R.id.deck_backgroundimage);
+                m_backgroundManager.fillImageView(backgroundImageView);
+            }
 
             return view;
         }

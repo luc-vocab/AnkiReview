@@ -98,7 +98,7 @@ public class ReviewActivity extends AppCompatActivity {
         m_flashcardFrame = findViewById(R.id.flashcard_frame);
         m_touchLayer = findViewById(R.id.touch_layer);
         m_flashcardPager = findViewById(R.id.flashcard_pager);
-        m_backgroundPager = findViewById(R.id.background_pager);
+
 
         m_progressBar = findViewById(R.id.review_progressbar);
 
@@ -144,41 +144,48 @@ public class ReviewActivity extends AppCompatActivity {
 
         // setup ViewPager for backgrounds
         // -------------------------------
+        if(Settings.ENABLE_BACKGROUNDS) {
+            m_backgroundPager = findViewById(R.id.background_pager);
+            m_backgroundAdapter = new BackgroundViewPagerAdapter(this, m_deckId);
+            m_backgroundPager.setAdapter(m_backgroundAdapter);
+            m_backgroundPager.setCurrentItem(1); // center
 
-        m_backgroundAdapter = new BackgroundViewPagerAdapter(this, m_deckId);
-        m_backgroundPager.setAdapter(m_backgroundAdapter);
-        m_backgroundPager.setCurrentItem(1); // center
+            // the flashcardpager will forward touch events to the backgroundpager
+            m_flashcardPager.setBackgroundPager(m_backgroundPager);
 
-        // the flashcardpager will forward touch events to the backgroundpager
-        m_flashcardPager.setBackgroundPager(m_backgroundPager);
-
-        // when we move to one of the side pages, reload
-        m_backgroundPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-            }
-            @Override
-            public void onPageSelected(int position) {
-                mCurrentPosition = position;
-            }
-            @Override
-            public void onPageScrollStateChanged(int state) {
-                if(ViewPager.SCROLL_STATE_IDLE == state){
-                    //Scrolling finished. Do something.
-                    if(mCurrentPosition == 0)
-                    {
-                        m_backgroundAdapter.moveToNextBackground(mCurrentPosition);
-                        m_flashcardPager.disableBackgroundSwiping();
-                    } else if(mCurrentPosition == 2)
-                    {
-                        m_backgroundAdapter.moveToNextBackground(mCurrentPosition);
-                        m_flashcardPager.disableBackgroundSwiping();
+            // when we move to one of the side pages, reload
+            m_backgroundPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+                @Override
+                public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                }
+                @Override
+                public void onPageSelected(int position) {
+                    mCurrentPosition = position;
+                }
+                @Override
+                public void onPageScrollStateChanged(int state) {
+                    if(ViewPager.SCROLL_STATE_IDLE == state){
+                        //Scrolling finished. Do something.
+                        if(mCurrentPosition == 0)
+                        {
+                            if(Settings.ENABLE_BACKGROUNDS){
+                                m_backgroundAdapter.moveToNextBackground(mCurrentPosition);
+                            }
+                            m_flashcardPager.disableBackgroundSwiping();
+                        } else if(mCurrentPosition == 2)
+                        {
+                            if(Settings.ENABLE_BACKGROUNDS) {
+                                m_backgroundAdapter.moveToNextBackground(mCurrentPosition);
+                            }
+                            m_flashcardPager.disableBackgroundSwiping();
+                        }
                     }
                 }
-            }
-            private int mCurrentPosition = 1;
-        });
-        // m_backgroundPager.setPageTransformer(true, new AlphaPageTransformer());
+                private int mCurrentPosition = 1;
+            });
+            // m_backgroundPager.setPageTransformer(true, new AlphaPageTransformer());
+        }
+
 
         // setup audio
         // -----------
