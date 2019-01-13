@@ -44,6 +44,8 @@ public class CardStyle implements Serializable {
 
         m_context = context;
 
+        m_fontCache = new HashMap<>();
+
         boolean loadData = false;
 
         if (loadData) {
@@ -217,7 +219,14 @@ public class CardStyle implements Serializable {
 
         String font = cardTemplate.getFont();
         if( font != null && font.length() > 0) {
-            requestTypeface( font, questionText, answerText );
+            if (m_fontCache.containsKey(font)) {
+                 // we have it in the cache, apply directly
+                questionText.setTypeface(m_fontCache.get(font));
+                answerText.setTypeface(m_fontCache.get(font));
+            } else {
+                // need to request asynchronously
+                requestTypeface(font, questionText, answerText);
+            }
         }
 
         questionText.setText(questionBuilder, TextView.BufferType.SPANNABLE);
@@ -258,6 +267,8 @@ public class CardStyle implements Serializable {
             @Override
             public void onTypefaceRetrieved(Typeface typeface) {
                 Log.v(TAG, "retrieved typeface ");
+                m_fontCache.put(fontRequested, typeface);
+
                 questionText.setTypeface(typeface);
                 answerText.setTypeface(typeface);
             }
@@ -381,6 +392,8 @@ public class CardStyle implements Serializable {
 
     }
 
+
+    private HashMap<String,Typeface> m_fontCache;
 
     private Context m_context;
     private CardStyleStorage m_cardStyleStorage;
