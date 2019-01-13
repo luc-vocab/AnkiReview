@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    >
+
+        <LinearLayout
+            android:id="@+id/value_slider_header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+
+            <TextView
+                style="@style/CardStyleHeader"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Sample Header for ValueSlider" />
+
+            <TextView
+                style="@style/CardStyleHeader"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="42" />
+
+        </LinearLayout>
+
+        <com.warkiz.widget.IndicatorStayLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <com.warkiz.widget.IndicatorSeekBar
+                android:id="@+id/built_in_isb"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:isb_show_indicator="rounded_rectangle"
+                app:isb_max="120"
+                app:isb_min="0" />
+        </com.warkiz.widget.IndicatorStayLayout>
+
+</LinearLayout>
+

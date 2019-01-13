@@ -42,6 +42,7 @@
         <item>@color/md_grey_500</item>
         <item>@color/md_blue_grey_500</item>
         <item>@color/md_white</item>
+        <item>@color/md_black</item>
     </array>
 
 
