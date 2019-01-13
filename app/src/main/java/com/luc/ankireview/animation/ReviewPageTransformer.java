@@ -3,8 +3,8 @@ package com.luc.ankireview.animation;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 
-import com.luc.ankireview.AnswerCard;
-import com.luc.ankireview.QuestionCard;
+import com.luc.ankireview.display.AnswerCard;
+import com.luc.ankireview.display.QuestionCard;
 import com.luc.ankireview.R;
 
 public class ReviewPageTransformer implements ViewPager.PageTransformer  {

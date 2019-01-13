@@ -1,4 +1,4 @@
-package com.luc.ankireview;
+package com.luc.ankireview.display;
 
 import android.content.Context;
 import android.support.design.widget.CoordinatorLayout;
@@ -6,6 +6,8 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.luc.ankireview.R;
 
 public class QuestionCardBehavior extends CoordinatorLayout.Behavior<QuestionCard>  {
     private static final String TAG = "QuestionCardBehavior";
@@ -41,7 +43,7 @@ public class QuestionCardBehavior extends CoordinatorLayout.Behavior<QuestionCar
         if( ! m_initialLayoutDone) {
 
             // center the question vertically
-            if ( parent.getParent() instanceof  ReviewerFlashcardLayout) {
+            if ( parent.getParent() instanceof ReviewerFlashcardLayout) {
 
                 int totalWindowHeight = parent.getHeight();
 

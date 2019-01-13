@@ -1,13 +1,11 @@
 package com.luc.ankireview.style;
 
-import android.app.ActionBar;
 import android.content.Context;
 import android.graphics.Typeface;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.content.res.ResourcesCompat;
 import android.support.v4.provider.FontRequest;
 import android.support.v4.provider.FontsContractCompat;
 import android.text.Html;
@@ -20,20 +18,17 @@ import android.text.style.LeadingMarginSpan;
 import android.text.style.RelativeSizeSpan;
 import android.util.Log;
 import android.util.TypedValue;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.luc.ankireview.AnswerCard;
+import com.luc.ankireview.display.AnswerCard;
 import com.luc.ankireview.Card;
-import com.luc.ankireview.QuestionCard;
+import com.luc.ankireview.display.QuestionCard;
 import com.luc.ankireview.R;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;

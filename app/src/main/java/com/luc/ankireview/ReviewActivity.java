@@ -31,6 +31,9 @@ import com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar;
 import com.leinardi.android.speeddial.SpeedDialActionItem;
 import com.leinardi.android.speeddial.SpeedDialView;
 import com.luc.ankireview.animation.ReviewPageTransformer;
+import com.luc.ankireview.display.BackgroundViewPagerAdapter;
+import com.luc.ankireview.display.FlashCardViewPagerAdapter;
+import com.luc.ankireview.display.FlashcardViewPager;
 import com.luc.ankireview.style.CardStyle;
 
 import java.io.File;
