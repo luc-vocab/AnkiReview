@@ -6,28 +6,20 @@
     see how colors match https://material.io/tools/color/
     -->
 
-    <color name="colorPrimary">#1976d2</color>
-    <color name="colorPrimaryDark">#0D47A1</color>
-    <color name="colorAccent">#1565c0</color>
-    <color name="colorBackground">#e0e0e0</color>
-    <color name="toolbarTextColor">#ffffff</color>
-
-    <color name="deckpicker_deckname_shadow">#000000</color>
-
     <!-- https://www.materialui.co/colors -->
-    <!-- text colors -->
+
     <color name="text_question">#1E88E5</color>
     <color name="text_romanization">#E91E63</color>
     <color name="text_chinese">#9E9E9E</color>
     <color name="text_cantonese">#9575CD</color>
 
     <!-- answer colors -->
-    <color name="answer_wrong">#ec407a</color>
-    <color name="answer_hard">#BA68C8</color>
-    <color name="answer_good">#4caf50</color>
-    <color name="answer_easy">#1976d2</color>
+    <color name="answer_wrong">@color/md_pink_400</color>
+    <color name="answer_hard">@color/md_purple_300</color>
+    <color name="answer_good">@color/md_green_a700</color>
+    <color name="answer_easy">@color/md_blue_600</color>
 
-    <color name="answer_tag_suspend">#EF6C00</color>
+    <color name="answer_tag_suspend">@color/md_orange_900</color>
 
     <array name="text_field_colors">
         <item>@color/md_red_500</item>

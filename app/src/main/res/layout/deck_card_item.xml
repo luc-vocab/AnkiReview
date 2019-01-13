@@ -41,13 +41,12 @@
                     android:layout_weight="1"
                     android:baselineAligned="false"
                     android:fontFamily="@font/fira_sans_condensed"
-                    android:shadowColor="@color/deckpicker_deckname_shadow"
                     android:shadowDx="0"
                     android:shadowDy="0"
                     android:shadowRadius="20"
                     android:text="TextView"
-                    android:textColor="@color/toolbarTextColor"
                     android:textSize="50dp"
+                    android:textColor="@color/md_white"
                     android:textStyle="bold" />
 
 
@@ -66,7 +65,6 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:fontFamily="@font/fira_sans_condensed"
-                        android:shadowColor="@color/colorBackground"
                         android:shadowDx="0"
                         android:shadowDy="0"
                         android:shadowRadius="20"
@@ -80,7 +78,6 @@
                         android:layout_weight="1"
                         android:fontFamily="@font/fira_sans_condensed"
                         android:text="TextView"
-                        android:shadowColor="@color/colorBackground"
                         android:shadowDx="0"
                         android:shadowDy="0"
                         android:shadowRadius="20"
@@ -93,7 +90,6 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:fontFamily="@font/fira_sans_condensed"
-                        android:shadowColor="@color/colorBackground"
                         android:shadowDx="0"
                         android:shadowDy="0"
                         android:shadowRadius="20"
