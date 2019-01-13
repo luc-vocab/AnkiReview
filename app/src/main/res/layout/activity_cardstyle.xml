@@ -243,7 +243,11 @@
 
                         <com.luc.ankireview.style.ValueSlider
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content" />
+                            android:layout_height="wrap_content"
+                            app:titleText="Test Value Slider"
+                            app:minValue="10"
+                            app:maxValue="100"
+                            />
 
                         <TextView
                             style="@style/CardStyleHeader"

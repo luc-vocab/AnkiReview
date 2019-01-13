@@ -1,13 +1,17 @@
 package com.luc.ankireview.style;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.luc.ankireview.R;
+import com.warkiz.widget.IndicatorSeekBar;
+import com.warkiz.widget.IndicatorStayLayout;
 
 public class ValueSlider extends LinearLayout {
     private static final String TAG = "ValueSlider";
@@ -19,6 +23,12 @@ public class ValueSlider extends LinearLayout {
 
     public ValueSlider(Context context, AttributeSet attrs) {
         super(context, attrs);
+
+        TypedArray a = context.getTheme().obtainStyledAttributes(attrs, R.styleable.ValueSlider, 0, 0);
+        m_titleText = a.getString(R.styleable.ValueSlider_titleText);
+        m_minValue = a.getInt(R.styleable.ValueSlider_minValue, 0);
+        m_maxValue = a.getInt(R.styleable.ValueSlider_maxValue, 0);
+
         initView();
     }
 
@@ -31,7 +41,33 @@ public class ValueSlider extends LinearLayout {
             @Override
             public void onClick(View view) {
                 Log.v(TAG, "header clicked");
+
+                if(m_sliderVisible == false ) {
+                    m_slider.setVisibility(View.VISIBLE);
+                    m_sliderVisible = true;
+                } else {
+                    m_slider.setVisibility(View.GONE);
+                    m_sliderVisible = false;
+                }
             }
         });
+
+        m_slider = findViewById(R.id.value_slider_slider);
+        m_slider.setVisibility(View.GONE);
+
+        TextView title = findViewById(R.id.value_slider_title);
+        title.setText(m_titleText);
+
+        IndicatorSeekBar indicatorSeekBar = findViewById(R.id.built_in_isb);
+        indicatorSeekBar.setMin(m_minValue);
+        indicatorSeekBar.setMax(m_maxValue);
     }
+
+    private boolean m_sliderVisible = false;
+    private IndicatorStayLayout m_slider;
+
+    private String m_titleText;
+    private int m_minValue;
+    private int m_maxValue;
+
 }
