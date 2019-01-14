@@ -37,6 +37,12 @@
         <item name="android:textSize">25dp</item>
     </style>
 
+    <!-- https://stackoverflow.com/questions/30754203/tablayout-tab-style -->
+    <style name="CardStyleTabLayout">
+        <item name="android:textSize">25dp</item>
+        <!-- <item name="tabPaddingBottom">10dp</item> -->
+    </style>
+
     <style name="Divider">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">1dp</item>
