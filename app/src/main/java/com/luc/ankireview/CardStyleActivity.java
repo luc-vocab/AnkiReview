@@ -156,24 +156,48 @@ public class CardStyleActivity extends AppCompatActivity implements TabLayout.On
             }
         });
 
-        m_margin_leftright_isb = findViewById(R.id.cardstyle_margin_leftright_isb);
-        m_margin_leftright_isb.setProgress(m_cardTemplate.getLeftRightMargin());
+        ValueSlider valueSliderBetween = findViewById(R.id.cardstyle_margin_between_valueslider);
+        valueSliderBetween.setCurrentValue(m_cardTemplate.getLeftRightMargin());
+        valueSliderBetween.setListener(new ValueSliderUpdate() {
+            @Override
+            public void valueUpdate(int currentValue) {
+                m_cardTemplate.setCenterMargin(currentValue);
+                updateCardPreview();
+            }
+        });
 
-        m_margin_center_isb = findViewById(R.id.cardstyle_margin_center_isb);
-        m_margin_center_isb.setProgress(m_cardTemplate.getCenterMargin());
 
-        m_padding_top_isb = findViewById(R.id.cardstyle_padding_top_isb);
-        m_padding_top_isb.setProgress(m_cardTemplate.getPaddingTop());
-        m_padding_bottom_isb = findViewById(R.id.cardstyle_padding_bottom_isb);
-        m_padding_bottom_isb.setProgress(m_cardTemplate.getPaddingBottom());
-        m_padding_leftright_isb = findViewById(R.id.cardstyle_padding_leftright_isb);
-        m_padding_leftright_isb.setProgress(m_cardTemplate.getPaddingLeftRight());
+        ValueSlider valueSliderPaddingTop = findViewById(R.id.cardstyle_padding_top_valueslider);
+        valueSliderPaddingTop.setCurrentValue(m_cardTemplate.getPaddingTop());
+        valueSliderPaddingTop.setListener(new ValueSliderUpdate() {
+            @Override
+            public void valueUpdate(int currentValue) {
+                m_cardTemplate.setPaddingTop(currentValue);
+                updateCardPreview();
+            }
+        });
 
-        m_margin_leftright_isb.setOnSeekChangeListener(this);
-        m_margin_center_isb.setOnSeekChangeListener(this);
-        m_padding_top_isb.setOnSeekChangeListener(this);
-        m_padding_bottom_isb.setOnSeekChangeListener(this);
-        m_padding_leftright_isb.setOnSeekChangeListener(this);
+
+        ValueSlider valueSliderPaddingBottom = findViewById(R.id.cardstyle_padding_bottom_valueslider);
+        valueSliderPaddingBottom.setCurrentValue(m_cardTemplate.getPaddingBottom());
+        valueSliderPaddingBottom.setListener(new ValueSliderUpdate() {
+            @Override
+            public void valueUpdate(int currentValue) {
+                m_cardTemplate.setPaddingBottom(currentValue);
+                updateCardPreview();
+            }
+        });
+
+        ValueSlider valueSliderPaddingLeftRight = findViewById(R.id.cardstyle_padding_leftright_valueslider);
+        valueSliderPaddingLeftRight.setCurrentValue(m_cardTemplate.getPaddingLeftRight());
+        valueSliderPaddingLeftRight.setListener(new ValueSliderUpdate() {
+            @Override
+            public void valueUpdate(int currentValue) {
+                m_cardTemplate.setPaddingLeftRight(currentValue);
+                updateCardPreview();
+            }
+        });
+
 
         m_field_relativesize_isb.setOnSeekChangeListener(this);
 
@@ -239,6 +263,7 @@ public class CardStyleActivity extends AppCompatActivity implements TabLayout.On
 
     @Override
     public void onSeeking(SeekParams seekParams) {
+        /*
         if( seekParams.seekBar == m_margin_leftright_isb) {
             Log.v(TAG, "left/right margin: " + seekParams.progress);
             m_cardTemplate.setLeftRightMargin(seekParams.progress);
@@ -258,6 +283,7 @@ public class CardStyleActivity extends AppCompatActivity implements TabLayout.On
             m_currentCardField.setRelativeSize((float) (progress / TEXT_RELATIVE_SIZE_FACTOR));
         }
         updateCardPreview();
+        */
     }
 
     @Override
@@ -329,14 +355,6 @@ public class CardStyleActivity extends AppCompatActivity implements TabLayout.On
     private IndicatorSeekBar m_text_basesize_isb;
 
     // margin controls
-    private IndicatorSeekBar m_margin_leftright_isb;
-    private IndicatorSeekBar m_margin_center_isb;
-
-
-    private IndicatorSeekBar m_padding_top_isb;
-    private IndicatorSeekBar m_padding_bottom_isb;
-    private IndicatorSeekBar m_padding_leftright_isb;
-
 
     private CardTemplateKey m_cardTemplateKey;
     private CardTemplate m_cardTemplate;

@@ -250,97 +250,43 @@
                             app:maxValue="120"
                             />
 
-                        <TextView
-                            style="@style/CardStyleHeader"
+
+                        <com.luc.ankireview.style.ValueSlider
+                            android:id="@+id/cardstyle_margin_between_valueslider"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Left/Right Margin" />
+                            app:titleText="Between Margin"
+                            app:minValue="0"
+                            app:maxValue="80"
+                            />
 
-
-                        <com.warkiz.widget.IndicatorStayLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
-                            <com.warkiz.widget.IndicatorSeekBar
-                                android:id="@+id/cardstyle_margin_leftright_isb"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                app:isb_show_indicator="rounded_rectangle"
-                                app:isb_max="120"
-                                app:isb_min="0" />
-                        </com.warkiz.widget.IndicatorStayLayout>
-
-                        <TextView
-                            style="@style/CardStyleHeader"
+                        <com.luc.ankireview.style.ValueSlider
+                            android:id="@+id/cardstyle_padding_top_valueslider"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Between Question and Answer Margin" />
+                            app:titleText="Padding Top"
+                            app:minValue="0"
+                            app:maxValue="80"
+                            />
 
-                        <com.warkiz.widget.IndicatorStayLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
-                            <com.warkiz.widget.IndicatorSeekBar
-                                android:id="@+id/cardstyle_margin_center_isb"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                app:isb_show_indicator="rounded_rectangle"
-                                app:isb_max="80"
-                                app:isb_min="0"
-                                />
-                        </com.warkiz.widget.IndicatorStayLayout>
-
-                        <TextView
-                            style="@style/CardStyleHeader"
+                        <com.luc.ankireview.style.ValueSlider
+                            android:id="@+id/cardstyle_padding_bottom_valueslider"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Padding Top" />
+                            app:titleText="Padding Bottom"
+                            app:minValue="0"
+                            app:maxValue="80"
+                            />
 
-                        <com.warkiz.widget.IndicatorStayLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
-                            <com.warkiz.widget.IndicatorSeekBar
-                                android:id="@+id/cardstyle_padding_top_isb"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                app:isb_show_indicator="rounded_rectangle"
-                                app:isb_max="80"
-                                app:isb_min="0" />
-                        </com.warkiz.widget.IndicatorStayLayout>
-
-                        <TextView
-                            style="@style/CardStyleHeader"
+                        <com.luc.ankireview.style.ValueSlider
+                            android:id="@+id/cardstyle_padding_leftright_valueslider"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Padding Bottom" />
+                            app:titleText="Padding Left/Right"
+                            app:minValue="0"
+                            app:maxValue="100"
+                            />
 
-                        <com.warkiz.widget.IndicatorStayLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
-                            <com.warkiz.widget.IndicatorSeekBar
-                                android:id="@+id/cardstyle_padding_bottom_isb"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                app:isb_show_indicator="rounded_rectangle"
-                                app:isb_max="80"
-                                app:isb_min="0" />
-                        </com.warkiz.widget.IndicatorStayLayout>
-
-                        <TextView
-                            style="@style/CardStyleHeader"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="Padding Left/Right" />
-
-                        <com.warkiz.widget.IndicatorStayLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
-                            <com.warkiz.widget.IndicatorSeekBar
-                                android:id="@+id/cardstyle_padding_leftright_isb"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                app:isb_show_indicator="rounded_rectangle"
-                                app:isb_max="100"
-                                app:isb_min="0" />
-                        </com.warkiz.widget.IndicatorStayLayout>
 
                     </LinearLayout>
                 </ScrollView>
