@@ -232,6 +232,7 @@
                             app:maxValue="120"
                             />
 
+                        <View style="@style/Divider"/>
 
                         <com.luc.ankireview.style.ValueSlider
                             android:id="@+id/cardstyle_margin_between_valueslider"
@@ -242,6 +243,8 @@
                             app:maxValue="80"
                             />
 
+                        <View style="@style/Divider"/>
+
                         <com.luc.ankireview.style.ValueSlider
                             android:id="@+id/cardstyle_padding_top_valueslider"
                             android:layout_width="match_parent"
@@ -251,6 +254,8 @@
                             app:maxValue="80"
                             />
 
+                        <View style="@style/Divider"/>
+
                         <com.luc.ankireview.style.ValueSlider
                             android:id="@+id/cardstyle_padding_bottom_valueslider"
                             android:layout_width="match_parent"
@@ -259,6 +264,8 @@
                             app:minValue="0"
                             app:maxValue="80"
                             />
+
+                        <View style="@style/Divider"/>
 
                         <com.luc.ankireview.style.ValueSlider
                             android:id="@+id/cardstyle_padding_leftright_valueslider"
