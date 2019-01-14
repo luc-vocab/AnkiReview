@@ -37,7 +37,9 @@
         <com.warkiz.widget.IndicatorStayLayout
             android:id="@+id/value_slider_slider"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            >
             <com.warkiz.widget.IndicatorSeekBar
                 android:id="@+id/built_in_isb"
                 android:layout_width="match_parent"

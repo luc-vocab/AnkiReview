@@ -57,26 +57,30 @@
 
         <android.support.design.widget.TabLayout
             android:id="@+id/cardstyle_tabs"
+            style="@style/CardStyleItemText"
             android:layout_width="match_parent"
             android:layout_height="30dp">
 
             <android.support.design.widget.TabItem
                 android:id="@+id/cardstyle_tab_fields"
+                style="@style/CardStyleItemText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Fields" />
 
             <android.support.design.widget.TabItem
                 android:id="@+id/carstyle_tab_font"
+                style="@style/CardStyleItemText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Font" />
 
             <android.support.design.widget.TabItem
                 android:id="@+id/cardstyle_tab_margins"
+                style="@style/CardStyleItemText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Margins" />
+                android:text="Spacing" />
         </android.support.design.widget.TabLayout>
 
         <FrameLayout
