@@ -8,6 +8,7 @@
     >
 
         <LinearLayout
+            style="@style/CardStyleItem"
             android:id="@+id/value_slider_header"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -15,19 +16,21 @@
             >
 
             <TextView
-                style="@style/CardStyleHeader"
+                style="@style/CardStyleItemText"
                 android:id="@+id/value_slider_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1" />
 
             <TextView
-                style="@style/CardStyleHeader"
+                style="@style/CardStyleItemText"
                 android:id="@+id/value_slider_value"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="42" />
+                android:layout_weight="3"
+                android:text="42"
+                android:gravity="right"
+                />
 
         </LinearLayout>
 
