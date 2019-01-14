@@ -32,7 +32,7 @@ import com.warkiz.widget.SeekParams;
 
 import java.util.Vector;
 
-public class CardStyleActivity extends AppCompatActivity implements TabLayout.OnTabSelectedListener, OnSeekChangeListener {
+public class CardStyleActivity extends AppCompatActivity implements TabLayout.OnTabSelectedListener {
     private static final String TAG = "CardStyleActivity";
     public static final double TEXT_RELATIVE_SIZE_FACTOR = 10.0;
 
@@ -114,7 +114,15 @@ public class CardStyleActivity extends AppCompatActivity implements TabLayout.On
             }
         });
 
-        m_field_relativesize_isb = findViewById(R.id.cardstyle_text_relativesize_isb);
+
+        m_field_relativesize = findViewById(R.id.cardstyle_text_relativesize_valueslider);
+        m_field_relativesize.setListener(new ValueSliderUpdate() {
+            @Override
+            public void valueUpdate(int currentValue) {
+                m_currentCardField.setRelativeSize((float) (currentValue / TEXT_RELATIVE_SIZE_FACTOR));
+                updateCardPreview();
+            }
+        });
 
         m_field_colorPalette = findViewById(R.id.cardstyle_text_color);
         m_field_colorPalette.setOnColorSelectedListener(new SpectrumPalette.OnColorSelectedListener() {
@@ -128,9 +136,17 @@ public class CardStyleActivity extends AppCompatActivity implements TabLayout.On
 
         // text controls
         // -------------
-        m_text_basesize_isb = findViewById(R.id.cardstyle_text_basesize_isb);
-        m_text_basesize_isb.setOnSeekChangeListener(this);
-        m_text_basesize_isb.setProgress(m_cardTemplate.getBaseTextSize());
+
+        ValueSlider valueSliderTextBaseSize = findViewById(R.id.cardstyle_text_basesize_valueslider);
+        valueSliderTextBaseSize.setCurrentValue(m_cardTemplate.getBaseTextSize());
+        valueSliderTextBaseSize.setListener(new ValueSliderUpdate() {
+            @Override
+            public void valueUpdate(int currentValue) {
+                m_cardTemplate.setBaseTextSize(currentValue);
+                updateCardPreview();
+            }
+        });
+
         m_text_font_family = findViewById(R.id.cardstyle_editor_font_family);
         m_text_font_family.setText(m_cardTemplate.getFont());
         m_text_font_lookup = findViewById(R.id.cardstyle_editor_font_lookup);
@@ -199,7 +215,7 @@ public class CardStyleActivity extends AppCompatActivity implements TabLayout.On
         });
 
 
-        m_field_relativesize_isb.setOnSeekChangeListener(this);
+
 
     }
 
@@ -261,39 +277,6 @@ public class CardStyleActivity extends AppCompatActivity implements TabLayout.On
 
     }
 
-    @Override
-    public void onSeeking(SeekParams seekParams) {
-        /*
-        if( seekParams.seekBar == m_margin_leftright_isb) {
-            Log.v(TAG, "left/right margin: " + seekParams.progress);
-            m_cardTemplate.setLeftRightMargin(seekParams.progress);
-        } else if( seekParams.seekBar == m_margin_center_isb ) {
-            Log.v(TAG, "left/right margin: " + seekParams.progress);
-            m_cardTemplate.setCenterMargin(seekParams.progress);
-        } else if ( seekParams.seekBar == m_text_basesize_isb) {
-            m_cardTemplate.setBaseTextSize(seekParams.progress);
-        } else if ( seekParams.seekBar == m_padding_bottom_isb) {
-            m_cardTemplate.setPaddingBottom(seekParams.progress);
-        } else if ( seekParams.seekBar == m_padding_top_isb) {
-            m_cardTemplate.setPaddingTop(seekParams.progress);
-        } else if ( seekParams.seekBar == m_padding_leftright_isb) {
-            m_cardTemplate.setPaddingLeftRight(seekParams.progress);
-        } else if ( seekParams.seekBar == m_field_relativesize_isb) {
-            float progress = seekParams.progressFloat;
-            m_currentCardField.setRelativeSize((float) (progress / TEXT_RELATIVE_SIZE_FACTOR));
-        }
-        updateCardPreview();
-        */
-    }
-
-    @Override
-    public void onStartTrackingTouch(IndicatorSeekBar seekBar) {
-    }
-
-    @Override
-    public void onStopTrackingTouch(IndicatorSeekBar seekBar) {
-    }
-
     public void updateCardPreview() {
         m_cardStyle.renderCard(m_card, m_cardstyleEditorCards);
     }
@@ -314,7 +297,7 @@ public class CardStyleActivity extends AppCompatActivity implements TabLayout.On
 
         m_field_fieldName.setText(cardField.getFieldName());
 
-        m_field_relativesize_isb.setProgress((float) (cardField.getRelativeSize() * TEXT_RELATIVE_SIZE_FACTOR));
+        m_field_relativesize.setCurrentValue((int) (cardField.getRelativeSize() * TEXT_RELATIVE_SIZE_FACTOR));
     }
 
     public void backToFieldList() {
@@ -346,13 +329,13 @@ public class CardStyleActivity extends AppCompatActivity implements TabLayout.On
     // field setting controls
     private TextView m_field_fieldName;
     private Button m_field_back_fieldlist;
-    private IndicatorSeekBar m_field_relativesize_isb;
+    private ValueSlider m_field_relativesize;
     private SpectrumPalette m_field_colorPalette;
 
     // text controls
     private TextView m_text_font_family;
     private Button m_text_font_lookup;
-    private IndicatorSeekBar m_text_basesize_isb;
+    private ValueSlider m_text_basesize;
 
     // margin controls
 
