@@ -130,14 +130,18 @@
 
                     </LinearLayout>
 
+                    <View style="@style/Divider"/>
+
                     <com.luc.ankireview.style.ValueSlider
                         android:id="@+id/cardstyle_text_relativesize_valueslider"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:titleText="Relative Size"
+                        app:titleText="Relative Text Size"
                         app:minValue="0"
                         app:maxValue="40"
                         />
+
+                    <View style="@style/Divider"/>
 
                     <TextView
                         android:layout_width="match_parent"
@@ -195,11 +199,13 @@
 
                 </LinearLayout>
 
+                <View style="@style/Divider"/>
+
                 <com.luc.ankireview.style.ValueSlider
                     android:id="@+id/cardstyle_text_basesize_valueslider"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:titleText="Base Size"
+                    app:titleText="Base Text Size"
                     app:minValue="10"
                     app:maxValue="100"
                     />
