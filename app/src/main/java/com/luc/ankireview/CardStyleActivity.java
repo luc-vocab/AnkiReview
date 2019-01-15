@@ -1,8 +1,10 @@
 package com.luc.ankireview;
 
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
+import android.support.v4.widget.ImageViewCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -14,6 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -124,12 +127,15 @@ public class CardStyleActivity extends AppCompatActivity implements TabLayout.On
             }
         });
 
+        m_fieldColorCircle = findViewById(R.id.cardstyle_field_color_circle);
+
         m_field_colorPalette = findViewById(R.id.cardstyle_text_color);
         m_field_colorPalette.setOnColorSelectedListener(new SpectrumPalette.OnColorSelectedListener() {
             @Override
             public void onColorSelected(int color) {
                 Log.v(TAG, "color selected: " + color);
                 m_currentCardField.setColor(color);
+                ImageViewCompat.setImageTintList(m_fieldColorCircle, ColorStateList.valueOf(color));
                 updateCardPreview();
             }
         });
@@ -330,6 +336,7 @@ public class CardStyleActivity extends AppCompatActivity implements TabLayout.On
     private TextView m_field_fieldName;
     private Button m_field_back_fieldlist;
     private ValueSlider m_field_relativesize;
+    private ImageView m_fieldColorCircle;
     private SpectrumPalette m_field_colorPalette;
 
     // text controls
