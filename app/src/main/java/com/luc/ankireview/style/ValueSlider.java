@@ -2,6 +2,8 @@ package com.luc.ankireview.style;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.support.transition.ChangeBounds;
+import android.support.transition.TransitionManager;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -38,11 +40,14 @@ public class ValueSlider extends LinearLayout implements  OnSeekChangeListener {
     public void initView() {
         LayoutInflater.from(getContext()).inflate(R.layout.value_slider, this);
 
+        m_valueSliderContainer = findViewById(R.id.value_slider_container);
+
         LinearLayout header = findViewById(R.id.value_slider_header);
         header.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
                 Log.v(TAG, "header clicked");
+                TransitionManager.beginDelayedTransition(m_valueSliderContainer);
 
                 if(m_sliderVisible == false ) {
                     m_slider.setVisibility(View.VISIBLE);
@@ -95,6 +100,8 @@ public class ValueSlider extends LinearLayout implements  OnSeekChangeListener {
     @Override
     public void onStopTrackingTouch(IndicatorSeekBar seekBar) {
     }
+
+    private LinearLayout m_valueSliderContainer;
 
     private boolean m_sliderVisible = false;
     private IndicatorStayLayout m_slider;
