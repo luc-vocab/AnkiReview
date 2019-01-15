@@ -67,7 +67,7 @@ public class FieldListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                     m_activity.openFieldSettings(cardField);
                 }
             });
-            ((FieldViewHolder) holder).mTextView.setOnTouchListener(new View.OnTouchListener() {
+            ((FieldViewHolder) holder).mDragHandle.setOnTouchListener(new View.OnTouchListener() {
                 @Override
                 public boolean onTouch(View v, MotionEvent event) {
                     if (event.getActionMasked() == MotionEvent.ACTION_DOWN) {
