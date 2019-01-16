@@ -307,6 +307,7 @@ public class CardStyleActivity extends AppCompatActivity implements TabLayout.On
 
         final CardStyleActivity context = this;
 
+        ImageViewCompat.setImageTintList(m_fieldColorCircle, ColorStateList.valueOf(cardField.getColor()));
         m_field_colorSelector.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
