@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/cardstyle_action_fields"
+        android:enabled="true"
+        android:icon="@drawable/fields"
+        android:title="Fields"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/cardstyle_action_font"
+        android:enabled="true"
+        android:icon="@drawable/font"
+        android:title="Font"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/cardstyle_action_spacing"
+        android:enabled="true"
+        android:icon="@drawable/spacing"
+        android:title="Spacing"
+        app:showAsAction="ifRoom" />
+</menu>

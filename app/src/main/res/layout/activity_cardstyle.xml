@@ -307,7 +307,14 @@
                 </ScrollView>
             </FrameLayout>
 
+
         </FrameLayout>
+
+        <android.support.design.widget.BottomNavigationView
+            android:id="@+id/cardstyle_bottom_navigation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:menu="@menu/cardstyle_bottom_menu"/>
 
 
     </LinearLayout>

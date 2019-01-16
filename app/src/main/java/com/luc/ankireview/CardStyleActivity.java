@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.support.annotation.ColorInt;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.widget.ImageViewCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -74,6 +76,24 @@ public class CardStyleActivity extends AppCompatActivity implements TabLayout.On
         m_cardstyleTabs = findViewById(R.id.cardstyle_tabs);
         m_cardstyleTabs.addOnTabSelectedListener(this);
 
+        m_bottomNavigation = findViewById(R.id.cardstyle_bottom_navigation);
+        m_bottomNavigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.cardstyle_action_fields:
+                        showFieldListView();
+                        break;
+                    case R.id.cardstyle_action_font:
+                        showFontView();
+                        break;
+                    case R.id.cardstyle_action_spacing:
+                        showSpacingView();
+                        break;
+                }
+                return true;
+            }
+        });
 
         m_cardstyleEditorCards = findViewById(R.id.cardstyle_editor_cards);
         m_cardStyle.renderCard(m_card, m_cardstyleEditorCards);
@@ -259,20 +279,11 @@ public class CardStyleActivity extends AppCompatActivity implements TabLayout.On
         Log.v(TAG, "onTabSelected " + tab.getPosition());
 
         if( tab.getPosition() == 0 ) {
-            m_fullFieldListView.setVisibility(View.VISIBLE);
-            m_fieldSettingsView.setVisibility(View.INVISIBLE);
-            m_fontView.setVisibility(View.INVISIBLE);
-            m_marginsView.setVisibility(View.INVISIBLE);
+            showFieldListView();
         } else if( tab.getPosition() == 1 ) {
-            m_fullFieldListView.setVisibility(View.INVISIBLE);
-            m_fieldSettingsView.setVisibility(View.INVISIBLE);
-            m_fontView.setVisibility(View.VISIBLE);
-            m_marginsView.setVisibility(View.INVISIBLE);
+            showFontView();
         } else if( tab.getPosition() == 2 ) {
-            m_fullFieldListView.setVisibility(View.INVISIBLE);
-            m_fieldSettingsView.setVisibility(View.INVISIBLE);
-            m_fontView.setVisibility(View.INVISIBLE);
-            m_marginsView.setVisibility(View.VISIBLE);
+            showSpacingView();
         }
     }
 
@@ -280,6 +291,34 @@ public class CardStyleActivity extends AppCompatActivity implements TabLayout.On
     public void onTabUnselected(TabLayout.Tab tab)
     {
 
+    }
+
+    private void showFieldListView() {
+        m_fullFieldListView.setVisibility(View.VISIBLE);
+        m_fieldSettingsView.setVisibility(View.INVISIBLE);
+        m_fontView.setVisibility(View.INVISIBLE);
+        m_marginsView.setVisibility(View.INVISIBLE);
+    }
+
+    private void showFieldSettingsView() {
+        m_fullFieldListView.setVisibility(View.INVISIBLE);
+        m_fieldSettingsView.setVisibility(View.VISIBLE);
+        m_fontView.setVisibility(View.INVISIBLE);
+        m_marginsView.setVisibility(View.INVISIBLE);
+    }
+
+    private void showFontView() {
+        m_fullFieldListView.setVisibility(View.INVISIBLE);
+        m_fieldSettingsView.setVisibility(View.INVISIBLE);
+        m_fontView.setVisibility(View.VISIBLE);
+        m_marginsView.setVisibility(View.INVISIBLE);
+    }
+
+    private void showSpacingView() {
+        m_fullFieldListView.setVisibility(View.INVISIBLE);
+        m_fieldSettingsView.setVisibility(View.INVISIBLE);
+        m_fontView.setVisibility(View.INVISIBLE);
+        m_marginsView.setVisibility(View.VISIBLE);
     }
 
     public void updateCardPreview() {
@@ -296,10 +335,7 @@ public class CardStyleActivity extends AppCompatActivity implements TabLayout.On
         m_currentCardField = cardField;
 
 
-        m_fullFieldListView.setVisibility(View.INVISIBLE);
-        m_fieldSettingsView.setVisibility(View.VISIBLE);
-        m_fontView.setVisibility(View.INVISIBLE);
-        m_marginsView.setVisibility(View.INVISIBLE);
+        showFieldSettingsView();
 
         m_field_fieldName.setText(cardField.getFieldName());
 
@@ -355,6 +391,9 @@ public class CardStyleActivity extends AppCompatActivity implements TabLayout.On
     private TabLayout m_cardstyleTabs;
 
     private LinearLayout m_cardstyleEditorCards;
+
+    // navigation
+    BottomNavigationView m_bottomNavigation;
 
 
     // field setting controls
