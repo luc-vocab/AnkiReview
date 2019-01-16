@@ -3,9 +3,11 @@ package com.luc.ankireview;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
+import android.support.annotation.ColorInt;
 import android.support.design.widget.TabLayout;
 import android.support.v4.widget.ImageViewCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.preference.PreferenceFragmentCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -19,6 +21,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.luc.ankireview.style.CardField;
 import com.luc.ankireview.style.CardStyle;
@@ -28,6 +31,7 @@ import com.luc.ankireview.style.FieldListAdapter;
 import com.luc.ankireview.style.ItemTouchCallback;
 import com.luc.ankireview.style.ValueSlider;
 import com.luc.ankireview.style.ValueSliderUpdate;
+import com.thebluealliance.spectrum.SpectrumDialog;
 import com.thebluealliance.spectrum.SpectrumPalette;
 import com.warkiz.widget.IndicatorSeekBar;
 import com.warkiz.widget.OnSeekChangeListener;
@@ -108,6 +112,7 @@ public class CardStyleActivity extends AppCompatActivity implements TabLayout.On
 
         // field settings controls
         // -----------------------
+
         m_field_fieldName = findViewById(R.id.cardstyle_field_fieldname);
         m_field_back_fieldlist = findViewById(R.id.cardstyle_field_back_to_fieldlist);
         m_field_back_fieldlist.setOnClickListener(new View.OnClickListener() {
@@ -127,18 +132,12 @@ public class CardStyleActivity extends AppCompatActivity implements TabLayout.On
             }
         });
 
+
+
+        // related to setting of color
+        m_field_colorSelector = findViewById(R.id.cardstyle_field_color_selector);
         m_fieldColorCircle = findViewById(R.id.cardstyle_field_color_circle);
 
-        m_field_colorPalette = findViewById(R.id.cardstyle_text_color);
-        m_field_colorPalette.setOnColorSelectedListener(new SpectrumPalette.OnColorSelectedListener() {
-            @Override
-            public void onColorSelected(int color) {
-                Log.v(TAG, "color selected: " + color);
-                m_currentCardField.setColor(color);
-                ImageViewCompat.setImageTintList(m_fieldColorCircle, ColorStateList.valueOf(color));
-                updateCardPreview();
-            }
-        });
 
         // text controls
         // -------------
@@ -291,10 +290,11 @@ public class CardStyleActivity extends AppCompatActivity implements TabLayout.On
         m_cardStyle.saveCardStyleData();
     }
 
-    public void openFieldSettings(CardField cardField) {
+    public void openFieldSettings(final CardField cardField) {
         Log.v(TAG, "openFieldSettings " + cardField.getFieldName());
 
         m_currentCardField = cardField;
+
 
         m_fullFieldListView.setVisibility(View.INVISIBLE);
         m_fieldSettingsView.setVisibility(View.VISIBLE);
@@ -304,6 +304,31 @@ public class CardStyleActivity extends AppCompatActivity implements TabLayout.On
         m_field_fieldName.setText(cardField.getFieldName());
 
         m_field_relativesize.setCurrentValue((int) (cardField.getRelativeSize() * TEXT_RELATIVE_SIZE_FACTOR));
+
+        final CardStyleActivity context = this;
+
+        m_field_colorSelector.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new SpectrumDialog.Builder(context)
+                        .setColors(R.array.text_field_colors)
+                        // .setSelectedColorRes(cardField.getColor()) // doesn't seem t work
+                        .setDismissOnColorSelected(true)
+                        .setOutlineWidth(2)
+                        .setOnColorSelectedListener(new SpectrumDialog.OnColorSelectedListener() {
+                            @Override public void onColorSelected(boolean positiveResult, @ColorInt int color) {
+                                if (positiveResult) {
+                                    cardField.setColor(color);
+                                    ImageViewCompat.setImageTintList(m_fieldColorCircle, ColorStateList.valueOf(color));
+                                    updateCardPreview();
+                                }
+                            }
+                        }).build().show(context.getSupportFragmentManager(), "field_color_picker");
+            }
+        });
+
+
+
     }
 
     public void backToFieldList() {
@@ -338,6 +363,7 @@ public class CardStyleActivity extends AppCompatActivity implements TabLayout.On
     private ValueSlider m_field_relativesize;
     private ImageView m_fieldColorCircle;
     private SpectrumPalette m_field_colorPalette;
+    private LinearLayout m_field_colorSelector;
 
     // text controls
     private TextView m_text_font_family;
