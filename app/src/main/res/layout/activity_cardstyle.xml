@@ -55,37 +55,12 @@
 
         </android.support.v4.widget.NestedScrollView>
 
-        <android.support.design.widget.TabLayout
-            android:id="@+id/cardstyle_tabs"
-            style="@style/CardStyleTabLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:tabTextAppearance="@style/CardStyleItemText"
-            >
-
-            <android.support.design.widget.TabItem
-                android:id="@+id/cardstyle_tab_fields"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Fields" />
-
-            <android.support.design.widget.TabItem
-                android:id="@+id/carstyle_tab_font"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Font" />
-
-            <android.support.design.widget.TabItem
-                android:id="@+id/cardstyle_tab_margins"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Spacing" />
-        </android.support.design.widget.TabLayout>
-
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:background="@color/md_white"
+            >
 
 
             <android.support.v7.widget.RecyclerView

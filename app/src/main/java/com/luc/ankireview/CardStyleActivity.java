@@ -41,7 +41,7 @@ import com.warkiz.widget.SeekParams;
 
 import java.util.Vector;
 
-public class CardStyleActivity extends AppCompatActivity implements TabLayout.OnTabSelectedListener {
+public class CardStyleActivity extends AppCompatActivity {
     private static final String TAG = "CardStyleActivity";
     public static final double TEXT_RELATIVE_SIZE_FACTOR = 10.0;
 
@@ -72,9 +72,6 @@ public class CardStyleActivity extends AppCompatActivity implements TabLayout.On
         m_cardTemplate = m_cardStyle.getCardTemplate(m_cardTemplateKey);
 
         Log.v(TAG, "num question card fields: " + m_cardTemplate.getQuestionCardFields().size());
-
-        m_cardstyleTabs = findViewById(R.id.cardstyle_tabs);
-        m_cardstyleTabs.addOnTabSelectedListener(this);
 
         m_bottomNavigation = findViewById(R.id.cardstyle_bottom_navigation);
         m_bottomNavigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -267,32 +264,6 @@ public class CardStyleActivity extends AppCompatActivity implements TabLayout.On
         }
     }
 
-    @Override
-    public void onTabReselected(TabLayout.Tab tab)
-    {
-
-    }
-
-    @Override
-    public void onTabSelected(TabLayout.Tab tab)
-    {
-        Log.v(TAG, "onTabSelected " + tab.getPosition());
-
-        if( tab.getPosition() == 0 ) {
-            showFieldListView();
-        } else if( tab.getPosition() == 1 ) {
-            showFontView();
-        } else if( tab.getPosition() == 2 ) {
-            showSpacingView();
-        }
-    }
-
-    @Override
-    public void onTabUnselected(TabLayout.Tab tab)
-    {
-
-    }
-
     private void showFieldListView() {
         m_fullFieldListView.setVisibility(View.VISIBLE);
         m_fieldSettingsView.setVisibility(View.INVISIBLE);
@@ -387,9 +358,6 @@ public class CardStyleActivity extends AppCompatActivity implements TabLayout.On
     // views
     private RecyclerView m_fullFieldListView;
     private FieldListAdapter m_fieldListAdapter;
-
-    private TabLayout m_cardstyleTabs;
-
     private LinearLayout m_cardstyleEditorCards;
 
     // navigation
