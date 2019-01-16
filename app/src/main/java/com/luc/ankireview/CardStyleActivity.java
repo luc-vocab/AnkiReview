@@ -312,9 +312,8 @@ public class CardStyleActivity extends AppCompatActivity implements TabLayout.On
             public void onClick(View view) {
                 new SpectrumDialog.Builder(context)
                         .setColors(R.array.text_field_colors)
-                        // .setSelectedColorRes(cardField.getColor()) // doesn't seem t work
+                        .setSelectedColor(cardField.getColor())
                         .setDismissOnColorSelected(true)
-                        .setOutlineWidth(2)
                         .setOnColorSelectedListener(new SpectrumDialog.OnColorSelectedListener() {
                             @Override public void onColorSelected(boolean positiveResult, @ColorInt int color) {
                                 if (positiveResult) {
