@@ -87,10 +87,10 @@ public class FieldListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     private void buildFieldList() {
         m_fieldList = new Vector<FieldListItem>();
 
-        // add the "all fields" header
+        // add the "all cardstyle_fields" header
         m_fieldList.add(new FieldListItem(null, FieldListItem.VIEWTYPE_HEADER, FieldListItem.HEADER_ALLFIELDS));
 
-        // add the unassigned fields
+        // add the unassigned cardstyle_fields
         for( String field : m_fullFieldList) {
             boolean isUnassigned = true;
             for( CardField cardField : m_cardTemplate.getQuestionCardFields() ) {

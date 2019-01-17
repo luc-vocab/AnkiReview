@@ -142,8 +142,8 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="right"
                             android:layout_weight="3"
-                            android:src="@drawable/circle"
-                            tools:src="@drawable/circle"
+                            android:src="@drawable/cardstyle_color_circle"
+                            tools:src="@drawable/cardstyle_color_circle"
                             >
 
                         </ImageView>

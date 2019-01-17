@@ -4,25 +4,25 @@
     <item
         android:id="@+id/cardstyle_action_fields"
         android:enabled="true"
-        android:icon="@drawable/fields"
-        android:title="Fields"
-        app:showAsAction="ifRoom" />
+        android:icon="@drawable/cardstyle_fields"
+        android:title="Field List"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/cardstyle_action_field_settings"
+        android:enabled="true"
+        android:icon="@drawable/cardstyle_field_settings"
+        android:title="Field Settings"
+        app:showAsAction="always" />
     <item
         android:id="@+id/cardstyle_action_font"
         android:enabled="true"
-        android:icon="@drawable/font"
+        android:icon="@drawable/cardstyle_font"
         android:title="Font"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="always" />
     <item
         android:id="@+id/cardstyle_action_spacing"
         android:enabled="true"
-        android:icon="@drawable/spacing"
+        android:icon="@drawable/cardstyle_spacing"
         android:title="Spacing"
-        app:showAsAction="ifRoom" />
-    <item
-        android:id="@+id/cardstyle_action_save"
-        android:enabled="true"
-        android:icon="@drawable/cardstyle_save"
-        android:title="Save"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="always" />
 </menu>
