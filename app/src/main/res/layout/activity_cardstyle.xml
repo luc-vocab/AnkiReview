@@ -55,19 +55,21 @@
 
         </android.support.v4.widget.NestedScrollView>
 
+        <View style="@style/Divider" />
+
+
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
             android:background="@color/md_white"
-            >
+            android:elevation="32dp">
 
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/cardstyle_editor_all_fields"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
-            </android.support.v7.widget.RecyclerView>
+                android:layout_height="match_parent"></android.support.v7.widget.RecyclerView>
 
             <FrameLayout
                 android:id="@+id/cardstyle_editor_fieldsettings"
@@ -82,21 +84,18 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        >
+                        android:orientation="horizontal">
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Now editing field: ">
-                        </TextView>
+                            android:text="Now editing field: "></TextView>
 
                         <TextView
                             android:id="@+id/cardstyle_field_fieldname"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="fieldname">
-                        </TextView>
+                            android:text="fieldname"></TextView>
 
                         <Button
                             android:id="@+id/cardstyle_field_back_to_fieldlist"
@@ -108,18 +107,17 @@
 
                     </LinearLayout>
 
-                    <View style="@style/Divider"/>
+                    <View style="@style/Divider" />
 
                     <com.luc.ankireview.style.ValueSlider
                         android:id="@+id/cardstyle_text_relativesize_valueslider"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:titleText="Relative Text Size"
-                        app:minValue="0"
                         app:maxValue="40"
-                        />
+                        app:minValue="0"
+                        app:titleText="Relative Text Size" />
 
-                    <View style="@style/Divider"/>
+                    <View style="@style/Divider" />
 
 
                     <LinearLayout
@@ -127,8 +125,8 @@
                         style="@style/CardStyleItem"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        >
+                        android:orientation="horizontal">
+
                         <TextView
                             style="@style/CardStyleItemText"
                             android:layout_width="match_parent"
@@ -143,8 +141,7 @@
                             android:layout_gravity="right"
                             android:layout_weight="3"
                             android:src="@drawable/cardstyle_color_circle"
-                            tools:src="@drawable/cardstyle_color_circle"
-                            >
+                            tools:src="@drawable/cardstyle_color_circle">
 
                         </ImageView>
 
@@ -165,45 +162,43 @@
                     android:layout_height="match_parent"
                     android:orientation="vertical">
 
-                <TextView
-                    style="@style/CardStyleHeader"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Font" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    >
-
-                    <EditText
+                    <TextView
                         style="@style/CardStyleHeader"
-                        android:id="@+id/cardstyle_editor_font_family"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="10"
-                        android:text="Font Family" />
+                        android:text="Font" />
 
-                    <Button
-                        android:id="@+id/cardstyle_editor_font_lookup"
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Lookup" />
+                        android:orientation="horizontal">
 
-                </LinearLayout>
+                        <EditText
+                            android:id="@+id/cardstyle_editor_font_family"
+                            style="@style/CardStyleHeader"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="10"
+                            android:text="Font Family" />
 
-                <View style="@style/Divider"/>
+                        <Button
+                            android:id="@+id/cardstyle_editor_font_lookup"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Lookup" />
 
-                <com.luc.ankireview.style.ValueSlider
-                    android:id="@+id/cardstyle_text_basesize_valueslider"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:titleText="Base Text Size"
-                    app:minValue="10"
-                    app:maxValue="100"
-                    />
+                    </LinearLayout>
+
+                    <View style="@style/Divider" />
+
+                    <com.luc.ankireview.style.ValueSlider
+                        android:id="@+id/cardstyle_text_basesize_valueslider"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:maxValue="100"
+                        app:minValue="10"
+                        app:titleText="Base Text Size" />
 
                 </LinearLayout>
 
@@ -228,54 +223,49 @@
                             android:id="@+id/cardstyle_margin_leftright_valueslider"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            app:titleText="Left/Right Margin"
-                            app:minValue="0"
                             app:maxValue="120"
-                            />
+                            app:minValue="0"
+                            app:titleText="Left/Right Margin" />
 
-                        <View style="@style/Divider"/>
+                        <View style="@style/Divider" />
 
                         <com.luc.ankireview.style.ValueSlider
                             android:id="@+id/cardstyle_margin_between_valueslider"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            app:titleText="Between Margin"
-                            app:minValue="0"
                             app:maxValue="80"
-                            />
+                            app:minValue="0"
+                            app:titleText="Between Margin" />
 
-                        <View style="@style/Divider"/>
+                        <View style="@style/Divider" />
 
                         <com.luc.ankireview.style.ValueSlider
                             android:id="@+id/cardstyle_padding_top_valueslider"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            app:titleText="Padding Top"
-                            app:minValue="0"
                             app:maxValue="80"
-                            />
+                            app:minValue="0"
+                            app:titleText="Padding Top" />
 
-                        <View style="@style/Divider"/>
+                        <View style="@style/Divider" />
 
                         <com.luc.ankireview.style.ValueSlider
                             android:id="@+id/cardstyle_padding_bottom_valueslider"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            app:titleText="Padding Bottom"
-                            app:minValue="0"
                             app:maxValue="80"
-                            />
+                            app:minValue="0"
+                            app:titleText="Padding Bottom" />
 
-                        <View style="@style/Divider"/>
+                        <View style="@style/Divider" />
 
                         <com.luc.ankireview.style.ValueSlider
                             android:id="@+id/cardstyle_padding_leftright_valueslider"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            app:titleText="Padding Left/Right"
-                            app:minValue="0"
                             app:maxValue="100"
-                            />
+                            app:minValue="0"
+                            app:titleText="Padding Left/Right" />
 
 
                     </LinearLayout>
