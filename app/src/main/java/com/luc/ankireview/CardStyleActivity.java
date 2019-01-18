@@ -18,10 +18,13 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,6 +42,7 @@ import com.warkiz.widget.IndicatorSeekBar;
 import com.warkiz.widget.OnSeekChangeListener;
 import com.warkiz.widget.SeekParams;
 
+import java.util.ArrayList;
 import java.util.Vector;
 
 public class CardStyleActivity extends AppCompatActivity {
@@ -80,6 +84,9 @@ public class CardStyleActivity extends AppCompatActivity {
                 switch (item.getItemId()) {
                     case R.id.cardstyle_action_fields:
                         showFieldListView();
+                        break;
+                    case R.id.cardstyle_action_field_settings:
+                        showFieldSettingsView();
                         break;
                     case R.id.cardstyle_action_font:
                         showFontView();
@@ -139,6 +146,23 @@ public class CardStyleActivity extends AppCompatActivity {
             }
         });
 
+        m_fieldSpinner = findViewById(R.id.cardstyle_field_settings_selector);
+        // m_availableFields = new ArrayList<String>();
+        m_fieldSpinnerAdapter = new ArrayAdapter<CardField>(this, R.layout.simple_spinner_item);
+        m_fieldSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        m_fieldSpinner.setAdapter(m_fieldSpinnerAdapter);
+        m_fieldSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                CardField cardField = (CardField) adapterView.getItemAtPosition(i);
+                openFieldSettings(cardField);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
 
         m_field_relativesize = findViewById(R.id.cardstyle_text_relativesize_valueslider);
         m_field_relativesize.setListener(new ValueSliderUpdate() {
@@ -276,6 +300,8 @@ public class CardStyleActivity extends AppCompatActivity {
         m_fieldSettingsView.setVisibility(View.VISIBLE);
         m_fontView.setVisibility(View.INVISIBLE);
         m_marginsView.setVisibility(View.INVISIBLE);
+
+        setupFieldSettings();
     }
 
     private void showFontView() {
@@ -298,6 +324,20 @@ public class CardStyleActivity extends AppCompatActivity {
 
     public void saveCardStyle() {
         m_cardStyle.saveCardStyleData();
+    }
+
+    private void setupFieldSettings() {
+        // setup the field dropdown
+        m_fieldSpinnerAdapter.clear();
+
+        for(CardField cardField : m_cardTemplate.getQuestionCardFields()) {
+            m_fieldSpinnerAdapter.add(cardField);
+        }
+
+        for(CardField cardField : m_cardTemplate.getAnswerCardFields()) {
+            m_fieldSpinnerAdapter.add(cardField);
+        }
+
     }
 
     public void openFieldSettings(final CardField cardField) {
@@ -366,6 +406,9 @@ public class CardStyleActivity extends AppCompatActivity {
 
     // field setting controls
     private TextView m_field_fieldName;
+    private Spinner m_fieldSpinner;
+    private ArrayAdapter<CardField> m_fieldSpinnerAdapter;
+    // private ArrayList<CardField> m_availableFields;
     private Button m_field_back_fieldlist;
     private ValueSlider m_field_relativesize;
     private ImageView m_fieldColorCircle;
