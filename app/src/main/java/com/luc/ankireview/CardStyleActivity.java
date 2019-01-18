@@ -21,6 +21,8 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -164,6 +166,14 @@ public class CardStyleActivity extends AppCompatActivity {
             }
         });
 
+        m_lineReturnCheckBox = findViewById(R.id.cardstyle_field_linereturn);
+        m_lineReturnCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                m_currentCardField.setLineReturn(b);
+                updateCardPreview();
+            }
+        });
 
 
         // related to setting of color
@@ -338,6 +348,8 @@ public class CardStyleActivity extends AppCompatActivity {
 
         m_field_relativesize.setCurrentValue((int) (cardField.getRelativeSize() * TEXT_RELATIVE_SIZE_FACTOR));
 
+        m_lineReturnCheckBox.setChecked(m_currentCardField.getLineReturn());
+
         final CardStyleActivity context = this;
 
         ImageViewCompat.setImageTintList(m_fieldColorCircle, ColorStateList.valueOf(cardField.getColor()));
@@ -394,6 +406,7 @@ public class CardStyleActivity extends AppCompatActivity {
     private Spinner m_fieldSpinner;
     private ArrayAdapter<CardField> m_fieldSpinnerAdapter;
     private ValueSlider m_field_relativesize;
+    private CheckBox m_lineReturnCheckBox;
     private ImageView m_fieldColorCircle;
     private SpectrumPalette m_field_colorPalette;
     private LinearLayout m_field_colorSelector;

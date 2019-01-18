@@ -100,6 +100,17 @@
 
                     <View style="@style/Divider" />
 
+                    <CheckBox
+                        style="@style/CardStyleItem"
+                        android:id="@+id/cardstyle_field_linereturn"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Line Return"
+                        android:layoutDirection="rtl"
+                        />
+
+
+                    <View style="@style/Divider" />
 
                     <LinearLayout
                         android:id="@+id/cardstyle_field_color_selector"
