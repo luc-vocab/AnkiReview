@@ -85,7 +85,8 @@
                         android:id="@+id/cardstyle_field_settings_selector"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1" />
+                        style="@style/CardStyleItem"
+                        />
 
                     <View style="@style/Divider" />
 

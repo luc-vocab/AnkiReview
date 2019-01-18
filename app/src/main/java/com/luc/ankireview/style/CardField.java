@@ -65,6 +65,8 @@ public class CardField implements Serializable {
         return m_isHtml;
     }
 
+    public String toString() { return m_fieldName; }
+
     private String m_fieldName;
     private int m_textColor = DEFAULT_COLOR;
     private boolean m_lineReturn = false; // whether there is a line return before this field
