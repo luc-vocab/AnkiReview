@@ -137,15 +137,6 @@ public class CardStyleActivity extends AppCompatActivity {
         // field settings controls
         // -----------------------
 
-        m_field_fieldName = findViewById(R.id.cardstyle_field_fieldname);
-        m_field_back_fieldlist = findViewById(R.id.cardstyle_field_back_to_fieldlist);
-        m_field_back_fieldlist.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                backToFieldList();
-            }
-        });
-
         m_fieldSpinner = findViewById(R.id.cardstyle_field_settings_selector);
         // m_availableFields = new ArrayList<String>();
         m_fieldSpinnerAdapter = new ArrayAdapter<CardField>(this, R.layout.simple_spinner_item);
@@ -345,11 +336,6 @@ public class CardStyleActivity extends AppCompatActivity {
 
         m_currentCardField = cardField;
 
-
-        showFieldSettingsView();
-
-        m_field_fieldName.setText(cardField.getFieldName());
-
         m_field_relativesize.setCurrentValue((int) (cardField.getRelativeSize() * TEXT_RELATIVE_SIZE_FACTOR));
 
         final CardStyleActivity context = this;
@@ -405,11 +391,8 @@ public class CardStyleActivity extends AppCompatActivity {
 
 
     // field setting controls
-    private TextView m_field_fieldName;
     private Spinner m_fieldSpinner;
     private ArrayAdapter<CardField> m_fieldSpinnerAdapter;
-    // private ArrayList<CardField> m_availableFields;
-    private Button m_field_back_fieldlist;
     private ValueSlider m_field_relativesize;
     private ImageView m_fieldColorCircle;
     private SpectrumPalette m_field_colorPalette;
