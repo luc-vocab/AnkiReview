@@ -52,7 +52,16 @@ public class FlashCardViewPagerAdapter extends PagerAdapter {
     @Override
     public int getCount() {
         // we only ever have 3 pages
-        return 3;
+
+        int count = 0;
+        if(m_currentCard != null) {
+            count += 1;
+        }
+        if(m_nextCard != null) {
+            count += 2;
+        }
+
+        return count;
     }
 
     @Override
@@ -75,11 +84,15 @@ public class FlashCardViewPagerAdapter extends PagerAdapter {
     }
 
     public void setCurrentCard(Card card) {
+
         m_currentCard = card;
+        notifyDataSetChanged();
     }
 
     public void setNextCard(Card card) {
+
         m_nextCard = card;
+        notifyDataSetChanged();
     }
 
 

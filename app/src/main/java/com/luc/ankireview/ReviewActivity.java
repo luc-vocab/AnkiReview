@@ -35,6 +35,8 @@ import com.luc.ankireview.display.BackgroundViewPagerAdapter;
 import com.luc.ankireview.display.FlashCardViewPagerAdapter;
 import com.luc.ankireview.display.FlashcardViewPager;
 import com.luc.ankireview.style.CardStyle;
+import com.luc.ankireview.style.CardTemplate;
+import com.luc.ankireview.style.CardTemplateKey;
 
 import java.io.File;
 import java.io.IOException;
@@ -302,7 +304,7 @@ public class ReviewActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.cardstyle:
                 Log.v(TAG, "card style selected");
-                launchCardStyle();
+                launchCardStyleForCurrentCard();
                 return true;
 
             default:
@@ -313,11 +315,15 @@ public class ReviewActivity extends AppCompatActivity {
         }
     }
 
-    private void launchCardStyle() {
-        // launch review activity
+    private void launchCardStyleForCurrentCard() {
+        launchCardStyleForCard(m_currentCard);
+    }
+
+    private void launchCardStyleForCard(Card card) {
+        // launch cardstyle activity
         Intent intent = new Intent(ReviewActivity.this, CardStyleActivity.class);
-        intent.putExtra("noteId", m_currentCard.getNoteId());
-        intent.putExtra("cardOrd", m_currentCard.getCardOrd());
+        intent.putExtra("noteId", card.getNoteId());
+        intent.putExtra("cardOrd", card.getCardOrd());
         this.startActivity(intent);
     }
 
@@ -386,6 +392,16 @@ public class ReviewActivity extends AppCompatActivity {
         m_progressBar.setProgress(0);
 
         Vector<Card> initialCards = AnkiUtils.getDueCards(getContentResolver(), m_deckId, 2);
+
+        // ensure we have a style defined for all of these cards, otherwise don't continue
+        for(Card card : initialCards) {
+            if (! checkStyleExists(card)) {
+                // don't continue
+                return;
+            }
+        }
+
+
         if( initialCards.size() == 0 ) {
             // nothing to review
             reviewsDone();
@@ -413,6 +429,17 @@ public class ReviewActivity extends AppCompatActivity {
         m_flashcardAdapter.setNextCard(m_nextCard);
         m_flashcardPager.setCurrentItem(1);
 
+    }
+
+    private boolean checkStyleExists(Card card) {
+        if( ! m_cardStyle.styleExistsForCard(card)) {
+            // redirect used to style activity
+            Toast toast = Toast.makeText(this, "No style found for this card, please create one", Toast.LENGTH_LONG);
+            toast.show();
+            launchCardStyleForCard(card);
+            return false;
+        }
+        return true;
     }
 
     private void showQuestion() {
@@ -445,16 +472,19 @@ public class ReviewActivity extends AppCompatActivity {
 
     private void prepareAnswerAudio(String audioFile) {
 
-        Uri uri = Uri.parse(m_baseUrl + audioFile);
-        try {
-            m_mediaPlayer.reset();
-            m_mediaPlayer.setDataSource(getApplicationContext(), uri);
-            m_mediaPlayer.prepare();
+        if( audioFile != null ) {
+            Uri uri = Uri.parse(m_baseUrl + audioFile);
+            try {
+                m_mediaPlayer.reset();
+                m_mediaPlayer.setDataSource(getApplicationContext(), uri);
+                m_mediaPlayer.prepare();
 
-            m_answerAudio = true;
-        } catch (IOException e) {
-            e.printStackTrace();
+                m_answerAudio = true;
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
+
     }
 
     private void answerCard(AnkiUtils.Ease ease) {

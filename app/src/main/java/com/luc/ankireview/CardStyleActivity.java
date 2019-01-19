@@ -77,8 +77,12 @@ public class CardStyleActivity extends AppCompatActivity {
         // retrieve the card template
         m_cardTemplateKey = new CardTemplateKey(m_card.getModelId(), m_card.getCardOrd());
         m_cardTemplate = m_cardStyle.getCardTemplate(m_cardTemplateKey);
+        if(m_cardTemplate == null) {
+            // create a new one
+            m_cardTemplate = m_cardStyle.createCardTemplate(m_cardTemplateKey);
+        }
 
-        Log.v(TAG, "num question card fields: " + m_cardTemplate.getQuestionCardFields().size());
+        // Log.v(TAG, "num question card fields: " + m_cardTemplate.getQuestionCardFields().size());
 
         m_bottomNavigation = findViewById(R.id.cardstyle_bottom_navigation);
         m_bottomNavigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {

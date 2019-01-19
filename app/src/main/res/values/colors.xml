@@ -8,11 +8,6 @@
 
     <!-- https://www.materialui.co/colors -->
 
-    <color name="text_question">#1E88E5</color>
-    <color name="text_romanization">#E91E63</color>
-    <color name="text_chinese">#9E9E9E</color>
-    <color name="text_cantonese">#9575CD</color>
-
     <!-- answer colors -->
     <color name="answer_wrong">@color/md_pink_400</color>
     <color name="answer_hard">@color/md_purple_300</color>
@@ -27,7 +22,7 @@
         <item>@color/md_purple_500</item>
         <item>@color/md_deep_purple_500</item>
         <item>@color/md_indigo_500</item>
-        <item>@color/md_blue_500</item>
+        <item>@color/md_blue_700</item>
         <item>@color/md_light_blue_500</item>
         <item>@color/md_cyan_500</item>
         <item>@color/md_teal_500</item>

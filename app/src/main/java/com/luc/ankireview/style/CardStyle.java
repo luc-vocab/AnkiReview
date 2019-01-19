@@ -29,6 +29,7 @@ import com.luc.ankireview.display.QuestionCard;
 import com.luc.ankireview.R;
 
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -43,117 +44,8 @@ public class CardStyle implements Serializable {
     public CardStyle(Context context) {
 
         m_context = context;
-
         m_fontCache = new HashMap<>();
-
-        boolean loadData = false;
-
-        if (loadData) {
-
-
-            loadCardStyleData();
-
-        } else {
-
-
-            m_cardStyleStorage = new CardStyleStorage();
-            m_cardStyleStorage.cardTemplateMap = new HashMap<>();
-
-            // Typeface typeface = ResourcesCompat.getFont(context, R.font.fira_sans_condensed);
-            String font = "Fira Sans Condensed";
-
-            // build CardTemplate for Chinese-Words
-            // ====================================
-
-            CardTemplate cardTemplate = new CardTemplate();
-            cardTemplate.setFont(font);
-            // question
-            CardField englishField = new CardField("English");
-            englishField.setColor(ContextCompat.getColor(context, R.color.text_question));
-            cardTemplate.addQuestionCardField(englishField);
-            // answer
-            CardField romanizationField = new CardField("Romanization");
-            romanizationField.setColor(ContextCompat.getColor(context, R.color.text_romanization));
-            cardTemplate.addAnswerCardField(romanizationField);
-            CardField chineseField = new CardField("Chinese");
-            chineseField.setColor(ContextCompat.getColor(context, R.color.text_cantonese));
-            cardTemplate.addAnswerCardField(chineseField);
-            // set sound field
-            cardTemplate.setSoundField("Sound");
-
-            // text
-            // ----
-            cardTemplate.setBaseTextSize(40);
-
-            // margins
-            // -------
-            cardTemplate.setCenterMargin(20);
-            cardTemplate.setLeftRightMargin(40);
-
-            cardTemplate.setPaddingTop(20);
-            cardTemplate.setPaddingBottom(30);
-            cardTemplate.setPaddingLeftRight(15);
-
-            CardTemplateKey key1 = new CardTemplateKey(1354424015761l, 0);
-            CardTemplateKey key2 = new CardTemplateKey(1354424015760l, 0);
-            CardTemplateKey key3 = new CardTemplateKey(1400993365602l, 0);
-
-            m_cardStyleStorage.cardTemplateMap.put(key1, cardTemplate);
-            m_cardStyleStorage.cardTemplateMap.put(key2, cardTemplate);
-            m_cardStyleStorage.cardTemplateMap.put(key3, cardTemplate);
-
-            // build CardTemplate for Hanzi
-            // ============================
-
-            cardTemplate = new CardTemplate();
-            cardTemplate.setFont(font);
-
-            // question
-            CardField characterField = new CardField("Character");
-            characterField.setColor(ContextCompat.getColor(context, R.color.text_question));
-            characterField.setRelativeSize(3.0f);
-            cardTemplate.addQuestionCardField(characterField);
-
-            // answer
-            CardField pinyinField = new CardField("Pinyin");
-            pinyinField.setColor(ContextCompat.getColor(context, R.color.text_romanization));
-            cardTemplate.addAnswerCardField(pinyinField);
-
-            CardField cantoneseField = new CardField("Cantonese");
-            cantoneseField.setColor(ContextCompat.getColor(context, R.color.text_cantonese));
-            cardTemplate.addAnswerCardField(cantoneseField);
-
-            CardField definitionField = new CardField("Definition");
-            definitionField.setIsHtml(true);
-            definitionField.setAlignment(Layout.Alignment.ALIGN_NORMAL);
-            definitionField.setLeftMargin(20);
-            definitionField.setRelativeSize(0.5f);
-            definitionField.setLineReturn(true);
-            cardTemplate.addAnswerCardField(definitionField);
-
-            // set sound field
-            cardTemplate.setSoundField("Sound");
-
-            // text
-            // ----
-            cardTemplate.setBaseTextSize(40);
-
-            // margins
-            // -------
-            cardTemplate.setCenterMargin(20);
-            cardTemplate.setLeftRightMargin(40);
-
-            cardTemplate.setPaddingTop(20);
-            cardTemplate.setPaddingBottom(30);
-            cardTemplate.setPaddingLeftRight(15);
-
-            key1 = new CardTemplateKey(1423381647288l, 0);
-            key2 = new CardTemplateKey(1423381647288l, 0);
-            m_cardStyleStorage.cardTemplateMap.put(key1, cardTemplate);
-            m_cardStyleStorage.cardTemplateMap.put(key2, cardTemplate);
-
-
-        }
+        loadCardStyleData();
 
     }
 
@@ -345,15 +237,34 @@ public class CardStyle implements Serializable {
         return text;
     }
 
+    public boolean styleExistsForCard(Card card) {
+        CardTemplateKey cardTemplateKey = new CardTemplateKey(card.getModelId(), card.getCardOrd());
+        CardTemplate cardTemplate = m_cardStyleStorage.cardTemplateMap.get(cardTemplateKey);
+        if (cardTemplate != null) {
+            return true;
+        }
+        return false;
+    }
+
     public String getAnswerAudio(Card card) {
         // get card template
         CardTemplateKey cardTemplateKey = new CardTemplateKey(card.getModelId(), card.getCardOrd());
         CardTemplate cardTemplate = m_cardStyleStorage.cardTemplateMap.get(cardTemplateKey);
 
-        String soundFile = card.extractSoundFile(card.getFieldValue(cardTemplate.getSoundField()));
-        return soundFile;
+        String soundField = cardTemplate.getSoundField();
+        if(soundField != null) {
+            String soundFile = card.extractSoundFile(card.getFieldValue(cardTemplate.getSoundField()));
+            return soundFile;
+        }
+        return null;
     }
 
+
+    public CardTemplate createCardTemplate(CardTemplateKey cardTemplateKey) {
+        CardTemplate cardTemplate = new CardTemplate();
+        m_cardStyleStorage.cardTemplateMap.put(cardTemplateKey, cardTemplate);
+        return cardTemplate;
+    }
 
     public CardTemplate getCardTemplate(CardTemplateKey cardTemplateKey)
     {
@@ -368,6 +279,10 @@ public class CardStyle implements Serializable {
             m_cardStyleStorage = (CardStyleStorage) is.readObject();
             is.close();
             fis.close();
+        } catch (FileNotFoundException e) {
+            // create new object
+            m_cardStyleStorage = new CardStyleStorage();
+            m_cardStyleStorage.cardTemplateMap = new HashMap<CardTemplateKey, CardTemplate>();
         } catch (Exception e) {
             e.printStackTrace();
         }
