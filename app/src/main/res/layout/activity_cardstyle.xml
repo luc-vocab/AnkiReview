@@ -126,7 +126,32 @@
 
                     </LinearLayout>
 
+                    <View style="@style/Divider" />
 
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        style="@style/CardStyleItem"
+                        >
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            style="@style/CardStyleItemText"
+                            android:text="Alignment"
+                            android:layout_weight="1"
+                            />
+
+                        <Spinner
+                            android:id="@+id/cardstyle_field_alignment"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            style="@style/CardStyleItem"
+                            />
+
+                    </LinearLayout>
 
                     <View style="@style/Divider" />
 

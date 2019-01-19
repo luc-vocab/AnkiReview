@@ -20,4 +20,10 @@
     <string name="reviewer_action_ease_3">Answer Good</string>
     <string name="reviewer_action_ease_4">Answer Easy</string>
 
+    <string-array name="alignment_array">
+        <item>Center</item>
+        <item>Left</item>
+        <item>Right</item>
+    </string-array>
+
 </resources>

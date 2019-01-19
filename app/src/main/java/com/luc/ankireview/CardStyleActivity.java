@@ -14,6 +14,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.text.Layout;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -137,10 +138,10 @@ public class CardStyleActivity extends AppCompatActivity {
         m_marginsView.setVisibility(View.INVISIBLE);
 
         // field settings controls
-        // -----------------------
+        // =======================
 
+        // field selector
         m_fieldSpinner = findViewById(R.id.cardstyle_field_settings_selector);
-        // m_availableFields = new ArrayList<String>();
         m_fieldSpinnerAdapter = new ArrayAdapter<CardField>(this, R.layout.simple_spinner_item);
         m_fieldSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         m_fieldSpinner.setAdapter(m_fieldSpinnerAdapter);
@@ -157,6 +158,7 @@ public class CardStyleActivity extends AppCompatActivity {
             }
         });
 
+        // relative size
         m_field_relativesize = findViewById(R.id.cardstyle_text_relativesize_valueslider);
         m_field_relativesize.setListener(new ValueSliderUpdate() {
             @Override
@@ -166,6 +168,7 @@ public class CardStyleActivity extends AppCompatActivity {
             }
         });
 
+        // line return
         m_lineReturnCheckBox = findViewById(R.id.cardstyle_field_linereturn);
         m_lineReturnCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -175,8 +178,42 @@ public class CardStyleActivity extends AppCompatActivity {
             }
         });
 
+        // alignment
+        m_fieldAlignmentSpinner = findViewById(R.id.cardstyle_field_alignment);
+        m_fieldAlignmentAdapter = ArrayAdapter.createFromResource(this,
+                R.array.alignment_array, android.R.layout.simple_spinner_item);
+        m_fieldAlignmentAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        m_fieldAlignmentSpinner.setAdapter(m_fieldAlignmentAdapter);
+        m_fieldAlignmentSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                if(m_currentCardField == null)
+                    return;
 
-        // related to setting of color
+                switch(i) {
+                    case 0:
+                        m_currentCardField.setAlignment(Layout.Alignment.ALIGN_CENTER);
+                        break;
+                    case 1:
+                        m_currentCardField.setAlignment(Layout.Alignment.ALIGN_NORMAL);
+                        break;
+                    case 2:
+                        m_currentCardField.setAlignment(Layout.Alignment.ALIGN_OPPOSITE);
+                        break;
+                    default:
+                        break;
+                }
+                updateCardPreview();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+
+        // color
         m_field_colorSelector = findViewById(R.id.cardstyle_field_color_selector);
         m_fieldColorCircle = findViewById(R.id.cardstyle_field_color_circle);
 
@@ -350,6 +387,19 @@ public class CardStyleActivity extends AppCompatActivity {
 
         m_lineReturnCheckBox.setChecked(m_currentCardField.getLineReturn());
 
+        switch( m_currentCardField.getAlignment()) {
+            case ALIGN_CENTER:
+                m_fieldAlignmentSpinner.setSelection(0);
+                break;
+            case ALIGN_NORMAL:
+                m_fieldAlignmentSpinner.setSelection(1);
+                break;
+            case ALIGN_OPPOSITE:
+                m_fieldAlignmentSpinner.setSelection(2);
+                break;
+        }
+
+
         final CardStyleActivity context = this;
 
         ImageViewCompat.setImageTintList(m_fieldColorCircle, ColorStateList.valueOf(cardField.getColor()));
@@ -407,6 +457,8 @@ public class CardStyleActivity extends AppCompatActivity {
     private ArrayAdapter<CardField> m_fieldSpinnerAdapter;
     private ValueSlider m_field_relativesize;
     private CheckBox m_lineReturnCheckBox;
+    private Spinner m_fieldAlignmentSpinner;
+    private ArrayAdapter<CharSequence> m_fieldAlignmentAdapter;
     private ImageView m_fieldColorCircle;
     private SpectrumPalette m_field_colorPalette;
     private LinearLayout m_field_colorSelector;
