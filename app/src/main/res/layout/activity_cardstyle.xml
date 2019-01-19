@@ -100,14 +100,32 @@
 
                     <View style="@style/Divider" />
 
-                    <CheckBox
-                        style="@style/CardStyleItem"
-                        android:id="@+id/cardstyle_field_linereturn"
+
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Line Return"
-                        android:layoutDirection="rtl"
-                        />
+                        android:orientation="horizontal"
+                        style="@style/CardStyleItem"
+                        >
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            style="@style/CardStyleItemText"
+                            android:text="Line Return"/>
+
+                        <CheckBox
+                            style="@style/CardStyleItem"
+                            android:id="@+id/cardstyle_field_linereturn"
+                            android:layout_weight="4"
+                            android:layout_gravity="right"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            />
+
+                    </LinearLayout>
+
 
 
                     <View style="@style/Divider" />
