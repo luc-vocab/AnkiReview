@@ -222,8 +222,17 @@ public class CardStyleActivity extends AppCompatActivity {
             }
         });
 
+        // left margin
+        m_field_leftmargin = findViewById(R.id.cardstyle_field_leftmargin);
+        m_field_leftmargin.setListener(new ValueSliderUpdate() {
+            @Override
+            public void valueUpdate(int currentValue) {
+                m_currentCardField.setLeftMargin(currentValue);
+                updateCardPreview();
+            }
+        });
 
-        // color
+                // color
         m_field_colorSelector = findViewById(R.id.cardstyle_field_color_selector);
         m_fieldColorCircle = findViewById(R.id.cardstyle_field_color_circle);
 
@@ -411,6 +420,7 @@ public class CardStyleActivity extends AppCompatActivity {
                 break;
         }
 
+        m_field_leftmargin.setCurrentValue(m_currentCardField.getLeftMargin());
 
         final CardStyleActivity context = this;
 
@@ -472,6 +482,7 @@ public class CardStyleActivity extends AppCompatActivity {
     private CheckBox m_htmlCheckBox;
     private Spinner m_fieldAlignmentSpinner;
     private ArrayAdapter<CharSequence> m_fieldAlignmentAdapter;
+    private ValueSlider m_field_leftmargin;
     private ImageView m_fieldColorCircle;
     private SpectrumPalette m_field_colorPalette;
     private LinearLayout m_field_colorSelector;

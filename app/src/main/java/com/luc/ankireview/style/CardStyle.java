@@ -126,7 +126,7 @@ public class CardStyle implements Serializable {
             CardField definitionField = new CardField("Definition");
             definitionField.setIsHtml(true);
             definitionField.setAlignment(Layout.Alignment.ALIGN_NORMAL);
-            definitionField.setLeftMargin(120);
+            definitionField.setLeftMargin(20);
             definitionField.setRelativeSize(0.5f);
             definitionField.setLineReturn(true);
             cardTemplate.addAnswerCardField(definitionField);
@@ -175,8 +175,8 @@ public class CardStyle implements Serializable {
             Log.e(TAG, "could not find cardtemplate for " + templateKey);
         }
 
-        SpannableStringBuilder questionBuilder = buildString(cardTemplate.getQuestionCardFields(), card);
-        SpannableStringBuilder answerBuilder = buildString(cardTemplate.getAnswerCardFields(), card);
+        SpannableStringBuilder questionBuilder = buildString(cardTemplate.getQuestionCardFields(), card, layout);
+        SpannableStringBuilder answerBuilder = buildString(cardTemplate.getAnswerCardFields(), card, layout);
 
         QuestionCard questionCard = layout.findViewById(R.id.question_card);
         AnswerCard answerCard = layout.findViewById(R.id.answer_card);
@@ -283,7 +283,7 @@ public class CardStyle implements Serializable {
         FontsContractCompat.requestFont(m_context, request, callback, getHandlerThreadHandler());
     }
 
-    private SpannableStringBuilder buildString(Vector<CardField> fields, Card card) {
+    private SpannableStringBuilder buildString(Vector<CardField> fields, Card card, ViewGroup layout) {
         SpannableStringBuilder builder = new SpannableStringBuilder();
         int currentIndex = 0;
         for( CardField cardField : fields) {
@@ -324,7 +324,9 @@ public class CardStyle implements Serializable {
                 if (cardField.getLeftMargin() > 0)  {
                     // add left margin span
                     // new LeadingMarginSpan.Standard(120),
-                    builder.setSpan(new LeadingMarginSpan.Standard(cardField.getLeftMargin()),currentIndex, currentIndex + currentFieldLength, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                    int leftMargin_px = (int) TypedValue.applyDimension(
+                            TypedValue.COMPLEX_UNIT_DIP, cardField.getLeftMargin(), layout.getResources().getDisplayMetrics());
+                    builder.setSpan(new LeadingMarginSpan.Standard(leftMargin_px),currentIndex, currentIndex + currentFieldLength, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
                 }
 
                 currentIndex += currentFieldLength;
