@@ -9,15 +9,26 @@ import java.util.Vector;
 
 public class CardTemplate implements Serializable {
 
+
     public CardTemplate() {
         m_questionCardFields = new Vector<CardField>();
         m_answerCardFields = new Vector<CardField>();
         m_soundField = null;
 
+        // setup default values
+        setDefaultValues();
+
+    }
+
+    public void setDefaultValues() {
         m_baseTextSize = 40;
 
-        m_leftRightMargin_px = 0;
-        m_centerMargin_px = 0;
+        m_leftRightMargin_px = 40;
+        m_centerMargin_px = 20;
+
+        m_paddingTop = 20;
+        m_paddingBottom = 30;
+        m_paddingLeftRight = 15;
     }
 
     public void setFont(String font) {

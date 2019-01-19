@@ -5,12 +5,26 @@ import android.text.Layout;
 import java.io.Serializable;
 
 public class CardField implements Serializable {
+    public static final long serialVersionUID = 1L; // increment this in case of schema changes
+
     public static final int DEFAULT_COLOR = -1;
     public static final float RELATIVE_SIZE_DEFAULT = 1.0f;
     public static final Layout.Alignment DEFAULT_ALIGNMENT = Layout.Alignment.ALIGN_CENTER;
 
     public CardField(String fieldName) {
+
         m_fieldName = fieldName;
+        setDefaultValues();
+
+    }
+
+    public void setDefaultValues() {
+        m_textColor = 0;
+        m_lineReturn = false;
+        m_relativeSize = RELATIVE_SIZE_DEFAULT;
+        m_alignment = DEFAULT_ALIGNMENT;
+        m_leftMargin = 0;
+        m_isHtml = false;
     }
 
     public String getFieldName() {
@@ -68,11 +82,12 @@ public class CardField implements Serializable {
     public String toString() { return m_fieldName; }
 
     private String m_fieldName;
-    private int m_textColor = DEFAULT_COLOR;
-    private boolean m_lineReturn = false; // whether there is a line return before this field
-    private float m_relativeSize = RELATIVE_SIZE_DEFAULT;
-    private Layout.Alignment m_alignment = DEFAULT_ALIGNMENT;
-    private int m_leftMargin = 0;
-    private boolean m_isHtml = false;
+
+    private int m_textColor;
+    private boolean m_lineReturn; // whether there is a line return before this field
+    private float m_relativeSize;
+    private Layout.Alignment m_alignment;
+    private int m_leftMargin;
+    private boolean m_isHtml;
 
 }

@@ -279,12 +279,11 @@ public class CardStyle implements Serializable {
             m_cardStyleStorage = (CardStyleStorage) is.readObject();
             is.close();
             fis.close();
-        } catch (FileNotFoundException e) {
-            // create new object
-            m_cardStyleStorage = new CardStyleStorage();
-            m_cardStyleStorage.cardTemplateMap = new HashMap<CardTemplateKey, CardTemplate>();
         } catch (Exception e) {
             e.printStackTrace();
+            Log.e(TAG, "could not open cardstylestorage, creating new");
+            m_cardStyleStorage = new CardStyleStorage();
+            m_cardStyleStorage.cardTemplateMap = new HashMap<CardTemplateKey, CardTemplate>();
         }
     }
 

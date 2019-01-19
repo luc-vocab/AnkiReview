@@ -5,6 +5,7 @@ import java.io.Serializable;
 import java.util.Objects;
 
 public class CardTemplateKey implements Serializable {
+    public static final long serialVersionUID = 1L; // increment this in case of schema changes
     public CardTemplateKey(long modelId, int cardOrd) {
         m_modelId = modelId;
         m_cardOrd = cardOrd;
