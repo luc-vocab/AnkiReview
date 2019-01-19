@@ -7,6 +7,7 @@ import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.TabLayout;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.ImageViewCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.preference.PreferenceFragmentCompat;
@@ -452,16 +453,11 @@ public class CardStyleActivity extends AppCompatActivity {
 
     }
 
-    public void backToFieldList() {
-        m_fullFieldListView.setVisibility(View.VISIBLE);
-        m_fieldSettingsView.setVisibility(View.INVISIBLE);
-        m_fontView.setVisibility(View.INVISIBLE);
-        m_marginsView.setVisibility(View.INVISIBLE);
+    public int defaultFieldColor() {
+        return ContextCompat.getColor(this, R.color.md_black);
     }
 
-    public CardStyle getCardStyle() {
-        return m_cardStyle;
-    }
+
 
     private CardStyle m_cardStyle;
 

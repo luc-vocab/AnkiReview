@@ -1,5 +1,6 @@
 package com.luc.ankireview.style;
 
+import android.support.v4.content.ContextCompat;
 import android.text.Layout;
 
 import java.io.Serializable;
@@ -11,15 +12,15 @@ public class CardField implements Serializable {
     public static final float RELATIVE_SIZE_DEFAULT = 1.0f;
     public static final Layout.Alignment DEFAULT_ALIGNMENT = Layout.Alignment.ALIGN_CENTER;
 
-    public CardField(String fieldName) {
+    public CardField(String fieldName, int defaultColor) {
 
         m_fieldName = fieldName;
-        setDefaultValues();
+        setDefaultValues(defaultColor);
 
     }
 
-    public void setDefaultValues() {
-        m_textColor = 0;
+    public void setDefaultValues(int defaultColor) {
+        m_textColor = defaultColor;
         m_lineReturn = false;
         m_relativeSize = RELATIVE_SIZE_DEFAULT;
         m_alignment = DEFAULT_ALIGNMENT;

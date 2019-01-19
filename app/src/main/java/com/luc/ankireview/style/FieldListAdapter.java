@@ -100,7 +100,7 @@ public class FieldListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             }
 
             if(isUnassigned) {
-                CardField cardField = new CardField(field);
+                CardField cardField = new CardField(field, m_activity.defaultFieldColor());
                 m_fieldList.add(new FieldListItem(cardField, FieldListItem.VIEWTYPE_FIELD, null));
             }
         }
@@ -121,7 +121,7 @@ public class FieldListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         m_fieldList.add(new FieldListItem(null, FieldListItem.VIEWTYPE_HEADER, FieldListItem.HEADER_SOUND));
         String soundField = m_cardTemplate.getSoundField();
         if( soundField != null ) {
-            CardField cardField = new CardField(soundField);
+            CardField cardField = new CardField(soundField, m_activity.defaultFieldColor());
             m_fieldList.add(new FieldListItem(cardField, FieldListItem.VIEWTYPE_FIELD, null));
         }
 
