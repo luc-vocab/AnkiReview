@@ -178,6 +178,16 @@ public class CardStyleActivity extends AppCompatActivity {
             }
         });
 
+        // html
+        m_htmlCheckBox = findViewById(R.id.cardstyle_field_html);
+        m_htmlCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                m_currentCardField.setIsHtml(b);
+                updateCardPreview();
+            }
+        });
+
         // alignment
         m_fieldAlignmentSpinner = findViewById(R.id.cardstyle_field_alignment);
         m_fieldAlignmentAdapter = ArrayAdapter.createFromResource(this,
@@ -387,6 +397,8 @@ public class CardStyleActivity extends AppCompatActivity {
 
         m_lineReturnCheckBox.setChecked(m_currentCardField.getLineReturn());
 
+        m_htmlCheckBox.setChecked(m_currentCardField.getIsHtml());
+
         switch( m_currentCardField.getAlignment()) {
             case ALIGN_CENTER:
                 m_fieldAlignmentSpinner.setSelection(0);
@@ -457,6 +469,7 @@ public class CardStyleActivity extends AppCompatActivity {
     private ArrayAdapter<CardField> m_fieldSpinnerAdapter;
     private ValueSlider m_field_relativesize;
     private CheckBox m_lineReturnCheckBox;
+    private CheckBox m_htmlCheckBox;
     private Spinner m_fieldAlignmentSpinner;
     private ArrayAdapter<CharSequence> m_fieldAlignmentAdapter;
     private ImageView m_fieldColorCircle;
