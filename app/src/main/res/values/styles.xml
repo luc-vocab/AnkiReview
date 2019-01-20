@@ -63,6 +63,10 @@
         <item name="android:textSize">20dp</item>
     </style>
 
+    <style name="CardStyleValueSlider" parent="CardStyleItem" >
+        <item name="android:layout_marginRight">30dp</item>
+    </style>
+
     <style name="Divider">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">1dp</item>
