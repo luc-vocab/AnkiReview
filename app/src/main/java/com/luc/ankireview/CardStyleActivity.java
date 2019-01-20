@@ -199,7 +199,7 @@ public class CardStyleActivity extends AppCompatActivity {
         // alignment
         m_fieldAlignmentSpinner = findViewById(R.id.cardstyle_field_alignment);
         m_fieldAlignmentAdapter = ArrayAdapter.createFromResource(this,
-                R.array.alignment_array, android.R.layout.simple_spinner_item);
+                R.array.alignment_array,  R.layout.simple_spinner_item);
         m_fieldAlignmentAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         m_fieldAlignmentSpinner.setAdapter(m_fieldAlignmentAdapter);
         m_fieldAlignmentSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
