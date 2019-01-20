@@ -1,6 +1,7 @@
 package com.luc.ankireview;
 
 import android.animation.ObjectAnimator;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
@@ -10,6 +11,7 @@ import android.os.Environment;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v4.view.GestureDetectorCompat;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -434,8 +436,6 @@ public class ReviewActivity extends AppCompatActivity {
     private boolean checkStyleExists(Card card) {
         if( ! m_cardStyle.styleExistsForCard(card)) {
             // redirect used to style activity
-            Toast toast = Toast.makeText(this, "No style found for this card, please create one", Toast.LENGTH_LONG);
-            toast.show();
             launchCardStyleForCard(card);
             return false;
         }

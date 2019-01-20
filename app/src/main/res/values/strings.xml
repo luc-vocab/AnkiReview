@@ -26,4 +26,8 @@
         <item>Right</item>
     </string-array>
 
+    <string name="card_style_create_ok">OK</string>
+    <string name="card_style_not_found">Card Style not found</string>
+    <string name="card_style_define_style">Please define a style for this card type, first by selecting question and answer fields, then by customizing the appearance of the card.</string>
+
 </resources>

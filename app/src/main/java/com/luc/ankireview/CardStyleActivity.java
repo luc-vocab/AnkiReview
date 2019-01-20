@@ -1,5 +1,6 @@
 package com.luc.ankireview;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
@@ -9,6 +10,7 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.ImageViewCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.preference.PreferenceFragmentCompat;
 import android.support.v7.widget.LinearLayoutManager;
@@ -81,6 +83,7 @@ public class CardStyleActivity extends AppCompatActivity {
         if(m_cardTemplate == null) {
             // create a new one
             m_cardTemplate = m_cardStyle.createCardTemplate(m_cardTemplateKey);
+            showDefineStyleDialog();
         }
 
         // Log.v(TAG, "num question card fields: " + m_cardTemplate.getQuestionCardFields().size());
@@ -325,6 +328,18 @@ public class CardStyleActivity extends AppCompatActivity {
 
 
 
+    }
+
+    public void showDefineStyleDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(R.string.card_style_define_style).setTitle(R.string.card_style_not_found).setPositiveButton(R.string.card_style_create_ok, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
     @Override
