@@ -8,11 +8,17 @@
 
         <TextView
             android:id="@+id/header_name"
+            style="@style/CardStyleFieldListSectionHeader"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/md_blue_700"
-            android:textColor="@color/md_white"
-            android:textSize="25dp"
             />
+
+        <TextView
+            android:id="@+id/header_description"
+            style="@style/CardStyleFieldListSectionDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+
     </LinearLayout>
 </layout>

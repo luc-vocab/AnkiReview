@@ -60,19 +60,15 @@ public class CardStyle implements Serializable {
 
     public void renderCard(Card card, ViewGroup layout) {
 
-        // look for the card template
+        // look for the card template (it should definitely exist at this point)
         CardTemplateKey templateKey = new CardTemplateKey(card.getModelId(), card.getCardOrd());
         CardTemplate cardTemplate = m_cardStyleStorage.cardTemplateMap.get(templateKey);
-        if(cardTemplate == null) {
-            Log.e(TAG, "could not find cardtemplate for " + templateKey);
-        }
 
         SpannableStringBuilder questionBuilder = buildString(cardTemplate.getQuestionCardFields(), card, layout);
         SpannableStringBuilder answerBuilder = buildString(cardTemplate.getAnswerCardFields(), card, layout);
 
         QuestionCard questionCard = layout.findViewById(R.id.question_card);
         AnswerCard answerCard = layout.findViewById(R.id.answer_card);
-
 
 
         int leftRightMargin_dp = cardTemplate.getLeftRightMargin();

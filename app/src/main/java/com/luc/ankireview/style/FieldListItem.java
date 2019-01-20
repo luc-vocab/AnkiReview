@@ -9,10 +9,11 @@ public class FieldListItem {
     public static final int VIEWTYPE_FIELD = 1;
     public static final int VIEWTYPE_HEADER = 2;
 
-    public FieldListItem(CardField cardField, int viewType, String header) {
+    public FieldListItem(CardField cardField, int viewType, String header, String description) {
         m_cardField = cardField;
         m_viewType = viewType;
         m_header = header;
+        m_description = description;
     }
 
     public int getViewType() {
@@ -27,7 +28,10 @@ public class FieldListItem {
         return m_header;
     }
 
+    public String getDescription() { return m_description; }
+
     private CardField m_cardField;
     private int m_viewType;
     private String m_header;
+    private String m_description;
 }

@@ -7,6 +7,7 @@
     </data>
 
     <LinearLayout
+        style="@style/CardStyleFieldListField"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -14,11 +15,11 @@
 
         <TextView
             android:id="@+id/field_name"
+            style="@style/CardStyleFieldListFieldName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@{field.fieldName}"
-            android:textSize="24dp" />
+            android:text="@{field.fieldName}" />
 
         <ImageView
             android:id="@+id/drag_handle"

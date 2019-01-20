@@ -37,6 +37,31 @@
         <item name="android:textSize">25dp</item>
     </style>
 
+    <style name="CardStyleFieldListItem">
+        <item name="android:textSize">25dp</item>
+        <item name="android:paddingLeft">10dp</item>
+        <item name="android:paddingRight">10dp</item>
+    </style>
+
+    <style name="CardStyleFieldListSectionHeader" parent="CardStyleFieldListItem">
+        <item name="android:background">@color/md_blue_700</item>
+        <item name="android:textColor">@color/md_white</item>
+    </style>
+
+    <style name="CardStyleFieldListSectionDescription" parent="CardStyleFieldListItem">
+        <item name="android:textSize">14dp</item>
+        <item name="android:background">@color/md_grey_300</item>
+        <item name="android:textColor">@color/md_grey_800</item>
+    </style>
+
+    <style name="CardStyleFieldListField" parent="CardStyleFieldListItem">
+    </style>
+
+
+    <style name="CardStyleFieldListFieldName" parent="CardStyleFieldListItem">
+        <item name="android:paddingLeft">10dp</item>
+        <item name="android:textSize">20dp</item>
+    </style>
 
     <style name="Divider">
         <item name="android:layout_width">match_parent</item>

@@ -71,6 +71,7 @@ public class FieldListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         } else {
             HeaderViewHolder headerViewHolder = (HeaderViewHolder) holder;
             headerViewHolder.mTextView.setText(item.getHeader());
+            headerViewHolder.mDescriptionTextView.setText(item.getDescription());
         }
 
     }
@@ -80,7 +81,8 @@ public class FieldListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         m_fieldList = new Vector<FieldListItem>();
 
         // add the "all cardstyle_fields" header
-        m_fieldList.add(new FieldListItem(null, FieldListItem.VIEWTYPE_HEADER, FieldListItem.HEADER_ALLFIELDS));
+        m_fieldList.add(new FieldListItem(null, FieldListItem.VIEWTYPE_HEADER,
+                                           FieldListItem.HEADER_ALLFIELDS, m_activity.getResources().getString(R.string.card_style_all_fields_description)));
 
         // add the unassigned cardstyle_fields
         for( String field : m_fullFieldList) {
@@ -101,28 +103,31 @@ public class FieldListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
             if(isUnassigned) {
                 CardField cardField = new CardField(field, m_activity.defaultFieldColor());
-                m_fieldList.add(new FieldListItem(cardField, FieldListItem.VIEWTYPE_FIELD, null));
+                m_fieldList.add(new FieldListItem(cardField, FieldListItem.VIEWTYPE_FIELD, null, null));
             }
         }
 
         // add the "question" items
-        m_fieldList.add(new FieldListItem(null, FieldListItem.VIEWTYPE_HEADER, FieldListItem.HEADER_QUESTION));
+        m_fieldList.add(new FieldListItem(null, FieldListItem.VIEWTYPE_HEADER, FieldListItem.HEADER_QUESTION,
+                m_activity.getResources().getString(R.string.card_style_question_fields_description)));
         for( CardField cardField : m_cardTemplate.getQuestionCardFields() ) {
-            m_fieldList.add(new FieldListItem(cardField, FieldListItem.VIEWTYPE_FIELD, null));
+            m_fieldList.add(new FieldListItem(cardField, FieldListItem.VIEWTYPE_FIELD, null, null));
         }
 
         // add the "answer" items
-        m_fieldList.add(new FieldListItem(null, FieldListItem.VIEWTYPE_HEADER, FieldListItem.HEADER_ANSWER));
+        m_fieldList.add(new FieldListItem(null, FieldListItem.VIEWTYPE_HEADER, FieldListItem.HEADER_ANSWER,
+                m_activity.getResources().getString(R.string.card_style_answer_fields_description)));
         for( CardField cardField : m_cardTemplate.getAnswerCardFields() ) {
-            m_fieldList.add(new FieldListItem(cardField, FieldListItem.VIEWTYPE_FIELD, null));
+            m_fieldList.add(new FieldListItem(cardField, FieldListItem.VIEWTYPE_FIELD, null, null));
         }
 
         // add the "sound" header
-        m_fieldList.add(new FieldListItem(null, FieldListItem.VIEWTYPE_HEADER, FieldListItem.HEADER_SOUND));
+        m_fieldList.add(new FieldListItem(null, FieldListItem.VIEWTYPE_HEADER, FieldListItem.HEADER_SOUND,
+                m_activity.getResources().getString(R.string.card_style_sound_fields_description)));
         String soundField = m_cardTemplate.getSoundField();
         if( soundField != null ) {
             CardField cardField = new CardField(soundField, m_activity.defaultFieldColor());
-            m_fieldList.add(new FieldListItem(cardField, FieldListItem.VIEWTYPE_FIELD, null));
+            m_fieldList.add(new FieldListItem(cardField, FieldListItem.VIEWTYPE_FIELD, null, null));
         }
 
     }
