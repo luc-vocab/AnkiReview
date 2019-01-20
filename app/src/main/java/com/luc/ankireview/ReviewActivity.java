@@ -89,6 +89,8 @@ public class ReviewActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        Log.v(TAG, "onCreate");
+
         setContentView(R.layout.activity_review);
 
         String mediaDir = Environment.getExternalStorageDirectory().getAbsolutePath() + "/AnkiDroid/collection.media/";
@@ -111,40 +113,7 @@ public class ReviewActivity extends AppCompatActivity {
         m_touchLayer.setOnTouchListener(m_gestureListener);
 
 
-        // setup ViewPager for flashcards
-        // ------------------------------
-
-        m_flashcardAdapter = new FlashCardViewPagerAdapter(this, this );
-        m_flashcardPager.setAdapter(m_flashcardAdapter);
-
-        m_flashcardPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-            }
-            @Override
-            public void onPageSelected(int position) {
-                mCurrentPosition = position;
-            }
-            @Override
-            public void onPageScrollStateChanged(int state) {
-                if(ViewPager.SCROLL_STATE_IDLE == state){
-                    //Scrolling finished. Do something.
-                    if(mCurrentPosition == 0)
-                    {
-                        Log.v(TAG, "Answer Pager: user scrolled left, card not memorized");
-                        answerBad();
-
-                    } else if(mCurrentPosition == 2)
-                    {
-                        Log.v(TAG, "Answer Pager: user scrolled right, card memorized");
-                        answerGood();
-                    }
-                }
-            }
-            private int mCurrentPosition = 1;
-        });
-
-        m_flashcardPager.setPageTransformer(true, new ReviewPageTransformer());
+        // setupFlashcardPager();
 
         // setup ViewPager for backgrounds
         // -------------------------------
@@ -288,10 +257,55 @@ public class ReviewActivity extends AppCompatActivity {
         m_toolbar.setTitle(deckName);
         setSupportActionBar(m_toolbar);
 
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        Log.v(TAG, "onStart");
+
+        setupFlashcardPager();
 
         m_cardStyle = new CardStyle(this);
-
         loadCards();
+    }
+
+    private void setupFlashcardPager() {
+        // setup ViewPager for flashcards
+        // ------------------------------
+
+        m_flashcardAdapter = new FlashCardViewPagerAdapter(this, this );
+        m_flashcardPager.setAdapter(m_flashcardAdapter);
+
+        m_flashcardPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            }
+            @Override
+            public void onPageSelected(int position) {
+                mCurrentPosition = position;
+            }
+            @Override
+            public void onPageScrollStateChanged(int state) {
+                if(ViewPager.SCROLL_STATE_IDLE == state){
+                    //Scrolling finished. Do something.
+                    if(mCurrentPosition == 0)
+                    {
+                        Log.v(TAG, "Answer Pager: user scrolled left, card not memorized");
+                        answerBad();
+
+                    } else if(mCurrentPosition == 2)
+                    {
+                        Log.v(TAG, "Answer Pager: user scrolled right, card memorized");
+                        answerGood();
+                    }
+                }
+            }
+            private int mCurrentPosition = 1;
+        });
+
+        m_flashcardPager.setPageTransformer(true, new ReviewPageTransformer());
     }
 
     @Override
