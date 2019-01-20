@@ -19,10 +19,16 @@
 
     <array name="text_field_colors">
         <item>@color/md_red_500</item>
+        <item>@color/md_red_800</item>
+        <item>@color/md_pink_300</item>
         <item>@color/md_pink_500</item>
+        <item>@color/md_purple_300</item>
         <item>@color/md_purple_500</item>
+        <item>@color/md_purple_800</item>
         <item>@color/md_deep_purple_500</item>
+        <item>@color/md_indigo_300</item>
         <item>@color/md_indigo_500</item>
+        <item>@color/md_blue_900</item>
         <item>@color/md_blue_700</item>
         <item>@color/md_light_blue_500</item>
         <item>@color/md_cyan_500</item>
@@ -34,10 +40,13 @@
         <item>@color/md_amber_500</item>
         <item>@color/md_orange_500</item>
         <item>@color/md_deep_orange_500</item>
+        <item>@color/md_deep_orange_800</item>
         <item>@color/md_brown_500</item>
-        <item>@color/md_grey_500</item>
         <item>@color/md_blue_grey_500</item>
-        <item>@color/md_white</item>
+        <item>@color/md_grey_300</item>
+        <item>@color/md_grey_500</item>
+        <item>@color/md_grey_700</item>
+        <item>@color/md_grey_900</item>
         <item>@color/md_black</item>
     </array>
 
