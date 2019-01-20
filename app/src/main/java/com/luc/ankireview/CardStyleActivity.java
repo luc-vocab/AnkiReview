@@ -1,5 +1,6 @@
 package com.luc.ankireview;
 
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.ColorStateList;
@@ -22,6 +23,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -267,6 +269,9 @@ public class CardStyleActivity extends AppCompatActivity {
                 String fontFamily = m_text_font_family.getText().toString();
                 m_cardTemplate.setFont(fontFamily);
                 updateCardPreview();
+
+                hideSoftKeyboard();
+
             }
         });
 
@@ -328,6 +333,15 @@ public class CardStyleActivity extends AppCompatActivity {
 
 
 
+    }
+
+
+    public void hideSoftKeyboard() {
+        InputMethodManager inputMethodManager =
+                (InputMethodManager) this.getSystemService(
+                        Activity.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(
+                this.getCurrentFocus().getWindowToken(), 0);
     }
 
     public void showDefineStyleDialog() {
