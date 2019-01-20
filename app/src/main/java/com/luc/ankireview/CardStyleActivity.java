@@ -415,6 +415,7 @@ public class CardStyleActivity extends AppCompatActivity {
 
     public void saveCardStyle() {
         m_cardStyle.saveCardStyleData();
+        finish();
     }
 
     private void setupFieldSettings() {
