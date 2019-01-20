@@ -47,7 +47,7 @@ public class ValueSlider extends LinearLayout implements  OnSeekChangeListener {
             @Override
             public void onClick(View view) {
                 Log.v(TAG, "header clicked");
-                TransitionManager.beginDelayedTransition(m_valueSliderContainer);
+                //TransitionManager.beginDelayedTransition(m_valueSliderContainer);
 
                 if(m_sliderVisible == false ) {
                     m_slider.setVisibility(View.VISIBLE);
