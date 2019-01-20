@@ -141,13 +141,11 @@
                                 android:text="Line Return"/>
 
                             <CheckBox
-                                style="@style/CardStyleItem"
                                 android:id="@+id/cardstyle_field_linereturn"
-                                android:layout_weight="4"
-                                android:layout_gravity="right"
+                                style="@style/CardStyleCheckBox"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                />
+                                android:layout_weight="3" />
 
                         </LinearLayout>
 
@@ -168,13 +166,11 @@
                                 android:text="HTML Content"/>
 
                             <CheckBox
-                                style="@style/CardStyleItem"
                                 android:id="@+id/cardstyle_field_html"
-                                android:layout_weight="4"
-                                android:layout_gravity="right"
+                                style="@style/CardStyleCheckBox"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                />
+                                android:layout_weight="4" />
 
                         </LinearLayout>
 
