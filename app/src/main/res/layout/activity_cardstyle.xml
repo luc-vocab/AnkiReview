@@ -93,12 +93,11 @@
                             >
 
                             <TextView
+                                style="@style/CardStyleItemTextHeavy"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                style="@style/CardStyleItemText"
-                                android:text="Select Field"
                                 android:layout_weight="1"
-                                />
+                                android:text="Select Field" />
 
                             <Spinner
                                 android:id="@+id/cardstyle_field_settings_selector"
@@ -257,13 +256,31 @@
                     android:layout_height="match_parent"
                     android:orientation="vertical">
 
-                    <TextView
-                        style="@style/CardStyleHeader"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Font" />
 
                     <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        style="@style/CardStyleItem"
+                        >
+                        <TextView
+                            style="@style/CardStyleItemTextHeavy"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Font" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:autoLink="web"
+                            android:text="Choose a font family from https://fonts.google.com"
+                            ></TextView>
+                    </LinearLayout>
+
+                    <View style="@style/Divider" />
+
+                    <LinearLayout
+                        style="@style/CardStyleItem"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
@@ -274,6 +291,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="10"
+                            android:hint="Enter Font Family"
+                            android:inputType="textNoSuggestions"
                             android:text="Font Family" />
 
                         <Button
