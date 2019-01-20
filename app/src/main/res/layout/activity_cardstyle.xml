@@ -238,7 +238,27 @@
                             app:minValue="0"
                             app:titleText="Left Margin" />
 
+                        <View style="@style/Divider" />
+                        <LinearLayout
+                            style="@style/CardStyleItem"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
 
+                            <TextView
+                                style="@style/CardStyleItemText"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="Reset Settings" />
+
+                            <Button
+                                android:id="@+id/cardstyle_editor_fieldsettings_reset"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="3"
+                                android:text="Reset" />
+                        </LinearLayout>
 
 
                     </LinearLayout>
@@ -314,6 +334,28 @@
                         app:minValue="10"
                         app:titleText="Base Text Size" />
 
+                    <View style="@style/Divider" />
+                    <LinearLayout
+                        style="@style/CardStyleItem"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            style="@style/CardStyleItemText"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Reset Settings" />
+
+                        <Button
+                            android:id="@+id/cardstyle_editor_font_reset"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="3"
+                            android:text="Reset" />
+                    </LinearLayout>
+
                 </LinearLayout>
 
             </FrameLayout>
@@ -380,6 +422,28 @@
                             app:maxValue="100"
                             app:minValue="0"
                             app:titleText="Padding Left/Right" />
+
+                        <View style="@style/Divider" />
+                        <LinearLayout
+                            style="@style/CardStyleItem"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                style="@style/CardStyleItemText"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="Reset Settings" />
+
+                            <Button
+                                android:id="@+id/cardstyle_editor_spacing_reset"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="3"
+                                android:text="Reset" />
+                        </LinearLayout>
 
 
                     </LinearLayout>

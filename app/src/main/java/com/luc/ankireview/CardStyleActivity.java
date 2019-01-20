@@ -246,13 +246,24 @@ public class CardStyleActivity extends AppCompatActivity {
         m_field_colorSelector = findViewById(R.id.cardstyle_field_color_selector);
         m_fieldColorCircle = findViewById(R.id.cardstyle_field_color_circle);
 
+        // reset button
+        Button fieldSettingsReset = findViewById(R.id.cardstyle_editor_fieldsettings_reset);
+        fieldSettingsReset.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.v(TAG, "resetting field settings to default");
+                m_currentCardField.setDefaultValues(defaultFieldColor());
+                updateFieldSettingsControls();
+                updateCardPreview();
+            }
+        });
+
 
         // text controls
         // -------------
 
-        ValueSlider valueSliderTextBaseSize = findViewById(R.id.cardstyle_text_basesize_valueslider);
-        valueSliderTextBaseSize.setCurrentValue(m_cardTemplate.getBaseTextSize());
-        valueSliderTextBaseSize.setListener(new ValueSliderUpdate() {
+        m_text_basesize = findViewById(R.id.cardstyle_text_basesize_valueslider);
+        m_text_basesize.setListener(new ValueSliderUpdate() {
             @Override
             public void valueUpdate(int currentValue) {
                 m_cardTemplate.setBaseTextSize(currentValue);
@@ -261,7 +272,6 @@ public class CardStyleActivity extends AppCompatActivity {
         });
 
         m_text_font_family = findViewById(R.id.cardstyle_editor_font_family);
-        m_text_font_family.setText(m_cardTemplate.getFont());
         m_text_font_lookup = findViewById(R.id.cardstyle_editor_font_lookup);
         m_text_font_lookup.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -275,12 +285,23 @@ public class CardStyleActivity extends AppCompatActivity {
             }
         });
 
+        updateFontControls();
+
+        Button resetFontSettings = findViewById(R.id.cardstyle_editor_font_reset);
+        resetFontSettings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                m_cardTemplate.setDefaultFontValues();
+                updateFontControls();
+                updateCardPreview();
+            }
+        });
+
         // margin controls
         // ---------------
 
-        ValueSlider valueSliderMarginLeftRight = findViewById(R.id.cardstyle_margin_leftright_valueslider);
-        valueSliderMarginLeftRight.setCurrentValue(m_cardTemplate.getLeftRightMargin());
-        valueSliderMarginLeftRight.setListener(new ValueSliderUpdate() {
+        m_valueSliderMarginLeftRight = findViewById(R.id.cardstyle_margin_leftright_valueslider);
+        m_valueSliderMarginLeftRight.setListener(new ValueSliderUpdate() {
             @Override
             public void valueUpdate(int currentValue) {
                 m_cardTemplate.setLeftRightMargin(currentValue);
@@ -288,9 +309,8 @@ public class CardStyleActivity extends AppCompatActivity {
             }
         });
 
-        ValueSlider valueSliderBetween = findViewById(R.id.cardstyle_margin_between_valueslider);
-        valueSliderBetween.setCurrentValue(m_cardTemplate.getLeftRightMargin());
-        valueSliderBetween.setListener(new ValueSliderUpdate() {
+        m_valueSliderBetween = findViewById(R.id.cardstyle_margin_between_valueslider);
+        m_valueSliderBetween.setListener(new ValueSliderUpdate() {
             @Override
             public void valueUpdate(int currentValue) {
                 m_cardTemplate.setCenterMargin(currentValue);
@@ -299,9 +319,8 @@ public class CardStyleActivity extends AppCompatActivity {
         });
 
 
-        ValueSlider valueSliderPaddingTop = findViewById(R.id.cardstyle_padding_top_valueslider);
-        valueSliderPaddingTop.setCurrentValue(m_cardTemplate.getPaddingTop());
-        valueSliderPaddingTop.setListener(new ValueSliderUpdate() {
+        m_valueSliderPaddingTop = findViewById(R.id.cardstyle_padding_top_valueslider);
+        m_valueSliderPaddingTop.setListener(new ValueSliderUpdate() {
             @Override
             public void valueUpdate(int currentValue) {
                 m_cardTemplate.setPaddingTop(currentValue);
@@ -310,9 +329,8 @@ public class CardStyleActivity extends AppCompatActivity {
         });
 
 
-        ValueSlider valueSliderPaddingBottom = findViewById(R.id.cardstyle_padding_bottom_valueslider);
-        valueSliderPaddingBottom.setCurrentValue(m_cardTemplate.getPaddingBottom());
-        valueSliderPaddingBottom.setListener(new ValueSliderUpdate() {
+        m_valueSliderPaddingBottom = findViewById(R.id.cardstyle_padding_bottom_valueslider);
+        m_valueSliderPaddingBottom.setListener(new ValueSliderUpdate() {
             @Override
             public void valueUpdate(int currentValue) {
                 m_cardTemplate.setPaddingBottom(currentValue);
@@ -320,17 +338,25 @@ public class CardStyleActivity extends AppCompatActivity {
             }
         });
 
-        ValueSlider valueSliderPaddingLeftRight = findViewById(R.id.cardstyle_padding_leftright_valueslider);
-        valueSliderPaddingLeftRight.setCurrentValue(m_cardTemplate.getPaddingLeftRight());
-        valueSliderPaddingLeftRight.setListener(new ValueSliderUpdate() {
+        m_valueSliderPaddingLeftRight = findViewById(R.id.cardstyle_padding_leftright_valueslider);
+        m_valueSliderPaddingLeftRight.setListener(new ValueSliderUpdate() {
             @Override
             public void valueUpdate(int currentValue) {
                 m_cardTemplate.setPaddingLeftRight(currentValue);
                 updateCardPreview();
             }
         });
+        updateSpacingControls();
 
-
+        Button resetSpacingButton = findViewById(R.id.cardstyle_editor_spacing_reset);
+        resetSpacingButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                m_cardTemplate.setDefaultSpacingValues();
+                updateSpacingControls();
+                updateCardPreview();
+            }
+        });
 
 
     }
@@ -437,29 +463,11 @@ public class CardStyleActivity extends AppCompatActivity {
 
         m_currentCardField = cardField;
 
-        m_field_relativesize.setCurrentValue((int) (cardField.getRelativeSize() * TEXT_RELATIVE_SIZE_FACTOR));
-
-        m_lineReturnCheckBox.setChecked(m_currentCardField.getLineReturn());
-
-        m_htmlCheckBox.setChecked(m_currentCardField.getIsHtml());
-
-        switch( m_currentCardField.getAlignment()) {
-            case ALIGN_CENTER:
-                m_fieldAlignmentSpinner.setSelection(0);
-                break;
-            case ALIGN_NORMAL:
-                m_fieldAlignmentSpinner.setSelection(1);
-                break;
-            case ALIGN_OPPOSITE:
-                m_fieldAlignmentSpinner.setSelection(2);
-                break;
-        }
-
-        m_field_leftmargin.setCurrentValue(m_currentCardField.getLeftMargin());
+        updateFieldSettingsControls();
 
         final CardStyleActivity context = this;
 
-        ImageViewCompat.setImageTintList(m_fieldColorCircle, ColorStateList.valueOf(cardField.getColor()));
+
         m_field_colorSelector.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -478,9 +486,38 @@ public class CardStyleActivity extends AppCompatActivity {
                         }).build().show(context.getSupportFragmentManager(), "field_color_picker");
             }
         });
+    }
 
+    private void updateFieldSettingsControls() {
+        m_field_relativesize.setCurrentValue((int) (m_currentCardField.getRelativeSize() * TEXT_RELATIVE_SIZE_FACTOR));
+        m_lineReturnCheckBox.setChecked(m_currentCardField.getLineReturn());
+        m_htmlCheckBox.setChecked(m_currentCardField.getIsHtml());
+        switch( m_currentCardField.getAlignment()) {
+            case ALIGN_CENTER:
+                m_fieldAlignmentSpinner.setSelection(0);
+                break;
+            case ALIGN_NORMAL:
+                m_fieldAlignmentSpinner.setSelection(1);
+                break;
+            case ALIGN_OPPOSITE:
+                m_fieldAlignmentSpinner.setSelection(2);
+                break;
+        }
+        m_field_leftmargin.setCurrentValue(m_currentCardField.getLeftMargin());
+        ImageViewCompat.setImageTintList(m_fieldColorCircle, ColorStateList.valueOf(m_currentCardField.getColor()));
+    }
 
+    private void updateFontControls() {
+        m_text_font_family.setText(m_cardTemplate.getFont());
+        m_text_basesize.setCurrentValue(m_cardTemplate.getBaseTextSize());
+    }
 
+    private void updateSpacingControls() {
+        m_valueSliderMarginLeftRight.setCurrentValue(m_cardTemplate.getLeftRightMargin());
+        m_valueSliderBetween.setCurrentValue(m_cardTemplate.getCenterMargin());
+        m_valueSliderPaddingTop.setCurrentValue(m_cardTemplate.getPaddingTop());
+        m_valueSliderPaddingBottom.setCurrentValue(m_cardTemplate.getPaddingBottom());
+        m_valueSliderPaddingLeftRight.setCurrentValue(m_cardTemplate.getPaddingLeftRight());
     }
 
     public int defaultFieldColor() {
@@ -523,6 +560,11 @@ public class CardStyleActivity extends AppCompatActivity {
     private ValueSlider m_text_basesize;
 
     // margin controls
+    private ValueSlider m_valueSliderMarginLeftRight;
+    private ValueSlider m_valueSliderBetween;
+    private ValueSlider m_valueSliderPaddingTop;
+    private ValueSlider m_valueSliderPaddingBottom;
+    private ValueSlider m_valueSliderPaddingLeftRight;
 
     private CardTemplateKey m_cardTemplateKey;
     private CardTemplate m_cardTemplate;

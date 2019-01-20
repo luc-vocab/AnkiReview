@@ -8,7 +8,7 @@ import java.io.Serializable;
 import java.util.Vector;
 
 public class CardTemplate implements Serializable {
-
+    public static final long serialVersionUID = 1L; // increment this in case of schema changes
 
     public CardTemplate() {
         m_questionCardFields = new Vector<CardField>();
@@ -21,8 +21,16 @@ public class CardTemplate implements Serializable {
     }
 
     public void setDefaultValues() {
-        m_baseTextSize = 40;
+        setDefaultFontValues();
+        setDefaultSpacingValues();
+    }
 
+    public void setDefaultFontValues() {
+        m_baseTextSize = 40;
+        m_font = "Roboto";
+    }
+
+    public void setDefaultSpacingValues() {
         m_leftRightMargin_px = 40;
         m_centerMargin_px = 20;
 
