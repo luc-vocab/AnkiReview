@@ -242,14 +242,27 @@ public class CardStyle implements Serializable {
         return false;
     }
 
+    public String getQuestionAudio(Card card) {
+        // get card template
+        CardTemplateKey cardTemplateKey = new CardTemplateKey(card.getModelId(), card.getCardOrd());
+        CardTemplate cardTemplate = m_cardStyleStorage.cardTemplateMap.get(cardTemplateKey);
+
+        String soundField = cardTemplate.getQuestionSoundField();
+        if(soundField != null) {
+            String soundFile = card.extractSoundFile(card.getFieldValue(soundField));
+            return soundFile;
+        }
+        return null;
+    }
+
     public String getAnswerAudio(Card card) {
         // get card template
         CardTemplateKey cardTemplateKey = new CardTemplateKey(card.getModelId(), card.getCardOrd());
         CardTemplate cardTemplate = m_cardStyleStorage.cardTemplateMap.get(cardTemplateKey);
 
-        String soundField = cardTemplate.getSoundField();
+        String soundField = cardTemplate.getAnswerSoundField();
         if(soundField != null) {
-            String soundFile = card.extractSoundFile(card.getFieldValue(cardTemplate.getSoundField()));
+            String soundFile = card.extractSoundFile(card.getFieldValue(soundField));
             return soundFile;
         }
         return null;

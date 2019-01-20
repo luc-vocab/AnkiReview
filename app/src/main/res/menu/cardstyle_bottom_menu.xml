@@ -11,7 +11,13 @@
         android:id="@+id/cardstyle_action_field_settings"
         android:enabled="true"
         android:icon="@drawable/cardstyle_field_settings"
-        android:title="Field Settings"
+        android:title="Look"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/cardstyle_action_sound"
+        android:enabled="true"
+        android:icon="@drawable/cardstyle_sound"
+        android:title="Sound"
         app:showAsAction="always" />
     <item
         android:id="@+id/cardstyle_action_font"

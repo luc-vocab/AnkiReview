@@ -97,9 +97,6 @@ public class FieldListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                     isUnassigned = false;
                 }
             }
-            if( field.equals(m_cardTemplate.getSoundField())) {
-                isUnassigned = false;
-            }
 
             if(isUnassigned) {
                 CardField cardField = new CardField(field, m_activity.defaultFieldColor());
@@ -121,14 +118,6 @@ public class FieldListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             m_fieldList.add(new FieldListItem(cardField, FieldListItem.VIEWTYPE_FIELD, null, null));
         }
 
-        // add the "sound" header
-        m_fieldList.add(new FieldListItem(null, FieldListItem.VIEWTYPE_HEADER, FieldListItem.HEADER_SOUND,
-                m_activity.getResources().getString(R.string.card_style_sound_fields_description)));
-        String soundField = m_cardTemplate.getSoundField();
-        if( soundField != null ) {
-            CardField cardField = new CardField(soundField, m_activity.defaultFieldColor());
-            m_fieldList.add(new FieldListItem(cardField, FieldListItem.VIEWTYPE_FIELD, null, null));
-        }
 
     }
 
@@ -180,8 +169,6 @@ public class FieldListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                     m_cardTemplate.addQuestionCardField(fieldListItem.getCardField());
                 } else if( insideAnswerFields) {
                     m_cardTemplate.addAnswerCardField(fieldListItem.getCardField());
-                } else if ( insideSoundFields ) {
-                    m_cardTemplate.setSoundField(fieldListItem.getCardField().getFieldName());
                 }
             } else {
                 if( fieldListItem.getHeader().equals(FieldListItem.HEADER_QUESTION)) {
@@ -192,10 +179,6 @@ public class FieldListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                     insideQuestionFields = false;
                     insideAnswerFields = true;
                     insideSoundFields = false;
-                } else if (fieldListItem.getHeader().equals(FieldListItem.HEADER_SOUND)) {
-                    insideQuestionFields = false;
-                    insideAnswerFields = false;
-                    insideSoundFields = true;
                 }
             }
         }

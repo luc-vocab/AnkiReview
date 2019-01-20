@@ -8,12 +8,14 @@ import java.io.Serializable;
 import java.util.Vector;
 
 public class CardTemplate implements Serializable {
-    public static final long serialVersionUID = 1L; // increment this in case of schema changes
+    public static final long serialVersionUID = 2L; // increment this in case of schema changes
 
     public CardTemplate() {
         m_questionCardFields = new Vector<CardField>();
         m_answerCardFields = new Vector<CardField>();
-        m_soundField = null;
+
+        m_questionSoundField = null;
+        m_answerSoundField = null;
 
         // setup default values
         setDefaultValues();
@@ -65,9 +67,11 @@ public class CardTemplate implements Serializable {
     }
 
 
-    public String getSoundField() { return m_soundField; }
+    public String getQuestionSoundField() { return m_questionSoundField; }
+    public void setQuestionSoundField(String  soundField) { m_questionSoundField = soundField; }
 
-    public void setSoundField(String  soundField) { m_soundField = soundField; }
+    public String getAnswerSoundField() { return m_answerSoundField; }
+    public void setAnswerSoundField(String  soundField) { m_answerSoundField = soundField; }
 
     public int getBaseTextSize() { return m_baseTextSize; }
     public void setBaseTextSize(int margin) { m_baseTextSize = margin; }
@@ -92,7 +96,9 @@ public class CardTemplate implements Serializable {
 
     private Vector<CardField> m_questionCardFields;
     private Vector<CardField> m_answerCardFields;
-    private String m_soundField;
+
+    private String m_questionSoundField;
+    private String m_answerSoundField;
 
     // text
     private int m_baseTextSize;
