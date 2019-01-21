@@ -256,13 +256,12 @@ public class ReviewActivity extends AppCompatActivity {
         m_toolbar.setTitle(deckName);
         setSupportActionBar(m_toolbar);
 
+        // final step
+        reloadCardStyleAndCards();
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-
-        Log.v(TAG, "onStart");
+    private void reloadCardStyleAndCards() {
+        Log.v(TAG, "reloadCardStyleAndCards");
 
         setupFlashcardPager();
 
@@ -339,7 +338,22 @@ public class ReviewActivity extends AppCompatActivity {
         Intent intent = new Intent(ReviewActivity.this, CardStyleActivity.class);
         intent.putExtra("noteId", card.getNoteId());
         intent.putExtra("cardOrd", card.getCardOrd());
-        this.startActivity(intent);
+        this.startActivityForResult(intent,0);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // Check which request we're responding to
+        if (requestCode == 0) {
+            // Make sure the request was successful
+            if (resultCode == RESULT_OK) {
+                // card style has been saved
+                Log.v(TAG, "card style has been updated");
+                reloadCardStyleAndCards();
+            } else if (resultCode == RESULT_CANCELED) {
+                Log.v(TAG, "user canceled");
+            }
+        }
     }
 
     private void singleTapHandler() {
