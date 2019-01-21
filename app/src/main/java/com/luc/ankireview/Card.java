@@ -46,13 +46,12 @@ public class Card {
         return result;
     }
 
-    private String filterSound( String content ) {
+    public static String filterSound( String content ) {
         Matcher matcher = s_soundPattern.matcher(content);
         // While there is matches of the pattern for sound markers
         while (matcher.find()) {
             String sound = matcher.group(1);
             Log.v(TAG, "sound: " + sound);
-            m_answerSound = sound;
         }
 
         content = matcher.replaceAll("");
@@ -205,7 +204,6 @@ public class Card {
 
     HashMap<String,String> m_fieldMap;
 
-    private String m_answerSound;
     private int m_buttonCount;
     private Vector<String> m_nextReviewTimes;
 }

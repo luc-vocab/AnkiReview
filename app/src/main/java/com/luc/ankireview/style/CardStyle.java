@@ -177,6 +177,9 @@ public class CardStyle implements Serializable {
         for( CardField cardField : fields) {
             CharSequence textValue = card.getFieldValue(cardField.getFieldName());
 
+            // filter out sound
+            textValue = Card.filterSound((String)textValue);
+
             if(cardField.getIsHtml()) {
                 // convert from HTML
                 textValue = removeTrailingLineReturns(Html.fromHtml(textValue.toString(), Html.FROM_HTML_MODE_LEGACY));
