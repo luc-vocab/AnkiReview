@@ -303,7 +303,8 @@ public class ReviewActivity extends AppCompatActivity {
             private int mCurrentPosition = 1;
         });
 
-        m_flashcardPager.setPageTransformer(true, new ReviewPageTransformer());
+        // don't use any page transformers for now
+        // m_flashcardPager.setPageTransformer(true, new ReviewPageTransformer());
     }
 
     @Override
