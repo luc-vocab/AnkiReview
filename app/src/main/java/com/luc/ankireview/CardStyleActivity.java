@@ -319,6 +319,7 @@ public class CardStyleActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 if(i == 0 ) {
                     m_cardTemplate.setQuestionSoundField(null);
+                    return;
                 }
                 String field = (String) adapterView.getItemAtPosition(i);
                 Log.v(TAG, "chosen question sound field: " + field);
@@ -335,6 +336,7 @@ public class CardStyleActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 if(i == 0 ) {
                     m_cardTemplate.setAnswerSoundField(null);
+                    return;
                 }
                 String field = (String) adapterView.getItemAtPosition(i);
                 Log.v(TAG, "chosen answer sound field: " + field);

@@ -1,7 +1,6 @@
 package com.luc.ankireview;
 
 import android.animation.ObjectAnimator;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
@@ -11,7 +10,6 @@ import android.os.Environment;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v4.view.GestureDetectorCompat;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -37,8 +35,6 @@ import com.luc.ankireview.display.BackgroundViewPagerAdapter;
 import com.luc.ankireview.display.FlashCardViewPagerAdapter;
 import com.luc.ankireview.display.FlashcardViewPager;
 import com.luc.ankireview.style.CardStyle;
-import com.luc.ankireview.style.CardTemplate;
-import com.luc.ankireview.style.CardTemplateKey;
 
 import java.io.File;
 import java.io.IOException;
@@ -163,8 +159,11 @@ public class ReviewActivity extends AppCompatActivity {
         // setup audio
         // -----------
 
-        m_mediaPlayer = new MediaPlayer();
-        m_mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+        m_questionSoundMediaPlayer = new MediaPlayer();
+        m_questionSoundMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+
+        m_answerSoundMediaPlayer = new MediaPlayer();
+        m_answerSoundMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
 
         m_answerBadAudio = MediaPlayer.create(this, R.raw.cancel_41);
         m_answerGoodAudio = MediaPlayer.create(this, R.raw.select_13);
@@ -462,6 +461,10 @@ public class ReviewActivity extends AppCompatActivity {
 
     private void showQuestion() {
         m_answerAudio = false;
+
+        // play question audio if found
+        playQuestionAudio(m_cardStyle.getQuestionAudio(m_currentCard));
+        // prepare answer audio if found
         prepareAnswerAudio(m_cardStyle.getAnswerAudio(m_currentCard));
 
         if(m_isFirstCard)
@@ -488,14 +491,29 @@ public class ReviewActivity extends AppCompatActivity {
         m_flashcardPager.enableSwipe();
     }
 
+    private void playQuestionAudio(String audioFile) {
+        if( audioFile != null) {
+            Uri uri = Uri.parse(m_baseUrl + audioFile);
+            try {
+                m_questionSoundMediaPlayer.reset();
+                m_questionSoundMediaPlayer.setDataSource(getApplicationContext(), uri);
+                m_questionSoundMediaPlayer.prepare();
+                m_questionSoundMediaPlayer.start();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
     private void prepareAnswerAudio(String audioFile) {
 
         if( audioFile != null ) {
             Uri uri = Uri.parse(m_baseUrl + audioFile);
             try {
-                m_mediaPlayer.reset();
-                m_mediaPlayer.setDataSource(getApplicationContext(), uri);
-                m_mediaPlayer.prepare();
+                m_answerSoundMediaPlayer.reset();
+                m_answerSoundMediaPlayer.setDataSource(getApplicationContext(), uri);
+                m_answerSoundMediaPlayer.prepare();
 
                 m_answerAudio = true;
             } catch (IOException e) {
@@ -517,7 +535,7 @@ public class ReviewActivity extends AppCompatActivity {
     private void playAnswerAudio()
     {
         if( m_answerAudio && ! m_showingQuestion) {
-            m_mediaPlayer.start();
+            m_answerSoundMediaPlayer.start();
         }
     }
 
@@ -692,7 +710,8 @@ public class ReviewActivity extends AppCompatActivity {
     // where to load file assets
     private String m_baseUrl;
     // for playing audio
-    private MediaPlayer m_mediaPlayer;
+    private MediaPlayer m_questionSoundMediaPlayer;
+    private MediaPlayer m_answerSoundMediaPlayer;
 
     // answer audio
     MediaPlayer m_answerBadAudio;
