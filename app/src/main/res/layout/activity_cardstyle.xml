@@ -85,6 +85,12 @@
                 ></include>
 
             <include
+                layout="@layout/cardstyle_tab_sound"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                ></include>
+
+            <include
                 layout="@layout/cardstyle_tab_spacing"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

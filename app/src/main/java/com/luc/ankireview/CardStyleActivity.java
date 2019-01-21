@@ -104,6 +104,9 @@ public class CardStyleActivity extends AppCompatActivity {
                     case R.id.cardstyle_action_font:
                         showFontView();
                         break;
+                    case R.id.cardstyle_action_sound:
+                        showSoundView();
+                        break;
                     case R.id.cardstyle_action_spacing:
                         showSpacingView();
                         break;
@@ -118,6 +121,7 @@ public class CardStyleActivity extends AppCompatActivity {
         // get font view and margins view
         m_fieldSettingsView = findViewById(R.id.cardstyle_editor_fieldsettings);
         m_fontView = findViewById(R.id.cardstyle_editor_font);
+        m_soundView = findViewById(R.id.cardstyle_editor_sound);
         m_marginsView = findViewById(R.id.cardstyle_editor_margins);
 
         // setup the full Field list ListView
@@ -145,6 +149,7 @@ public class CardStyleActivity extends AppCompatActivity {
         m_fullFieldListView.setVisibility(View.VISIBLE);
         m_fieldSettingsView.setVisibility(View.INVISIBLE);
         m_fontView.setVisibility(View.INVISIBLE);
+        m_soundView.setVisibility(View.INVISIBLE);
         m_marginsView.setVisibility(View.INVISIBLE);
 
         // field settings controls
@@ -409,6 +414,7 @@ public class CardStyleActivity extends AppCompatActivity {
         m_fullFieldListView.setVisibility(View.VISIBLE);
         m_fieldSettingsView.setVisibility(View.INVISIBLE);
         m_fontView.setVisibility(View.INVISIBLE);
+        m_soundView.setVisibility(View.INVISIBLE);
         m_marginsView.setVisibility(View.INVISIBLE);
     }
 
@@ -416,6 +422,7 @@ public class CardStyleActivity extends AppCompatActivity {
         m_fullFieldListView.setVisibility(View.INVISIBLE);
         m_fieldSettingsView.setVisibility(View.VISIBLE);
         m_fontView.setVisibility(View.INVISIBLE);
+        m_soundView.setVisibility(View.INVISIBLE);
         m_marginsView.setVisibility(View.INVISIBLE);
 
         setupFieldSettings();
@@ -425,6 +432,15 @@ public class CardStyleActivity extends AppCompatActivity {
         m_fullFieldListView.setVisibility(View.INVISIBLE);
         m_fieldSettingsView.setVisibility(View.INVISIBLE);
         m_fontView.setVisibility(View.VISIBLE);
+        m_soundView.setVisibility(View.INVISIBLE);
+        m_marginsView.setVisibility(View.INVISIBLE);
+    }
+
+    private void showSoundView() {
+        m_fullFieldListView.setVisibility(View.INVISIBLE);
+        m_fieldSettingsView.setVisibility(View.INVISIBLE);
+        m_fontView.setVisibility(View.INVISIBLE);
+        m_soundView.setVisibility(View.VISIBLE);
         m_marginsView.setVisibility(View.INVISIBLE);
     }
 
@@ -432,6 +448,7 @@ public class CardStyleActivity extends AppCompatActivity {
         m_fullFieldListView.setVisibility(View.INVISIBLE);
         m_fieldSettingsView.setVisibility(View.INVISIBLE);
         m_fontView.setVisibility(View.INVISIBLE);
+        m_soundView.setVisibility(View.INVISIBLE);
         m_marginsView.setVisibility(View.VISIBLE);
     }
 
@@ -529,6 +546,7 @@ public class CardStyleActivity extends AppCompatActivity {
     private CardStyle m_cardStyle;
 
     private FrameLayout m_fieldSettingsView;
+    private FrameLayout m_soundView;
     private FrameLayout m_fontView;
     private FrameLayout m_marginsView;
 
