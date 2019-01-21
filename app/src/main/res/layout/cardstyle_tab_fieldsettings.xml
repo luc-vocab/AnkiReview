@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+    <FrameLayout
+        android:id="@+id/cardstyle_editor_fieldsettings"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.v4.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    style="@style/CardStyleItem"
+                    >
+
+                    <TextView
+                        style="@style/CardStyleItemTextHeavy"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Select Field" />
+
+                    <Spinner
+                        android:id="@+id/cardstyle_field_settings_selector"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        style="@style/CardStyleItemText"
+                        android:layout_gravity="right"
+                        />
+
+                </LinearLayout>
+
+                <View style="@style/Divider" />
+
+                <LinearLayout
+                    android:id="@+id/cardstyle_field_color_selector"
+                    style="@style/CardStyleItem"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/CardStyleItemText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Text Color" />
+
+                    <ImageView
+                        android:id="@+id/cardstyle_field_color_circle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:layout_marginRight="0dp"
+                        android:layout_weight="4"
+                        android:src="@drawable/cardstyle_color_circle"
+                        tools:src="@drawable/cardstyle_color_circle">
+
+                    </ImageView>
+
+                </LinearLayout>
+
+                <View style="@style/Divider" />
+
+                <com.luc.ankireview.style.ValueSlider
+                    android:id="@+id/cardstyle_text_relativesize_valueslider"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:maxValue="40"
+                    app:minValue="0"
+                    app:titleText="Relative Text Size" />
+
+                <View style="@style/Divider" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    style="@style/CardStyleItem"
+                    >
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        style="@style/CardStyleItemText"
+                        android:text="Alignment"
+                        android:layout_weight="1"
+                        />
+
+                    <Spinner
+                        android:id="@+id/cardstyle_field_alignment"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="right"
+                        style="@style/CardStyleItemText"
+                        />
+
+                </LinearLayout>
+
+                <View style="@style/Divider" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    style="@style/CardStyleItem"
+                    >
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        style="@style/CardStyleItemText"
+                        android:text="Line Return"/>
+
+                    <CheckBox
+                        android:id="@+id/cardstyle_field_linereturn"
+                        style="@style/CardStyleCheckBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="3" />
+
+                </LinearLayout>
+
+                <View style="@style/Divider" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    style="@style/CardStyleItem"
+                    >
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        style="@style/CardStyleItemText"
+                        android:text="HTML Content"/>
+
+                    <CheckBox
+                        android:id="@+id/cardstyle_field_html"
+                        style="@style/CardStyleCheckBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="4" />
+
+                </LinearLayout>
+
+                <View style="@style/Divider" />
+
+                <com.luc.ankireview.style.ValueSlider
+                    android:id="@+id/cardstyle_field_leftmargin"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:maxValue="80"
+                    app:minValue="0"
+                    app:titleText="Left Margin" />
+
+                <View style="@style/Divider" />
+                <LinearLayout
+                    style="@style/CardStyleItem"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/CardStyleItemText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Reset Settings" />
+
+                    <Button
+                        android:id="@+id/cardstyle_editor_fieldsettings_reset"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="3"
+                        android:text="Reset" />
+                </LinearLayout>
+
+
+            </LinearLayout>
+        </android.support.v4.widget.NestedScrollView>
+
+    </FrameLayout>
+</layout>

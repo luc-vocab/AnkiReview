@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    >
+    <FrameLayout
+        android:id="@+id/cardstyle_editor_margins"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <com.luc.ankireview.style.ValueSlider
+                    android:id="@+id/cardstyle_margin_leftright_valueslider"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:maxValue="120"
+                    app:minValue="0"
+                    app:titleText="Left/Right Margin" />
+
+                <View style="@style/Divider" />
+
+                <com.luc.ankireview.style.ValueSlider
+                    android:id="@+id/cardstyle_margin_between_valueslider"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:maxValue="80"
+                    app:minValue="0"
+                    app:titleText="Between Margin" />
+
+                <View style="@style/Divider" />
+
+                <com.luc.ankireview.style.ValueSlider
+                    android:id="@+id/cardstyle_padding_top_valueslider"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:maxValue="80"
+                    app:minValue="0"
+                    app:titleText="Padding Top" />
+
+                <View style="@style/Divider" />
+
+                <com.luc.ankireview.style.ValueSlider
+                    android:id="@+id/cardstyle_padding_bottom_valueslider"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:maxValue="80"
+                    app:minValue="0"
+                    app:titleText="Padding Bottom" />
+
+                <View style="@style/Divider" />
+
+                <com.luc.ankireview.style.ValueSlider
+                    android:id="@+id/cardstyle_padding_leftright_valueslider"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:maxValue="100"
+                    app:minValue="0"
+                    app:titleText="Padding Left/Right" />
+
+                <View style="@style/Divider" />
+                <LinearLayout
+                    style="@style/CardStyleItem"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/CardStyleItemText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Reset Settings" />
+
+                    <Button
+                        android:id="@+id/cardstyle_editor_spacing_reset"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="3"
+                        android:text="Reset" />
+                </LinearLayout>
+
+
+            </LinearLayout>
+        </ScrollView>
+    </FrameLayout>
+</layout>

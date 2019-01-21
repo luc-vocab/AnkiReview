@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    >
+    <FrameLayout
+        android:id="@+id/cardstyle_editor_font"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                style="@style/CardStyleItem"
+                >
+                <TextView
+                    style="@style/CardStyleItemTextHeavy"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Font" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:autoLink="web"
+                    android:text="Choose a font family from https://fonts.google.com"
+                    ></TextView>
+            </LinearLayout>
+
+            <View style="@style/Divider" />
+
+            <LinearLayout
+                style="@style/CardStyleItem"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/cardstyle_editor_font_family"
+                    style="@style/CardStyleHeader"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="10"
+                    android:hint="Enter Font Family"
+                    android:inputType="textNoSuggestions"
+                    android:text="Font Family" />
+
+                <Button
+                    android:id="@+id/cardstyle_editor_font_lookup"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Lookup" />
+
+            </LinearLayout>
+
+            <View style="@style/Divider" />
+
+            <com.luc.ankireview.style.ValueSlider
+                android:id="@+id/cardstyle_text_basesize_valueslider"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:maxValue="100"
+                app:minValue="10"
+                app:titleText="Base Text Size" />
+
+            <View style="@style/Divider" />
+            <LinearLayout
+                style="@style/CardStyleItem"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/CardStyleItemText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Reset Settings" />
+
+                <Button
+                    android:id="@+id/cardstyle_editor_font_reset"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3"
+                    android:text="Reset" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </FrameLayout>
+</layout>
