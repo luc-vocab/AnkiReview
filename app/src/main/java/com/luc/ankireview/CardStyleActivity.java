@@ -350,9 +350,17 @@ public class CardStyleActivity extends AppCompatActivity {
         });
         // populate the adapter
         soundFieldsAdapter.add("<None>");
+        int i = 1;
         for (String field : m_card.getFieldMap().keySet())
         {
             soundFieldsAdapter.add(field);
+            if(field.equals(m_cardTemplate.getQuestionSoundField())) {
+                questionSoundSpinner.setSelection(i);
+            }
+            if(field.equals(m_cardTemplate.getAnswerSoundField())) {
+                answerSoundSpinner.setSelection(i);
+            }
+            i++;
         }
 
         // margin controls
