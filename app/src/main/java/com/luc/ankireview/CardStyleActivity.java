@@ -302,6 +302,57 @@ public class CardStyleActivity extends AppCompatActivity {
             }
         });
 
+
+        // sound controls
+        // --------------
+
+        Spinner questionSoundSpinner = findViewById(R.id.cardstyle_soundfield_question);
+        Spinner answerSoundSpinner = findViewById(R.id.cardstyle_soundfield_answer);
+
+        ArrayAdapter<String> soundFieldsAdapter = new ArrayAdapter<String>(this, R.layout.simple_spinner_item);
+        soundFieldsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        questionSoundSpinner.setAdapter(soundFieldsAdapter);
+        answerSoundSpinner.setAdapter(soundFieldsAdapter);
+
+        questionSoundSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                if(i == 0 ) {
+                    m_cardTemplate.setQuestionSoundField(null);
+                }
+                String field = (String) adapterView.getItemAtPosition(i);
+                Log.v(TAG, "chosen question sound field: " + field);
+                m_cardTemplate.setQuestionSoundField(field);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+        answerSoundSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                if(i == 0 ) {
+                    m_cardTemplate.setAnswerSoundField(null);
+                }
+                String field = (String) adapterView.getItemAtPosition(i);
+                Log.v(TAG, "chosen answer sound field: " + field);
+                m_cardTemplate.setAnswerSoundField(field);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+        // populate the adapter
+        soundFieldsAdapter.add("<None>");
+        for (String field : m_card.getFieldMap().keySet())
+        {
+            soundFieldsAdapter.add(field);
+        }
+
         // margin controls
         // ---------------
 

@@ -5,6 +5,63 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                style="@style/CardStyleItem"
+                >
+
+                <TextView
+                    style="@style/CardStyleItemTextHeavy"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Question Sound" />
+
+                <Spinner
+                    android:id="@+id/cardstyle_soundfield_question"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    style="@style/CardStyleItemText"
+                    android:layout_gravity="right"
+                    />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                style="@style/CardStyleItem"
+                >
+
+                <TextView
+                    style="@style/CardStyleItemTextHeavy"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Answer Sound" />
+
+                <Spinner
+                    android:id="@+id/cardstyle_soundfield_answer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    style="@style/CardStyleItemText"
+                    android:layout_gravity="right"
+                    />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
     </FrameLayout>
 
 </layout>
