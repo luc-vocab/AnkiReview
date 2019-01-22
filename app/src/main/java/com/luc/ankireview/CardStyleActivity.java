@@ -519,6 +519,7 @@ public class CardStyleActivity extends AppCompatActivity {
 
     public void saveCardStyle() {
         m_cardStyle.saveCardStyleData();
+        setResult(Activity.RESULT_OK, null);
         finish();
     }
 
