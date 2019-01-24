@@ -25,6 +25,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.ichi2.anki.FlashCardsContract;
 import com.luc.ankireview.backgrounds.BackgroundManager;
@@ -224,37 +225,45 @@ public class DeckPickerActivity extends AppCompatActivity implements AdapterView
 
     private void listDecks() {
 
-        m_ankiDeckList.clear();
+        try {
 
-        Cursor decksCursor = getContentResolver().query(FlashCardsContract.Deck.CONTENT_ALL_URI, null, null, null, null);
-        if (decksCursor.moveToFirst()) {
-            do {
-                long deckID = decksCursor.getLong(decksCursor.getColumnIndex(FlashCardsContract.Deck.DECK_ID));
-                String deckName = decksCursor.getString(decksCursor.getColumnIndex(FlashCardsContract.Deck.DECK_NAME));
+            m_ankiDeckList.clear();
 
-                AnkiDeck deck = new AnkiDeck();
-                deck.deckId = deckID;
-                deck.deckName = deckName;
+            Cursor decksCursor = getContentResolver().query(FlashCardsContract.Deck.CONTENT_ALL_URI, null, null, null, null);
+            if (decksCursor.moveToFirst()) {
+                do {
+                    long deckID = decksCursor.getLong(decksCursor.getColumnIndex(FlashCardsContract.Deck.DECK_ID));
+                    String deckName = decksCursor.getString(decksCursor.getColumnIndex(FlashCardsContract.Deck.DECK_NAME));
 
-                try {
-                    JSONObject deckOptions = new JSONObject(decksCursor.getString(decksCursor.getColumnIndex(FlashCardsContract.Deck.OPTIONS)));
-                    JSONArray deckCounts = new JSONArray(decksCursor.getString(decksCursor.getColumnIndex(FlashCardsContract.Deck.DECK_COUNTS)));
-                    deck.deckDueCounts = AnkiUtils.parseDeckDueCount(deckCounts);
+                    AnkiDeck deck = new AnkiDeck();
+                    deck.deckId = deckID;
+                    deck.deckName = deckName;
 
-                    // Log.d(TAG, deckOptions.toString());
+                    try {
+                        JSONObject deckOptions = new JSONObject(decksCursor.getString(decksCursor.getColumnIndex(FlashCardsContract.Deck.OPTIONS)));
+                        JSONArray deckCounts = new JSONArray(decksCursor.getString(decksCursor.getColumnIndex(FlashCardsContract.Deck.DECK_COUNTS)));
+                        deck.deckDueCounts = AnkiUtils.parseDeckDueCount(deckCounts);
 
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+                        // Log.d(TAG, deckOptions.toString());
 
-                Log.d(TAG, "deck name: " + deckName);
-                if(!deckName.equals("Default"))
-                    m_ankiDeckList.add(deck);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
 
-            } while (decksCursor.moveToNext());
+                    Log.d(TAG, "deck name: " + deckName);
+                    if (!deckName.equals("Default"))
+                        m_ankiDeckList.add(deck);
+
+                } while (decksCursor.moveToNext());
+            }
+
+            m_adapter.notifyDataSetChanged();
+
+        } catch (IllegalStateException e) {
+            Log.e(TAG, "Could not list AnkiDroid decks: " + e);
+            Toast toast = Toast.makeText(this, "Could not list AnkiDroid decks " + e.getMessage(), Toast.LENGTH_LONG);
+            toast.show();
         }
-
-        m_adapter.notifyDataSetChanged();
 
     }
 
