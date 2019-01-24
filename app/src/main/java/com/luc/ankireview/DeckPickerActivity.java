@@ -155,41 +155,50 @@ public class DeckPickerActivity extends AppCompatActivity implements AdapterView
     }
 
     private void checkAllPermissions() {
-        // Here, thisActivity is the current activity
-        if ( ! permissionsGranted() ) {
 
-            Log.d(TAG, "permissions not granted yet");
+        try {
 
-            // Permission is not granted
-            // Should we show an explanation?
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this, ANKI_PERMISSIONS ) ||
-                    ActivityCompat.shouldShowRequestPermissionRationale(this, READ_STORAGE_PERMISSION ) ||
-                    ActivityCompat.shouldShowRequestPermissionRationale(this, INTERNET_PERMISSION)  ) {
-                // Show an explanation to the user *asynchronously* -- don't block
-                // this thread waiting for the user's response! After the user
-                // sees the explanation, try again to request the permission.
+            // Here, thisActivity is the current activity
+            if (!permissionsGranted()) {
 
-                Log.d(TAG, "show explanation ?");
+                Log.d(TAG, "permissions not granted yet");
 
-                ActivityCompat.requestPermissions(this,
-                        new String[]{ANKI_PERMISSIONS, READ_STORAGE_PERMISSION, INTERNET_PERMISSION },
-                        0);
+                // Permission is not granted
+                // Should we show an explanation?
+                if (ActivityCompat.shouldShowRequestPermissionRationale(this, ANKI_PERMISSIONS) ||
+                        ActivityCompat.shouldShowRequestPermissionRationale(this, READ_STORAGE_PERMISSION) ||
+                        ActivityCompat.shouldShowRequestPermissionRationale(this, INTERNET_PERMISSION)) {
+                    // Show an explanation to the user *asynchronously* -- don't block
+                    // this thread waiting for the user's response! After the user
+                    // sees the explanation, try again to request the permission.
 
+                    Log.d(TAG, "show explanation ?");
+
+                    ActivityCompat.requestPermissions(this,
+                            new String[]{ANKI_PERMISSIONS, READ_STORAGE_PERMISSION, INTERNET_PERMISSION},
+                            0);
+
+                } else {
+                    Log.d(TAG, "requesting permissions");
+
+                    // No explanation needed, we can request the permission.
+                    ActivityCompat.requestPermissions(this,
+                            new String[]{ANKI_PERMISSIONS, READ_STORAGE_PERMISSION, INTERNET_PERMISSION},
+                            0);
+
+                    // we're going to get a callback later
+                }
             } else {
-                Log.d(TAG, "requesting permissions");
+                // Permission has already been granted
+                Log.d(TAG, "permissions already granted");
 
-                // No explanation needed, we can request the permission.
-                ActivityCompat.requestPermissions(this,
-                        new String[]{ANKI_PERMISSIONS, READ_STORAGE_PERMISSION, INTERNET_PERMISSION},
-                        0);
-
-                // we're going to get a callback later
+                listDecks();
             }
-        } else {
-            // Permission has already been granted
-            Log.d(TAG, "permissions already granted");
+        } catch (IllegalArgumentException e) {
+            Log.e(TAG, "Could not request permissions " + e.getMessage());
+            Toast toast = Toast.makeText(this, "Could not list request permissions, do you have AnkiDroid installed? " + e.getMessage(), Toast.LENGTH_LONG);
+            toast.show();
 
-            listDecks();
         }
     }
 
