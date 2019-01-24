@@ -128,6 +128,7 @@ public class DeckPickerActivity extends AppCompatActivity implements AdapterView
             {
                 Log.e(TAG, "permission not granted: " + permission);
                 allPermissionsGranted = false;
+                showToast("Missing permissions, will not be able to list AnkiDroid decks");
             }
         }
 
@@ -137,6 +138,11 @@ public class DeckPickerActivity extends AppCompatActivity implements AdapterView
 
         return;
 
+    }
+
+    private void showToast(String message) {
+        Toast toast = Toast.makeText(this, message, Toast.LENGTH_LONG);
+        toast.show();
     }
 
     private void listDecksIfPermissionsGranted() {
@@ -268,10 +274,13 @@ public class DeckPickerActivity extends AppCompatActivity implements AdapterView
 
             m_adapter.notifyDataSetChanged();
 
+            if( m_ankiDeckList.size() == 0 ) {
+                showToast("No decks found, please add some flashcard decks in AnkiDroid");
+            }
+
         } catch (IllegalStateException e) {
             Log.e(TAG, "Could not list AnkiDroid decks: " + e);
-            Toast toast = Toast.makeText(this, "Could not list AnkiDroid decks " + e.getMessage(), Toast.LENGTH_LONG);
-            toast.show();
+            showToast("Could not list AnkiDroid decks " + e.getMessage());
         }
 
     }
