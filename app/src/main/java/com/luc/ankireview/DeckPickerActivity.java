@@ -278,7 +278,7 @@ public class DeckPickerActivity extends AppCompatActivity implements AdapterView
                 showToast("No decks found, please add some flashcard decks in AnkiDroid");
             }
 
-        } catch (IllegalStateException e) {
+        } catch (Exception e) {
             Log.e(TAG, "Could not list AnkiDroid decks: " + e);
             showToast("Could not list AnkiDroid decks " + e.getMessage());
         }
