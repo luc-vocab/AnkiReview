@@ -172,6 +172,8 @@ public class CardStyleActivity extends AppCompatActivity {
 
             }
         });
+        m_fieldSettingsPanel = findViewById(R.id.cardstyle_field_settings_panel);
+        m_fieldSettingsPanel.setVisibility(View.INVISIBLE);
 
         // relative size
         m_field_relativesize = findViewById(R.id.cardstyle_text_relativesize_valueslider);
@@ -565,6 +567,8 @@ public class CardStyleActivity extends AppCompatActivity {
                         }).build().show(context.getSupportFragmentManager(), "field_color_picker");
             }
         });
+
+        m_fieldSettingsPanel.setVisibility(View.VISIBLE);
     }
 
     private void updateFieldSettingsControls() {
@@ -624,6 +628,7 @@ public class CardStyleActivity extends AppCompatActivity {
     // field setting controls
     private Spinner m_fieldSpinner;
     private ArrayAdapter<CardField> m_fieldSpinnerAdapter;
+    private FrameLayout m_fieldSettingsPanel;
     private ValueSlider m_field_relativesize;
     private CheckBox m_lineReturnCheckBox;
     private CheckBox m_htmlCheckBox;
