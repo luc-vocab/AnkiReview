@@ -23,6 +23,7 @@ import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
 import android.view.animation.DecelerateInterpolator;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -35,6 +36,7 @@ import com.luc.ankireview.display.BackgroundViewPagerAdapter;
 import com.luc.ankireview.display.FlashCardViewPagerAdapter;
 import com.luc.ankireview.display.FlashcardViewPager;
 import com.luc.ankireview.style.CardStyle;
+import com.luc.ankireview.style.CardTemplateKey;
 
 import java.io.File;
 import java.io.IOException;
@@ -98,6 +100,8 @@ public class ReviewActivity extends AppCompatActivity {
         Log.d(TAG, "ReviewActivity.onCreate, deckId: "  + m_deckId);
 
         m_flashcardFrame = findViewById(R.id.flashcard_frame);
+        m_styleNotFound = findViewById(R.id.cardstyle_not_defined);
+        m_styleNotFound.setVisibility(View.INVISIBLE);
         m_touchLayer = findViewById(R.id.touch_layer);
         m_flashcardPager = findViewById(R.id.flashcard_pager);
 
@@ -107,6 +111,14 @@ public class ReviewActivity extends AppCompatActivity {
         // set touch listener
         m_detector = new GestureDetectorCompat(this, new ReviewerGestureDetector());
         m_touchLayer.setOnTouchListener(m_gestureListener);
+
+        Button cardStyleButton = findViewById(R.id.define_cardstyle_button);
+        cardStyleButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                launchCardStyle();
+            }
+        });
 
 
         // setupFlashcardPager();
@@ -319,7 +331,7 @@ public class ReviewActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.cardstyle:
                 Log.v(TAG, "card style selected");
-                launchCardStyleForCurrentCard();
+                launchCardStyle();
                 return true;
 
             default:
@@ -330,17 +342,15 @@ public class ReviewActivity extends AppCompatActivity {
         }
     }
 
-    private void launchCardStyleForCurrentCard() {
-        launchCardStyleForCard(m_currentCard);
+    private void launchCardStyle() {
+        if (m_cardForCardStyleEdit != null) {
+            Intent intent = new Intent(ReviewActivity.this, CardStyleActivity.class);
+            intent.putExtra("noteId", m_cardForCardStyleEdit.getNoteId());
+            intent.putExtra("cardOrd", m_cardForCardStyleEdit.getCardOrd());
+            this.startActivityForResult(intent,0);
+        }
     }
 
-    private void launchCardStyleForCard(Card card) {
-        // launch cardstyle activity
-        Intent intent = new Intent(ReviewActivity.this, CardStyleActivity.class);
-        intent.putExtra("noteId", card.getNoteId());
-        intent.putExtra("cardOrd", card.getCardOrd());
-        this.startActivityForResult(intent,0);
-    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -441,6 +451,8 @@ public class ReviewActivity extends AppCompatActivity {
             reviewsDone();
         } else {
             m_currentCard = initialCards.get(0);
+            setupCardStyleHandler(m_currentCard);
+
             // default to current card
             m_nextCard = m_currentCard;
             if( initialCards.size() == 2)
@@ -448,6 +460,8 @@ public class ReviewActivity extends AppCompatActivity {
 
             // done loading cards, show first question
             showQuestion();
+
+            showReviewControls();
         }
 
 
@@ -465,10 +479,31 @@ public class ReviewActivity extends AppCompatActivity {
 
     }
 
+    private void showReviewControls() {
+        m_flashcardFrame.setVisibility(View.VISIBLE);
+        m_speedDialView.setVisibility(View.VISIBLE);
+        m_styleNotFound.setVisibility(View.INVISIBLE);
+    }
+
+    private void showCardStyleNotDefinedControls() {
+        m_flashcardFrame.setVisibility(View.INVISIBLE);
+        m_speedDialView.setVisibility(View.INVISIBLE);
+        m_styleNotFound.setVisibility(View.VISIBLE);
+    }
+
+    private void setupCardStyleHandler(Card card) {
+        // store card information to handle clicks to card style
+        m_cardForCardStyleEdit = card;
+    }
+
     private boolean checkStyleExists(Card card) {
         if( ! m_cardStyle.styleExistsForCard(card)) {
             // redirect used to style activity
-            launchCardStyleForCard(card);
+            // launchCardStyleForCard(card);
+
+            showCardStyleNotDefinedControls();
+            setupCardStyleHandler(card);
+
             return false;
         }
         return true;
@@ -653,6 +688,7 @@ public class ReviewActivity extends AppCompatActivity {
         } else {
             // move "next card" up to current card
             m_currentCard = m_nextCard;
+            setupCardStyleHandler(m_currentCard);
 
             // now loop over the nextCards array. if we find a card which is different from
             // the current card, assign it to m_nextCard (to avoid reviewing the same card twice in a row).
@@ -691,6 +727,9 @@ public class ReviewActivity extends AppCompatActivity {
     private Card m_currentCard;
     private Card m_nextCard;
 
+    // when the user clicks Card Style, they'll go edit this card template
+    private Card m_cardForCardStyleEdit;
+
     private boolean m_answerAudio = false;
 
     private CardStyle m_cardStyle;
@@ -699,6 +738,7 @@ public class ReviewActivity extends AppCompatActivity {
     // layout elements
     private Toolbar m_toolbar;
     private FrameLayout m_flashcardFrame;
+    private FrameLayout m_styleNotFound;
     private FlashcardViewPager m_flashcardPager;
     private ViewPager m_backgroundPager;
     private FrameLayout m_touchLayer;

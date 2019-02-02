@@ -64,11 +64,36 @@
     </FrameLayout>
 
 
-
     <FrameLayout
         android:id="@+id/touch_layer"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/cardstyle_not_defined"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Card Style not defined" />
+
+            <Button
+                android:id="@+id/define_cardstyle_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Setup Card Style" />
+        </LinearLayout>
+
 
     </FrameLayout>
 

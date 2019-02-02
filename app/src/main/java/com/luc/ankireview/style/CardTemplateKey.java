@@ -30,6 +30,9 @@ public class CardTemplateKey implements Serializable {
         return " modelId: " + Long.toString(m_modelId);
     }
 
+    public long getModelId() { return m_modelId; }
+    public int getCardOrd() { return m_cardOrd; }
+
     private long m_modelId;
     private int m_cardOrd;
 }

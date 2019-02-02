@@ -85,7 +85,7 @@ public class CardStyleActivity extends AppCompatActivity {
         if(m_cardTemplate == null) {
             // create a new one
             m_cardTemplate = m_cardStyle.createCardTemplate(m_cardTemplateKey);
-            showDefineStyleDialog();
+            // showDefineStyleDialog();
         }
 
         // Log.v(TAG, "num question card fields: " + m_cardTemplate.getQuestionCardFields().size());
