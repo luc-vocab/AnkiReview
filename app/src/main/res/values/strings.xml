@@ -26,6 +26,13 @@
         <item>Right</item>
     </string-array>
 
+
+    <string name="review_cardstyle_not_defined_title">Card Style not defined</string>
+    <string name="review_cardstyle_not_defined_description">
+        Couldn\'t find a style for this card. AnkiReview doesn\'t use the Anki HTML/CSS
+        card template, you must define your style inside AnkiReview. After doing so,
+        you will be able to review this card.</string>
+
     <string name="card_style_create_ok">OK</string>
     <string name="card_style_not_found">Card Style not found</string>
     <string name="card_style_define_style">Please define a style for this card type, first by selecting question and answer fields, then by customizing the appearance of the card.</string>
