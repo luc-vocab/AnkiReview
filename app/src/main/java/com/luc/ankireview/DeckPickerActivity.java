@@ -27,6 +27,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.crashlytics.android.Crashlytics;
 import com.ichi2.anki.FlashCardsContract;
 import com.luc.ankireview.backgrounds.BackgroundManager;
 
@@ -279,8 +280,9 @@ public class DeckPickerActivity extends AppCompatActivity implements AdapterView
             }
 
         } catch (Exception e) {
+            Crashlytics.logException(e);
             Log.e(TAG, "Could not list AnkiDroid decks: " + e);
-            showToast("Could not list AnkiDroid decks " + e.getMessage());
+            Utils.reportAnkiAPIException(this, e);
         }
 
     }

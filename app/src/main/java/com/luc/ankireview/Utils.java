@@ -32,8 +32,8 @@ public class Utils {
 
     public static void reportAnkiAPIException(final AppCompatActivity activity, Exception e) {
         new AlertDialog.Builder(activity)
-                .setTitle("Couldn't retrieve due cards")
-                .setMessage("Unable to retrieve due cards from AnkiDroid. Please export your deck and send it to " +
+                .setTitle("Couldn't call AnkiDroid API")
+                .setMessage("Unable to retrieve data from AnkiDroid. Please export your deck and send it to " +
                         activity.getString(R.string.developer_email) + " to help resolve the issue (" + e.getMessage() + ")")
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
