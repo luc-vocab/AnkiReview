@@ -438,16 +438,29 @@ public class CardStyleActivity extends AppCompatActivity {
                 this.getCurrentFocus().getWindowToken(), 0);
     }
 
-    public void showDefineStyleDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage(R.string.card_style_define_style).setTitle(R.string.card_style_not_found).setPositiveButton(R.string.card_style_create_ok, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
 
-            }
-        });
-        AlertDialog dialog = builder.create();
-        dialog.show();
+    @Override
+    public void onBackPressed() {
+        new AlertDialog.Builder(this)
+                .setTitle("Save your Card Style")
+                .setMessage("Do you want to save your changes to the card style ?")
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener()
+                {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        saveAndExit();
+                    }
+
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener()
+                {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        exitWithoutSaving();
+                    }
+
+                })
+                .show();
     }
 
     @Override
@@ -462,7 +475,7 @@ public class CardStyleActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.cardstyle_save:
                 Log.v(TAG, "save card style");
-                saveCardStyle();
+                saveAndExit();
                 return true;
 
             default:
@@ -519,10 +532,23 @@ public class CardStyleActivity extends AppCompatActivity {
         m_cardStyle.renderCard(m_card, m_cardstyleEditorCards);
     }
 
-    public void saveCardStyle() {
-        m_cardStyle.saveCardStyleData();
-        setResult(Activity.RESULT_OK, null);
+    public void exitWithoutSaving() {
+        setResult(Activity.RESULT_CANCELED, null);
         finish();
+    }
+
+    public void saveAndExit() {
+        if (m_cardTemplate.getQuestionCardFields().size() == 0 || m_cardTemplate.getAnswerCardFields().size() == 0 ) {
+            new AlertDialog.Builder(this)
+                    .setTitle("Select Question and Answer fields before saving")
+                    .setMessage("You haven't defined Question or Answer fields. Please drag fields from the All Fields section to the Question or Answer section")
+                    .setPositiveButton("OK", null)
+                    .show();
+        } else {
+            m_cardStyle.saveCardStyleData();
+            setResult(Activity.RESULT_OK, null);
+            finish();
+        }
     }
 
     private void setupFieldSettings() {
