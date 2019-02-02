@@ -23,6 +23,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.luc.ankireview.Utils;
 import com.luc.ankireview.display.AnswerCard;
 import com.luc.ankireview.Card;
 import com.luc.ankireview.display.QuestionCard;
@@ -182,7 +183,7 @@ public class CardStyle implements Serializable {
 
             if(cardField.getIsHtml()) {
                 // convert from HTML
-                textValue = removeTrailingLineReturns(Html.fromHtml(textValue.toString(), Html.FROM_HTML_MODE_LEGACY));
+                textValue = removeTrailingLineReturns(Utils.fromHtml(textValue.toString()));
             }
 
             int currentFieldLength = textValue.length();
