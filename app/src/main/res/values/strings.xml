@@ -42,4 +42,6 @@
     <string name="card_style_answer_fields_description">Drag fields here to show them on the Answer (bottom part).</string>
     <string name="card_style_sound_fields_description">Drag fields which contain an Anki sound tag, they will be played upon revealing the answer.</string>
 
+    <string name="developer_email">ankireview@mailc.net</string>
+
 </resources>

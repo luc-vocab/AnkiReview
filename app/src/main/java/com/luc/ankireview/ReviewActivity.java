@@ -10,6 +10,7 @@ import android.os.Environment;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v4.view.GestureDetectorCompat;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -29,6 +30,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar;
+import com.crashlytics.android.Crashlytics;
 import com.leinardi.android.speeddial.SpeedDialActionItem;
 import com.leinardi.android.speeddial.SpeedDialView;
 import com.luc.ankireview.animation.ReviewPageTransformer;
@@ -423,6 +425,7 @@ public class ReviewActivity extends AppCompatActivity {
 
     }
 
+
     private void loadCards() {
 
         AnkiUtils.DeckDueCounts deckDueCounts = AnkiUtils.getDeckDueCount(getContentResolver(), m_deckId);
@@ -435,34 +438,42 @@ public class ReviewActivity extends AppCompatActivity {
         m_progressBar.setMax(m_initialDueCount * 100);
         m_progressBar.setProgress(0);
 
-        Vector<Card> initialCards = AnkiUtils.getDueCards(getContentResolver(), m_deckId, 2);
+        try {
+            Vector<Card> initialCards = AnkiUtils.getDueCards(getContentResolver(), m_deckId, 2);
 
-        // ensure we have a style defined for all of these cards, otherwise don't continue
-        for(Card card : initialCards) {
-            if (! checkStyleExists(card)) {
-                // don't continue
-                return;
+            // ensure we have a style defined for all of these cards, otherwise don't continue
+            for(Card card : initialCards) {
+                if (! checkStyleExists(card)) {
+                    // don't continue
+                    return;
+                }
             }
+
+
+            if( initialCards.size() == 0 ) {
+                // nothing to review
+                reviewsDone();
+            } else {
+                m_currentCard = initialCards.get(0);
+                setupCardStyleHandler(m_currentCard);
+
+                // default to current card
+                m_nextCard = m_currentCard;
+                if( initialCards.size() == 2)
+                    m_nextCard = initialCards.get(1);
+
+                // done loading cards, show first question
+                showQuestion();
+
+                showReviewControls();
+
+            }
+        } catch (Exception e) {
+            Crashlytics.logException(e);
+            Utils.reportAnkiAPIException(this, e);
         }
 
 
-        if( initialCards.size() == 0 ) {
-            // nothing to review
-            reviewsDone();
-        } else {
-            m_currentCard = initialCards.get(0);
-            setupCardStyleHandler(m_currentCard);
-
-            // default to current card
-            m_nextCard = m_currentCard;
-            if( initialCards.size() == 2)
-                m_nextCard = initialCards.get(1);
-
-            // done loading cards, show first question
-            showQuestion();
-
-            showReviewControls();
-        }
 
 
 
@@ -680,31 +691,36 @@ public class ReviewActivity extends AppCompatActivity {
 
 
         // retrieve next 5 cards due
-        Vector<Card> nextCards = AnkiUtils.getDueCards(getContentResolver(), m_deckId, 5);
+        try {
+            Vector<Card> nextCards = AnkiUtils.getDueCards(getContentResolver(), m_deckId, 5);
 
-        if( nextCards.size() == 0) {
-            // zero cards due. we've finished our reviews
-            reviewsDone();
-        } else {
-            // move "next card" up to current card
-            m_currentCard = m_nextCard;
-            setupCardStyleHandler(m_currentCard);
+            if (nextCards.size() == 0) {
+                // zero cards due. we've finished our reviews
+                reviewsDone();
+            } else {
+                // move "next card" up to current card
+                m_currentCard = m_nextCard;
+                setupCardStyleHandler(m_currentCard);
 
-            // now loop over the nextCards array. if we find a card which is different from
-            // the current card, assign it to m_nextCard (to avoid reviewing the same card twice in a row).
-            // if this is impossible ,then m_nextCard stays the same as m_currentCard.
-            for(Card card : nextCards) {
-                if( ! card.equals(m_currentCard)) {
-                    m_nextCard = card;
-                    break;
+                // now loop over the nextCards array. if we find a card which is different from
+                // the current card, assign it to m_nextCard (to avoid reviewing the same card twice in a row).
+                // if this is impossible ,then m_nextCard stays the same as m_currentCard.
+                for (Card card : nextCards) {
+                    if (!card.equals(m_currentCard)) {
+                        m_nextCard = card;
+                        break;
+                    }
                 }
+
+
+                int currentPage = m_flashcardPager.getCurrentItem();
+                m_flashcardAdapter.moveToNextQuestion(currentPage, m_currentCard, m_nextCard);
+
+                showQuestion();
             }
-
-
-            int currentPage = m_flashcardPager.getCurrentItem();
-            m_flashcardAdapter.moveToNextQuestion(currentPage, m_currentCard, m_nextCard);
-
-            showQuestion();
+        } catch ( Exception e ) {
+            Crashlytics.logException(e);
+            Utils.reportAnkiAPIException(this, e);
         }
 
     }
