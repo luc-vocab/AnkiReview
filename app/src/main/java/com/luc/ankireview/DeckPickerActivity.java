@@ -2,7 +2,9 @@ package com.luc.ankireview;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -162,6 +164,22 @@ public class DeckPickerActivity extends AppCompatActivity implements AdapterView
     }
 
     private void checkAllPermissions() {
+
+        // check whether ankidroid is installed
+        if ( ! Utils.isAppInstalled(this, "com.ichi2.anki")) {
+            new AlertDialog.Builder(this)
+                    .setTitle("AnkiDroid not found")
+                    .setMessage("This application cannot function without AnkiDroid installed.")
+                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            finish();
+                        }
+                    })
+                    .show();
+            return;
+        }
+
 
         try {
 
