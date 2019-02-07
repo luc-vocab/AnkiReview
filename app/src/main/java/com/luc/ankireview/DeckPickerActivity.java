@@ -30,6 +30,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.crashlytics.android.Crashlytics;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.ichi2.anki.FlashCardsContract;
 import com.luc.ankireview.backgrounds.BackgroundManager;
 
@@ -233,6 +234,7 @@ public class DeckPickerActivity extends AppCompatActivity implements AdapterView
         setContentView(R.layout.activity_deck_picker);
 
         m_backgroundManager = new BackgroundManager();
+        m_firebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.deckpicker_toolbar);
         setSupportActionBar(toolbar);
@@ -328,6 +330,8 @@ public class DeckPickerActivity extends AppCompatActivity implements AdapterView
         AnkiDeck deck = (AnkiDeck) m_adapter.getItem(i);
         Log.d(TAG, "selected deck: " + deck.deckName + " deckId: " + deck.deckId);
 
+        m_firebaseAnalytics.logEvent(Analytics.REVIEW_START, null);
+
         // launch review activity
         Intent intent = new Intent(DeckPickerActivity.this, ReviewActivity.class);
         intent.putExtra("deckId", deck.deckId);
@@ -336,5 +340,6 @@ public class DeckPickerActivity extends AppCompatActivity implements AdapterView
     //private List<String> m_decks = new LinkedList<String>();
 
     private BackgroundManager m_backgroundManager;
+    private FirebaseAnalytics m_firebaseAnalytics;
 
 }
