@@ -151,8 +151,10 @@ public class DeckPickerActivity extends AppCompatActivity implements AdapterView
         m_deckPickerMessageTitle.setText(titleResource);
         m_deckPickerMessageDescription.setText(descriptionResource);
         if( extra != null) {
+            m_deckPickerMessageExtra.setVisibility(View.VISIBLE);
             m_deckPickerMessageExtra.setText(extra);
         } else {
+            m_deckPickerMessageExtra.setVisibility(View.GONE);
             m_deckPickerMessageExtra.setText(null);
         }
 
