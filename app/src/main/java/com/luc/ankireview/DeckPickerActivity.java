@@ -262,6 +262,7 @@ public class DeckPickerActivity extends AppCompatActivity implements AdapterView
         try {
 
             m_ankiDeckList.clear();
+            Vector<AnkiDeck> noDueDeckList = new Vector<AnkiDeck>();
 
             Cursor decksCursor = getContentResolver().query(FlashCardsContract.Deck.CONTENT_ALL_URI, null, null, null, null);
             if (decksCursor.moveToFirst()) {
@@ -271,7 +272,7 @@ public class DeckPickerActivity extends AppCompatActivity implements AdapterView
 
                     AnkiDeck deck = new AnkiDeck();
                     deck.deckId = deckID;
-                    deck.deckName = deckName;
+                    deck.deckName = deckName.replaceAll("::", " > ");
 
                     try {
                         JSONObject deckOptions = new JSONObject(decksCursor.getString(decksCursor.getColumnIndex(FlashCardsContract.Deck.OPTIONS)));
@@ -285,8 +286,15 @@ public class DeckPickerActivity extends AppCompatActivity implements AdapterView
                     }
 
                     Log.d(TAG, "deck name: " + deckName);
-                    if (!deckName.equals("Default"))
-                        m_ankiDeckList.add(deck);
+                    if (!deckName.equals("Default")) {
+
+                        if( deck.deckDueCounts.getTotal() > 0) {
+                            m_ankiDeckList.add(deck);
+                        } else {
+                            noDueDeckList.add(deck);
+                        }
+                    }
+
 
                 } while (decksCursor.moveToNext());
             }
@@ -294,7 +302,11 @@ public class DeckPickerActivity extends AppCompatActivity implements AdapterView
             m_adapter.notifyDataSetChanged();
 
             if( m_ankiDeckList.size() == 0 ) {
-                showToast("No decks found, please add some flashcard decks in AnkiDroid");
+                if ( noDueDeckList.size() > 0) {
+                    showToast("Some decks found, but no due cards. Open AnkiDroid to schedule more cards");
+                } else {
+                    showToast("No decks found, please add some flashcard decks in AnkiDroid");
+                }
             }
 
         } catch (Exception e) {
