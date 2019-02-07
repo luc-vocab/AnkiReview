@@ -133,7 +133,7 @@ public class DeckPickerActivity extends AppCompatActivity implements AdapterView
             {
                 Log.e(TAG, "permission not granted: " + permission);
                 allPermissionsGranted = false;
-                showToast("Missing permissions, will not be able to list AnkiDroid decks");
+                showDeckPickerMessage(R.string.deckpicker_missingpermissions_title, R.string.deckpicker_missingpermissions_description, null);
             }
         }
 
@@ -145,15 +145,16 @@ public class DeckPickerActivity extends AppCompatActivity implements AdapterView
 
     }
 
-    private void showToast(String message) {
-        Toast toast = Toast.makeText(this, message, Toast.LENGTH_LONG);
-        toast.show();
-    }
 
-    private void showDeckPickerMessage(int titleResource, int descriptionResource) {
+    private void showDeckPickerMessage(int titleResource, int descriptionResource, String extra) {
 
         m_deckPickerMessageTitle.setText(titleResource);
         m_deckPickerMessageDescription.setText(descriptionResource);
+        if( extra != null) {
+            m_deckPickerMessageExtra.setText(extra);
+        } else {
+            m_deckPickerMessageExtra.setText(null);
+        }
 
         m_deckPickerMessage.setVisibility(View.VISIBLE);
         m_deckList.setVisibility(View.INVISIBLE);
@@ -178,7 +179,7 @@ public class DeckPickerActivity extends AppCompatActivity implements AdapterView
 
         // check whether ankidroid is installed
         if ( ! Utils.isAppInstalled(this, "com.ichi2.anki")) {
-            showDeckPickerMessage(R.string.deckpicker_ankidroid_not_found_title, R.string.deckpicker_ankidroid_not_found_description);
+            showDeckPickerMessage(R.string.deckpicker_ankidroid_not_found_title, R.string.deckpicker_ankidroid_not_found_description, null);
         }
 
 
@@ -252,6 +253,7 @@ public class DeckPickerActivity extends AppCompatActivity implements AdapterView
 
         m_deckPickerMessageTitle = findViewById(R.id.deckpicker_message_title);
         m_deckPickerMessageDescription = findViewById(R.id.deckpicker_message_description);
+        m_deckPickerMessageExtra = findViewById(R.id.deckpicker_message_extra);
 
         checkAllPermissions();
 
@@ -311,16 +313,16 @@ public class DeckPickerActivity extends AppCompatActivity implements AdapterView
 
             if( m_ankiDeckList.size() == 0 ) {
                 if ( noDueDeckList.size() > 0) {
-                    showToast("Some decks found, but no due cards. Open AnkiDroid to schedule more cards");
+                    showDeckPickerMessage(R.string.deckpicker_nocardsdue_title, R.string.deckpicker_nocardsdue_description, null);
                 } else {
-                    showToast("No decks found, please add some flashcard decks in AnkiDroid");
+                    showDeckPickerMessage(R.string.deckpicker_nodecksfound_title, R.string.deckpicker_nodecksfound_description, null);
                 }
             }
 
         } catch (Exception e) {
             Crashlytics.logException(e);
             Log.e(TAG, "Could not list AnkiDroid decks: " + e);
-            Utils.reportAnkiAPIException(this, e);
+            showDeckPickerMessage(R.string.deckpicker_cannotlistdecks_title, R.string.deckpicker_cannotlistdecks_description, e.getMessage());
         }
 
     }
@@ -332,6 +334,7 @@ public class DeckPickerActivity extends AppCompatActivity implements AdapterView
     private FrameLayout m_deckPickerMessage;
     private TextView m_deckPickerMessageTitle;
     private TextView m_deckPickerMessageDescription;
+    private TextView m_deckPickerMessageExtra;
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {

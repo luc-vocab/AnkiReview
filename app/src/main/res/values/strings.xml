@@ -46,6 +46,18 @@
     <string name="deckpicker_ankidroid_not_found_title">AnkiDroid not found</string>
     <string name="deckpicker_ankidroid_not_found_description">This application requires AnkiDroid in order to run. Please install AnkiDroid and add some flashcard decks.</string>
 
+    <string name="deckpicker_cannotlistdecks_title">Unable to retrieve Deck List</string>
+    <string name="deckpicker_cannotlistdecks_description">Could not retrieve AnkiDroid deck list</string>
+
+    <string name="deckpicker_nodecksfound_title">No Decks Found</string>
+    <string name="deckpicker_nodecksfound_description">Could not find any flashcard decks. Please add some decks in AnkiDroid.</string>
+
+    <string name="deckpicker_nocardsdue_title">All Reviews Done</string>
+    <string name="deckpicker_nocardsdue_description">No due cards. You can schedule extra reviews from AnkiDroid if needed.</string>
+
+    <string name="deckpicker_missingpermissions_title">Missing Permissions</string>
+    <string name="deckpicker_missingpermissions_description">Permissions not granted, will not be able to list AnkiDroid decks.</string>
+
     <string name="developer_email">ankireview@mailc.net</string>
 
 </resources>
