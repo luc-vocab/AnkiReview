@@ -42,6 +42,10 @@
     <string name="card_style_answer_fields_description">Drag fields here to show them on the Answer (bottom part).</string>
     <string name="card_style_sound_fields_description">Drag fields which contain an Anki sound tag, they will be played upon revealing the answer.</string>
 
+    <!-- deck picker related messages -->
+    <string name="deckpicker_ankidroid_not_found_title">AnkiDroid not found</string>
+    <string name="deckpicker_ankidroid_not_found_description">This application requires AnkiDroid in order to run. Please install AnkiDroid and add some flashcard decks.</string>
+
     <string name="developer_email">ankireview@mailc.net</string>
 
 </resources>

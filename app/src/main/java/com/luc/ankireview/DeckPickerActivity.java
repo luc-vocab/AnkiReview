@@ -24,6 +24,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -149,6 +150,15 @@ public class DeckPickerActivity extends AppCompatActivity implements AdapterView
         toast.show();
     }
 
+    private void showDeckPickerMessage(int titleResource, int descriptionResource) {
+
+        m_deckPickerMessageTitle.setText(titleResource);
+        m_deckPickerMessageDescription.setText(descriptionResource);
+
+        m_deckPickerMessage.setVisibility(View.VISIBLE);
+        m_deckList.setVisibility(View.INVISIBLE);
+    }
+
     private void listDecksIfPermissionsGranted() {
         if( permissionsGranted() ) {
             listDecks();
@@ -168,17 +178,7 @@ public class DeckPickerActivity extends AppCompatActivity implements AdapterView
 
         // check whether ankidroid is installed
         if ( ! Utils.isAppInstalled(this, "com.ichi2.anki")) {
-            new AlertDialog.Builder(this)
-                    .setTitle("AnkiDroid not found")
-                    .setMessage("This application cannot function without AnkiDroid installed.")
-                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            finish();
-                        }
-                    })
-                    .show();
-            return;
+            showDeckPickerMessage(R.string.deckpicker_ankidroid_not_found_title, R.string.deckpicker_ankidroid_not_found_description);
         }
 
 
@@ -246,6 +246,12 @@ public class DeckPickerActivity extends AppCompatActivity implements AdapterView
 
         m_adapter = new DeckAdapter(this, m_ankiDeckList);
         m_deckList.setAdapter(m_adapter);
+
+        m_deckPickerMessage = findViewById(R.id.deckpicker_message);
+        m_deckPickerMessage.setVisibility(View.INVISIBLE);
+
+        m_deckPickerMessageTitle = findViewById(R.id.deckpicker_message_title);
+        m_deckPickerMessageDescription = findViewById(R.id.deckpicker_message_description);
 
         checkAllPermissions();
 
@@ -322,6 +328,10 @@ public class DeckPickerActivity extends AppCompatActivity implements AdapterView
     Vector<AnkiDeck> m_ankiDeckList;
     private ListView m_deckList;
     private DeckAdapter m_adapter;
+
+    private FrameLayout m_deckPickerMessage;
+    private TextView m_deckPickerMessageTitle;
+    private TextView m_deckPickerMessageDescription;
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
