@@ -33,13 +33,6 @@ public class AnkiReviewApp extends Application {
         config.put("secure", true);
         MediaManager.init(this, config);
 
-        configureCrashReporting();
     }
 
-    private void configureCrashReporting() {
-        CrashlyticsCore crashlyticsCore = new CrashlyticsCore.Builder()
-                .disabled(BuildConfig.DEBUG)
-                .build();
-        Fabric.with(this, new Crashlytics.Builder().core(crashlyticsCore).build());
-    }
 }
