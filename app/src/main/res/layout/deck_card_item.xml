@@ -21,15 +21,12 @@
 
             <TextView
                 android:id="@+id/deck_name"
+                style="@style/DeckPickerDeckName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
                 android:layout_weight="1"
                 android:baselineAligned="false"
-                android:fontFamily="@font/fira_sans_condensed"
-                android:text="TextView"
-                android:textSize="40dp"
-                android:textColor="@color/md_blue_700" />
+                android:text="TextView" />
 
 
             <LinearLayout
@@ -37,7 +34,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:layout_weight="1"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="5dp"
                 >
 
                 <FrameLayout
@@ -57,31 +54,29 @@
 
                     <TextView
                         android:id="@+id/deck_new_count"
+                        style="@style/DeckPickerDeckCounts"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:fontFamily="@font/fira_sans_condensed"
                         android:textColor="@color/answer_easy"
-                        android:textSize="25dp" />
+                        />
 
                     <TextView
                         android:id="@+id/deck_review_count"
+                        style="@style/DeckPickerDeckCounts"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:fontFamily="@font/fira_sans_condensed"
                         android:text="TextView"
-                        android:textColor="@color/answer_good"
-                        android:textSize="25dp" />
+                        android:textColor="@color/answer_good" />
 
                     <TextView
                         android:id="@+id/deck_learn_count"
+                        style="@style/DeckPickerDeckCounts"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:fontFamily="@font/fira_sans_condensed"
-                        android:textColor="@color/answer_wrong"
-                        android:textSize="25dp" />
+                        android:textColor="@color/answer_wrong" />
 
                 </LinearLayout>
 

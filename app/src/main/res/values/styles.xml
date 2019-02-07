@@ -22,6 +22,18 @@
 
     </style>
 
+
+    <!-- Deck Picker styles -->
+    <style name="DeckPickerDeckName">
+        <item name="android:layout_marginLeft">10dp</item>
+        <item name="android:textSize">25dp</item>
+        <item name="android:textColor">@color/md_blue_700</item>
+    </style>
+
+    <style name="DeckPickerDeckCounts">
+        <item name="android:textSize">18dp</item>
+    </style>
+
     <style name="CardStyleItem">
         <item name="android:layout_marginLeft">10dp</item>
         <item name="android:layout_marginRight">10dp</item>
