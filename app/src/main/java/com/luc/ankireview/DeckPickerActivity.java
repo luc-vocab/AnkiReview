@@ -162,6 +162,11 @@ public class DeckPickerActivity extends AppCompatActivity implements AdapterView
         m_deckList.setVisibility(View.INVISIBLE);
     }
 
+    private void showDecks() {
+        m_deckPickerMessage.setVisibility(View.INVISIBLE);
+        m_deckList.setVisibility(View.VISIBLE);
+    }
+
     private void listDecksIfPermissionsGranted() {
         if( permissionsGranted() ) {
             listDecks();
@@ -319,6 +324,8 @@ public class DeckPickerActivity extends AppCompatActivity implements AdapterView
                 } else {
                     showDeckPickerMessage(R.string.deckpicker_nodecksfound_title, R.string.deckpicker_nodecksfound_description, null);
                 }
+            } else {
+                showDecks();
             }
 
         } catch (Exception e) {
