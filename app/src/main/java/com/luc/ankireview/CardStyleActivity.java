@@ -532,6 +532,11 @@ public class CardStyleActivity extends AppCompatActivity {
         m_marginsView.setVisibility(View.VISIBLE);
     }
 
+    public void fieldListUpateCardPreview() {
+        m_firebaseAnalytics.logEvent(Analytics.CARDSTYLE_FIELD_CHOSEN, null);
+        updateCardPreview();
+    }
+
     public void updateCardPreview() {
         m_cardStyle.renderCard(m_card, m_cardstyleEditorCards);
     }

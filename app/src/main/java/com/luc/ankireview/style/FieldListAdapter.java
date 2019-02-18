@@ -183,7 +183,7 @@ public class FieldListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             }
         }
 
-        m_activity.updateCardPreview();
+        m_activity.fieldListUpateCardPreview();
     }
 
     @Override
