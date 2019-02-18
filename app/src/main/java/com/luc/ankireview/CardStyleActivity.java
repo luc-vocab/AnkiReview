@@ -36,6 +36,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.luc.ankireview.style.CardField;
 import com.luc.ankireview.style.CardStyle;
 import com.luc.ankireview.style.CardTemplate;
@@ -75,6 +76,9 @@ public class CardStyleActivity extends AppCompatActivity {
         int cardOrd = intent.getIntExtra("cardOrd", 0);
 
         Log.v(TAG, "starting CardStyleActivity with noteId: " + noteId + " cardOrd: " + cardOrd);
+
+        m_firebaseAnalytics = FirebaseAnalytics.getInstance(this);
+        m_firebaseAnalytics.logEvent(Analytics.CARDSTYLE_START, null);
 
         // retrieve the appropriate card
         m_card = AnkiUtils.retrieveCard(getContentResolver(), noteId, cardOrd);
@@ -533,6 +537,9 @@ public class CardStyleActivity extends AppCompatActivity {
     }
 
     public void exitWithoutSaving() {
+
+        m_firebaseAnalytics.logEvent(Analytics.CARDSTYLE_NOSAVE, null);
+
         setResult(Activity.RESULT_CANCELED, null);
         finish();
     }
@@ -545,6 +552,9 @@ public class CardStyleActivity extends AppCompatActivity {
                     .setPositiveButton("OK", null)
                     .show();
         } else {
+
+            m_firebaseAnalytics.logEvent(Analytics.CARDSTYLE_SAVE, null);
+
             m_cardStyle.saveCardStyleData();
             setResult(Activity.RESULT_OK, null);
             finish();
@@ -683,4 +693,5 @@ public class CardStyleActivity extends AppCompatActivity {
 
     private CardField m_currentCardField = null;
 
+    private FirebaseAnalytics m_firebaseAnalytics;
 }

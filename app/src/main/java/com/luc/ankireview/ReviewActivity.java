@@ -31,6 +31,7 @@ import android.widget.Toast;
 
 import com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar;
 import com.crashlytics.android.Crashlytics;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.leinardi.android.speeddial.SpeedDialActionItem;
 import com.leinardi.android.speeddial.SpeedDialView;
 import com.luc.ankireview.animation.ReviewPageTransformer;
@@ -100,6 +101,8 @@ public class ReviewActivity extends AppCompatActivity {
         Intent intent = getIntent();
         m_deckId = intent.getLongExtra("deckId", 0);
         Log.d(TAG, "ReviewActivity.onCreate, deckId: "  + m_deckId);
+
+        m_firebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
         m_flashcardFrame = findViewById(R.id.flashcard_frame);
         m_styleNotFound = findViewById(R.id.cardstyle_not_defined);
@@ -734,6 +737,10 @@ public class ReviewActivity extends AppCompatActivity {
 
 
     private void reviewsDone() {
+        Bundle bundle = new Bundle();
+        bundle.putInt(Analytics.REVIEW_COUNT, m_reviewCount);
+        m_firebaseAnalytics.logEvent(Analytics.REVIEW_END, bundle);
+
         showToast("End of cards reached");
         finish();
     }
@@ -799,5 +806,6 @@ public class ReviewActivity extends AppCompatActivity {
     // speed dial button
     SpeedDialView m_speedDialView;
 
+    private FirebaseAnalytics m_firebaseAnalytics;
 
 }
