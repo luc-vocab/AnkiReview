@@ -134,6 +134,8 @@ public class DeckPickerActivity extends AppCompatActivity implements AdapterView
                 Log.e(TAG, "permission not granted: " + permission);
                 allPermissionsGranted = false;
                 showDeckPickerMessage(R.string.deckpicker_missingpermissions_title, R.string.deckpicker_missingpermissions_description, null);
+
+                m_firebaseAnalytics.logEvent(Analytics.MISSING_PERMISSION, null);
             }
         }
 
@@ -187,6 +189,8 @@ public class DeckPickerActivity extends AppCompatActivity implements AdapterView
         // check whether ankidroid is installed
         if ( ! Utils.isAppInstalled(this, "com.ichi2.anki")) {
             showDeckPickerMessage(R.string.deckpicker_ankidroid_not_found_title, R.string.deckpicker_ankidroid_not_found_description, null);
+            m_firebaseAnalytics.logEvent(Analytics.MISSING_ANKIDROID, null);
+            return;
         }
 
 
@@ -321,10 +325,15 @@ public class DeckPickerActivity extends AppCompatActivity implements AdapterView
             if( m_ankiDeckList.size() == 0 ) {
                 if ( noDueDeckList.size() > 0) {
                     showDeckPickerMessage(R.string.deckpicker_nocardsdue_title, R.string.deckpicker_nocardsdue_description, null);
+                    m_firebaseAnalytics.logEvent(Analytics.NO_DUEDECKS, null);
                 } else {
                     showDeckPickerMessage(R.string.deckpicker_nodecksfound_title, R.string.deckpicker_nodecksfound_description, null);
+                    m_firebaseAnalytics.logEvent(Analytics.NO_DECKS, null);
                 }
             } else {
+                Bundle bundle = new Bundle();
+                bundle.putInt(Analytics.DECK_COUNT, m_ankiDeckList.size());
+                m_firebaseAnalytics.logEvent(Analytics.LIST_DECKS, bundle);
                 showDecks();
             }
 
