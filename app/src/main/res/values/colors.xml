@@ -16,6 +16,7 @@
 
     <color name="answer_tag_suspend">@color/md_orange_900</color>
 
+    <color name="cardstyle_empty_color">@color/md_grey_300</color>
 
     <array name="text_field_colors">
         <item>@color/md_red_500</item>

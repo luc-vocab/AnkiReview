@@ -65,8 +65,8 @@ public class CardStyle implements Serializable {
         CardTemplateKey templateKey = new CardTemplateKey(card.getModelId(), card.getCardOrd());
         CardTemplate cardTemplate = m_cardStyleStorage.cardTemplateMap.get(templateKey);
 
-        SpannableStringBuilder questionBuilder = buildString(cardTemplate.getQuestionCardFields(), card, layout);
-        SpannableStringBuilder answerBuilder = buildString(cardTemplate.getAnswerCardFields(), card, layout);
+        SpannableStringBuilder questionBuilder = buildString(cardTemplate.getQuestionCardFields(), card, layout, true);
+        SpannableStringBuilder answerBuilder = buildString(cardTemplate.getAnswerCardFields(), card, layout, false);
 
         QuestionCard questionCard = layout.findViewById(R.id.question_card);
         AnswerCard answerCard = layout.findViewById(R.id.answer_card);
@@ -172,56 +172,76 @@ public class CardStyle implements Serializable {
         FontsContractCompat.requestFont(m_context, request, callback, getHandlerThreadHandler());
     }
 
-    private SpannableStringBuilder buildString(Vector<CardField> fields, Card card, ViewGroup layout) {
+    private SpannableStringBuilder buildString(Vector<CardField> fields, Card card, ViewGroup layout, boolean isQuestion) {
         SpannableStringBuilder builder = new SpannableStringBuilder();
-        int currentIndex = 0;
-        for( CardField cardField : fields) {
-            CharSequence textValue = card.getFieldValue(cardField.getFieldName());
 
-            // filter out sound
-            textValue = Card.filterSound((String)textValue);
-
-            if(cardField.getIsHtml()) {
-                // convert from HTML
-                textValue = removeTrailingLineReturns(Utils.fromHtml(textValue.toString()));
+        if (fields.size() == 0)
+        {
+            String placeholderContent;
+            if (isQuestion) {
+                placeholderContent = layout.getContext().getString(R.string.card_style_question_empty);
+            } else {
+                placeholderContent = layout.getContext().getString(R.string.card_style_answer_empty);
             }
 
-            int currentFieldLength = textValue.length();
-            if( currentFieldLength > 0) {
-                if( currentIndex > 0) {
-                    // not the first field, append a space or line return first
-                    if (cardField.getLineReturn()) {
-                        builder.append("\n");
-                    } else {
-                        builder.append(" ");
+
+            builder.append(placeholderContent);
+            int currentFieldLength = placeholderContent.length();
+            int color = ContextCompat.getColor(layout.getContext(), R.color.cardstyle_empty_color);
+            builder.setSpan(new ForegroundColorSpan(color), 0, currentFieldLength, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            builder.setSpan(new RelativeSizeSpan(0.5f), 0, currentFieldLength, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        } else {
+
+
+            int currentIndex = 0;
+            for (CardField cardField : fields) {
+                CharSequence textValue = card.getFieldValue(cardField.getFieldName());
+
+                // filter out sound
+                textValue = Card.filterSound((String) textValue);
+
+                if (cardField.getIsHtml()) {
+                    // convert from HTML
+                    textValue = removeTrailingLineReturns(Utils.fromHtml(textValue.toString()));
+                }
+
+                int currentFieldLength = textValue.length();
+                if (currentFieldLength > 0) {
+                    if (currentIndex > 0) {
+                        // not the first field, append a space or line return first
+                        if (cardField.getLineReturn()) {
+                            builder.append("\n");
+                        } else {
+                            builder.append(" ");
+                        }
+                        currentIndex += 1;
                     }
-                    currentIndex += 1;
-                }
 
-                builder.append(textValue);
-                if( cardField.getColor() != cardField.DEFAULT_COLOR ) {
-                    builder.setSpan(new ForegroundColorSpan(cardField.getColor()), currentIndex, currentIndex + currentFieldLength, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-                }
+                    builder.append(textValue);
+                    if (cardField.getColor() != cardField.DEFAULT_COLOR) {
+                        builder.setSpan(new ForegroundColorSpan(cardField.getColor()), currentIndex, currentIndex + currentFieldLength, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                    }
 
-                if(cardField.getRelativeSize() != cardField.RELATIVE_SIZE_DEFAULT) {
-                    // add relative size span
-                    builder.setSpan(new RelativeSizeSpan(cardField.getRelativeSize()),currentIndex, currentIndex + currentFieldLength, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-                }
+                    if (cardField.getRelativeSize() != cardField.RELATIVE_SIZE_DEFAULT) {
+                        // add relative size span
+                        builder.setSpan(new RelativeSizeSpan(cardField.getRelativeSize()), currentIndex, currentIndex + currentFieldLength, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                    }
 
-                if(cardField.getAlignment() != cardField.DEFAULT_ALIGNMENT) {
-                    // add alignment span
-                    builder.setSpan(new AlignmentSpan.Standard(cardField.getAlignment()),currentIndex, currentIndex + currentFieldLength, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-                }
+                    if (cardField.getAlignment() != cardField.DEFAULT_ALIGNMENT) {
+                        // add alignment span
+                        builder.setSpan(new AlignmentSpan.Standard(cardField.getAlignment()), currentIndex, currentIndex + currentFieldLength, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                    }
 
-                if (cardField.getLeftMargin() > 0)  {
-                    // add left margin span
-                    // new LeadingMarginSpan.Standard(120),
-                    int leftMargin_px = (int) TypedValue.applyDimension(
-                            TypedValue.COMPLEX_UNIT_DIP, cardField.getLeftMargin(), layout.getResources().getDisplayMetrics());
-                    builder.setSpan(new LeadingMarginSpan.Standard(leftMargin_px),currentIndex, currentIndex + currentFieldLength, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-                }
+                    if (cardField.getLeftMargin() > 0) {
+                        // add left margin span
+                        // new LeadingMarginSpan.Standard(120),
+                        int leftMargin_px = (int) TypedValue.applyDimension(
+                                TypedValue.COMPLEX_UNIT_DIP, cardField.getLeftMargin(), layout.getResources().getDisplayMetrics());
+                        builder.setSpan(new LeadingMarginSpan.Standard(leftMargin_px), currentIndex, currentIndex + currentFieldLength, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                    }
 
-                currentIndex += currentFieldLength;
+                    currentIndex += currentFieldLength;
+                }
             }
         }
 
