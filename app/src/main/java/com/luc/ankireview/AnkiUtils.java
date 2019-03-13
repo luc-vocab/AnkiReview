@@ -333,6 +333,10 @@ public class AnkiUtils {
         addCardTag(contentResolver, card, MARK_TAG);
     }
 
+    public static void tagCard(ContentResolver contentResolver, Card card, String tag) {
+        addCardTag(contentResolver, card, tag);
+    }
+
     public static void addCardTag(ContentResolver contentResolver, Card card, String newTag) {
         Uri reviewInfoUri = FlashCardsContract.ReviewInfo.CONTENT_URI;
         ContentValues values = new ContentValues();

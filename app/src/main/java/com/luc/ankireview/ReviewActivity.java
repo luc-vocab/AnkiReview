@@ -3,6 +3,7 @@ package com.luc.ankireview;
 import android.animation.ObjectAnimator;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
@@ -13,6 +14,7 @@ import android.support.v4.view.GestureDetectorCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.preference.PreferenceManager;
 import android.support.v7.widget.Toolbar;
 import android.text.InputType;
 import android.util.Log;
@@ -44,9 +46,12 @@ import com.luc.ankireview.display.FlashcardViewPager;
 import com.luc.ankireview.style.CardStyle;
 import com.luc.ankireview.style.CardTemplateKey;
 
+import org.json.JSONArray;
+
 import java.io.File;
 import java.io.IOException;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Vector;
 
@@ -647,8 +652,10 @@ public class ReviewActivity extends AppCompatActivity {
         alert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
                 String value = input.getText().toString();
-                value  = value.replaceAll("\\s+","");
+                value = value.replaceAll("\\s+", "");
                 Log.v(TAG, "new tag: " + value);
+                addQuicktag(value);
+
             }
         });
 
@@ -662,9 +669,58 @@ public class ReviewActivity extends AppCompatActivity {
 
     }
 
+
+    private ArrayList<String> getQuicktagList() {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+
+        ArrayList<String> quickTagList = new ArrayList<String>();
+
+        try{
+
+            JSONArray quickTagArray = new JSONArray(prefs.getString(Settings.PREFERENCES_KEY_QUICKTAGS, "[]"));
+            for (int i = 0; i < quickTagArray.length(); i++) {
+                String currentTag = quickTagArray.getString(i);
+                quickTagList.add(currentTag);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return quickTagList;
+    }
+
+    public void addQuicktag(String newTag) {
+
+        ArrayList<String> quickTagList = getQuicktagList();
+        if( ! quickTagList.contains(newTag)){
+            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+            try {
+                JSONArray quickTagArray = new JSONArray(prefs.getString(Settings.PREFERENCES_KEY_QUICKTAGS, "[]"));
+                quickTagArray.put(newTag);
+
+                // write back to preferences
+                SharedPreferences.Editor editor = prefs.edit();
+                editor.putString(Settings.PREFERENCES_KEY_QUICKTAGS, quickTagArray.toString());
+                System.out.println(quickTagArray.toString());
+                editor.commit();
+
+                tagCard(newTag);
+            } catch(Exception e) {
+                e.printStackTrace();
+
+            }
+        }
+
+    }
+
     public void markCard() {
         AnkiUtils.markCard(getContentResolver(), m_currentCard);
         showToast("Marked Card");
+    }
+
+    public void tagCard(String tag) {
+        AnkiUtils.tagCard(getContentResolver(), m_currentCard, tag);
+        showToast("Tagged card " + tag);
     }
 
     public void markSuspendCard() {
