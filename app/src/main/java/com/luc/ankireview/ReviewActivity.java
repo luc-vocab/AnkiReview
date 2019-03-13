@@ -1,6 +1,7 @@
 package com.luc.ankireview;
 
 import android.animation.ObjectAnimator;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
@@ -13,6 +14,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.InputType;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.Menu;
@@ -25,6 +27,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -248,6 +251,9 @@ public class ReviewActivity extends AppCompatActivity {
 
                 } else {
                     switch (speedDialActionItem.getId()) {
+                        case R.id.reviewer_action_add_quicktag:
+                            showAddQuicktag();
+                            return false;
                         case R.id.reviewer_action_mark:
                             markCard();
                             return false;
@@ -424,6 +430,13 @@ public class ReviewActivity extends AppCompatActivity {
                         .create());
 
         */
+
+        // quicktags
+        m_speedDialView.addActionItem(
+                new SpeedDialActionItem.Builder(R.id.reviewer_action_add_quicktag, R.drawable.tag)
+                        .setFabBackgroundColor(ResourcesCompat.getColor(getResources(), R.color.answer_tag_suspend, getTheme()))
+                        .setLabel(R.string.reviewer_action_add_quicktag)
+                        .create());
 
 
     }
@@ -617,6 +630,36 @@ public class ReviewActivity extends AppCompatActivity {
         showCorrectAnimation();
         answerCard(m_currentCard.getEaseGood());
         moveToNextQuestion();
+    }
+
+    public void showAddQuicktag() {
+
+
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+
+        alert.setTitle("Add Quicktag");
+        //alert.setMessage("Message");
+
+        final EditText input = new EditText(this);
+        input.setInputType(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
+        alert.setView(input);
+
+        alert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                String value = input.getText().toString();
+                value  = value.replaceAll("\\s+","");
+                Log.v(TAG, "new tag: " + value);
+            }
+        });
+
+        alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                // Canceled.
+            }
+        });
+
+        alert.show();
+
     }
 
     public void markCard() {

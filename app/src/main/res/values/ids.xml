@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <item name="reviewer_action_add_quicktag" type="id"/>
+
     <item name="reviewer_action_mark" type="id"/>
     <item name="reviewer_action_mark_suspend" type="id"/>
     <item name="reviewer_action_mark_bury" type="id"/>
