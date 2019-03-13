@@ -32,6 +32,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar;
@@ -367,6 +368,10 @@ public class ReviewActivity extends AppCompatActivity {
                 launchCardStyle();
                 return true;
 
+            case R.id.reset_quicktags:
+                resetQuicktags();
+                return true;
+
             default:
                 // If we got here, the user's action was not recognized.
                 // Invoke the superclass to handle it.
@@ -680,7 +685,7 @@ public class ReviewActivity extends AppCompatActivity {
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
 
         alert.setTitle("Add Quicktag");
-        //alert.setMessage("Message");
+
 
         final EditText input = new EditText(this);
         input.setInputType(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
@@ -726,6 +731,15 @@ public class ReviewActivity extends AppCompatActivity {
         return quickTagList;
     }
 
+    private void resetQuicktags() {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString(Settings.PREFERENCES_KEY_QUICKTAGS, null);
+        editor.commit();
+        showToast("Quicktags reset");
+        setupSpeedDial();
+    }
+
     public void addQuicktag(String newTag) {
 
         ArrayList<String> quickTagList = getQuicktagList();
@@ -747,12 +761,15 @@ public class ReviewActivity extends AppCompatActivity {
                 System.out.println(quickTagArray.toString());
                 editor.commit();
 
-                tagCard(newTag);
+
+                setupSpeedDial();
             } catch(Exception e) {
                 e.printStackTrace();
 
             }
         }
+        // tag card regardless of whether the quicktag existed or not
+        tagCard(newTag);
 
     }
 
