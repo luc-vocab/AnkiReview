@@ -255,7 +255,24 @@ public class ReviewActivity extends AppCompatActivity {
                     return false;
 
                 } else {
+                    ArrayList<String> quicktagList = getQuicktagList();
                     switch (speedDialActionItem.getId()) {
+                        case R.id.reviewer_action_quicktag_1:
+                            tagCard(quicktagList.get(0));
+                            return false;
+                        case R.id.reviewer_action_quicktag_2:
+                            tagCard(quicktagList.get(1));
+                            return false;
+                        case R.id.reviewer_action_quicktag_3:
+                            tagCard(quicktagList.get(2));
+                            return false;
+                        case R.id.reviewer_action_quicktag_4:
+                            tagCard(quicktagList.get(3));
+                            return false;
+                        case R.id.reviewer_action_quicktag_5:
+                            tagCard(quicktagList.get(4));
+                            return false;
+
                         case R.id.reviewer_action_add_quicktag:
                             showAddQuicktag();
                             return false;
@@ -436,7 +453,27 @@ public class ReviewActivity extends AppCompatActivity {
 
         */
 
+
         // quicktags
+
+        ArrayList<String> quicktagList = getQuicktagList();
+        int resourceArray[] = {
+                R.id.reviewer_action_quicktag_1,
+                R.id.reviewer_action_quicktag_2,
+                R.id.reviewer_action_quicktag_3,
+                R.id.reviewer_action_quicktag_4,
+                R.id.reviewer_action_quicktag_5
+        };
+        int i = 0;
+        for(String quicktag : quicktagList) {
+            m_speedDialView.addActionItem(
+                    new SpeedDialActionItem.Builder(resourceArray[i], R.drawable.tag)
+                            .setFabBackgroundColor(ResourcesCompat.getColor(getResources(), R.color.answer_tag_suspend, getTheme()))
+                            .setLabel(quicktag)
+                            .create());
+            i++;
+        }
+
         m_speedDialView.addActionItem(
                 new SpeedDialActionItem.Builder(R.id.reviewer_action_add_quicktag, R.drawable.tag)
                         .setFabBackgroundColor(ResourcesCompat.getColor(getResources(), R.color.answer_tag_suspend, getTheme()))
@@ -693,6 +730,12 @@ public class ReviewActivity extends AppCompatActivity {
 
         ArrayList<String> quickTagList = getQuicktagList();
         if( ! quickTagList.contains(newTag)){
+
+            if (quickTagList.size() >= Settings.MAX_QUICKTAGS) {
+                showToast("You can set a maximum of " + Settings.MAX_QUICKTAGS + " quicktags");
+                return;
+            }
+
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
             try {
                 JSONArray quickTagArray = new JSONArray(prefs.getString(Settings.PREFERENCES_KEY_QUICKTAGS, "[]"));
