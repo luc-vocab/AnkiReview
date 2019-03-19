@@ -15,6 +15,7 @@
     <color name="answer_easy">@color/md_blue_600</color>
 
     <color name="answer_tag_suspend">@color/md_orange_900</color>
+    <color name="answer_tag_disabled">@color/md_grey_500</color>
 
     <color name="cardstyle_empty_color">@color/md_grey_300</color>
 

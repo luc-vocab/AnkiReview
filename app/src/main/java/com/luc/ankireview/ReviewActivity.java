@@ -471,9 +471,15 @@ public class ReviewActivity extends AppCompatActivity {
         };
         int i = 0;
         for(String quicktag : quicktagList) {
+
+            int color = ResourcesCompat.getColor(getResources(), R.color.answer_tag_suspend, getTheme());
+            if (m_currentCard.getTagMap().contains(quicktag)) {
+                color = ResourcesCompat.getColor(getResources(), R.color.answer_tag_disabled, getTheme());
+            }
+
             m_speedDialView.addActionItem(
                     new SpeedDialActionItem.Builder(resourceArray[i], R.drawable.tag)
-                            .setFabBackgroundColor(ResourcesCompat.getColor(getResources(), R.color.answer_tag_suspend, getTheme()))
+                            .setFabBackgroundColor(color)
                             .setLabel(quicktag)
                             .create());
             i++;

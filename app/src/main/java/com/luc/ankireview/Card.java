@@ -5,6 +5,7 @@ import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Vector;
 import java.util.regex.Matcher;
@@ -16,12 +17,13 @@ public class Card {
     private static final String TAG = "Card";
 
 
-    public Card(long noteId, int cardOrd, long modelId, String cardTemplateName, HashMap<String,String> fieldMap) {
+    public Card(long noteId, int cardOrd, long modelId, String cardTemplateName, HashMap<String,String> fieldMap, HashSet<String> tagSet) {
         m_noteId = noteId;
         m_cardOrd = cardOrd;
         m_modelId = modelId;
         m_cardTemplateName = cardTemplateName;
         m_fieldMap = fieldMap;
+        m_tags = tagSet;
 
         m_buttonCount = 0;
         m_nextReviewTimes = null;
@@ -79,6 +81,8 @@ public class Card {
     public String getFieldValue(String fieldName) { return m_fieldMap.get(fieldName); }
 
     public HashMap<String,String> getFieldMap() { return m_fieldMap; }
+
+    public HashSet<String> getTagMap() { return m_tags; }
 
     public AnkiUtils.Ease getEaseBad() {
         return AnkiUtils.Ease.EASE_1;
@@ -203,6 +207,7 @@ public class Card {
     private String m_cardTemplateName;
 
     HashMap<String,String> m_fieldMap;
+    HashSet<String> m_tags;
 
     private int m_buttonCount;
     private Vector<String> m_nextReviewTimes;

@@ -12,7 +12,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Vector;
 
 public class AnkiUtils {
@@ -218,6 +220,7 @@ public class AnkiUtils {
         // -------------------------
 
         String[] fieldValues = {};
+        HashSet<String> tagSet = new HashSet<String>();
         long modelId = 0;
 
         Uri noteInfoUri = Uri.withAppendedPath(FlashCardsContract.Note.CONTENT_URI, Long.toString(noteId));
@@ -233,8 +236,13 @@ public class AnkiUtils {
 
             String fields = noteCursor.getString(noteCursor.getColumnIndex(FlashCardsContract.Note.FLDS));
             Log.v(TAG, "fields: " + fields);
-
             fieldValues = fields.split("\\x1f");
+
+            String tags = noteCursor.getString(noteCursor.getColumnIndex(FlashCardsContract.Note.TAGS));
+            String[] cardTags = tags.split(" ");
+            for( String tag : cardTags) {
+                tagSet.add(tag);
+            }
 
         }
 
@@ -287,7 +295,7 @@ public class AnkiUtils {
             // Log.v(TAG, "card template name: " + cardTemplateName);
         }
 
-        Card card = new Card(noteId, cardOrd, modelId, cardTemplateName, fieldMap);
+        Card card = new Card(noteId, cardOrd, modelId, cardTemplateName, fieldMap, tagSet);
 
         return card;
     }
