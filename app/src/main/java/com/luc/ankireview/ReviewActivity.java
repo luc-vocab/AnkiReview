@@ -768,7 +768,6 @@ public class ReviewActivity extends AppCompatActivity {
                 editor.commit();
 
 
-                setupSpeedDial();
             } catch(Exception e) {
                 e.printStackTrace();
 
@@ -786,7 +785,10 @@ public class ReviewActivity extends AppCompatActivity {
 
     public void tagCard(String tag) {
         AnkiUtils.tagCard(getContentResolver(), m_currentCard, tag);
+        // add the tag locally so that the speedial can reflect this new tag
+        m_currentCard.getTagMap().add(tag);
         showToast("Tagged card " + tag);
+        setupSpeedDial();
     }
 
     public void markSuspendCard() {
