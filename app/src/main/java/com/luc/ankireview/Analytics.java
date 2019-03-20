@@ -7,6 +7,7 @@ public class Analytics {
 
     // events
     public static final String REVIEW_START = "review_start";
+    public static final String REVIEW_PROGRESS = "review_progress";
     public static final String REVIEW_END = "review_end";
     public static final String LIST_DECKS = "list_decks";
     public static final String NO_DECKS = "no_decks";

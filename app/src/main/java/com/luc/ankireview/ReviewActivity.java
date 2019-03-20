@@ -893,6 +893,10 @@ public class ReviewActivity extends AppCompatActivity {
             Utils.reportAnkiAPIException(this, e);
         }
 
+        Bundle bundle = new Bundle();
+        bundle.putInt(Analytics.REVIEW_COUNT, m_reviewCount);
+        m_firebaseAnalytics.logEvent(Analytics.REVIEW_PROGRESS, bundle);
+
     }
 
     private void showToast(String text)
