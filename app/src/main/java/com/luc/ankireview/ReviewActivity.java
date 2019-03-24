@@ -417,6 +417,11 @@ public class ReviewActivity extends AppCompatActivity {
     private void setupSpeedDial() {
         // populate with possible choices
 
+        if( m_currentCard == null) {
+            // don't do anything
+            return;
+        }
+
         m_speedDialView.clearActionItems();
 
         if( ! m_showingQuestion) {
