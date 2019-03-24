@@ -873,6 +873,15 @@ public class ReviewActivity extends AppCompatActivity {
                 // zero cards due. we've finished our reviews
                 reviewsDone();
             } else {
+
+                // check whether all cards loaded have a style associated with them
+                for(Card card : nextCards) {
+                    if (! checkStyleExists(card)) {
+                        // don't continue
+                        return;
+                    }
+                }
+
                 // move "next card" up to current card
                 m_currentCard = m_nextCard;
                 setupCardStyleHandler(m_currentCard);
