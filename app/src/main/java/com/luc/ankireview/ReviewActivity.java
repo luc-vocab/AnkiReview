@@ -33,6 +33,7 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar;
@@ -121,6 +122,8 @@ public class ReviewActivity extends AppCompatActivity {
 
 
         m_progressBar = findViewById(R.id.review_progressbar);
+
+        m_cardTemplateName = findViewById(R.id.cardstyle_cardtemplate_name);
 
         // set touch listener
         m_detector = new GestureDetectorCompat(this, new ReviewerGestureDetector());
@@ -570,10 +573,11 @@ public class ReviewActivity extends AppCompatActivity {
         m_styleNotFound.setVisibility(View.INVISIBLE);
     }
 
-    private void showCardStyleNotDefinedControls() {
+    private void showCardStyleNotDefinedControls(String cardTemplateName) {
         m_flashcardFrame.setVisibility(View.INVISIBLE);
         m_speedDialView.setVisibility(View.INVISIBLE);
         m_styleNotFound.setVisibility(View.VISIBLE);
+        m_cardTemplateName.setText(cardTemplateName);
     }
 
     private void setupCardStyleHandler(Card card) {
@@ -586,7 +590,7 @@ public class ReviewActivity extends AppCompatActivity {
             // redirect used to style activity
             // launchCardStyleForCard(card);
 
-            showCardStyleNotDefinedControls();
+            showCardStyleNotDefinedControls(card.getCardTemplateName());
             setupCardStyleHandler(card);
 
             return false;
@@ -950,6 +954,7 @@ public class ReviewActivity extends AppCompatActivity {
     private FlashcardViewPager m_flashcardPager;
     private ViewPager m_backgroundPager;
     private FrameLayout m_touchLayer;
+    private TextView m_cardTemplateName;
 
     private RoundCornerProgressBar m_progressBar;
 
