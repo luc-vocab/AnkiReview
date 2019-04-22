@@ -298,11 +298,11 @@ public class ReviewActivity extends AppCompatActivity {
 
 
         // load deck name
-        String deckName = AnkiUtils.getDeckName(getContentResolver(), m_deckId);
+        m_deckName = AnkiUtils.getDeckName(getContentResolver(), m_deckId);
 
         // action bar
         m_toolbar = (Toolbar) findViewById(R.id.review_toolbar);
-        m_toolbar.setTitle(deckName);
+        m_toolbar.setTitle(m_deckName);
         setSupportActionBar(m_toolbar);
 
         // final step
@@ -388,6 +388,8 @@ public class ReviewActivity extends AppCompatActivity {
             Intent intent = new Intent(ReviewActivity.this, CardStyleActivity.class);
             intent.putExtra("noteId", m_cardForCardStyleEdit.getNoteId());
             intent.putExtra("cardOrd", m_cardForCardStyleEdit.getCardOrd());
+            intent.putExtra("cardTemplateName", m_cardForCardStyleEdit.getCardTemplateName());
+            intent.putExtra("deckName", m_deckName );
             this.startActivityForResult(intent,0);
         }
     }
@@ -935,6 +937,7 @@ public class ReviewActivity extends AppCompatActivity {
     }
 
     private long m_deckId;
+    private String m_deckName;
 
     private Card m_currentCard;
     private Card m_nextCard;

@@ -67,13 +67,18 @@ public class CardStyleActivity extends AppCompatActivity {
 
         m_cardStyle = new CardStyle(this);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.review_toolbar);
-        toolbar.setTitle(R.string.card_style);
-        setSupportActionBar(toolbar);
-
         Intent intent = getIntent();
         long noteId = intent.getLongExtra("noteId", 0l);
         int cardOrd = intent.getIntExtra("cardOrd", 0);
+        String deckName = intent.getStringExtra("deckName");
+        String cardTemplateName = intent.getStringExtra("cardTemplateName");
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.review_toolbar);
+        toolbar.setTitle("Card Style: " + deckName);
+        toolbar.setSubtitle("Card Template: " + cardTemplateName);
+        setSupportActionBar(toolbar);
+
+
 
         Log.v(TAG, "starting CardStyleActivity with noteId: " + noteId + " cardOrd: " + cardOrd);
 
