@@ -104,9 +104,7 @@ public class ReviewActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_review);
 
-        String mediaDir = Environment.getExternalStorageDirectory().getAbsolutePath() + "/AnkiDroid/collection.media/";
-        Uri mediaDirUri = Uri.fromFile(new File(mediaDir));
-        m_baseUrl = mediaDirUri.toString() +"/";
+        m_baseUrl = Utils.getBaseUrl();
 
         Intent intent = getIntent();
         m_deckId = intent.getLongExtra("deckId", 0);

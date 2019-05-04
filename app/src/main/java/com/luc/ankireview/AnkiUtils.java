@@ -295,7 +295,7 @@ public class AnkiUtils {
             // Log.v(TAG, "card template name: " + cardTemplateName);
         }
 
-        Card card = new Card(noteId, cardOrd, modelId, cardTemplateName, fieldMap, tagSet);
+        Card card = new Card(noteId, cardOrd, modelId, cardTemplateName, fieldMap, tagSet, question, answer);
 
         return card;
     }

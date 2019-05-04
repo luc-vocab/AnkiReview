@@ -17,7 +17,7 @@ public class Card {
     private static final String TAG = "Card";
 
 
-    public Card(long noteId, int cardOrd, long modelId, String cardTemplateName, HashMap<String,String> fieldMap, HashSet<String> tagSet) {
+    public Card(long noteId, int cardOrd, long modelId, String cardTemplateName, HashMap<String,String> fieldMap, HashSet<String> tagSet, String questionContent, String answerContent) {
         m_noteId = noteId;
         m_cardOrd = cardOrd;
         m_modelId = modelId;
@@ -27,6 +27,9 @@ public class Card {
 
         m_buttonCount = 0;
         m_nextReviewTimes = null;
+
+        m_questionContent = questionContent;
+        m_answerContent = answerContent;
     }
 
     public void setReviewData(int buttonCount, Vector<String> nextReviewTimes) {
@@ -77,6 +80,10 @@ public class Card {
     }
 
     public String getCardTemplateName() { return m_cardTemplateName; }
+
+    public String getQuestionContent() { return m_questionContent; }
+
+    public String getAnswerContent() { return m_answerContent; }
 
     public String getFieldValue(String fieldName) { return m_fieldMap.get(fieldName); }
 
@@ -211,4 +218,7 @@ public class Card {
 
     private int m_buttonCount;
     private Vector<String> m_nextReviewTimes;
+
+    private String m_questionContent;
+    private String m_answerContent;
 }

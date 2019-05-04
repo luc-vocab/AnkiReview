@@ -3,7 +3,9 @@ package com.luc.ankireview;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Build;
+import android.os.Environment;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -11,6 +13,7 @@ import android.text.Html;
 import android.text.Spanned;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
@@ -65,5 +68,12 @@ public class Utils {
         } else {
             return Html.fromHtml(html);
         }
+    }
+
+    public static String getBaseUrl() {
+        String mediaDir = Environment.getExternalStorageDirectory().getAbsolutePath() + "/AnkiDroid/collection.media/";
+        Uri mediaDirUri = Uri.fromFile(new File(mediaDir));
+        String baseUrl = mediaDirUri.toString() +"/";
+        return baseUrl;
     }
 }

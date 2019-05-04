@@ -73,7 +73,8 @@ public class ReviewerFlashcardLayout extends FrameLayout  implements View.OnTouc
 
     }
 
-    public void setCard(Card card) {
+
+    private void setCard(Card card) {
         CardStyle cardStyle = m_reviewActivity.getCardStyle();
         cardStyle.renderCard(card, this);
     }
