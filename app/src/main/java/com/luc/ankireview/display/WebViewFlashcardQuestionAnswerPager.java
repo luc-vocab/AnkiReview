@@ -39,7 +39,7 @@ public class WebViewFlashcardQuestionAnswerPager extends ViewPager {
                         m_center = cardLayout;
                         break;
                     case 2:
-                        cardLayout = new WebViewFlashcardLayout(container.getContext(), m_card, false);
+                        cardLayout = new WebViewFlashcardLayout(container.getContext(), m_card, true);
                         m_right = cardLayout;
                         break;
                     default:

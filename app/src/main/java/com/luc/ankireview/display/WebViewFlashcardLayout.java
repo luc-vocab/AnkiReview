@@ -48,7 +48,7 @@ public class WebViewFlashcardLayout extends WebView {
                 Log.v(TAG, "WebView pagefinished " + url);
                 if( !m_firstTimeInitDone) {
                     // reload
-                    renderCard(false);
+                    renderCard(m_showAnswer);
                     m_firstTimeInitDone = true;
                 }
             }
@@ -57,6 +57,7 @@ public class WebViewFlashcardLayout extends WebView {
         });
 
         m_card = card;
+        m_showAnswer = showAnswer;
         try {
             m_cardTemplate = Utils.convertStreamToString(context.getAssets().open("card_template.html"));
         } catch (IOException e) {
@@ -139,6 +140,7 @@ public class WebViewFlashcardLayout extends WebView {
     }
 
     private Card m_card;
+    private boolean m_showAnswer;
     private String m_cardTemplate;
     private boolean m_firstTimeInitDone = false;
 }
