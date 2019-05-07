@@ -46,6 +46,11 @@ public class WebViewFlashcardLayout extends WebView {
             @Override
             public void onPageFinished(WebView view, String url) {
                 Log.v(TAG, "WebView pagefinished " + url);
+                if( !m_firstTimeInitDone) {
+                    // reload
+                    renderCard(false);
+                    m_firstTimeInitDone = true;
+                }
             }
 
 
@@ -135,4 +140,5 @@ public class WebViewFlashcardLayout extends WebView {
 
     private Card m_card;
     private String m_cardTemplate;
+    private boolean m_firstTimeInitDone = false;
 }
