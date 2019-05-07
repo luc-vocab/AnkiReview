@@ -82,7 +82,7 @@ public class WebViewFlashcardLayout extends WebView {
     {
 
         // todo: add sound
-        // content = Sound.expandSounds(baseUrl, content);
+        content = m_card.filterSound(content);
 
         // In order to display the bold style correctly, we have to change
         // font-weight to 700
