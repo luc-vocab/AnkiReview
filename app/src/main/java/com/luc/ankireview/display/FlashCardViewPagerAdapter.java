@@ -46,7 +46,8 @@ public class FlashCardViewPagerAdapter extends PagerAdapter {
 
     private View createCardView(ViewGroup container, Card card) {
         // View cardView = new ReviewerFlashcardLayout(container.getContext(), card);
-        View cardView = new WebViewFlashcardLayout(container.getContext(), card, false);
+        // View cardView = new WebViewFlashcardLayout(container.getContext(), card, false);
+        View cardView = new WebViewFlashcardQuestionAnswerPager(container.getContext(), card);
         return cardView;
     }
 
