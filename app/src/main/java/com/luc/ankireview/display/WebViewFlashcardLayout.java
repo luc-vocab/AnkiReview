@@ -4,7 +4,10 @@ import android.content.Context;
 import android.text.Spanned;
 import android.text.SpannedString;
 import android.util.Log;
+import android.webkit.WebResourceError;
+import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 
 import com.luc.ankireview.Card;
 import com.luc.ankireview.Utils;
@@ -21,6 +24,33 @@ public class WebViewFlashcardLayout extends WebView {
 
     public WebViewFlashcardLayout(Context context, Card card, boolean showAnswer) {
         super(context);
+
+        // webview settings
+        getSettings().setJavaScriptEnabled(true);
+        getSettings().setAllowFileAccess(true);
+        getSettings().setAllowFileAccessFromFileURLs(true);
+
+        setWebViewClient(new WebViewClient() {
+            @Override
+            public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error)
+            {
+                Log.e(TAG,"WebView error " + error.toString() + " request: " + request.getUrl());
+            }
+
+            @Override
+            public void onLoadResource(WebView view, String url)
+            {
+                Log.v(TAG,"WebView loadresource: " +  url);
+            }
+
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                Log.v(TAG, "WebView pagefinished " + url);
+            }
+
+
+        });
+
         m_card = card;
         try {
             m_cardTemplate = Utils.convertStreamToString(context.getAssets().open("card_template.html"));
