@@ -8,7 +8,6 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v4.view.GestureDetectorCompat;
 import android.support.v4.view.ViewPager;
@@ -32,7 +31,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -41,16 +39,13 @@ import com.crashlytics.android.Crashlytics;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.leinardi.android.speeddial.SpeedDialActionItem;
 import com.leinardi.android.speeddial.SpeedDialView;
-import com.luc.ankireview.animation.ReviewPageTransformer;
 import com.luc.ankireview.display.BackgroundViewPagerAdapter;
 import com.luc.ankireview.display.FlashCardViewPagerAdapter;
 import com.luc.ankireview.display.FlashcardViewPager;
 import com.luc.ankireview.style.CardStyle;
-import com.luc.ankireview.style.CardTemplateKey;
 
 import org.json.JSONArray;
 
-import java.io.File;
 import java.io.IOException;
 
 import java.util.ArrayList;
@@ -215,15 +210,16 @@ public class ReviewActivity extends AppCompatActivity {
         fadeOut.setStartOffset(animationSpeed);
         fadeOut.setDuration(animationSpeed);
 
-        m_animationSet = new AnimationSet(false);
-        m_animationSet.addAnimation(fadeIn);
-        m_animationSet.addAnimation(fadeOut);
+        m_answerSymbolAnimationSet = new AnimationSet(false);
+        m_answerSymbolAnimationSet.addAnimation(fadeIn);
+        m_answerSymbolAnimationSet.addAnimation(fadeOut);
 
-        m_animationSet.setAnimationListener(new Animation.AnimationListener() {
+        m_answerSymbolAnimationSet.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationEnd(Animation animation) {
                 m_correct.setVisibility(View.INVISIBLE);
                 m_incorrect.setVisibility(View.INVISIBLE);
+                executeQueuedAnswerCard();
             }
             @Override
             public void onAnimationRepeat(Animation animation) {
@@ -682,16 +678,26 @@ public class ReviewActivity extends AppCompatActivity {
     {
         m_answerBadAudio.start();
         showIncorrectAnimation();
-        answerCard(m_currentCard.getEaseBad());
-        moveToNextQuestion();
+        queueAnswerCardAndMoveToNextQuestion(m_currentCard.getEaseBad());
     }
 
     private void answerGood()
     {
         m_answerGoodAudio.start();
         showCorrectAnimation();
-        answerCard(m_currentCard.getEaseGood());
-        moveToNextQuestion();
+        queueAnswerCardAndMoveToNextQuestion(m_currentCard.getEaseGood());
+    }
+
+    private void queueAnswerCardAndMoveToNextQuestion(AnkiUtils.Ease ease) {
+        m_queuedAnswerCardEase = ease;
+    }
+
+    private void executeQueuedAnswerCard() {
+        if (m_queuedAnswerCardEase != null ) {
+            answerCard(m_queuedAnswerCardEase);
+            moveToNextQuestion();
+            m_queuedAnswerCardEase = null;
+        }
     }
 
     public void showAddQuicktag() {
@@ -836,12 +842,12 @@ public class ReviewActivity extends AppCompatActivity {
     }
 
     private void showCorrectAnimation() {
-        m_correct.startAnimation(m_animationSet);
+        m_correct.startAnimation(m_answerSymbolAnimationSet);
         m_correct.setVisibility(View.VISIBLE);
     }
 
     private void showIncorrectAnimation() {
-        m_incorrect.startAnimation(m_animationSet);
+        m_incorrect.startAnimation(m_answerSymbolAnimationSet);
         m_incorrect.setVisibility(View.VISIBLE);
     }
 
@@ -992,10 +998,12 @@ public class ReviewActivity extends AppCompatActivity {
     // animations
     private ImageView m_correct;
     private ImageView m_incorrect;
-    private AnimationSet m_animationSet;
+    private AnimationSet m_answerSymbolAnimationSet;
 
     // speed dial button
     SpeedDialView m_speedDialView;
+
+    AnkiUtils.Ease m_queuedAnswerCardEase = null;
 
     private FirebaseAnalytics m_firebaseAnalytics;
 
