@@ -4,16 +4,22 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.luc.ankireview.Card;
+import com.luc.ankireview.ReviewActivity;
+import com.luc.ankireview.Settings;
 
 public class WebViewFlashcardQuestionAnswerPager extends ViewPager {
+    private static final String TAG = "WebViewFlashcardQuestionAnswerPager";
 
-    public WebViewFlashcardQuestionAnswerPager(@NonNull Context context, Card card) {
+    public WebViewFlashcardQuestionAnswerPager(@NonNull Context context, ReviewActivity reviewActivity, Card card) {
         super(context);
 
+        m_reviewActivity = reviewActivity;
         m_card = card;
 
         m_pagerAdapter = new PagerAdapter() {
@@ -77,16 +83,69 @@ public class WebViewFlashcardQuestionAnswerPager extends ViewPager {
 
         };
 
+        addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            }
+            @Override
+            public void onPageSelected(int position) {
+                mCurrentPosition = position;
+            }
+            @Override
+            public void onPageScrollStateChanged(int state) {
+                if(ViewPager.SCROLL_STATE_IDLE == state){
+                    //Scrolling finished. Do something.
+                    if(mCurrentPosition == 0)
+                    {
+                        answerRevealed();
+                    } else if(mCurrentPosition == 2)
+                    {
+                        answerRevealed();
+                    }
+                }
+            }
+            private int mCurrentPosition = 1;
+        });
+
         this.setAdapter(m_pagerAdapter);
         this.setCurrentItem(1);
 
     }
 
+    public void answerRevealed() {
+        disableSwipe();
+        m_reviewActivity.showAnswer();
+    }
 
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        if( m_swipeEnabled)
+            return super.onTouchEvent(event);
+        return false;
+    }
+
+    @Override
+    public boolean onInterceptTouchEvent(MotionEvent event) {
+        if( m_swipeEnabled )
+            return super.onInterceptTouchEvent(event);
+        return false;
+    }
+
+    public void enableSwipe() {
+        m_swipeEnabled = true;
+    }
+
+    public void disableSwipe() {
+        m_swipeEnabled = false;
+    }
+
+    private ReviewActivity m_reviewActivity;
     private Card m_card;
     private PagerAdapter m_pagerAdapter;
 
     private WebViewFlashcardLayout m_left = null;
     private WebViewFlashcardLayout m_center = null;
     private WebViewFlashcardLayout m_right = null;
+
+    private boolean m_swipeEnabled = true;
 }

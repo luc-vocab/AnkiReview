@@ -13,6 +13,7 @@ public class FlashCardViewPagerAdapter extends PagerAdapter {
     private static final String TAG = "FlashCardViewPagerAdapter";
 
     public FlashCardViewPagerAdapter(Context context, ReviewActivity reviewActivity) {
+        m_reviewActivity = reviewActivity;
     }
 
     @Override
@@ -47,7 +48,7 @@ public class FlashCardViewPagerAdapter extends PagerAdapter {
     private View createCardView(ViewGroup container, Card card) {
         // View cardView = new ReviewerFlashcardLayout(container.getContext(), card);
         // View cardView = new WebViewFlashcardLayout(container.getContext(), card, false);
-        View cardView = new WebViewFlashcardQuestionAnswerPager(container.getContext(), card);
+        View cardView = new WebViewFlashcardQuestionAnswerPager(container.getContext(), m_reviewActivity, card);
         return cardView;
     }
 
@@ -137,6 +138,8 @@ public class FlashCardViewPagerAdapter extends PagerAdapter {
 
     }
 
+
+    ReviewActivity m_reviewActivity;
 
     View m_left;
     View m_right;
