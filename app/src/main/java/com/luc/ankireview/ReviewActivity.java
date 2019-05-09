@@ -1,5 +1,6 @@
 package com.luc.ankireview;
 
+import android.animation.Animator;
 import android.animation.ObjectAnimator;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -838,6 +839,31 @@ public class ReviewActivity extends AppCompatActivity {
         ObjectAnimator animation = ObjectAnimator.ofFloat(m_progressBar, "progress", m_progressBar.getProgress(), progressTo * 100);
         animation.setDuration(500);
         animation.setInterpolator(new DecelerateInterpolator());
+
+        animation.addListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animator) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animator) {
+                // retrieve following cards which will freeze UI when drawing following carsd
+                // but we're not animating anything at that point so it should be OK
+                retrieveFollowingCards();
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animator) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animator) {
+
+            }
+        });
+
         animation.start();
     }
 
@@ -872,9 +898,16 @@ public class ReviewActivity extends AppCompatActivity {
             m_cardsDone = numCardsDone;
             // m_progressBar.setProgress(m_cardsDone * 100);
             setProgressAnimate(m_cardsDone);
+        } else {
+            retrieveFollowingCards();
         }
 
 
+
+
+    }
+
+    private void retrieveFollowingCards() {
         // retrieve next 5 cards due
         try {
             Vector<Card> nextCards = AnkiUtils.getDueCards(getContentResolver(), m_deckId, 5);
@@ -920,7 +953,6 @@ public class ReviewActivity extends AppCompatActivity {
         Bundle bundle = new Bundle();
         bundle.putInt(Analytics.REVIEW_COUNT, m_reviewCount);
         m_firebaseAnalytics.logEvent(Analytics.REVIEW_PROGRESS, bundle);
-
     }
 
     private void showToast(String text)
