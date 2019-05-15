@@ -46,11 +46,12 @@ public class WebViewFlashcardLayout extends WebView {
             @Override
             public void onPageFinished(WebView view, String url) {
                 Log.v(TAG, "WebView pagefinished " + url);
+                /*
                 if( !m_firstTimeInitDone) {
                     // reload
                     renderCard(m_showAnswer);
                     m_firstTimeInitDone = true;
-                }
+                }*/
             }
 
 
@@ -74,7 +75,7 @@ public class WebViewFlashcardLayout extends WebView {
         } else {
             content = commonContentProcessing(m_card.getQuestionContent(), true, 100, 100, false);
         }
-        Log.v(TAG, "renderCard: content: " + content.toString());
+        //Log.v(TAG, "renderCard: content: " + content.toString());
         loadDataWithBaseURL(Utils.getBaseUrl(), content.toString(),"text/html", "utf-8", null);
     }
 

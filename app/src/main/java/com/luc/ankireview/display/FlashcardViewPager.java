@@ -33,8 +33,10 @@ public class FlashcardViewPager extends ViewPager {
         if(Settings.ENABLE_BACKGROUNDS && m_backgroundSwipingEnabled) {
             m_backgroundPager.onTouchEvent(event);
         }
-        if( m_swipeEnabled)
+        if( m_swipeEnabled){
             return super.onTouchEvent(event);
+        }
+
         return false;
     }
 
@@ -43,8 +45,9 @@ public class FlashcardViewPager extends ViewPager {
         if(Settings.ENABLE_BACKGROUNDS && m_backgroundSwipingEnabled) {
             m_backgroundPager.onInterceptTouchEvent(event);
         }
-        if( m_swipeEnabled )
+        if( m_swipeEnabled ) {
             return super.onInterceptTouchEvent(event);
+        }
         return false;
     }
 

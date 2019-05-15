@@ -14,7 +14,7 @@ import com.luc.ankireview.ReviewActivity;
 import com.luc.ankireview.Settings;
 
 public class WebViewFlashcardQuestionAnswerPager extends ViewPager {
-    private static final String TAG = "WebViewFlashcardQuestionAnswerPager";
+    private static final String TAG = "WebViewFlashcardQAPager";
 
     public WebViewFlashcardQuestionAnswerPager(@NonNull Context context, ReviewActivity reviewActivity, Card card) {
         super(context);
@@ -113,21 +113,26 @@ public class WebViewFlashcardQuestionAnswerPager extends ViewPager {
     }
 
     public void answerRevealed() {
+        Log.v(TAG, "answerRevealed");
         disableSwipe();
         m_reviewActivity.showAnswer();
     }
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        if( m_swipeEnabled)
+        if( m_swipeEnabled) {
+            // Log.d(TAG, "onTouchEvent");
             return super.onTouchEvent(event);
+        }
         return false;
     }
 
     @Override
     public boolean onInterceptTouchEvent(MotionEvent event) {
-        if( m_swipeEnabled )
+        if( m_swipeEnabled ) {
+            //Log.d(TAG, "onTouchEvent");
             return super.onInterceptTouchEvent(event);
+        }
         return false;
     }
 
