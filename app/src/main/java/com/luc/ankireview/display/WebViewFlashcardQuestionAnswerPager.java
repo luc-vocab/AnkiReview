@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 
 import com.luc.ankireview.Card;
 import com.luc.ankireview.ReviewActivity;
-import com.luc.ankireview.Settings;
 
 public class WebViewFlashcardQuestionAnswerPager extends ViewPager {
     private static final String TAG = "WebViewFlashcardQAPager";
@@ -32,20 +31,20 @@ public class WebViewFlashcardQuestionAnswerPager extends ViewPager {
             public Object instantiateItem(ViewGroup container, int position) {
                 // add the correct webview to the viewgroup, based on position
 
-                WebViewFlashcardLayout cardLayout = null;
+                WebViewLayout cardLayout = null;
 
                 switch( position)
                 {
                     case 0:
-                        cardLayout = new WebViewFlashcardLayout(container.getContext(), m_card, true);
+                        cardLayout = new WebViewLayout(container.getContext(), m_card, true);
                         m_left = cardLayout;
                         break;
                     case 1:
-                        cardLayout = new WebViewFlashcardLayout(container.getContext(), m_card, false);
+                        cardLayout = new WebViewLayout(container.getContext(), m_card, false);
                         m_center = cardLayout;
                         break;
                     case 2:
-                        cardLayout = new WebViewFlashcardLayout(container.getContext(), m_card, true);
+                        cardLayout = new WebViewLayout(container.getContext(), m_card, true);
                         m_right = cardLayout;
                         break;
                     default:
@@ -148,9 +147,9 @@ public class WebViewFlashcardQuestionAnswerPager extends ViewPager {
     private Card m_card;
     private PagerAdapter m_pagerAdapter;
 
-    private WebViewFlashcardLayout m_left = null;
-    private WebViewFlashcardLayout m_center = null;
-    private WebViewFlashcardLayout m_right = null;
+    private WebViewLayout m_left = null;
+    private WebViewLayout m_center = null;
+    private WebViewLayout m_right = null;
 
     private boolean m_swipeEnabled = true;
 }

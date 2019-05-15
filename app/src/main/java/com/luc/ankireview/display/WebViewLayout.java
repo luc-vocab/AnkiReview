@@ -19,10 +19,14 @@ import java.io.InputStreamReader;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class WebViewFlashcardLayout extends WebView {
-    private static final String TAG = "WebViewFlashcardLayout";
 
-    public WebViewFlashcardLayout(Context context, Card card, boolean showAnswer) {
+/**
+ * show either the question or the answre
+ */
+public class WebViewLayout extends WebView {
+    private static final String TAG = "WebViewLayout";
+
+    public WebViewLayout(Context context, Card card, boolean showAnswer) {
         super(context);
 
         // webview settings
