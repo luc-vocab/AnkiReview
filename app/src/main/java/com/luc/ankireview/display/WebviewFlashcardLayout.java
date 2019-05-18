@@ -58,11 +58,23 @@ public class WebviewFlashcardLayout extends FrameLayout implements View.OnTouchL
         // touchLayer.setOnTouchListener(this);
         touchLayer.setOnTouchListener(this);
 
+        // render question
+
         FrameLayout questionFrame = findViewById(R.id.question_frame);
-        WebViewLayout cardLayout = new WebViewLayout(context, m_card, false);
-        questionFrame.addView(cardLayout);
+        WebViewLayout questionCardLayout = new WebViewLayout(context, m_card, false);
+        questionFrame.addView(questionCardLayout);
+
+        // render answer
+        FrameLayout answerFrame = findViewById(R.id.answer_frame);
+        WebViewLayout answerCardLayout = new WebViewLayout(context, m_card, true);
+        answerFrame.addView(answerCardLayout);
 
 
+        WebviewCardBehavior behavior = new WebviewCardBehavior();
+        CoordinatorLayout.LayoutParams layoutParams = (CoordinatorLayout.LayoutParams) questionFrame.getLayoutParams();
+        layoutParams.setBehavior(behavior);
+
+        m_reviewActivity = (ReviewActivity) context;
 
         /*
         QuestionCardBehavior behavior = new QuestionCardBehavior();
@@ -76,4 +88,5 @@ public class WebviewFlashcardLayout extends FrameLayout implements View.OnTouchL
 
 
     private Card m_card;
+    private ReviewActivity m_reviewActivity;
 }
