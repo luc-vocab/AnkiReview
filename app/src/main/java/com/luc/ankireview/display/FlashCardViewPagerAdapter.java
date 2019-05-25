@@ -26,15 +26,19 @@ public class FlashCardViewPagerAdapter extends PagerAdapter {
         {
             case 0:
                 cardLayout = createCardView(container, m_nextCard);
-                m_left = cardLayout;
+                m_left = (FlashCardLayoutInterface) cardLayout;
                 break;
             case 1:
                 cardLayout = createCardView(container, m_currentCard);
-                m_center = cardLayout;
+                m_center = (FlashCardLayoutInterface) cardLayout;
+                if(m_centerCardDisplayedQueued) {
+                    m_centerCardDisplayedQueued = false;
+                    m_center.isDisplayed();
+                }
                 break;
             case 2:
                 cardLayout = createCardView(container, m_nextCard);
-                m_right = cardLayout;
+                m_right = (FlashCardLayoutInterface) cardLayout;
                 break;
             default:
                 break;
@@ -118,12 +122,14 @@ public class FlashCardViewPagerAdapter extends PagerAdapter {
             m_right = null;
 
 
+
         } else if (currentPage == 2 ) {
             // answered good on the previous question
             m_center = m_right;
             // other views should be regenerated
             m_left = null;
             m_right = null;
+
 
         } else if (currentPage == 1 ) {
             //regenerate everything
@@ -139,15 +145,25 @@ public class FlashCardViewPagerAdapter extends PagerAdapter {
 
     }
 
+    public void centerCardDisplayed() {
+        if(m_center == null) {
+            m_centerCardDisplayedQueued = true;
+        } else {
+            m_center.isDisplayed();
+        }
+    }
+
 
     ReviewActivity m_reviewActivity;
 
-    View m_left;
-    View m_right;
-    View m_center;
+    FlashCardLayoutInterface m_left;
+    FlashCardLayoutInterface m_right;
+    FlashCardLayoutInterface m_center;
 
     Card m_currentCard;
     Card m_nextCard;
+
+    boolean m_centerCardDisplayedQueued = false;
 
 
 }

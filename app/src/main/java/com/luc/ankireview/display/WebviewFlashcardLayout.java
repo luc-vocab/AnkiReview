@@ -22,7 +22,7 @@ import com.luc.ankireview.ReviewActivity;
 /**
  * Encapsulate the question and answer WebViews (equivalent to ReviewerFlashcardLayout)
  */
-public class WebviewFlashcardLayout extends FrameLayout implements View.OnTouchListener {
+public class WebviewFlashcardLayout extends FrameLayout implements View.OnTouchListener, FlashCardLayoutInterface {
     private static final String TAG = "WebviewFlashcardLayout";
 
     public WebviewFlashcardLayout(Context context) {
@@ -70,9 +70,6 @@ public class WebviewFlashcardLayout extends FrameLayout implements View.OnTouchL
 
         // render answer
         m_answerFrame= findViewById(R.id.answer_frame);
-        WebViewLayout answerCardLayout = new WebViewLayout(context, m_card, true);
-        m_answerFrame.addView(answerCardLayout);
-
 
         WebviewCardBehavior behavior = new WebviewCardBehavior();
         CoordinatorLayout.LayoutParams layoutParams = (CoordinatorLayout.LayoutParams) questionFrame.getLayoutParams();
@@ -81,6 +78,13 @@ public class WebviewFlashcardLayout extends FrameLayout implements View.OnTouchL
         m_reviewActivity = (ReviewActivity) context;
 
     }
+
+    private void renderAnswer() {
+        Log.v(TAG, "renderAnswer");
+        WebViewLayout answerCardLayout = new WebViewLayout(m_reviewActivity, m_card, true);
+        m_answerFrame.addView(answerCardLayout);
+    }
+
 
     public void setSpringAnimation(int answerTargetY) {
 
@@ -185,6 +189,15 @@ public class WebviewFlashcardLayout extends FrameLayout implements View.OnTouchL
         m_answerSpringAnimation.start();
     }
 
+    @Override
+    public void isDisplayed() {
+        Log.v(TAG, "isDisplayed");
+        if( ! m_answerAdded ) {
+            renderAnswer();
+            m_answerAdded = true;
+        }
+    }
+
     private Card m_card;
     private ReviewActivity m_reviewActivity;
 
@@ -196,4 +209,10 @@ public class WebviewFlashcardLayout extends FrameLayout implements View.OnTouchL
     // track velocity of pointer
     private VelocityTracker m_velocityTracker;
     private float m_lastPointerY;
+
+    private boolean m_answerAdded = false;
+
+
+
+
 }

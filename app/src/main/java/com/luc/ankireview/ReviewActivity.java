@@ -328,6 +328,7 @@ public class ReviewActivity extends AppCompatActivity {
             }
             @Override
             public void onPageSelected(int position) {
+                Log.v(TAG, "onPageSelected: " + position);
                 mCurrentPosition = position;
             }
             @Override
@@ -615,6 +616,7 @@ public class ReviewActivity extends AppCompatActivity {
         m_showingQuestion = true;
 
         m_flashcardPager.disableSwipe();
+        m_flashcardAdapter.centerCardDisplayed();
 
         setupSpeedDial();
     }
@@ -682,15 +684,15 @@ public class ReviewActivity extends AppCompatActivity {
     private void answerBad()
     {
         m_answerBadAudio.start();
-        showIncorrectAnimation();
         queueAnswerCardAndMoveToNextQuestion(m_currentCard.getEaseBad());
+        showIncorrectAnimation();
     }
 
     private void answerGood()
     {
         m_answerGoodAudio.start();
-        showCorrectAnimation();
         queueAnswerCardAndMoveToNextQuestion(m_currentCard.getEaseGood());
+        showCorrectAnimation();
     }
 
     private void queueAnswerCardAndMoveToNextQuestion(AnkiUtils.Ease ease) {
@@ -700,8 +702,8 @@ public class ReviewActivity extends AppCompatActivity {
     private void executeQueuedAnswerCard() {
         if (m_queuedAnswerCardEase != null ) {
             answerCard(m_queuedAnswerCardEase);
-            moveToNextQuestion();
             m_queuedAnswerCardEase = null;
+            moveToNextQuestion();
         }
     }
 
@@ -883,6 +885,8 @@ public class ReviewActivity extends AppCompatActivity {
 
     private void moveToNextQuestion()
     {
+        m_queuedAnswerCardEase = null;
+
         AnkiUtils.DeckDueCounts deckDueCounts = AnkiUtils.getDeckDueCount(getContentResolver(), m_deckId);
         updateDueCountSubtitle(deckDueCounts);
 
