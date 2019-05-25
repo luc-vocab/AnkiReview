@@ -71,86 +71,21 @@
 
     </FrameLayout>
 
-    <FrameLayout
+    <include
         android:id="@+id/cardstyle_not_defined"
+        layout="@layout/cardstyle_not_defined"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <android.support.v7.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
-                android:layout_marginLeft="25dp"
-                android:layout_marginRight="25dp"
-                app:cardCornerRadius="5dp"
-                >
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_margin="15dp"
-                    >
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/review_cardstyle_not_defined_title"
-                        android:textSize="25dp"
-                        android:textStyle="bold" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textSize="18dp"
-                            android:text="Card Template: "
-                            />
-                        <TextView
-                            android:id="@+id/cardstyle_cardtemplate_name"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textSize="18dp"
-                            android:textStyle="bold"
-                            />
-                    </LinearLayout>
-
-
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginBottom="10dp"
-                        android:text="@string/review_cardstyle_not_defined_description"
-                        android:textSize="18dp" />
-
-                <Button
-                    android:id="@+id/define_cardstyle_button"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Setup Card Style"
-                    style="@style/Widget.AppCompat.Button.Colored"
-                    />
-
-                </LinearLayout>
-
-            </android.support.v7.widget.CardView>
-
-
-        </LinearLayout>
-
-
-    </FrameLayout>
+    <include
+        android:id="@+id/deck_display_mode"
+        layout="@layout/deck_display_options"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        />
 
     <ImageView
         android:id="@+id/correct_svg"

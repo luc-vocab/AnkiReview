@@ -28,6 +28,20 @@
     </string-array>
 
 
+    <!-- deck display options strings -->
+    <string name="review_deck_display_options">Choose Display Mode</string>
+    <string name="review_deck_display_anki">
+        Use Anki HTML/CSS rendering engine. You don\'t
+    have to configure anything, however you won\'t be able to customize the appearance, colors, fonts and size from AnkiReview.
+    Works for all decks.</string>
+
+    <string name="review_deck_display_ankireview">
+        Use AnkiReview rendering engine (doesn\'t use HTML). You can configure the appearance, color, fonts to your liking and
+        question/answer are separately animated. Only works for simple text-based decks.
+    </string>
+
+
+
     <string name="review_cardstyle_not_defined_title">Card Style not defined</string>
     <string name="review_cardstyle_not_defined_description">
         Couldn\'t find a style for this card. AnkiReview doesn\'t use the Anki HTML/CSS

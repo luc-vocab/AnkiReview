@@ -318,6 +318,7 @@ public class CardStyle implements Serializable {
             Log.e(TAG, "could not open cardstylestorage, creating new");
             m_cardStyleStorage = new CardStyleStorage();
             m_cardStyleStorage.cardTemplateMap = new HashMap<CardTemplateKey, CardTemplate>();
+            m_cardStyleStorage.deckDisplayMode = new HashMap<Long,Boolean>();
         }
     }
 
@@ -342,6 +343,17 @@ public class CardStyle implements Serializable {
 
     }
 
+    public void chooseDeckDisplayMode(long deckId, boolean useAnkiReviewStyle) {
+        m_cardStyleStorage.deckDisplayMode.put(deckId, useAnkiReviewStyle);
+        saveCardStyleData();
+    }
+
+    public boolean deckDisplayModeConfigured(long deckId) {
+        if( m_cardStyleStorage.deckDisplayMode.containsKey(deckId) ) {
+            return true;
+        }
+        return false;
+    }
 
     private HashMap<String,Typeface> m_fontCache;
 

@@ -111,7 +111,9 @@ public class ReviewActivity extends AppCompatActivity {
 
         m_flashcardFrame = findViewById(R.id.flashcard_frame);
         m_styleNotFound = findViewById(R.id.cardstyle_not_defined);
+        m_deckDisplayMode = findViewById(R.id.deck_display_mode);
         m_styleNotFound.setVisibility(View.INVISIBLE);
+        m_deckDisplayMode.setVisibility(View.INVISIBLE);
         m_touchLayer = findViewById(R.id.touch_layer);
         m_flashcardPager = findViewById(R.id.flashcard_pager);
         // m_flashcardPager.setPageTransformer(false, new RotateDownTransformer());
@@ -127,6 +129,8 @@ public class ReviewActivity extends AppCompatActivity {
         // TEMPORARY: disable touch layer
         // m_touchLayer.setOnTouchListener(m_gestureListener);
 
+        // buttons for card style
+
         Button cardStyleButton = findViewById(R.id.define_cardstyle_button);
         cardStyleButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -135,6 +139,22 @@ public class ReviewActivity extends AppCompatActivity {
             }
         });
 
+        // buttons for deck display options
+        Button deck_display_use_anki = findViewById(R.id.deck_display_use_anki);
+        Button deck_display_use_ankireview = findViewById(R.id.deck_display_use_anki);
+
+        deck_display_use_anki.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                deckDisplayOptionsChooseAnki();
+            }
+        });
+        deck_display_use_ankireview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                deckDisplayOptionsChooseAnkiReview();
+            }
+        });
 
         // setupFlashcardPager();
 
@@ -311,10 +331,18 @@ public class ReviewActivity extends AppCompatActivity {
     private void reloadCardStyleAndCards() {
         Log.v(TAG, "reloadCardStyleAndCards");
 
-        setupFlashcardPager();
-
         m_cardStyle = new CardStyle(this);
-        loadCards();
+        if( ! m_cardStyle.deckDisplayModeConfigured(m_deckId)) {
+            // show deck style prompt
+            showDeckDisplayOptions();
+        } else {
+            setupFlashcardPager();
+            loadCards();
+        }
+    }
+
+    private void showDeckDisplayOptions() {
+        m_deckDisplayMode.setVisibility(View.VISIBLE);
     }
 
     private void setupFlashcardPager() {
@@ -392,6 +420,19 @@ public class ReviewActivity extends AppCompatActivity {
             intent.putExtra("deckName", m_deckName );
             this.startActivityForResult(intent,0);
         }
+    }
+
+
+    private void deckDisplayOptionsChooseAnki() {
+        m_cardStyle.chooseDeckDisplayMode(m_deckId, false);
+        showReviewControls();
+        reloadCardStyleAndCards();
+    }
+
+    private void deckDisplayOptionsChooseAnkiReview() {
+        m_cardStyle.chooseDeckDisplayMode(m_deckId, true);
+        showReviewControls();
+        reloadCardStyleAndCards();
     }
 
 
@@ -573,6 +614,7 @@ public class ReviewActivity extends AppCompatActivity {
         m_flashcardFrame.setVisibility(View.VISIBLE);
         m_speedDialView.setVisibility(View.VISIBLE);
         m_styleNotFound.setVisibility(View.INVISIBLE);
+        m_deckDisplayMode.setVisibility(View.INVISIBLE);
     }
 
     private void showCardStyleNotDefinedControls(String cardTemplateName) {
@@ -1000,6 +1042,7 @@ public class ReviewActivity extends AppCompatActivity {
     private Toolbar m_toolbar;
     private FrameLayout m_flashcardFrame;
     private FrameLayout m_styleNotFound;
+    private FrameLayout m_deckDisplayMode;
     private FlashcardViewPager m_flashcardPager;
     private ViewPager m_backgroundPager;
     private FrameLayout m_touchLayer;
