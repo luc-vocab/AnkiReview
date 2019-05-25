@@ -33,16 +33,16 @@ public class WebviewCardBehavior extends CoordinatorLayout.Behavior<FrameLayout>
             if ( parent.getParent() instanceof WebviewFlashcardLayout) {
 
                 int totalWindowHeight = parent.getHeight();
+                int answerTargetY = (int) child.getY();
 
                 // position the answer card outside of the screen
 
                 FrameLayout answerFrame = parent.findViewById(R.id.answer_frame);
                 answerFrame.setY(totalWindowHeight);
 
-                /*
-                ReviewerFlashcardLayout reviewerFlashcardLayout = (ReviewerFlashcardLayout) parent.getParent();
-                reviewerFlashcardLayout.setSpringAnimation(yPosition, questionTargetY, answerTargetY);
-                */
+                WebviewFlashcardLayout webviewFlashcardLayout = (WebviewFlashcardLayout) parent.getParent();
+                webviewFlashcardLayout.setSpringAnimation(answerTargetY);
+
             }
 
             m_initialLayoutDone = true;

@@ -121,7 +121,9 @@ public class ReviewActivity extends AppCompatActivity {
 
         // set touch listener
         m_detector = new GestureDetectorCompat(this, new ReviewerGestureDetector());
-        m_touchLayer.setOnTouchListener(m_gestureListener);
+
+        // TEMPORARY: disable touch layer
+        // m_touchLayer.setOnTouchListener(m_gestureListener);
 
         Button cardStyleButton = findViewById(R.id.define_cardstyle_button);
         cardStyleButton.setOnClickListener(new View.OnClickListener() {
@@ -619,12 +621,14 @@ public class ReviewActivity extends AppCompatActivity {
 
     public void showAnswer()
     {
-        Log.v(TAG,"showAnswer");
+        Log.v(TAG,"showAnswer start");
 
         m_showingQuestion = false;
         playAnswerAudio();
         setupSpeedDial();
         m_flashcardPager.enableSwipe();
+
+        Log.v(TAG, "showAnswer end");
     }
 
     private void playQuestionAudio(String audioFile) {

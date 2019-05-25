@@ -34,6 +34,7 @@ public class FlashcardViewPager extends ViewPager {
             m_backgroundPager.onTouchEvent(event);
         }
         if( m_swipeEnabled){
+            //Log.d(TAG, "onTouchEvent");
             return super.onTouchEvent(event);
         }
 
@@ -46,6 +47,7 @@ public class FlashcardViewPager extends ViewPager {
             m_backgroundPager.onInterceptTouchEvent(event);
         }
         if( m_swipeEnabled ) {
+            //Log.d(TAG, "onInterceptTouchEvent");
             return super.onInterceptTouchEvent(event);
         }
         return false;

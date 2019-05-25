@@ -1,11 +1,17 @@
 package com.luc.ankireview.display;
 
 import android.content.Context;
+import android.support.animation.DynamicAnimation;
+import android.support.animation.SpringAnimation;
+import android.support.animation.SpringForce;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CoordinatorLayout;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
+import android.view.VelocityTracker;
+import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.view.View;
 
@@ -17,6 +23,8 @@ import com.luc.ankireview.ReviewActivity;
  * Encapsulate the question and answer WebViews (equivalent to ReviewerFlashcardLayout)
  */
 public class WebviewFlashcardLayout extends FrameLayout implements View.OnTouchListener {
+    private static final String TAG = "WebviewFlashcardLayout";
+
     public WebviewFlashcardLayout(Context context) {
         super(context);
         init(context);
@@ -43,10 +51,6 @@ public class WebviewFlashcardLayout extends FrameLayout implements View.OnTouchL
         init(context);
     }
 
-    @Override
-    public boolean onTouch(View view, MotionEvent motionEvent) {
-        return false;
-    }
 
     private void init(Context context) {
         inflate(context, R.layout.flashcard_webview, this);
@@ -65,9 +69,9 @@ public class WebviewFlashcardLayout extends FrameLayout implements View.OnTouchL
         questionFrame.addView(questionCardLayout);
 
         // render answer
-        FrameLayout answerFrame = findViewById(R.id.answer_frame);
+        m_answerFrame= findViewById(R.id.answer_frame);
         WebViewLayout answerCardLayout = new WebViewLayout(context, m_card, true);
-        answerFrame.addView(answerCardLayout);
+        m_answerFrame.addView(answerCardLayout);
 
 
         WebviewCardBehavior behavior = new WebviewCardBehavior();
@@ -76,17 +80,120 @@ public class WebviewFlashcardLayout extends FrameLayout implements View.OnTouchL
 
         m_reviewActivity = (ReviewActivity) context;
 
-        /*
-        QuestionCardBehavior behavior = new QuestionCardBehavior();
-        CoordinatorLayout.LayoutParams layoutParams = (CoordinatorLayout.LayoutParams) m_questionCard.getLayoutParams();
-        layoutParams.setBehavior(behavior);
+    }
 
-        m_reviewActivity = (ReviewActivity) context;
-        */
+    public void setSpringAnimation(int answerTargetY) {
+
+        m_answerSpringAnimation = new SpringAnimation(m_answerFrame, DynamicAnimation.TRANSLATION_Y, answerTargetY);
+        m_answerSpringAnimation.getSpring().setDampingRatio(SpringForce.DAMPING_RATIO_NO_BOUNCY);
+
+        m_answerSpringAnimation.addEndListener(new DynamicAnimation.OnAnimationEndListener() {
+            @Override
+            public void onAnimationEnd(DynamicAnimation animation, boolean canceled, float value, float velocity) {
+                answerAnimationDone();
+            }
+        });
 
     }
 
+    protected void answerAnimationDone() {
+        if( ! m_animationsTriggeredOnce) {
+            Log.v(TAG, "answerAnimationDone, showAnswer()");
+            m_reviewActivity.showAnswer();
+        }
+        m_animationsTriggeredOnce = true;
+    }
+
+    @Override
+    public boolean onTouch(View v, MotionEvent event) {
+
+
+        if(m_animationsTriggeredOnce) {
+            return false;
+        }
+
+        Log.v(TAG, "onTouch");
+
+        int index = event.getActionIndex();
+        int action = event.getActionMasked();
+
+        switch(action) {
+            case MotionEvent.ACTION_DOWN:
+                if(m_velocityTracker == null) {
+                    // Retrieve a new VelocityTracker object to watch the
+                    // velocity of a motion.
+                    m_velocityTracker = VelocityTracker.obtain();
+                }
+                else {
+                    // Reset the velocity tracker back to its initial state.
+                    m_velocityTracker.clear();
+                }
+                // Add  movement to the tracker.
+                m_velocityTracker.addMovement(event);
+
+                m_lastPointerY = event.getY();
+
+                break;
+            case MotionEvent.ACTION_MOVE:
+                m_velocityTracker.addMovement(event);
+                // When you want to determine the velocity, call
+                // computeCurrentVelocity(). Then call getXVelocity()
+                // and getYVelocity() to retrieve the velocity for each pointer ID.
+                m_velocityTracker.computeCurrentVelocity(1000);
+                // Log velocity of pixels per second
+                // Best practice to use VelocityTrackerCompat where possible.
+                // Log.d(&#34;&#34;, &#34;X velocity: &#34; + mVelocityTracker.getXVelocity(pointerId));
+                // Log.d(&#34;&#34;, &#34;Y velocity: &#34; + mVelocityTracker.getYVelocity(pointerId));
+
+                float dy = event.getY() - m_lastPointerY;
+                dragAnswerCard(dy);
+                m_lastPointerY = event.getY();
+
+
+                break;
+            case MotionEvent.ACTION_UP:
+            case MotionEvent.ACTION_CANCEL:
+                // Return a VelocityTracker object back to be re-used by others.
+
+                m_velocityTracker.computeCurrentVelocity(1000);
+                float velocity = m_velocityTracker.getYVelocity();
+
+
+                m_velocityTracker.recycle();
+                m_velocityTracker = null;
+
+                //Log.v(TAG, "starting spring animations with velocity " + velocity);
+                startSpringAnimations(velocity);
+
+                break;
+        }
+
+
+
+        return true;
+    }
+
+    public void dragAnswerCard(float dy) {
+        // move answer card by this much
+        float originalAnswerY = m_answerFrame.getY();
+        m_answerFrame.setY(originalAnswerY + dy);
+
+    }
+
+    public void startSpringAnimations(float velocity) {
+        m_answerSpringAnimation.setStartVelocity(velocity);
+        m_answerSpringAnimation.start();
+    }
 
     private Card m_card;
     private ReviewActivity m_reviewActivity;
+
+    FrameLayout m_answerFrame;
+
+    SpringAnimation m_answerSpringAnimation;
+    boolean m_animationsTriggeredOnce = false;
+
+    // track velocity of pointer
+    private VelocityTracker m_velocityTracker;
+    private float m_lastPointerY;
 }
