@@ -14,6 +14,7 @@ import android.view.VelocityTracker;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.view.View;
+import android.widget.ImageView;
 
 import com.luc.ankireview.Card;
 import com.luc.ankireview.R;
@@ -58,16 +59,23 @@ public class WebviewFlashcardLayout extends FrameLayout implements View.OnTouchL
         // render question
 
         FrameLayout questionFrame = findViewById(R.id.question_frame);
-        WebViewLayout questionCardLayout = new WebViewLayout(context, m_card, false);
+        WebViewLayout questionCardLayout = new WebViewLayout(context, m_card, false, null);
         questionFrame.addView(questionCardLayout);
 
 
         // answer will be rendered only when this card is displayed.
         m_answerFrame= findViewById(R.id.answer_frame);
 
+        m_arrowUp = findViewById(R.id.arrow_up);
+        m_arrowUp.setVisibility(View.GONE);
+
         WebviewCardBehavior behavior = new WebviewCardBehavior();
         CoordinatorLayout.LayoutParams layoutParams = (CoordinatorLayout.LayoutParams) questionFrame.getLayoutParams();
         layoutParams.setBehavior(behavior);
+
+        WebviewArrowUpBehavior arrowUpBehavior = new WebviewArrowUpBehavior();
+        CoordinatorLayout.LayoutParams arrowUpLayoutParams = (CoordinatorLayout.LayoutParams) m_arrowUp.getLayoutParams();
+        arrowUpLayoutParams.setBehavior(arrowUpBehavior);
 
         m_reviewActivity = (ReviewActivity) context;
 
@@ -79,7 +87,7 @@ public class WebviewFlashcardLayout extends FrameLayout implements View.OnTouchL
         touchLayer.setOnTouchListener(this);
 
         Log.v(TAG, "renderAnswer");
-        WebViewLayout answerCardLayout = new WebViewLayout(m_reviewActivity, m_card, true);
+        WebViewLayout answerCardLayout = new WebViewLayout(m_reviewActivity, m_card, true, this);
         m_answerFrame.addView(answerCardLayout);
     }
 
@@ -114,7 +122,7 @@ public class WebviewFlashcardLayout extends FrameLayout implements View.OnTouchL
             return false;
         }
 
-        Log.v(TAG, "onTouch");
+        // Log.v(TAG, "onTouch");
 
         int index = event.getActionIndex();
         int action = event.getActionMasked();
@@ -179,7 +187,6 @@ public class WebviewFlashcardLayout extends FrameLayout implements View.OnTouchL
         // move answer card by this much
         float originalAnswerY = m_answerFrame.getY();
         m_answerFrame.setY(originalAnswerY + dy);
-
     }
 
     public void startSpringAnimations(float velocity) {
@@ -196,6 +203,12 @@ public class WebviewFlashcardLayout extends FrameLayout implements View.OnTouchL
         }
     }
 
+    public void answerRenderingFinished() {
+        Log.v(TAG, "answerRenderingFinished");
+
+        m_arrowUp.setVisibility(View.VISIBLE);
+    }
+
     private Card m_card;
     private ReviewActivity m_reviewActivity;
 
@@ -210,7 +223,7 @@ public class WebviewFlashcardLayout extends FrameLayout implements View.OnTouchL
 
     private boolean m_answerAdded = false;
 
-
+    private ImageView m_arrowUp;
 
 
 }

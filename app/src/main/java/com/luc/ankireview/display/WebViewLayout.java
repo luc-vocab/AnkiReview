@@ -26,7 +26,7 @@ import java.util.regex.Pattern;
 public class WebViewLayout extends WebView {
     private static final String TAG = "WebViewLayout";
 
-    public WebViewLayout(Context context, Card card, boolean showAnswer) {
+    public WebViewLayout(Context context, Card card, boolean showAnswer, final WebviewFlashcardLayout callOnRenderFinish) {
         super(context);
 
         // webview settings
@@ -54,6 +54,10 @@ public class WebViewLayout extends WebView {
                     // reload
                     renderCard(m_showAnswer);
                     m_firstTimeInitDone = true;
+                } else {
+                    if(callOnRenderFinish != null) {
+                        callOnRenderFinish.answerRenderingFinished();
+                    }
                 }
             }
 

@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 
 import com.luc.ankireview.R;
 
@@ -15,6 +16,7 @@ public class WebviewCardBehavior extends CoordinatorLayout.Behavior<FrameLayout>
     public boolean layoutDependsOn(CoordinatorLayout parent, FrameLayout child, View dependency) {
         // Log.v(TAG, "layoutDependsOn " + dependency.getClass().toString());
         if( dependency.getId() == R.id.answer_frame) {
+            Log.v(TAG, "dependency on answer_frame");
             return true;
         }
         return false;
@@ -39,6 +41,11 @@ public class WebviewCardBehavior extends CoordinatorLayout.Behavior<FrameLayout>
 
                 FrameLayout answerFrame = parent.findViewById(R.id.answer_frame);
                 answerFrame.setY(totalWindowHeight);
+
+                // position the up arrow
+                ImageView upArrow = parent.findViewById(R.id.arrow_up);
+                Log.v(TAG, "upArrowHeight: " + upArrow.getHeight());
+                upArrow.setY(totalWindowHeight - upArrow.getHeight() - 200);
 
                 WebviewFlashcardLayout webviewFlashcardLayout = (WebviewFlashcardLayout) parent.getParent();
                 webviewFlashcardLayout.setSpringAnimation(answerTargetY);
