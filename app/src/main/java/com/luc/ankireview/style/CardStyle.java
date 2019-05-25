@@ -269,7 +269,8 @@ public class CardStyle implements Serializable {
 
     public String getQuestionAudio(long deckId, Card card) {
         if( ! useAnkiReviewDeckDisplayMode(deckId) ) {
-            return null;
+            String soundFile = card.extractSoundFile(card.getQuestionContent());
+            return soundFile;
         }
 
         // get card template
@@ -286,7 +287,8 @@ public class CardStyle implements Serializable {
 
     public String getAnswerAudio(long deckId, Card card) {
         if( ! useAnkiReviewDeckDisplayMode(deckId) ) {
-            return null;
+            String soundFile = card.extractSoundFile(card.getAnswerContent());
+            return soundFile;
         }
 
         // get card template
