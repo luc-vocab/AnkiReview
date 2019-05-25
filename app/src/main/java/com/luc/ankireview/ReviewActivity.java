@@ -126,8 +126,7 @@ public class ReviewActivity extends AppCompatActivity {
         // set touch listener
         m_detector = new GestureDetectorCompat(this, new ReviewerGestureDetector());
 
-        // TEMPORARY: disable touch layer
-        // m_touchLayer.setOnTouchListener(m_gestureListener);
+        m_touchLayer.setOnTouchListener(m_gestureListener);
 
         // buttons for card style
 
