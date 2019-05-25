@@ -267,7 +267,11 @@ public class CardStyle implements Serializable {
         return false;
     }
 
-    public String getQuestionAudio(Card card) {
+    public String getQuestionAudio(long deckId, Card card) {
+        if( ! useAnkiReviewDeckDisplayMode(deckId) ) {
+            return null;
+        }
+
         // get card template
         CardTemplateKey cardTemplateKey = new CardTemplateKey(card.getModelId(), card.getCardOrd());
         CardTemplate cardTemplate = m_cardStyleStorage.cardTemplateMap.get(cardTemplateKey);
@@ -280,7 +284,11 @@ public class CardStyle implements Serializable {
         return null;
     }
 
-    public String getAnswerAudio(Card card) {
+    public String getAnswerAudio(long deckId, Card card) {
+        if( ! useAnkiReviewDeckDisplayMode(deckId) ) {
+            return null;
+        }
+
         // get card template
         CardTemplateKey cardTemplateKey = new CardTemplateKey(card.getModelId(), card.getCardOrd());
         CardTemplate cardTemplate = m_cardStyleStorage.cardTemplateMap.get(cardTemplateKey);
@@ -344,6 +352,7 @@ public class CardStyle implements Serializable {
     }
 
     public void chooseDeckDisplayMode(long deckId, boolean useAnkiReviewStyle) {
+        Log.v(TAG, "chooseDeckDisplayMode, useAnkiReviewStyle: " + useAnkiReviewStyle);
         m_cardStyleStorage.deckDisplayMode.put(deckId, useAnkiReviewStyle);
         saveCardStyleData();
     }
@@ -351,6 +360,13 @@ public class CardStyle implements Serializable {
     public boolean deckDisplayModeConfigured(long deckId) {
         if( m_cardStyleStorage.deckDisplayMode.containsKey(deckId) ) {
             return true;
+        }
+        return false;
+    }
+
+    public boolean useAnkiReviewDeckDisplayMode(long deckId) {
+        if (m_cardStyleStorage.deckDisplayMode.containsKey(deckId)) {
+            return m_cardStyleStorage.deckDisplayMode.get(deckId);
         }
         return false;
     }

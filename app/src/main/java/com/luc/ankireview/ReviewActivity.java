@@ -141,7 +141,7 @@ public class ReviewActivity extends AppCompatActivity {
 
         // buttons for deck display options
         Button deck_display_use_anki = findViewById(R.id.deck_display_use_anki);
-        Button deck_display_use_ankireview = findViewById(R.id.deck_display_use_anki);
+        Button deck_display_use_ankireview = findViewById(R.id.deck_display_use_ankireview);
 
         deck_display_use_anki.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -630,15 +630,23 @@ public class ReviewActivity extends AppCompatActivity {
     }
 
     private boolean checkStyleExists(Card card) {
-        if( ! m_cardStyle.styleExistsForCard(card)) {
-            // redirect used to style activity
-            // launchCardStyleForCard(card);
+        boolean useAnkiReviewDeckDisplayMode = m_cardStyle.useAnkiReviewDeckDisplayMode(m_deckId);
 
-            showCardStyleNotDefinedControls(card.getCardTemplateName());
-            setupCardStyleHandler(card);
+        Log.v(TAG, "useAnkiReviewDeckDisplayMode: " + useAnkiReviewDeckDisplayMode);
 
-            return false;
+        if( useAnkiReviewDeckDisplayMode )
+        {
+            if( ! m_cardStyle.styleExistsForCard(card)) {
+                // redirect used to style activity
+                // launchCardStyleForCard(card);
+
+                showCardStyleNotDefinedControls(card.getCardTemplateName());
+                setupCardStyleHandler(card);
+
+                return false;
+            }
         }
+
         return true;
     }
 
@@ -646,9 +654,9 @@ public class ReviewActivity extends AppCompatActivity {
         m_answerAudio = false;
 
         // play question audio if found
-        playQuestionAudio(m_cardStyle.getQuestionAudio(m_currentCard));
+        playQuestionAudio(m_cardStyle.getQuestionAudio(m_deckId, m_currentCard));
         // prepare answer audio if found
-        prepareAnswerAudio(m_cardStyle.getAnswerAudio(m_currentCard));
+        prepareAnswerAudio(m_cardStyle.getAnswerAudio(m_deckId, m_currentCard));
 
         if(m_isFirstCard)
         {
