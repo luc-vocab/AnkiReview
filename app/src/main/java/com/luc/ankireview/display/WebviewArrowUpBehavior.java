@@ -32,7 +32,18 @@ public class WebviewArrowUpBehavior extends CoordinatorLayout.Behavior<ImageView
 
     }
 
+    @Override
+    public boolean onLayoutChild (CoordinatorLayout parent,
+                                  ImageView child,
+                                  int layoutDirection) {
+        parent.onLayoutChild(child, layoutDirection);
 
+
+        int totalWindowHeight = parent.getHeight();
+        child.setY(totalWindowHeight - child.getHeight());
+
+        return true;
+    }
 
 
 }
