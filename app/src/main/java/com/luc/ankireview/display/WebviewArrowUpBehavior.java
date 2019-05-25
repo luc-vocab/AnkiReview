@@ -1,5 +1,6 @@
 package com.luc.ankireview.display;
 
+import android.animation.ObjectAnimator;
 import android.support.design.widget.CoordinatorLayout;
 import android.util.Log;
 import android.view.View;
@@ -45,9 +46,12 @@ public class WebviewArrowUpBehavior extends CoordinatorLayout.Behavior<ImageView
                                   int layoutDirection) {
         parent.onLayoutChild(child, layoutDirection);
 
-
         int totalWindowHeight = parent.getHeight();
-        child.setY(totalWindowHeight - child.getHeight());
+        child.setY(totalWindowHeight);
+
+        ObjectAnimator animation = ObjectAnimator.ofFloat(child, "translationY", totalWindowHeight - child.getHeight());
+        animation.setDuration(150);
+        animation.start();
 
         return true;
     }
