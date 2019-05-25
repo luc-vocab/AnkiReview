@@ -50,10 +50,12 @@ public class FlashCardViewPagerAdapter extends PagerAdapter {
     }
 
     private View createCardView(ViewGroup container, Card card) {
-        // View cardView = new ReviewerFlashcardLayout(container.getContext(), card);
-        // View cardView = new WebViewFlashcardLayout(container.getContext(), card, false);
-        // View cardView = new WebViewFlashcardQuestionAnswerPager(container.getContext(), m_reviewActivity, card);
-        View cardView = new WebviewFlashcardLayout(container.getContext(), m_reviewActivity, card);
+       View cardView;
+        if(m_reviewActivity.useAnkiReviewStyle()) {
+            cardView = new ReviewerFlashcardLayout(container.getContext(), card);
+        } else {
+            cardView = new WebviewFlashcardLayout(container.getContext(), m_reviewActivity, card);
+        }
         return cardView;
     }
 

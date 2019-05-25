@@ -341,9 +341,6 @@ public class ReviewActivity extends AppCompatActivity {
         }
     }
 
-    private void showDeckDisplayOptions() {
-        m_deckDisplayMode.setVisibility(View.VISIBLE);
-    }
 
     private void setupFlashcardPager() {
         // setup ViewPager for flashcards
@@ -394,6 +391,9 @@ public class ReviewActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case R.id.deck_display_mode:
+                showDeckDisplayOptions();
+                return true;
             case R.id.cardstyle:
                 Log.v(TAG, "card style selected");
                 launchCardStyle();
@@ -622,6 +622,13 @@ public class ReviewActivity extends AppCompatActivity {
         m_speedDialView.setVisibility(View.INVISIBLE);
         m_styleNotFound.setVisibility(View.VISIBLE);
         m_cardTemplateName.setText(cardTemplateName);
+    }
+
+    private void showDeckDisplayOptions() {
+        m_flashcardFrame.setVisibility(View.INVISIBLE);
+        m_speedDialView.setVisibility(View.INVISIBLE);
+        m_styleNotFound.setVisibility(View.INVISIBLE);
+        m_deckDisplayMode.setVisibility(View.VISIBLE);
     }
 
     private void setupCardStyleHandler(Card card) {
@@ -1045,6 +1052,10 @@ public class ReviewActivity extends AppCompatActivity {
 
     private CardStyle m_cardStyle;
     public CardStyle getCardStyle() { return m_cardStyle; }
+
+    public boolean useAnkiReviewStyle() {
+        return m_cardStyle.useAnkiReviewDeckDisplayMode(m_deckId);
+    }
 
     // layout elements
     private Toolbar m_toolbar;
