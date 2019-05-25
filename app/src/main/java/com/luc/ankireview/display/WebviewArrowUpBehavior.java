@@ -27,7 +27,14 @@ public class WebviewArrowUpBehavior extends CoordinatorLayout.Behavior<ImageView
                                     View dependency)
     {
 
+        float currentY = dependency.getY();
         child.setY(dependency.getY() - child.getHeight());
+
+        int totalWindowHeight = parent.getHeight();
+        double alpha = 1.0 + (currentY - totalWindowHeight)/totalWindowHeight;
+        child.setAlpha((float)alpha);
+
+
         return true;
 
     }
