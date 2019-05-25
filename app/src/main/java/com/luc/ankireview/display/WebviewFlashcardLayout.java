@@ -82,9 +82,7 @@ public class WebviewFlashcardLayout extends FrameLayout implements View.OnTouchL
     }
 
     private void renderAnswer() {
-        // setup touch listener
-        FrameLayout touchLayer = findViewById(R.id.flashcard_touch_layer);
-        touchLayer.setOnTouchListener(this);
+
 
         Log.v(TAG, "renderAnswer");
         WebViewLayout answerCardLayout = new WebViewLayout(m_reviewActivity, m_card, true, this);
@@ -103,6 +101,10 @@ public class WebviewFlashcardLayout extends FrameLayout implements View.OnTouchL
                 answerAnimationDone();
             }
         });
+
+        // setup touch listener
+        FrameLayout touchLayer = findViewById(R.id.flashcard_touch_layer);
+        touchLayer.setOnTouchListener(this);
 
     }
 

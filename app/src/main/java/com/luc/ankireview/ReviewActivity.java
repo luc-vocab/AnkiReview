@@ -40,6 +40,7 @@ import com.crashlytics.android.Crashlytics;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.leinardi.android.speeddial.SpeedDialActionItem;
 import com.leinardi.android.speeddial.SpeedDialView;
+import com.luc.ankireview.animation.RotateDownTransformer;
 import com.luc.ankireview.display.BackgroundViewPagerAdapter;
 import com.luc.ankireview.display.FlashCardViewPagerAdapter;
 import com.luc.ankireview.display.FlashcardViewPager;
@@ -113,6 +114,7 @@ public class ReviewActivity extends AppCompatActivity {
         m_styleNotFound.setVisibility(View.INVISIBLE);
         m_touchLayer = findViewById(R.id.touch_layer);
         m_flashcardPager = findViewById(R.id.flashcard_pager);
+        // m_flashcardPager.setPageTransformer(false, new RotateDownTransformer());
 
 
         m_progressBar = findViewById(R.id.review_progressbar);

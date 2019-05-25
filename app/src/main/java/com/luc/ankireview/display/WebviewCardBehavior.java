@@ -12,6 +12,9 @@ import com.luc.ankireview.R;
 public class WebviewCardBehavior extends CoordinatorLayout.Behavior<FrameLayout> {
     private static final String TAG = "WebviewCardBehavior";
 
+    private static final float MIN_SCALE = 0.50f;
+    private static final float MIN_ALPHA = 0.5f;
+
     @Override
     public boolean layoutDependsOn(CoordinatorLayout parent, FrameLayout child, View dependency) {
         // Log.v(TAG, "layoutDependsOn " + dependency.getClass().toString());
@@ -61,6 +64,30 @@ public class WebviewCardBehavior extends CoordinatorLayout.Behavior<FrameLayout>
         return false;
     }
 
+    @Override
+    public boolean onDependentViewChanged (CoordinatorLayout parent,
+                                           FrameLayout child,
+                                           View dependency)
+    {
+
+        int totalWindowHeight = parent.getHeight();
+        float currentY = dependency.getY();
+
+
+
+        float position = 1 - currentY / totalWindowHeight;
+
+
+
+        child.setY((currentY - totalWindowHeight) * 0.4f);
+
+        double alpha = 1.0 + (currentY - totalWindowHeight)/totalWindowHeight;
+        child.setAlpha((float)alpha);
+
+
+        return true;
+
+    }
 
     private boolean m_initialLayoutDone = false;
 
