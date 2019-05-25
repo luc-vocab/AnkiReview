@@ -56,6 +56,10 @@ public class WebviewFlashcardLayout extends FrameLayout implements View.OnTouchL
     private void init(Context context) {
         inflate(context, R.layout.flashcard_webview, this);
 
+        // setup touch listener
+        FrameLayout touchLayer = findViewById(R.id.flashcard_touch_layer);
+        touchLayer.setOnTouchListener(this);
+
         // render question
 
         FrameLayout questionFrame = findViewById(R.id.question_frame);
@@ -102,9 +106,6 @@ public class WebviewFlashcardLayout extends FrameLayout implements View.OnTouchL
             }
         });
 
-        // setup touch listener
-        FrameLayout touchLayer = findViewById(R.id.flashcard_touch_layer);
-        touchLayer.setOnTouchListener(this);
 
     }
 
@@ -118,6 +119,9 @@ public class WebviewFlashcardLayout extends FrameLayout implements View.OnTouchL
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {
+        if( !m_answerAvailable ) {
+            return false;
+        }
 
 
         if(m_animationsTriggeredOnce) {
@@ -209,6 +213,8 @@ public class WebviewFlashcardLayout extends FrameLayout implements View.OnTouchL
         Log.v(TAG, "answerRenderingFinished");
 
         m_arrowUp.setVisibility(View.VISIBLE);
+
+        m_answerAvailable = true;
     }
 
     private Card m_card;
@@ -224,6 +230,7 @@ public class WebviewFlashcardLayout extends FrameLayout implements View.OnTouchL
     private float m_lastPointerY;
 
     private boolean m_answerAdded = false;
+    private boolean m_answerAvailable = false;
 
     private ImageView m_arrowUp;
 
