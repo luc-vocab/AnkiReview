@@ -50,12 +50,11 @@ public class WebViewLayout extends WebView {
             @Override
             public void onPageFinished(WebView view, String url) {
                 Log.v(TAG, "WebView pagefinished " + url);
-                /*
                 if( !m_firstTimeInitDone) {
                     // reload
                     renderCard(m_showAnswer);
                     m_firstTimeInitDone = true;
-                }*/
+                }
             }
 
 

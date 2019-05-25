@@ -55,20 +55,14 @@ public class WebviewFlashcardLayout extends FrameLayout implements View.OnTouchL
     private void init(Context context) {
         inflate(context, R.layout.flashcard_webview, this);
 
-        FrameLayout touchLayer = findViewById(R.id.flashcard_touch_layer);
-
-        // set touch listener
-        // m_detector = new GestureDetectorCompat(context, new FlashcardLayout.FlingGestureDetector());
-        // touchLayer.setOnTouchListener(this);
-        touchLayer.setOnTouchListener(this);
-
         // render question
 
         FrameLayout questionFrame = findViewById(R.id.question_frame);
         WebViewLayout questionCardLayout = new WebViewLayout(context, m_card, false);
         questionFrame.addView(questionCardLayout);
 
-        // render answer
+
+        // answer will be rendered only when this card is displayed.
         m_answerFrame= findViewById(R.id.answer_frame);
 
         WebviewCardBehavior behavior = new WebviewCardBehavior();
@@ -80,6 +74,10 @@ public class WebviewFlashcardLayout extends FrameLayout implements View.OnTouchL
     }
 
     private void renderAnswer() {
+        // setup touch listener
+        FrameLayout touchLayer = findViewById(R.id.flashcard_touch_layer);
+        touchLayer.setOnTouchListener(this);
+
         Log.v(TAG, "renderAnswer");
         WebViewLayout answerCardLayout = new WebViewLayout(m_reviewActivity, m_card, true);
         m_answerFrame.addView(answerCardLayout);
