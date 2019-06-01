@@ -367,10 +367,11 @@ public class CardStyle implements Serializable {
     }
 
     public boolean useAnkiReviewDeckDisplayMode(long deckId) {
+        boolean result = false;
         if (m_cardStyleStorage.deckDisplayMode.containsKey(deckId)) {
-            return m_cardStyleStorage.deckDisplayMode.get(deckId);
+            result = m_cardStyleStorage.deckDisplayMode.get(deckId).booleanValue();
         }
-        return false;
+        return result;
     }
 
     private HashMap<String,Typeface> m_fontCache;

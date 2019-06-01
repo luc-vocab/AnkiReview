@@ -412,12 +412,32 @@ public class ReviewActivity extends AppCompatActivity {
 
     private void launchCardStyle() {
         if (m_cardForCardStyleEdit != null) {
-            Intent intent = new Intent(ReviewActivity.this, CardStyleActivity.class);
-            intent.putExtra("noteId", m_cardForCardStyleEdit.getNoteId());
-            intent.putExtra("cardOrd", m_cardForCardStyleEdit.getCardOrd());
-            intent.putExtra("cardTemplateName", m_cardForCardStyleEdit.getCardTemplateName());
-            intent.putExtra("deckName", m_deckName );
-            this.startActivityForResult(intent,0);
+
+            // is this deck enabled for AnkiReview style ?
+            if ( ! m_cardStyle.useAnkiReviewDeckDisplayMode(m_deckId)) {
+
+                new AlertDialog.Builder(this)
+                        .setTitle("Please enable AnkiReview style")
+                        .setMessage("Editing the Card Style only works if you've chosen AnkiReview style in Deck Display Mode.")
+                        .setPositiveButton("OK", new DialogInterface.OnClickListener()
+                        {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                // do nothing
+                            }
+
+                        })
+                        .show();
+
+            } else {
+
+                Intent intent = new Intent(ReviewActivity.this, CardStyleActivity.class);
+                intent.putExtra("noteId", m_cardForCardStyleEdit.getNoteId());
+                intent.putExtra("cardOrd", m_cardForCardStyleEdit.getCardOrd());
+                intent.putExtra("cardTemplateName", m_cardForCardStyleEdit.getCardTemplateName());
+                intent.putExtra("deckName", m_deckName);
+                this.startActivityForResult(intent, 0);
+            }
         }
     }
 
