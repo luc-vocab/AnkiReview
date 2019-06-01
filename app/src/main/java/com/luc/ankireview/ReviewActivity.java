@@ -775,6 +775,10 @@ public class ReviewActivity extends AppCompatActivity {
 
     private void queueAnswerCardAndMoveToNextQuestion(AnkiUtils.Ease ease) {
         m_queuedAnswerCardEase = ease;
+        if( ! useAsynchronousMode() ) {
+            // perform action immediately
+            executeQueuedAnswerCard();
+        }
     }
 
     private void executeQueuedAnswerCard() {
@@ -934,7 +938,9 @@ public class ReviewActivity extends AppCompatActivity {
             public void onAnimationEnd(Animator animator) {
                 // retrieve following cards which will freeze UI when drawing following carsd
                 // but we're not animating anything at that point so it should be OK
-                retrieveFollowingCards();
+                if( useAsynchronousMode() ) {
+                    retrieveFollowingCards();
+                }
             }
 
             @Override
@@ -984,6 +990,10 @@ public class ReviewActivity extends AppCompatActivity {
             m_cardsDone = numCardsDone;
             // m_progressBar.setProgress(m_cardsDone * 100);
             setProgressAnimate(m_cardsDone);
+            if( ! useAsynchronousMode() ) {
+                // not using asynchronous mode, retrieve following cards immediately
+                retrieveFollowingCards();
+            }
         } else {
             retrieveFollowingCards();
         }
@@ -1056,6 +1066,15 @@ public class ReviewActivity extends AppCompatActivity {
 
         showToast("End of cards reached");
         finish();
+    }
+
+    /**
+     * whether to queue card answers and retrievals until animations are done. this is necessary
+     * when using WebViews as initializing those tend to slow down animations
+     */
+    private boolean useAsynchronousMode() {
+        // only enable if we're not using ankireview style
+        return ! useAnkiReviewStyle();
     }
 
     private long m_deckId;
