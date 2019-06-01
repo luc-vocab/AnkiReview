@@ -1,9 +1,13 @@
 package com.luc.ankireview.display;
 
+import android.animation.Animator;
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.text.Spanned;
 import android.text.SpannedString;
 import android.util.Log;
+import android.view.View;
+import android.view.animation.AlphaAnimation;
 import android.webkit.WebResourceError;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
@@ -28,6 +32,8 @@ public class WebViewLayout extends WebView {
 
     public WebViewLayout(Context context, Card card, boolean showAnswer, final WebviewFlashcardLayout callOnRenderFinish) {
         super(context);
+
+        final View animationTarget = this;
 
         // webview settings
         getSettings().setJavaScriptEnabled(true);
@@ -55,6 +61,14 @@ public class WebViewLayout extends WebView {
                     renderCard(m_showAnswer);
                     m_firstTimeInitDone = true;
                 } else {
+                    if(! m_showAnswer) {
+                        // fade-in
+
+                        ObjectAnimator fadeInAnimation = ObjectAnimator.ofFloat(animationTarget, "alpha", 1.0f);
+                        fadeInAnimation.setDuration(250);
+                        fadeInAnimation.start();
+
+                    }
                     if(callOnRenderFinish != null) {
                         callOnRenderFinish.answerRenderingFinished();
                     }
@@ -66,6 +80,12 @@ public class WebViewLayout extends WebView {
 
         m_card = card;
         m_showAnswer = showAnswer;
+
+        if(! m_showAnswer) {
+            // this is the question, set alpha to 0, we'll fade in when question has been rendered
+            setAlpha(0.0f);
+        }
+
         try {
             m_cardTemplate = Utils.convertStreamToString(context.getAssets().open("card_template.html"));
         } catch (IOException e) {
@@ -151,4 +171,5 @@ public class WebViewLayout extends WebView {
     private boolean m_showAnswer;
     private String m_cardTemplate;
     private boolean m_firstTimeInitDone = false;
+
 }
