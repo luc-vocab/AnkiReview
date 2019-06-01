@@ -28,32 +28,32 @@ public class WebviewFlashcardLayout extends FrameLayout implements View.OnTouchL
 
     public WebviewFlashcardLayout(Context context) {
         super(context);
-        init(context);
+        init(context, false);
     }
 
-    public WebviewFlashcardLayout(Context context, ReviewActivity reviewActivity, Card card) {
+    public WebviewFlashcardLayout(Context context, ReviewActivity reviewActivity, Card card, boolean questionFadeIn) {
         super(context);
         m_card = card;
-        init(context);
+        init(context, questionFadeIn);
     }
 
     public WebviewFlashcardLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
-        init(context);
+        init(context, false);
     }
 
     public WebviewFlashcardLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        init(context);
+        init(context, false);
     }
 
     public WebviewFlashcardLayout(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
-        init(context);
+        init(context, false);
     }
 
 
-    private void init(Context context) {
+    private void init(Context context, boolean questionFadeIn) {
         inflate(context, R.layout.flashcard_webview, this);
 
         // setup touch listener
@@ -63,7 +63,7 @@ public class WebviewFlashcardLayout extends FrameLayout implements View.OnTouchL
         // render question
 
         FrameLayout questionFrame = findViewById(R.id.question_frame);
-        WebViewLayout questionCardLayout = new WebViewLayout(context, m_card, false, null);
+        WebViewLayout questionCardLayout = new WebViewLayout(context, m_card, false, null, questionFadeIn);
         questionFrame.addView(questionCardLayout);
 
 
@@ -89,7 +89,7 @@ public class WebviewFlashcardLayout extends FrameLayout implements View.OnTouchL
 
 
         Log.v(TAG, "renderAnswer");
-        WebViewLayout answerCardLayout = new WebViewLayout(m_reviewActivity, m_card, true, this);
+        WebViewLayout answerCardLayout = new WebViewLayout(m_reviewActivity, m_card, true, this, false);
         m_answerFrame.addView(answerCardLayout);
     }
 

@@ -25,11 +25,11 @@ public class FlashCardViewPagerAdapter extends PagerAdapter {
         switch( position)
         {
             case 0:
-                cardLayout = createCardView(container, m_nextCard);
+                cardLayout = createCardView(container, m_nextCard, false);
                 m_left = (FlashCardLayoutInterface) cardLayout;
                 break;
             case 1:
-                cardLayout = createCardView(container, m_currentCard);
+                cardLayout = createCardView(container, m_currentCard, true);
                 m_center = (FlashCardLayoutInterface) cardLayout;
                 if(m_centerCardDisplayedQueued) {
                     m_centerCardDisplayedQueued = false;
@@ -37,7 +37,7 @@ public class FlashCardViewPagerAdapter extends PagerAdapter {
                 }
                 break;
             case 2:
-                cardLayout = createCardView(container, m_nextCard);
+                cardLayout = createCardView(container, m_nextCard, false);
                 m_right = (FlashCardLayoutInterface) cardLayout;
                 break;
             default:
@@ -49,12 +49,12 @@ public class FlashCardViewPagerAdapter extends PagerAdapter {
         return cardLayout;
     }
 
-    private View createCardView(ViewGroup container, Card card) {
+    private View createCardView(ViewGroup container, Card card, boolean isCenter) {
        View cardView;
         if(m_reviewActivity.useAnkiReviewStyle()) {
             cardView = new ReviewerFlashcardLayout(container.getContext(), card);
         } else {
-            cardView = new WebviewFlashcardLayout(container.getContext(), m_reviewActivity, card);
+            cardView = new WebviewFlashcardLayout(container.getContext(), m_reviewActivity, card, isCenter);
         }
         return cardView;
     }

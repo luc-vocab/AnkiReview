@@ -30,7 +30,7 @@ import java.util.regex.Pattern;
 public class WebViewLayout extends WebView {
     private static final String TAG = "WebViewLayout";
 
-    public WebViewLayout(Context context, Card card, boolean showAnswer, final WebviewFlashcardLayout callOnRenderFinish) {
+    public WebViewLayout(Context context, Card card, boolean showAnswer, final WebviewFlashcardLayout callOnRenderFinish, final boolean fadeIn) {
         super(context);
 
         final View animationTarget = this;
@@ -61,11 +61,12 @@ public class WebViewLayout extends WebView {
                     renderCard(m_showAnswer);
                     m_firstTimeInitDone = true;
                 } else {
-                    if(! m_showAnswer) {
+                    if(fadeIn) {
                         // fade-in
+                        Log.v(TAG, "start fadeIn animation");
 
                         ObjectAnimator fadeInAnimation = ObjectAnimator.ofFloat(animationTarget, "alpha", 1.0f);
-                        fadeInAnimation.setDuration(250);
+                        fadeInAnimation.setDuration(300);
                         fadeInAnimation.start();
 
                     }
@@ -81,7 +82,7 @@ public class WebViewLayout extends WebView {
         m_card = card;
         m_showAnswer = showAnswer;
 
-        if(! m_showAnswer) {
+        if(fadeIn) {
             // this is the question, set alpha to 0, we'll fade in when question has been rendered
             setAlpha(0.0f);
         }
