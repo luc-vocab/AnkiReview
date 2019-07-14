@@ -2,6 +2,7 @@ package com.luc.ankireview;
 
 import android.animation.Animator;
 import android.animation.ObjectAnimator;
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -1067,7 +1068,10 @@ public class ReviewActivity extends AppCompatActivity {
         bundle.putInt(Analytics.REVIEW_COUNT, m_reviewCount);
         m_firebaseAnalytics.logEvent(Analytics.REVIEW_END, bundle);
 
+
         showToast("End of cards reached");
+
+        setResult(Activity.RESULT_OK, null);
         finish();
     }
 

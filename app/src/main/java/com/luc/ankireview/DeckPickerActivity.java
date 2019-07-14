@@ -33,6 +33,7 @@ import android.widget.Toast;
 import com.crashlytics.android.Crashlytics;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.ichi2.anki.FlashCardsContract;
+import com.kobakei.ratethisapp.RateThisApp;
 import com.luc.ankireview.backgrounds.BackgroundManager;
 
 
@@ -248,6 +249,12 @@ public class DeckPickerActivity extends AppCompatActivity implements AdapterView
         m_backgroundManager = new BackgroundManager();
         m_firebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
+        // rating request library
+        RateThisApp.onCreate(this);
+        RateThisApp.Config config = new RateThisApp.Config(0, 0);
+        config.setMessage(R.string.review_request_message);
+        RateThisApp.init(config);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.deckpicker_toolbar);
         setSupportActionBar(toolbar);
 
@@ -366,9 +373,28 @@ public class DeckPickerActivity extends AppCompatActivity implements AdapterView
         // launch review activity
         Intent intent = new Intent(DeckPickerActivity.this, ReviewActivity.class);
         intent.putExtra("deckId", deck.deckId);
-        this.startActivity(intent);
+        this.startActivityForResult(intent, 0);
     }
     //private List<String> m_decks = new LinkedList<String>();
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // Check which request we're responding to
+        if (requestCode == 0) {
+            // Make sure the request was successful
+            if (resultCode == RESULT_OK) {
+                Log.v(TAG, "review session has been completed");
+
+                // show review request
+                // If the condition is satisfied, "Rate this app" dialog will be shown
+                RateThisApp.showRateDialogIfNeeded(this);
+
+                // RatingRequest.with(this).message(getString(R.string.review_request_message)).register();
+            } else if (resultCode == RESULT_CANCELED) {
+                Log.v(TAG, "review session has been interrupted");
+            }
+        }
+    }
 
     private BackgroundManager m_backgroundManager;
     private FirebaseAnalytics m_firebaseAnalytics;
