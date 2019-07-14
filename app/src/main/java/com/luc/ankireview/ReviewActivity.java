@@ -1050,6 +1050,7 @@ public class ReviewActivity extends AppCompatActivity {
 
         Bundle bundle = new Bundle();
         bundle.putInt(Analytics.REVIEW_COUNT, m_reviewCount);
+        bundle.putBoolean(Analytics.DISPLAYOPTIONS_USE_ANKIREVIEW, useAnkiReviewStyle());
         m_firebaseAnalytics.logEvent(Analytics.REVIEW_PROGRESS, bundle);
     }
 

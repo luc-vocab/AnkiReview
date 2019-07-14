@@ -4,6 +4,7 @@ public class Analytics {
     // params
     public static final String REVIEW_COUNT = "review_count";
     public static final String DECK_COUNT = "deck_count";
+    public static final String DISPLAYOPTIONS_USE_ANKIREVIEW = "display_options_ankireview";
 
     // events
     public static final String REVIEW_START = "review_start";
