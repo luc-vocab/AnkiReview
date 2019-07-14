@@ -445,12 +445,14 @@ public class ReviewActivity extends AppCompatActivity {
     private void deckDisplayOptionsChooseAnki() {
         m_cardStyle.chooseDeckDisplayMode(m_deckId, false);
         showReviewControls();
+        m_firebaseAnalytics.logEvent(Analytics.DISPLAYOPTIONS_HTML, null);
         reloadCardStyleAndCards();
     }
 
     private void deckDisplayOptionsChooseAnkiReview() {
         m_cardStyle.chooseDeckDisplayMode(m_deckId, true);
         showReviewControls();
+        m_firebaseAnalytics.logEvent(Analytics.DISPLAYOPTIONS_ANKIREVIEW, null);
         reloadCardStyleAndCards();
     }
 

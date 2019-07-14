@@ -15,6 +15,9 @@ public class Analytics {
     public static final String MISSING_ANKIDROID = "missing_ankidroid";
     public static final String MISSING_PERMISSION = "missing_permission";
 
+    public static final String DISPLAYOPTIONS_ANKIREVIEW = "deckdisplayoptions_ankireview";
+    public static final String DISPLAYOPTIONS_HTML = "deckdisplayoptions_html";
+
     public static final String CARDSTYLE_START = "cardstyle_start";
     public static final String CARDSTYLE_FIELD_CHOSEN = "cardstyle_field_chosen";
     public static final String CARDSTYLE_SAVE = "cardstyle_save";
