@@ -23,4 +23,9 @@ public class Analytics {
     public static final String CARDSTYLE_FIELD_CHOSEN = "cardstyle_field_chosen";
     public static final String CARDSTYLE_SAVE = "cardstyle_save";
     public static final String CARDSTYLE_NOSAVE = "cardstyle_nosave";
+
+    public static final String RATINGREQUEST_YES = "ratingrequest_yes";
+    public static final String RATINGREQUEST_NO = "ratingrequest_no";
+    public static final String RATINGREQUEST_LATER = "ratingrequest_later";
+
 }

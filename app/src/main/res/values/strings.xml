@@ -76,6 +76,7 @@
     <string name="deckpicker_missingpermissions_title">Missing Permissions</string>
     <string name="deckpicker_missingpermissions_description">Permissions not granted, will not be able to list AnkiDroid decks.</string>
 
+    <string name="review_request_title">Good Job ! Review session done</string>
     <string name="review_request_message">I spent nine months writing AnkiReview, to make reviewing more fun and give back to the Anki community. It would mean the world to me if you gave me a review!</string>
 
     <string name="developer_email">ankireview@mailc.net</string>

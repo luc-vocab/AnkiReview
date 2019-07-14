@@ -251,8 +251,25 @@ public class DeckPickerActivity extends AppCompatActivity implements AdapterView
 
         // rating request library
         RateThisApp.onCreate(this);
-        RateThisApp.Config config = new RateThisApp.Config(0, 0);
+        RateThisApp.Config config = new RateThisApp.Config();
+        config.setTitle(R.string.review_request_title);
         config.setMessage(R.string.review_request_message);
+        RateThisApp.setCallback(new RateThisApp.Callback() {
+            @Override
+            public void onYesClicked() {
+                m_firebaseAnalytics.logEvent(Analytics.RATINGREQUEST_YES, null);
+            }
+
+            @Override
+            public void onNoClicked() {
+                m_firebaseAnalytics.logEvent(Analytics.RATINGREQUEST_NO, null);
+            }
+
+            @Override
+            public void onCancelClicked() {
+                m_firebaseAnalytics.logEvent(Analytics.RATINGREQUEST_LATER, null);
+            }
+        });
         RateThisApp.init(config);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.deckpicker_toolbar);
