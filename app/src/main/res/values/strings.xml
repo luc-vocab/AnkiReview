@@ -52,7 +52,7 @@
     <string name="card_style_not_found">Card Style not found</string>
     <string name="card_style_define_style">Please define a style for this card type, first by selecting question and answer fields, then by customizing the appearance of the card.</string>
 
-    <string name="card_style_all_fields_description">Drag from the available fields, using the handle on the right, to the Question or Answer section above. You can scroll to see all available fields.</string>
+    <string name="card_style_all_fields_description">Drag from the available fields to the Question or Answer section above. You can scroll to see all available fields.</string>
     <string name="card_style_question_fields_description">Drag fields here to show them on the Question (top part).</string>
     <string name="card_style_answer_fields_description">Drag fields here to show them on the Answer (bottom part).</string>
     <string name="card_style_sound_fields_description">Drag fields which contain an Anki sound tag, they will be played upon revealing the answer.</string>
