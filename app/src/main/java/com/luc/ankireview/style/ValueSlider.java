@@ -2,8 +2,8 @@ package com.luc.ankireview.style;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.support.transition.ChangeBounds;
-import android.support.transition.TransitionManager;
+import androidx.transition.ChangeBounds;
+import androidx.transition.TransitionManager;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;

@@ -1,13 +1,12 @@
 package com.luc.ankireview.display;
 
 import android.content.Context;
-import android.support.v4.view.PagerAdapter;
+import androidx.viewpager.widget.PagerAdapter;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.luc.ankireview.Card;
 import com.luc.ankireview.ReviewActivity;
-import com.luc.ankireview.display.ReviewerFlashcardLayout;
 
 public class FlashCardViewPagerAdapter extends PagerAdapter {
     private static final String TAG = "FlashCardViewPagerAdapter";

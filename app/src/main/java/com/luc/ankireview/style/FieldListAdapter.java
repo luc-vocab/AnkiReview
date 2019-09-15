@@ -1,14 +1,12 @@
 package com.luc.ankireview.style;
 
-import android.preference.PreferenceActivity;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.helper.ItemTouchHelper;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.luc.ankireview.CardStyleActivity;
 import com.luc.ankireview.R;
