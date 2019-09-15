@@ -455,6 +455,7 @@ public class CardStyleActivity extends AppCompatActivity {
 
         SimpleTarget target1;
         SimpleTarget target2;
+        SimpleTarget target3;
 
         // tell user where the card style preview will appear
         {
@@ -491,13 +492,37 @@ public class CardStyleActivity extends AppCompatActivity {
             float targetY = (float) (location[1] - dragHandle.getHeight() / 2.0);
 
             float overlayX = 10f;
-            float overlayY = targetY - 600f;
+            float overlayY = targetY - 800f;
 
             target2 = new SimpleTarget.Builder(this)
                     .setPoint(targetX, targetY)
                     .setShape(new Circle(targetSize)) // or RoundedRectangle()
                     .setTitle("Field List")
-                    .setDescription("Grab this handle to drag the field into the Question or Answer section above.")
+                    .setDescription("Here you can configure which fields appear in the Question card or Answer card. Grab this handle to drag the field into the Question or Answer section above. " +
+                                    "You can also scroll up or down to see the complete field list.")
+                    .setOverlayPoint(overlayX, overlayY)
+                    .build();
+        }
+
+        // color tab
+        {
+            int[] location = new int[2];
+
+            View fieldLookButton = findViewById(R.id.cardstyle_action_field_settings);
+            fieldLookButton.getLocationOnScreen(location);
+
+            float targetSize = 100f;
+            float targetX = (float) (location[0] + fieldLookButton.getWidth() / 2.0);
+            float targetY = (float) (location[1] + fieldLookButton.getHeight() / 2.0);
+
+            float overlayX = 10f;
+            float overlayY = targetY - 600f;
+
+            target3 = new SimpleTarget.Builder(this)
+                    .setPoint(targetX, targetY)
+                    .setShape(new Circle(targetSize)) // or RoundedRectangle()
+                    .setTitle("Appearance Settings")
+                    .setDescription("You can configure text color, size and other settings here. There are other settings in tabs to the right, such as Sound, Font, Spacing.")
                     .setOverlayPoint(overlayX, overlayY)
                     .build();
         }
@@ -506,19 +531,8 @@ public class CardStyleActivity extends AppCompatActivity {
                 .setOverlayColor(R.color.background)
                 .setDuration(1000L)
                 .setAnimation(new DecelerateInterpolator(2f))
-                .setTargets(target1, target2)
+                .setTargets(target1, target2, target3)
                 .setClosedOnTouchedOutside(true)
-                .setOnSpotlightStateListener(new OnSpotlightStateChangedListener() {
-                    @Override
-                    public void onStarted() {
-                        Toast.makeText(CardStyleActivity.this, "spotlight is started", Toast.LENGTH_SHORT).show();
-                    }
-
-                    @Override
-                    public void onEnded() {
-                        Toast.makeText(CardStyleActivity.this, "spotlight is ended", Toast.LENGTH_SHORT).show();
-                    }
-                })
                 .start();
     }
 
