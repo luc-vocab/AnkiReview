@@ -92,12 +92,14 @@ public class CardStyleActivity extends AppCompatActivity {
         m_card = AnkiUtils.retrieveCard(getContentResolver(), noteId, cardOrd);
 
         // retrieve the card template
+        boolean firstTimeSetup = false;
         m_cardTemplateKey = new CardTemplateKey(m_card.getModelId(), m_card.getCardOrd());
         m_cardTemplate = m_cardStyle.getCardTemplate(m_cardTemplateKey);
         if(m_cardTemplate == null) {
             // create a new one
             m_cardTemplate = m_cardStyle.createCardTemplate(m_cardTemplateKey);
             // showDefineStyleDialog();
+            firstTimeSetup = true;
         }
 
         // Log.v(TAG, "num question card fields: " + m_cardTemplate.getQuestionCardFields().size());
@@ -441,12 +443,15 @@ public class CardStyleActivity extends AppCompatActivity {
         // start spotlight
         // ===============
 
-        m_fullFieldListView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-            @Override public void onGlobalLayout() {
-                m_fullFieldListView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-                showSpotlightGuide();
-            }
-        });
+        if( firstTimeSetup ) {
+            m_fullFieldListView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+                @Override
+                public void onGlobalLayout() {
+                    m_fullFieldListView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                    showSpotlightGuide();
+                }
+            });
+        }
 
     }
 
