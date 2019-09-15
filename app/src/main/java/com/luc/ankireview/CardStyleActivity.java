@@ -76,7 +76,7 @@ public class CardStyleActivity extends AppCompatActivity {
         String deckName = intent.getStringExtra("deckName");
         String cardTemplateName = intent.getStringExtra("cardTemplateName");
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.review_toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.cardstyle_toolbar);
         toolbar.setTitle("Card Style: " + deckName);
         toolbar.setSubtitle("Card Template: " + cardTemplateName);
         setSupportActionBar(toolbar);
@@ -456,6 +456,7 @@ public class CardStyleActivity extends AppCompatActivity {
         SimpleTarget target1;
         SimpleTarget target2;
         SimpleTarget target3;
+        SimpleTarget target4;
 
         // tell user where the card style preview will appear
         {
@@ -527,11 +528,34 @@ public class CardStyleActivity extends AppCompatActivity {
                     .build();
         }
 
+        // instruct user to save
+        {
+            int[] location = new int[2];
+
+            View saveButton = findViewById(R.id.cardstyle_toolbar);
+            saveButton.getLocationOnScreen(location);
+
+            float targetSize = 100f;
+            float targetX = (float) (saveButton.getWidth() - 100f);
+            float targetY = (float) (location[1] + saveButton.getHeight() / 2.0);
+
+            float overlayX = 10f;
+            float overlayY = targetY + targetSize + 100f;
+
+            target4 = new SimpleTarget.Builder(this)
+                    .setPoint(targetX, targetY)
+                    .setShape(new Circle(targetSize)) // or RoundedRectangle()
+                    .setTitle("Save and Exit")
+                    .setDescription("When done configuring the card style, save and exit here. You can come back any time with the Card Style menu entry while reviewing.")
+                    .setOverlayPoint(overlayX, overlayY)
+                    .build();
+        }
+
         Spotlight.with(this)
                 .setOverlayColor(R.color.background)
                 .setDuration(1000L)
                 .setAnimation(new DecelerateInterpolator(2f))
-                .setTargets(target1, target2, target3)
+                .setTargets(target1, target2, target3, target4)
                 .setClosedOnTouchedOutside(true)
                 .start();
     }
