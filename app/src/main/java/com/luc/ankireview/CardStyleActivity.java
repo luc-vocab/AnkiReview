@@ -23,6 +23,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewTreeObserver;
+import android.view.animation.DecelerateInterpolator;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -34,6 +36,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.luc.ankireview.style.CardField;
@@ -44,6 +47,11 @@ import com.luc.ankireview.style.FieldListAdapter;
 import com.luc.ankireview.style.ItemTouchCallback;
 import com.luc.ankireview.style.ValueSlider;
 import com.luc.ankireview.style.ValueSliderUpdate;
+import com.takusemba.spotlight.OnSpotlightStateChangedListener;
+import com.takusemba.spotlight.OnTargetStateChangedListener;
+import com.takusemba.spotlight.Spotlight;
+import com.takusemba.spotlight.shape.Circle;
+import com.takusemba.spotlight.target.SimpleTarget;
 import com.thebluealliance.spectrum.SpectrumDialog;
 import com.thebluealliance.spectrum.SpectrumPalette;
 
@@ -430,9 +438,89 @@ public class CardStyleActivity extends AppCompatActivity {
             }
         });
 
+        // start spotlight
+        // ===============
+
+        m_fullFieldListView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override public void onGlobalLayout() {
+                m_fullFieldListView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                showSpotlightGuide();
+            }
+        });
 
     }
 
+
+    private void showSpotlightGuide() {
+
+        SimpleTarget target1;
+        SimpleTarget target2;
+
+        // tell user where the card style preview will appear
+        {
+            int[] location = new int[2];
+            View centeredView = m_cardstyleEditorCards;
+            centeredView.getLocationOnScreen(location);
+
+            float targetSize = 400f;
+            float targetX = (float) (location[0] + m_cardstyleEditorCards.getWidth() / 2.0);
+            float targetY = (float) (location[1] + m_cardstyleEditorCards.getHeight() / 2.0);
+
+            float overlayX = 10f;
+            float overlayY = targetY + targetSize + 100f;
+
+            target1 = new SimpleTarget.Builder(this)
+                    .setPoint(targetX, targetY)
+                    .setShape(new Circle(targetSize)) // or RoundedRectangle()
+                    .setTitle("Card Preview")
+                    .setDescription("In this screen, you can design the appearance of your cards (Question and Answer). As you configure your card's style, a preview will appear at the top.")
+                    .setOverlayPoint(overlayX, overlayY)
+                    .build();
+
+        }
+
+        // instruct user to drag the field handle
+        {
+            int[] location = new int[2];
+            LinearLayout fieldEntry = (LinearLayout) m_fullFieldListView.getChildAt(m_fieldListAdapter.getFirstUnassignedFieldId());
+            View dragHandle = fieldEntry.getChildAt(1);
+            dragHandle.getLocationOnScreen(location);
+
+            float targetSize = 100f;
+            float targetX = (float) (location[0] + dragHandle.getWidth() / 2.0);
+            float targetY = (float) (location[1] - dragHandle.getHeight() / 2.0);
+
+            float overlayX = 10f;
+            float overlayY = targetY - 600f;
+
+            target2 = new SimpleTarget.Builder(this)
+                    .setPoint(targetX, targetY)
+                    .setShape(new Circle(targetSize)) // or RoundedRectangle()
+                    .setTitle("Field List")
+                    .setDescription("Grab this handle to drag the field into the Question or Answer section above.")
+                    .setOverlayPoint(overlayX, overlayY)
+                    .build();
+        }
+
+        Spotlight.with(this)
+                .setOverlayColor(R.color.background)
+                .setDuration(1000L)
+                .setAnimation(new DecelerateInterpolator(2f))
+                .setTargets(target1, target2)
+                .setClosedOnTouchedOutside(true)
+                .setOnSpotlightStateListener(new OnSpotlightStateChangedListener() {
+                    @Override
+                    public void onStarted() {
+                        Toast.makeText(CardStyleActivity.this, "spotlight is started", Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onEnded() {
+                        Toast.makeText(CardStyleActivity.this, "spotlight is ended", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .start();
+    }
 
     public void hideSoftKeyboard() {
         try {

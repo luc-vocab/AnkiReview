@@ -97,6 +97,8 @@ public class FieldListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         m_fieldList.add(new FieldListItem(null, FieldListItem.VIEWTYPE_HEADER,
                 FieldListItem.HEADER_ALLFIELDS, m_activity.getResources().getString(R.string.card_style_all_fields_description)));
 
+        boolean foundFirstUnassignedField = false;
+
         // add the unassigned cardstyle_fields
         for( String field : m_fullFieldList) {
             boolean isUnassigned = true;
@@ -114,6 +116,12 @@ public class FieldListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             if(isUnassigned) {
                 CardField cardField = new CardField(field, m_activity.defaultFieldColor());
                 m_fieldList.add(new FieldListItem(cardField, FieldListItem.VIEWTYPE_FIELD, null, null));
+
+                if(! foundFirstUnassignedField) {
+                    m_firstUnassignedFieldId = m_fieldList.size();
+                    foundFirstUnassignedField = true;
+                }
+
             }
         }
 
@@ -188,6 +196,12 @@ public class FieldListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     public void onViewSwiped(int position) {
         // swiping is not allowed
     }
+
+    public int getFirstUnassignedFieldId() {
+        return m_firstUnassignedFieldId;
+    }
+
+    private int m_firstUnassignedFieldId = 0;
 
     private CardStyleActivity m_activity;
 
