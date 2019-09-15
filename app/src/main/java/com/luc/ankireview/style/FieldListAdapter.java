@@ -80,9 +80,24 @@ public class FieldListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     private void buildFieldList() {
         m_fieldList = new Vector<FieldListItem>();
 
+
+        // add the "question" items
+        m_fieldList.add(new FieldListItem(null, FieldListItem.VIEWTYPE_HEADER, FieldListItem.HEADER_QUESTION,
+                m_activity.getResources().getString(R.string.card_style_question_fields_description)));
+        for( CardField cardField : m_cardTemplate.getQuestionCardFields() ) {
+            m_fieldList.add(new FieldListItem(cardField, FieldListItem.VIEWTYPE_FIELD, null, null));
+        }
+
+        // add the "answer" items
+        m_fieldList.add(new FieldListItem(null, FieldListItem.VIEWTYPE_HEADER, FieldListItem.HEADER_ANSWER,
+                m_activity.getResources().getString(R.string.card_style_answer_fields_description)));
+        for( CardField cardField : m_cardTemplate.getAnswerCardFields() ) {
+            m_fieldList.add(new FieldListItem(cardField, FieldListItem.VIEWTYPE_FIELD, null, null));
+        }
+
         // add the "all cardstyle_fields" header
         m_fieldList.add(new FieldListItem(null, FieldListItem.VIEWTYPE_HEADER,
-                                           FieldListItem.HEADER_ALLFIELDS, m_activity.getResources().getString(R.string.card_style_all_fields_description)));
+                FieldListItem.HEADER_ALLFIELDS, m_activity.getResources().getString(R.string.card_style_all_fields_description)));
 
         // add the unassigned cardstyle_fields
         for( String field : m_fullFieldList) {
@@ -103,21 +118,6 @@ public class FieldListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                 m_fieldList.add(new FieldListItem(cardField, FieldListItem.VIEWTYPE_FIELD, null, null));
             }
         }
-
-        // add the "question" items
-        m_fieldList.add(new FieldListItem(null, FieldListItem.VIEWTYPE_HEADER, FieldListItem.HEADER_QUESTION,
-                m_activity.getResources().getString(R.string.card_style_question_fields_description)));
-        for( CardField cardField : m_cardTemplate.getQuestionCardFields() ) {
-            m_fieldList.add(new FieldListItem(cardField, FieldListItem.VIEWTYPE_FIELD, null, null));
-        }
-
-        // add the "answer" items
-        m_fieldList.add(new FieldListItem(null, FieldListItem.VIEWTYPE_HEADER, FieldListItem.HEADER_ANSWER,
-                m_activity.getResources().getString(R.string.card_style_answer_fields_description)));
-        for( CardField cardField : m_cardTemplate.getAnswerCardFields() ) {
-            m_fieldList.add(new FieldListItem(cardField, FieldListItem.VIEWTYPE_FIELD, null, null));
-        }
-
 
     }
 
@@ -158,7 +158,6 @@ public class FieldListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
         boolean insideQuestionFields = false;
         boolean insideAnswerFields = false;
-        boolean insideSoundFields = false;
 
         m_cardTemplate.getQuestionCardFields().clear();
         m_cardTemplate.getAnswerCardFields().clear();
@@ -174,11 +173,12 @@ public class FieldListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                 if( fieldListItem.getHeader().equals(FieldListItem.HEADER_QUESTION)) {
                     insideQuestionFields = true;
                     insideAnswerFields = false;
-                    insideSoundFields = false;
                 } else if (fieldListItem.getHeader().equals(FieldListItem.HEADER_ANSWER)) {
                     insideQuestionFields = false;
                     insideAnswerFields = true;
-                    insideSoundFields = false;
+                } else if (fieldListItem.getHeader().equals(FieldListItem.HEADER_ALLFIELDS)) {
+                    insideQuestionFields = false;
+                    insideAnswerFields = false;
                 }
             }
         }
