@@ -1,10 +1,10 @@
 package com.luc.ankireview.display;
 
 import android.content.Context;
-import android.support.animation.DynamicAnimation;
-import android.support.animation.SpringAnimation;
-import android.support.animation.SpringForce;
-import android.support.design.widget.CoordinatorLayout;
+import androidx.dynamicanimation.animation.DynamicAnimation;
+import androidx.dynamicanimation.animation.SpringAnimation;
+import androidx.dynamicanimation.animation.SpringForce;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -16,9 +16,6 @@ import android.widget.FrameLayout;
 import com.luc.ankireview.Card;
 import com.luc.ankireview.R;
 import com.luc.ankireview.ReviewActivity;
-import com.luc.ankireview.display.AnswerCard;
-import com.luc.ankireview.display.QuestionCard;
-import com.luc.ankireview.display.QuestionCardBehavior;
 import com.luc.ankireview.style.CardStyle;
 
 import static java.lang.Math.abs;

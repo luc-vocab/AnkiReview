@@ -1,6 +1,6 @@
 package com.luc.ankireview.style;
 
-import android.support.v4.content.ContextCompat;
+import androidx.core.content.ContextCompat;
 import android.text.Layout;
 
 import java.io.Serializable;

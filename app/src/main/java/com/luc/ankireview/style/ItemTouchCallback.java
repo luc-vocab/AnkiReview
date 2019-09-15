@@ -1,9 +1,9 @@
 package com.luc.ankireview.style;
 
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.helper.ItemTouchHelper;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.ItemTouchHelper;
 
-import static android.support.v7.widget.helper.ItemTouchHelper.Callback.makeMovementFlags;
+import static androidx.recyclerview.widget.ItemTouchHelper.Callback.makeMovementFlags;
 
 public class ItemTouchCallback extends ItemTouchHelper.Callback {
 

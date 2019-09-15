@@ -4,12 +4,11 @@ import android.content.Context;
 import android.graphics.Typeface;
 import android.os.Handler;
 import android.os.HandlerThread;
-import android.support.design.widget.CoordinatorLayout;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.provider.FontRequest;
-import android.support.v4.provider.FontsContractCompat;
-import android.text.Html;
-import android.text.Layout;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import androidx.core.content.ContextCompat;
+import androidx.core.provider.FontRequest;
+import androidx.core.provider.FontsContractCompat;
+
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.style.AlignmentSpan;
@@ -30,7 +29,6 @@ import com.luc.ankireview.display.QuestionCard;
 import com.luc.ankireview.R;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
