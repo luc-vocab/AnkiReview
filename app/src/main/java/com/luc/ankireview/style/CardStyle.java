@@ -4,6 +4,8 @@ import android.content.Context;
 import android.graphics.Typeface;
 import android.os.Handler;
 import android.os.HandlerThread;
+
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.content.ContextCompat;
 import androidx.core.provider.FontRequest;
@@ -80,7 +82,17 @@ public class CardStyle implements Serializable {
                 TypedValue.COMPLEX_UNIT_DIP, bottomMargin_dp, layout.getResources()
                         .getDisplayMetrics());
 
-        if( questionCard.getLayoutParams() instanceof  CoordinatorLayout.LayoutParams ) {
+
+        if( questionCard.getLayoutParams() instanceof  ConstraintLayout.LayoutParams ) {
+            ConstraintLayout.LayoutParams questionLayoutParams = (ConstraintLayout.LayoutParams) questionCard.getLayoutParams();
+            questionLayoutParams.setMargins(leftRightMargin_px, 0,  leftRightMargin_px, bottomMargin_px);
+            questionCard.setLayoutParams(questionLayoutParams);
+
+            ConstraintLayout.LayoutParams answerLayoutParams = (ConstraintLayout.LayoutParams) answerCard.getLayoutParams();
+            answerLayoutParams.setMargins(leftRightMargin_px, 0,  leftRightMargin_px, bottomMargin_px);
+            answerCard.setLayoutParams(answerLayoutParams);
+        }
+        else if( questionCard.getLayoutParams() instanceof  CoordinatorLayout.LayoutParams ) {
             CoordinatorLayout.LayoutParams questionLayoutParams = (CoordinatorLayout.LayoutParams) questionCard.getLayoutParams();
             questionLayoutParams.setMargins(leftRightMargin_px, 0,  leftRightMargin_px, bottomMargin_px);
             questionCard.setLayoutParams(questionLayoutParams);
