@@ -537,6 +537,10 @@ public class ReviewActivity extends AppCompatActivity {
         // if we've never shown a question before, do some first time setup
 
         // TODO do something
+
+        // m_currentCard
+        CardStyle cardStyle = getCardStyle();
+        cardStyle.renderCard(m_currentCard, m_flashcardFrame);
     }
 
     private void showReviewControls() {
