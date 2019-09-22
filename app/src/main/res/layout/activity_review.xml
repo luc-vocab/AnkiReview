@@ -48,12 +48,12 @@
         >
 
         <include
-            layout="@layout/questioncard"
+            layout="@layout/answercard"
             android:layout_width="0dp"
             android:layout_height="wrap_content" />
 
         <include
-            layout="@layout/answercard"
+            layout="@layout/questioncard"
             android:layout_width="0dp"
             android:layout_height="wrap_content" />
 
