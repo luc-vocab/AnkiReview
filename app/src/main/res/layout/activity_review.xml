@@ -36,32 +36,33 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <FrameLayout
+    <androidx.constraintlayout.motion.widget.MotionLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/flashcard_frame"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
+        app:layoutDescription="@xml/reviewer_motion_scene"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         >
 
-        <androidx.viewpager.widget.ViewPager
-            android:id="@+id/background_pager"
+        <include
+            layout="@layout/questioncard"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"></androidx.viewpager.widget.ViewPager>
+            android:layout_height="wrap_content" />
 
-        <com.luc.ankireview.display.FlashcardViewPager
-            android:id="@+id/flashcard_pager"
+        <include
+            layout="@layout/answercard"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-        </com.luc.ankireview.display.FlashcardViewPager>
+            android:layout_height="wrap_content" />
 
         <com.leinardi.android.speeddial.SpeedDialOverlayLayout
             android:id="@+id/overlay"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
-    </FrameLayout>
+    </androidx.constraintlayout.motion.widget.MotionLayout>
 
 
     <FrameLayout

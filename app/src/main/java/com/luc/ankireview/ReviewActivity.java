@@ -10,6 +10,8 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
+
+import androidx.constraintlayout.motion.widget.MotionLayout;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.core.view.GestureDetectorCompat;
 import androidx.viewpager.widget.ViewPager;
@@ -114,9 +116,6 @@ public class ReviewActivity extends AppCompatActivity {
         m_deckDisplayMode = findViewById(R.id.deck_display_mode);
         m_styleNotFound.setVisibility(View.INVISIBLE);
         m_deckDisplayMode.setVisibility(View.INVISIBLE);
-        m_touchLayer = findViewById(R.id.touch_layer);
-        m_flashcardPager = findViewById(R.id.flashcard_pager);
-        // m_flashcardPager.setPageTransformer(false, new RotateDownTransformer());
 
 
         m_progressBar = findViewById(R.id.review_progressbar);
@@ -125,8 +124,6 @@ public class ReviewActivity extends AppCompatActivity {
 
         // set touch listener
         m_detector = new GestureDetectorCompat(this, new ReviewerGestureDetector());
-
-        m_touchLayer.setOnTouchListener(m_gestureListener);
 
         // buttons for card style
 
@@ -154,52 +151,6 @@ public class ReviewActivity extends AppCompatActivity {
                 deckDisplayOptionsChooseAnkiReview();
             }
         });
-
-        // setupFlashcardPager();
-
-        // setup ViewPager for backgrounds
-        // -------------------------------
-        if(Settings.ENABLE_BACKGROUNDS) {
-            m_backgroundPager = findViewById(R.id.background_pager);
-            m_backgroundAdapter = new BackgroundViewPagerAdapter(this, m_deckId);
-            m_backgroundPager.setAdapter(m_backgroundAdapter);
-            m_backgroundPager.setCurrentItem(1); // center
-
-            // the flashcardpager will forward touch events to the backgroundpager
-            m_flashcardPager.setBackgroundPager(m_backgroundPager);
-
-            // when we move to one of the side pages, reload
-            m_backgroundPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-                @Override
-                public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-                }
-                @Override
-                public void onPageSelected(int position) {
-                    mCurrentPosition = position;
-                }
-                @Override
-                public void onPageScrollStateChanged(int state) {
-                    if(ViewPager.SCROLL_STATE_IDLE == state){
-                        //Scrolling finished. Do something.
-                        if(mCurrentPosition == 0)
-                        {
-                            if(Settings.ENABLE_BACKGROUNDS){
-                                m_backgroundAdapter.moveToNextBackground(mCurrentPosition);
-                            }
-                            m_flashcardPager.disableBackgroundSwiping();
-                        } else if(mCurrentPosition == 2)
-                        {
-                            if(Settings.ENABLE_BACKGROUNDS) {
-                                m_backgroundAdapter.moveToNextBackground(mCurrentPosition);
-                            }
-                            m_flashcardPager.disableBackgroundSwiping();
-                        }
-                    }
-                }
-                private int mCurrentPosition = 1;
-            });
-            // m_backgroundPager.setPageTransformer(true, new AlphaPageTransformer());
-        }
 
 
         // setup audio
@@ -335,50 +286,11 @@ public class ReviewActivity extends AppCompatActivity {
             // show deck style prompt
             showDeckDisplayOptions();
         } else {
-            setupFlashcardPager();
             loadCards();
         }
     }
 
 
-    private void setupFlashcardPager() {
-        // setup ViewPager for flashcards
-        // ------------------------------
-
-        m_flashcardAdapter = new FlashCardViewPagerAdapter(this, this );
-        m_flashcardPager.setAdapter(m_flashcardAdapter);
-
-        m_flashcardPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-            }
-            @Override
-            public void onPageSelected(int position) {
-                Log.v(TAG, "onPageSelected: " + position);
-                mCurrentPosition = position;
-            }
-            @Override
-            public void onPageScrollStateChanged(int state) {
-                if(ViewPager.SCROLL_STATE_IDLE == state){
-                    //Scrolling finished. Do something.
-                    if(mCurrentPosition == 0)
-                    {
-                        Log.v(TAG, "Answer Pager: user scrolled left, card not memorized");
-                        answerBad();
-
-                    } else if(mCurrentPosition == 2)
-                    {
-                        Log.v(TAG, "Answer Pager: user scrolled right, card memorized");
-                        answerGood();
-                    }
-                }
-            }
-            private int mCurrentPosition = 1;
-        });
-
-        // don't use any page transformers for now
-        // m_flashcardPager.setPageTransformer(true, new ReviewPageTransformer());
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -624,11 +536,7 @@ public class ReviewActivity extends AppCompatActivity {
     {
         // if we've never shown a question before, do some first time setup
 
-        // show question in the middle
-        m_flashcardAdapter.setCurrentCard(m_currentCard);
-        m_flashcardAdapter.setNextCard(m_nextCard);
-        m_flashcardPager.setCurrentItem(1);
-
+        // TODO do something
     }
 
     private void showReviewControls() {
@@ -695,9 +603,6 @@ public class ReviewActivity extends AppCompatActivity {
         m_cardReviewStartTime = System.currentTimeMillis();
         m_showingQuestion = true;
 
-        m_flashcardPager.disableSwipe();
-        m_flashcardAdapter.centerCardDisplayed();
-
         setupSpeedDial();
     }
 
@@ -708,7 +613,6 @@ public class ReviewActivity extends AppCompatActivity {
         m_showingQuestion = false;
         playAnswerAudio();
         setupSpeedDial();
-        m_flashcardPager.enableSwipe();
 
         Log.v(TAG, "showAnswer end");
     }
@@ -977,10 +881,6 @@ public class ReviewActivity extends AppCompatActivity {
         updateDueCountSubtitle(deckDueCounts);
 
         m_reviewCount++;
-        if(m_reviewCount % 3 == 0) {
-            // enable background swiping
-            m_flashcardPager.enableBackgroundSwiping();
-        }
 
         int currentDueCount = deckDueCounts.getTotalWithWeights();
         int numCardsDone = m_initialDueCount - currentDueCount;
@@ -1038,8 +938,6 @@ public class ReviewActivity extends AppCompatActivity {
                 }
 
 
-                int currentPage = m_flashcardPager.getCurrentItem();
-                m_flashcardAdapter.moveToNextQuestion(currentPage, m_currentCard, m_nextCard);
 
                 showQuestion();
             }
@@ -1103,12 +1001,10 @@ public class ReviewActivity extends AppCompatActivity {
 
     // layout elements
     private Toolbar m_toolbar;
-    private FrameLayout m_flashcardFrame;
+    private MotionLayout m_flashcardFrame;
     private FrameLayout m_styleNotFound;
     private FrameLayout m_deckDisplayMode;
-    private FlashcardViewPager m_flashcardPager;
-    private ViewPager m_backgroundPager;
-    private FrameLayout m_touchLayer;
+
     private TextView m_cardTemplateName;
 
     private RoundCornerProgressBar m_progressBar;
@@ -1127,9 +1023,6 @@ public class ReviewActivity extends AppCompatActivity {
     int m_cardsDone; // not due anymore
     int m_reviewCount = 0;
 
-    // adapters
-    private FlashCardViewPagerAdapter m_flashcardAdapter;
-    private BackgroundViewPagerAdapter m_backgroundAdapter;
     // where to load file assets
     private String m_baseUrl;
     // for playing audio
