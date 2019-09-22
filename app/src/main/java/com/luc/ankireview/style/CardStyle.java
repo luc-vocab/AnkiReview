@@ -19,6 +19,7 @@ import android.text.style.LeadingMarginSpan;
 import android.text.style.RelativeSizeSpan;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -59,98 +60,71 @@ public class CardStyle implements Serializable {
         return m_handler;
     }
 
-    public void renderCard(Card card, ViewGroup layout) {
+    private void renderOneCard(Card card, Vector<CardField> cardFields, View cardView, TextView cardText, String placeholderContent) {
+        // look for the card template (it should definitely exist at this point)
+        CardTemplateKey templateKey = new CardTemplateKey(card.getModelId(), card.getCardOrd());
+        CardTemplate cardTemplate = m_cardStyleStorage.cardTemplateMap.get(templateKey);
+
+        SpannableStringBuilder stringBuilder = buildString(cardFields, card, cardView.getContext(), placeholderContent);
+
+        int bottomMargin_dp = cardTemplate.getCenterMargin();
+        int bottomMargin_px = (int) TypedValue.applyDimension(
+                TypedValue.COMPLEX_UNIT_DIP, bottomMargin_dp, cardView.getResources()
+                        .getDisplayMetrics());
+
+        ConstraintLayout.LayoutParams layoutParams = (ConstraintLayout.LayoutParams) cardView.getLayoutParams();
+        layoutParams.setMargins(0, 0,  0, bottomMargin_px);
+        cardView.setLayoutParams(layoutParams);
+
+
+        String font = cardTemplate.getFont();
+        if( font != null && font.length() > 0) {
+            if (m_fontCache.containsKey(font)) {
+                // we have it in the cache, apply directly
+                cardText.setTypeface(m_fontCache.get(font));
+            } else {
+                // need to request asynchronously
+                requestTypeface(font, cardText);
+            }
+        }
+
+        cardText.setText(stringBuilder, TextView.BufferType.SPANNABLE);
+
+        // compute text size
+        int baseTextSize_dp = cardTemplate.getBaseTextSize();
+        cardText.setTextSize(TypedValue.COMPLEX_UNIT_DIP, baseTextSize_dp);
+
+        // compute margins
+        int paddingTop_px = (int) TypedValue.applyDimension(
+                TypedValue.COMPLEX_UNIT_DIP, cardTemplate.getPaddingTop(), cardView.getResources().getDisplayMetrics());
+        int paddingBottom_px = (int) TypedValue.applyDimension(
+                TypedValue.COMPLEX_UNIT_DIP, cardTemplate.getPaddingBottom(), cardView.getResources().getDisplayMetrics());
+        int paddingLeftRight_px = (int) TypedValue.applyDimension(
+                TypedValue.COMPLEX_UNIT_DIP, cardTemplate.getPaddingLeftRight(), cardView.getResources().getDisplayMetrics());
+
+        cardView.setPadding(paddingLeftRight_px, paddingTop_px, paddingLeftRight_px, paddingBottom_px);
+    }
+
+    public void renderQuestion(Card card, View questionCard, TextView questionText) {
+        // look for the card template (it should definitely exist at this point)
+        CardTemplateKey templateKey = new CardTemplateKey(card.getModelId(), card.getCardOrd());
+        CardTemplate cardTemplate = m_cardStyleStorage.cardTemplateMap.get(templateKey);
+
+        renderOneCard(card, cardTemplate.getQuestionCardFields(), questionCard, questionText, questionCard.getContext().getString(R.string.card_style_question_empty));
+    }
+
+    public void renderBothCards(Card card, View questionCard, View answerCard, TextView questionText, TextView answerText) {
 
         // look for the card template (it should definitely exist at this point)
         CardTemplateKey templateKey = new CardTemplateKey(card.getModelId(), card.getCardOrd());
         CardTemplate cardTemplate = m_cardStyleStorage.cardTemplateMap.get(templateKey);
 
-        SpannableStringBuilder questionBuilder = buildString(cardTemplate.getQuestionCardFields(), card, layout, true);
-        SpannableStringBuilder answerBuilder = buildString(cardTemplate.getAnswerCardFields(), card, layout, false);
-
-        QuestionCard questionCard = layout.findViewById(R.id.question_card);
-        AnswerCard answerCard = layout.findViewById(R.id.answer_card);
-
-
-        int leftRightMargin_dp = cardTemplate.getLeftRightMargin();
-        int leftRightMargin_px = (int) TypedValue.applyDimension(
-                TypedValue.COMPLEX_UNIT_DIP, leftRightMargin_dp, layout.getResources()
-                        .getDisplayMetrics());
-
-        int bottomMargin_dp = cardTemplate.getCenterMargin();
-        int bottomMargin_px = (int) TypedValue.applyDimension(
-                TypedValue.COMPLEX_UNIT_DIP, bottomMargin_dp, layout.getResources()
-                        .getDisplayMetrics());
-
-
-        if( questionCard.getLayoutParams() instanceof  ConstraintLayout.LayoutParams ) {
-            ConstraintLayout.LayoutParams questionLayoutParams = (ConstraintLayout.LayoutParams) questionCard.getLayoutParams();
-            questionLayoutParams.setMargins(leftRightMargin_px, 0,  leftRightMargin_px, bottomMargin_px);
-            questionCard.setLayoutParams(questionLayoutParams);
-
-            ConstraintLayout.LayoutParams answerLayoutParams = (ConstraintLayout.LayoutParams) answerCard.getLayoutParams();
-            answerLayoutParams.setMargins(leftRightMargin_px, 0,  leftRightMargin_px, bottomMargin_px);
-            answerCard.setLayoutParams(answerLayoutParams);
-        }
-        else if( questionCard.getLayoutParams() instanceof  CoordinatorLayout.LayoutParams ) {
-            CoordinatorLayout.LayoutParams questionLayoutParams = (CoordinatorLayout.LayoutParams) questionCard.getLayoutParams();
-            questionLayoutParams.setMargins(leftRightMargin_px, 0,  leftRightMargin_px, bottomMargin_px);
-            questionCard.setLayoutParams(questionLayoutParams);
-
-            CoordinatorLayout.LayoutParams answerLayoutParams = (CoordinatorLayout.LayoutParams) answerCard.getLayoutParams();
-            answerLayoutParams.setMargins(leftRightMargin_px, 0,  leftRightMargin_px, bottomMargin_px);
-            answerCard.setLayoutParams(answerLayoutParams);
-        } else if ( questionCard.getLayoutParams() instanceof LinearLayout.LayoutParams )
-        {
-            LinearLayout.LayoutParams questionLayoutParams = (LinearLayout.LayoutParams) questionCard.getLayoutParams();
-            questionLayoutParams.setMargins(leftRightMargin_px, 20,  leftRightMargin_px, bottomMargin_px);
-            questionCard.setLayoutParams(questionLayoutParams);
-
-            LinearLayout.LayoutParams answerLayoutParams = (LinearLayout.LayoutParams) answerCard.getLayoutParams();
-            answerLayoutParams.setMargins(leftRightMargin_px, 0,  leftRightMargin_px, bottomMargin_px);
-            answerCard.setLayoutParams(answerLayoutParams);
-        }
-
-
-
-        TextView questionText = layout.findViewById(R.id.question_text);
-        TextView answerText = layout.findViewById(R.id.answer_text);
-
-        String font = cardTemplate.getFont();
-        if( font != null && font.length() > 0) {
-            if (m_fontCache.containsKey(font)) {
-                 // we have it in the cache, apply directly
-                questionText.setTypeface(m_fontCache.get(font));
-                answerText.setTypeface(m_fontCache.get(font));
-            } else {
-                // need to request asynchronously
-                requestTypeface(font, questionText, answerText);
-            }
-        }
-
-        questionText.setText(questionBuilder, TextView.BufferType.SPANNABLE);
-        answerText.setText(answerBuilder, TextView.BufferType.SPANNABLE);
-
-        // compute text size
-        int baseTextSize_dp = cardTemplate.getBaseTextSize();
-        questionText.setTextSize(TypedValue.COMPLEX_UNIT_DIP, baseTextSize_dp);
-        answerText.setTextSize(TypedValue.COMPLEX_UNIT_DIP, baseTextSize_dp);
-
-        // compute margins
-        int paddingTop_px = (int) TypedValue.applyDimension(
-                TypedValue.COMPLEX_UNIT_DIP, cardTemplate.getPaddingTop(), layout.getResources().getDisplayMetrics());
-        int paddingBottom_px = (int) TypedValue.applyDimension(
-                TypedValue.COMPLEX_UNIT_DIP, cardTemplate.getPaddingBottom(), layout.getResources().getDisplayMetrics());
-        int paddingLeftRight_px = (int) TypedValue.applyDimension(
-                TypedValue.COMPLEX_UNIT_DIP, cardTemplate.getPaddingLeftRight(), layout.getResources().getDisplayMetrics());
-
-        questionText.setPadding(paddingLeftRight_px, paddingTop_px, paddingLeftRight_px, paddingBottom_px);
-        answerText.setPadding(paddingLeftRight_px, paddingTop_px, paddingLeftRight_px, paddingBottom_px);
-
+        renderOneCard(card, cardTemplate.getQuestionCardFields(), questionCard, questionText, questionCard.getContext().getString(R.string.card_style_question_empty));
+        renderOneCard(card, cardTemplate.getAnswerCardFields(), answerCard, answerText, answerCard.getContext().getString(R.string.card_style_answer_empty));
 
     }
 
-    private void requestTypeface(final String fontRequested, final TextView questionText, final TextView answerText ) {
+    private void requestTypeface(final String fontRequested, final TextView cardText) {
         // retrieve fonts
 
         Log.v(TAG, "requesting typeface " + fontRequested);
@@ -168,8 +142,7 @@ public class CardStyle implements Serializable {
                 Log.v(TAG, "retrieved typeface ");
                 m_fontCache.put(fontRequested, typeface);
 
-                questionText.setTypeface(typeface);
-                answerText.setTypeface(typeface);
+                cardText.setTypeface(typeface);
             }
 
             @Override
@@ -182,22 +155,15 @@ public class CardStyle implements Serializable {
         FontsContractCompat.requestFont(m_context, request, callback, getHandlerThreadHandler());
     }
 
-    private SpannableStringBuilder buildString(Vector<CardField> fields, Card card, ViewGroup layout, boolean isQuestion) {
+    private SpannableStringBuilder buildString(Vector<CardField> fields, Card card, Context context, String placeholderContent) {
         SpannableStringBuilder builder = new SpannableStringBuilder();
 
         if (fields.size() == 0)
         {
-            String placeholderContent;
-            if (isQuestion) {
-                placeholderContent = layout.getContext().getString(R.string.card_style_question_empty);
-            } else {
-                placeholderContent = layout.getContext().getString(R.string.card_style_answer_empty);
-            }
-
 
             builder.append(placeholderContent);
             int currentFieldLength = placeholderContent.length();
-            int color = ContextCompat.getColor(layout.getContext(), R.color.cardstyle_empty_color);
+            int color = ContextCompat.getColor(context, R.color.cardstyle_empty_color);
             builder.setSpan(new ForegroundColorSpan(color), 0, currentFieldLength, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
             builder.setSpan(new RelativeSizeSpan(0.5f), 0, currentFieldLength, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         } else {
@@ -246,7 +212,7 @@ public class CardStyle implements Serializable {
                         // add left margin span
                         // new LeadingMarginSpan.Standard(120),
                         int leftMargin_px = (int) TypedValue.applyDimension(
-                                TypedValue.COMPLEX_UNIT_DIP, cardField.getLeftMargin(), layout.getResources().getDisplayMetrics());
+                                TypedValue.COMPLEX_UNIT_DIP, cardField.getLeftMargin(), context.getResources().getDisplayMetrics());
                         builder.setSpan(new LeadingMarginSpan.Standard(leftMargin_px), currentIndex, currentIndex + currentFieldLength, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
                     }
 

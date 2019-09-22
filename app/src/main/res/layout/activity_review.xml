@@ -47,15 +47,44 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         >
 
-        <include
-            layout="@layout/answercard"
+        <androidx.cardview.widget.CardView
+            android:id="@+id/next_question_card"
             android:layout_width="0dp"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="5dp">
+            <TextView
+                android:id="@+id/next_question_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:includeFontPadding="false" />
+        </androidx.cardview.widget.CardView>
 
-        <include
-            layout="@layout/questioncard"
+        <androidx.cardview.widget.CardView
+            android:id="@+id/answer_card"
             android:layout_width="0dp"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="5dp">
+            <TextView
+                android:id="@+id/answer_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:includeFontPadding="false" />
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/question_card"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="5dp">
+            <TextView
+                android:id="@+id/question_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:includeFontPadding="false" />
+        </androidx.cardview.widget.CardView>
 
         <com.leinardi.android.speeddial.SpeedDialOverlayLayout
             android:id="@+id/overlay"

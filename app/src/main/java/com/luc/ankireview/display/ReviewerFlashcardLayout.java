@@ -73,7 +73,8 @@ public class ReviewerFlashcardLayout extends FrameLayout  implements View.OnTouc
 
     private void setCard(Card card) {
         CardStyle cardStyle = m_reviewActivity.getCardStyle();
-        cardStyle.renderCard(card, this);
+        // TODO: see if this needs to be preserved, probably not
+        // cardStyle.renderCard(card, this);
     }
 
     public void setSpringAnimation(int originalQuestionY, int questionTargetY, int answerTargetY) {

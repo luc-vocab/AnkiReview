@@ -11,6 +11,7 @@ import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.motion.widget.MotionLayout;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.core.view.GestureDetectorCompat;
@@ -111,7 +112,21 @@ public class ReviewActivity extends AppCompatActivity {
 
         m_firebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
+        // flashcard elements
+        // ------------------
+
         m_flashcardFrame = findViewById(R.id.flashcard_frame);
+
+        // card views
+        m_questionCardView = findViewById(R.id.question_card);
+        m_answerCardView = findViewById(R.id.answer_card);
+        m_nextQuestionCardView = findViewById(R.id.next_question_card);
+
+        // card textviews
+        m_questionTextView = findViewById(R.id.question_text);
+        m_answerTextView = findViewById(R.id.answer_text);
+        m_nextQuestionTextView = findViewById(R.id.next_question_text);
+
         m_styleNotFound = findViewById(R.id.cardstyle_not_defined);
         m_deckDisplayMode = findViewById(R.id.deck_display_mode);
         m_styleNotFound.setVisibility(View.INVISIBLE);
@@ -565,7 +580,12 @@ public class ReviewActivity extends AppCompatActivity {
 
         // m_currentCard
         CardStyle cardStyle = getCardStyle();
-        cardStyle.renderCard(m_currentCard, m_flashcardFrame);
+
+        // render the current card
+        cardStyle.renderBothCards(m_currentCard, m_questionCardView, m_answerCardView, m_questionTextView, m_answerTextView);
+
+        // render the next card
+        cardStyle.renderQuestion(m_nextCard, m_nextQuestionCardView, m_nextQuestionTextView);
     }
 
     private void showReviewControls() {
@@ -1031,6 +1051,19 @@ public class ReviewActivity extends AppCompatActivity {
     // layout elements
     private Toolbar m_toolbar;
     private MotionLayout m_flashcardFrame;
+
+    // card views
+    private CardView m_questionCardView;
+    private CardView m_answerCardView;
+    private CardView m_nextQuestionCardView;
+
+    // card textviews
+    private TextView m_questionTextView;
+    private TextView m_answerTextView;
+    private TextView m_nextQuestionTextView;
+
+
+
     private FrameLayout m_styleNotFound;
     private FrameLayout m_deckDisplayMode;
 

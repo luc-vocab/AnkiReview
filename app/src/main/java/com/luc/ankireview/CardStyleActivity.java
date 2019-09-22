@@ -130,7 +130,7 @@ public class CardStyleActivity extends AppCompatActivity {
         });
 
         m_cardstyleEditorCards = findViewById(R.id.cardstyle_editor_cards);
-        m_cardStyle.renderCard(m_card, m_cardstyleEditorCards);
+        //m_cardStyle.renderCard(m_card, m_cardstyleEditorCards);
 
         // get font view and margins view
         m_fieldSettingsView = findViewById(R.id.cardstyle_editor_fieldsettings);
@@ -673,7 +673,8 @@ public class CardStyleActivity extends AppCompatActivity {
     }
 
     public void updateCardPreview() {
-        m_cardStyle.renderCard(m_card, m_cardstyleEditorCards);
+        // TODO: fix preview
+        // m_cardStyle.renderCard(m_card, m_cardstyleEditorCards);
     }
 
     public void exitWithoutSaving() {
