@@ -38,28 +38,6 @@
 
             app:layout_constraintTop_toTopOf="parent" />
 
-        <Constraint
-            android:id="@id/next_question_card"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-
-            android:layout_marginTop="20dp"
-            app:layout_constraintWidth_percent="0.9"
-
-            android:elevation="5dp"
-
-            android:alpha="0.0"
-
-            app:layout_constraintTop_toTopOf="parent"
-
-            >
-            <Transform
-                android:scaleX="0.80"
-                android:scaleY="0.80" />
-        </Constraint>
 
     </ConstraintSet>
 
@@ -109,7 +87,7 @@
             android:layout_marginTop="20dp"
             app:layout_constraintWidth_percent="0.9"
 
-            android:elevation="5dp"
+            android:elevation="0dp"
 
             android:alpha="0.0"
 
@@ -243,6 +221,84 @@
 
     </ConstraintSet>
 
+    <ConstraintSet android:id="@+id/answer_good_offscreen"
+        app:deriveConstraintsFrom="@id/answer_good"
+        >
+
+        <Constraint
+            android:id="@id/question_card"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+
+
+            app:layout_constraintLeft_toRightOf="parent"
+
+            android:layout_marginTop="20dp"
+            app:layout_constraintWidth_percent="0.9"
+
+            android:elevation="5dp"
+
+            app:layout_constraintTop_toTopOf="parent"
+
+            />
+
+        <Constraint
+            android:id="@id/answer_card"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+
+            app:layout_constraintLeft_toRightOf="parent"
+
+
+            android:layout_marginTop="20dp"
+            app:layout_constraintWidth_percent="0.9"
+
+            android:alpha="1.0"
+            android:elevation="5dp"
+
+            app:layout_constraintTop_toBottomOf="@id/question_card" />
+
+    </ConstraintSet>
+
+    <ConstraintSet android:id="@+id/answer_bad_offscreen"
+        app:deriveConstraintsFrom="@id/answer_bad"
+        >
+
+        <Constraint
+            android:id="@id/question_card"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+
+            app:layout_constraintRight_toLeftOf="parent"
+
+            android:layout_marginTop="20dp"
+
+            app:layout_constraintWidth_percent="0.9"
+
+            android:elevation="5dp"
+
+            app:layout_constraintTop_toTopOf="parent"
+
+            />
+
+        <Constraint
+            android:id="@id/answer_card"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+
+            app:layout_constraintRight_toLeftOf="parent"
+
+            android:layout_marginTop="20dp"
+
+            app:layout_constraintWidth_percent="0.9"
+
+            android:alpha="1.0"
+            android:elevation="5dp"
+
+            app:layout_constraintTop_toBottomOf="@id/question_card" />
+
+    </ConstraintSet>
+
     <Transition
         app:constraintSetEnd="@+id/answer_shown"
         app:constraintSetStart="@+id/question_shown"
@@ -279,5 +335,18 @@
             app:touchAnchorId="@id/answer_card"
             app:touchAnchorSide="left" />
     </Transition>
+
+
+    <Transition
+        app:autoTransition="animateToEnd"
+        app:constraintSetEnd="@+id/answer_good_offscreen"
+        app:constraintSetStart="@+id/answer_good"
+        app:duration="150" />
+
+    <Transition
+        app:autoTransition="animateToEnd"
+        app:constraintSetEnd="@+id/answer_bad_offscreen"
+        app:constraintSetStart="@+id/answer_bad"
+        app:duration="150" />
 
 </MotionScene>
