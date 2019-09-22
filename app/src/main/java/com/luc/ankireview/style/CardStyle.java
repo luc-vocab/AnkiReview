@@ -102,7 +102,7 @@ public class CardStyle implements Serializable {
         int paddingLeftRight_px = (int) TypedValue.applyDimension(
                 TypedValue.COMPLEX_UNIT_DIP, cardTemplate.getPaddingLeftRight(), cardView.getResources().getDisplayMetrics());
 
-        cardView.setPadding(paddingLeftRight_px, paddingTop_px, paddingLeftRight_px, paddingBottom_px);
+        cardText.setPadding(paddingLeftRight_px, paddingTop_px, paddingLeftRight_px, paddingBottom_px);
     }
 
     public void renderQuestion(Card card, View questionCard, TextView questionText) {
