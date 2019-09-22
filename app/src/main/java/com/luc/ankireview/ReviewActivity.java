@@ -274,6 +274,31 @@ public class ReviewActivity extends AppCompatActivity {
         m_toolbar.setTitle(m_deckName);
         setSupportActionBar(m_toolbar);
 
+        m_flashcardFrame.setTransitionListener(new MotionLayout.TransitionListener() {
+            @Override
+            public void onTransitionStarted(MotionLayout motionLayout, int i, int i1) {
+
+            }
+
+            @Override
+            public void onTransitionChange(MotionLayout motionLayout, int i, int i1, float v) {
+
+            }
+
+            @Override
+            public void onTransitionCompleted(MotionLayout motionLayout, int i) {
+                if( i == R.id.answer_shown){
+                    Log.v(TAG,"**** answer_shown");
+                    showAnswer();
+                }
+            }
+
+            @Override
+            public void onTransitionTrigger(MotionLayout motionLayout, int i, boolean b, float v) {
+
+            }
+        });
+
         // final step
         reloadCardStyleAndCards();
     }
