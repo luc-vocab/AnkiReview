@@ -209,7 +209,6 @@ public class ReviewActivity extends AppCompatActivity {
             public void onAnimationEnd(Animation animation) {
                 m_correct.setVisibility(View.INVISIBLE);
                 m_incorrect.setVisibility(View.INVISIBLE);
-                executeQueuedAnswerCard();
             }
             @Override
             public void onAnimationRepeat(Animation animation) {
@@ -303,8 +302,13 @@ public class ReviewActivity extends AppCompatActivity {
             @Override
             public void onTransitionCompleted(MotionLayout motionLayout, int i) {
                 if( i == R.id.answer_shown){
-                    Log.v(TAG,"**** answer_shown");
                     showAnswer();
+                }
+                else if( i == R.id.answer_good_offscreen) {
+                    answerGood();
+                }
+                else if( i == R.id.answer_bad_offscreen) {
+                    answerGood();
                 }
             }
 
@@ -588,6 +592,20 @@ public class ReviewActivity extends AppCompatActivity {
         cardStyle.renderQuestion(m_nextCard, m_nextQuestionCardView, m_nextQuestionTextView);
     }
 
+    private void loadNextQuestion() {
+        CardStyle cardStyle = getCardStyle();
+
+        // render the current card (already rolled forward)
+        cardStyle.renderBothCards(m_currentCard, m_questionCardView, m_answerCardView, m_questionTextView, m_answerTextView);
+
+        // transition back to "question shown" state, immediately
+        m_flashcardFrame.setProgress(0.0f);
+        m_flashcardFrame.setTransition(R.id.question_shown, R.id.answer_shown);
+
+        // once we are in "question shown", render the next card (it is currently invisible)
+        cardStyle.renderQuestion(m_nextCard, m_nextQuestionCardView, m_nextQuestionTextView);
+    }
+
     private void showReviewControls() {
         m_flashcardFrame.setVisibility(View.VISIBLE);
         m_speedDialView.setVisibility(View.VISIBLE);
@@ -717,31 +735,17 @@ public class ReviewActivity extends AppCompatActivity {
     private void answerBad()
     {
         m_answerBadAudio.start();
-        queueAnswerCardAndMoveToNextQuestion(m_currentCard.getEaseBad());
+        answerCard(m_currentCard.getEaseBad());
         showIncorrectAnimation();
+        moveToNextQuestion();
     }
 
     private void answerGood()
     {
         m_answerGoodAudio.start();
-        queueAnswerCardAndMoveToNextQuestion(m_currentCard.getEaseGood());
+        answerCard(m_currentCard.getEaseGood());
         showCorrectAnimation();
-    }
-
-    private void queueAnswerCardAndMoveToNextQuestion(AnkiUtils.Ease ease) {
-        m_queuedAnswerCardEase = ease;
-        if( ! useAsynchronousMode() ) {
-            // perform action immediately
-            executeQueuedAnswerCard();
-        }
-    }
-
-    private void executeQueuedAnswerCard() {
-        if (m_queuedAnswerCardEase != null ) {
-            answerCard(m_queuedAnswerCardEase);
-            m_queuedAnswerCardEase = null;
-            moveToNextQuestion();
-        }
+        moveToNextQuestion();
     }
 
     public void showAddQuicktag() {
@@ -891,11 +895,7 @@ public class ReviewActivity extends AppCompatActivity {
 
             @Override
             public void onAnimationEnd(Animator animator) {
-                // retrieve following cards which will freeze UI when drawing following carsd
-                // but we're not animating anything at that point so it should be OK
-                if( useAsynchronousMode() ) {
-                    retrieveFollowingCards();
-                }
+
             }
 
             @Override
@@ -924,7 +924,6 @@ public class ReviewActivity extends AppCompatActivity {
 
     private void moveToNextQuestion()
     {
-        m_queuedAnswerCardEase = null;
 
         AnkiUtils.DeckDueCounts deckDueCounts = AnkiUtils.getDeckDueCount(getContentResolver(), m_deckId);
         updateDueCountSubtitle(deckDueCounts);
@@ -941,10 +940,10 @@ public class ReviewActivity extends AppCompatActivity {
             m_cardsDone = numCardsDone;
             // m_progressBar.setProgress(m_cardsDone * 100);
             setProgressAnimate(m_cardsDone);
-            if( ! useAsynchronousMode() ) {
-                // not using asynchronous mode, retrieve following cards immediately
-                retrieveFollowingCards();
-            }
+
+            retrieveFollowingCards();
+
+
         } else {
             retrieveFollowingCards();
         }
@@ -986,9 +985,7 @@ public class ReviewActivity extends AppCompatActivity {
                     }
                 }
 
-
-
-                showQuestion();
+                loadNextQuestion();
             }
         } catch ( Exception e ) {
             Crashlytics.logException(e);
@@ -1019,15 +1016,6 @@ public class ReviewActivity extends AppCompatActivity {
 
         setResult(Activity.RESULT_OK, null);
         finish();
-    }
-
-    /**
-     * whether to queue card answers and retrievals until animations are done. this is necessary
-     * when using WebViews as initializing those tend to slow down animations
-     */
-    private boolean useAsynchronousMode() {
-        // only enable if we're not using ankireview style
-        return ! useAnkiReviewStyle();
     }
 
     private long m_deckId;
@@ -1106,7 +1094,6 @@ public class ReviewActivity extends AppCompatActivity {
     // speed dial button
     SpeedDialView m_speedDialView;
 
-    AnkiUtils.Ease m_queuedAnswerCardEase = null;
 
     private FirebaseAnalytics m_firebaseAnalytics;
 
