@@ -6,7 +6,6 @@ import android.os.Handler;
 import android.os.HandlerThread;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.content.ContextCompat;
 import androidx.core.provider.FontRequest;
 import androidx.core.provider.FontsContractCompat;
@@ -20,15 +19,11 @@ import android.text.style.RelativeSizeSpan;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.luc.ankireview.Utils;
-import com.luc.ankireview.display.AnswerCard;
 import com.luc.ankireview.Card;
-import com.luc.ankireview.display.QuestionCard;
 import com.luc.ankireview.R;
 
 import java.io.FileInputStream;
