@@ -145,81 +145,6 @@
             app:layout_constraintRight_toRightOf="parent"
 
             android:layout_marginTop="20dp"
-            android:layout_marginRight="600dp"
-            app:layout_constraintWidth_percent="0.9"
-
-            android:elevation="5dp"
-
-            app:layout_constraintTop_toTopOf="parent"
-
-            />
-
-        <Constraint
-            android:id="@id/answer_card"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-
-            android:layout_marginTop="20dp"
-            android:layout_marginRight="700dp"
-            app:layout_constraintWidth_percent="0.9"
-
-            android:alpha="1.0"
-            android:elevation="5dp"
-
-            app:layout_constraintTop_toBottomOf="@id/question_card" />
-
-        <Constraint
-            android:id="@id/next_question_card"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-
-            android:layout_marginTop="20dp"
-            app:layout_constraintWidth_percent="0.9"
-
-            android:elevation="5dp"
-
-            android:alpha="1.0"
-
-            app:layout_constraintTop_toTopOf="parent"
-
-            />
-
-        <Constraint
-            android:id="@id/background_photo"
-            android:layout_width="0dp"
-            android:layout_height="800dp"
-
-            android:layout_marginTop="10dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/next_question_card"
-            >
-            <Transform
-                android:scaleX="1.0"
-                android:scaleY="1.0" />
-        </Constraint>
-
-    </ConstraintSet>
-
-    <ConstraintSet android:id="@+id/answer_good"
-        app:deriveConstraintsFrom="@id/answer_shown"
-        >
-
-        <Constraint
-            android:id="@id/question_card"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-
-            android:layout_marginTop="20dp"
             android:layout_marginLeft="600dp"
             app:layout_constraintWidth_percent="0.9"
 
@@ -282,6 +207,81 @@
 
     </ConstraintSet>
 
+    <ConstraintSet android:id="@+id/answer_good"
+        app:deriveConstraintsFrom="@id/answer_shown"
+        >
+
+        <Constraint
+            android:id="@id/question_card"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="600dp"
+            app:layout_constraintWidth_percent="0.9"
+
+            android:elevation="5dp"
+
+            app:layout_constraintTop_toTopOf="parent"
+
+            />
+
+        <Constraint
+            android:id="@id/answer_card"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="700dp"
+            app:layout_constraintWidth_percent="0.9"
+
+            android:alpha="1.0"
+            android:elevation="5dp"
+
+            app:layout_constraintTop_toBottomOf="@id/question_card" />
+
+        <Constraint
+            android:id="@id/next_question_card"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+
+            android:layout_marginTop="20dp"
+            app:layout_constraintWidth_percent="0.9"
+
+            android:elevation="5dp"
+
+            android:alpha="1.0"
+
+            app:layout_constraintTop_toTopOf="parent"
+
+            />
+
+        <Constraint
+            android:id="@id/background_photo"
+            android:layout_width="0dp"
+            android:layout_height="800dp"
+
+            android:layout_marginTop="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/next_question_card"
+            >
+            <Transform
+                android:scaleX="1.0"
+                android:scaleY="1.0" />
+        </Constraint>
+
+    </ConstraintSet>
+
     <ConstraintSet android:id="@+id/answer_good_offscreen"
         app:deriveConstraintsFrom="@id/answer_good"
         >
@@ -292,7 +292,7 @@
             android:layout_height="wrap_content"
 
 
-            app:layout_constraintLeft_toRightOf="parent"
+            app:layout_constraintRight_toLeftOf="parent"
 
             android:layout_marginTop="20dp"
             app:layout_constraintWidth_percent="0.9"
@@ -308,7 +308,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
 
-            app:layout_constraintLeft_toRightOf="parent"
+            app:layout_constraintRight_toLeftOf="parent"
 
 
             android:layout_marginTop="20dp"
@@ -330,7 +330,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
 
-            app:layout_constraintRight_toLeftOf="parent"
+            app:layout_constraintLeft_toRightOf="parent"
 
             android:layout_marginTop="20dp"
 
@@ -347,7 +347,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
 
-            app:layout_constraintRight_toLeftOf="parent"
+            app:layout_constraintLeft_toRightOf="parent"
 
             android:layout_marginTop="20dp"
 
@@ -379,10 +379,10 @@
         app:duration="300">
 
         <OnSwipe
-            app:dragDirection="dragLeft"
+            app:dragDirection="dragRight"
             app:onTouchUp="autoComplete"
             app:touchAnchorId="@id/answer_card"
-            app:touchAnchorSide="right" />
+            app:touchAnchorSide="left" />
     </Transition>
 
     <Transition
@@ -391,10 +391,10 @@
         app:duration="300">
 
         <OnSwipe
-            app:dragDirection="dragRight"
+            app:dragDirection="dragLeft"
             app:onTouchUp="autoComplete"
             app:touchAnchorId="@id/answer_card"
-            app:touchAnchorSide="left" />
+            app:touchAnchorSide="right" />
     </Transition>
 
 
