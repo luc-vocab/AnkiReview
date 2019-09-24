@@ -101,6 +101,10 @@ public class CardStyle implements Serializable {
     }
 
     public void renderQuestion(Card card, View questionCard, TextView questionText) {
+        // make the view invisible ( it will only become visible later)
+        questionCard.setAlpha(0.0f);
+
+
         // look for the card template (it should definitely exist at this point)
         CardTemplateKey templateKey = new CardTemplateKey(card.getModelId(), card.getCardOrd());
         CardTemplate cardTemplate = m_cardStyleStorage.cardTemplateMap.get(templateKey);

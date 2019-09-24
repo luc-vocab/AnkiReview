@@ -185,40 +185,6 @@ public class ReviewActivity extends AppCompatActivity {
         m_correct.setVisibility(View.INVISIBLE);
         m_incorrect.setVisibility(View.INVISIBLE);
 
-        int animationSpeed = 450;
-
-        Animation fadeIn = new AlphaAnimation(0, 1);
-        fadeIn.setInterpolator(new DecelerateInterpolator()); //add this
-        fadeIn.setDuration(animationSpeed);
-
-        Animation fadeOut = new AlphaAnimation(1, 0);
-        fadeOut.setInterpolator(new AccelerateInterpolator()); //and this
-        fadeOut.setStartOffset(animationSpeed);
-        fadeOut.setDuration(animationSpeed);
-
-        m_answerSymbolAnimationSet = new AnimationSet(false);
-        m_answerSymbolAnimationSet.addAnimation(fadeIn);
-        m_answerSymbolAnimationSet.addAnimation(fadeOut);
-
-        m_answerSymbolAnimationSet.setAnimationListener(new Animation.AnimationListener() {
-            @Override
-            public void onAnimationEnd(Animation animation) {
-                m_correct.setVisibility(View.INVISIBLE);
-                m_incorrect.setVisibility(View.INVISIBLE);
-            }
-            @Override
-            public void onAnimationRepeat(Animation animation) {
-
-            }
-            @Override
-            public void onAnimationStart(Animation animation) {
-
-            }
-        });
-
-
-
-
         // setup speed dial
         m_speedDialView = findViewById(R.id.speedDial);
 
@@ -304,7 +270,7 @@ public class ReviewActivity extends AppCompatActivity {
                     answerGood();
                 }
                 else if( i == R.id.answer_bad_offscreen) {
-                    answerGood();
+                    answerBad();
                 }
             }
 
@@ -599,7 +565,8 @@ public class ReviewActivity extends AppCompatActivity {
         m_flashcardFrame.setTransition(R.id.question_shown, R.id.answer_shown);
 
         // once we are in "question shown", render the next card (it is currently invisible)
-        cardStyle.renderQuestion(m_nextCard, m_nextQuestionCardView, m_nextQuestionTextView);
+        m_cardStyle.renderQuestion(m_nextCard, m_nextQuestionCardView, m_nextQuestionTextView);
+
     }
 
     private void showReviewControls() {
@@ -732,7 +699,6 @@ public class ReviewActivity extends AppCompatActivity {
     {
         m_answerBadAudio.start();
         answerCard(m_currentCard.getEaseBad());
-        showIncorrectAnimation();
         moveToNextQuestion();
     }
 
@@ -740,7 +706,6 @@ public class ReviewActivity extends AppCompatActivity {
     {
         m_answerGoodAudio.start();
         answerCard(m_currentCard.getEaseGood());
-        showCorrectAnimation();
         moveToNextQuestion();
     }
 
@@ -906,16 +871,6 @@ public class ReviewActivity extends AppCompatActivity {
         });
 
         animation.start();
-    }
-
-    private void showCorrectAnimation() {
-        m_correct.startAnimation(m_answerSymbolAnimationSet);
-        m_correct.setVisibility(View.VISIBLE);
-    }
-
-    private void showIncorrectAnimation() {
-        m_incorrect.startAnimation(m_answerSymbolAnimationSet);
-        m_incorrect.setVisibility(View.VISIBLE);
     }
 
     private void moveToNextQuestion()
@@ -1085,7 +1040,6 @@ public class ReviewActivity extends AppCompatActivity {
     // animations
     private ImageView m_correct;
     private ImageView m_incorrect;
-    private AnimationSet m_answerSymbolAnimationSet;
 
     // speed dial button
     SpeedDialView m_speedDialView;
