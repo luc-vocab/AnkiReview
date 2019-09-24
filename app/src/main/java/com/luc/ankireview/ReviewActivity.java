@@ -43,6 +43,7 @@ import com.crashlytics.android.Crashlytics;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.leinardi.android.speeddial.SpeedDialActionItem;
 import com.leinardi.android.speeddial.SpeedDialView;
+import com.luc.ankireview.backgrounds.BackgroundManager;
 import com.luc.ankireview.style.CardStyle;
 
 import org.json.JSONArray;
@@ -279,6 +280,11 @@ public class ReviewActivity extends AppCompatActivity {
 
             }
         });
+
+        m_backgroundPhoto = findViewById(R.id.background_photo);
+
+        m_backgroundManager = new BackgroundManager();
+        m_backgroundManager.fillImageView(m_backgroundPhoto);
 
         // final step
         reloadCardStyleAndCards();
@@ -1044,6 +1050,8 @@ public class ReviewActivity extends AppCompatActivity {
     // speed dial button
     SpeedDialView m_speedDialView;
 
+    BackgroundManager m_backgroundManager;
+    ImageView m_backgroundPhoto;
 
     private FirebaseAnalytics m_firebaseAnalytics;
 

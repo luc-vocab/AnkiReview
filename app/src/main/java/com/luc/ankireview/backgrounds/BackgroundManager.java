@@ -27,7 +27,7 @@ public class BackgroundManager {
     private static final String TAG = "BackgroundManager";
 
     public BackgroundManager() {
-        if(Settings.ENABLE_BACKGROUNDS) {
+        if(true) {
             FirebaseFirestoreSettings settings = new FirebaseFirestoreSettings.Builder()
                     .setPersistenceEnabled(true)
                     .build();

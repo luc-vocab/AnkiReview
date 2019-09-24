@@ -47,6 +47,12 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         >
 
+        <ImageView
+            android:id="@+id/background_photo"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content">
+        </ImageView>
+
         <androidx.cardview.widget.CardView
             android:id="@+id/next_question_card"
             android:layout_width="0dp"
