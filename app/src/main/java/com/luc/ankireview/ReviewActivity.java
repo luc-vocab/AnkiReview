@@ -949,6 +949,11 @@ public class ReviewActivity extends AppCompatActivity {
             Utils.reportAnkiAPIException(this, e);
         }
 
+        if ((m_reviewCount % 3) == 0) {{
+            // cycle background
+            m_backgroundManager.fillImageView(m_backgroundPhoto);
+        }}
+
         Bundle bundle = new Bundle();
         bundle.putInt(Analytics.REVIEW_COUNT, m_reviewCount);
         bundle.putBoolean(Analytics.DISPLAYOPTIONS_USE_ANKIREVIEW, useAnkiReviewStyle());

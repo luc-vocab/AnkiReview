@@ -191,14 +191,16 @@
         <Constraint
             android:id="@id/background_photo"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="800dp"
 
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintWidth_percent="1"
-            app:layout_constraintTop_toTopOf="parent"
-
-            />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/next_question_card"
+            >
+            <Transform
+                android:scaleX="1.0"
+                android:scaleY="1.0" />
+        </Constraint>
 
     </ConstraintSet>
 
@@ -259,6 +261,20 @@
             app:layout_constraintTop_toTopOf="parent"
 
             />
+
+        <Constraint
+            android:id="@id/background_photo"
+            android:layout_width="0dp"
+            android:layout_height="800dp"
+
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/next_question_card"
+            >
+            <Transform
+                android:scaleX="1.0"
+                android:scaleY="1.0" />
+        </Constraint>
 
     </ConstraintSet>
 

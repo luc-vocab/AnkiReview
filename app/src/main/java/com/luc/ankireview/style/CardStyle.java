@@ -62,6 +62,7 @@ public class CardStyle implements Serializable {
 
         SpannableStringBuilder stringBuilder = buildString(cardFields, card, cardView.getContext(), placeholderContent);
 
+        /*
         int bottomMargin_dp = cardTemplate.getCenterMargin();
         int bottomMargin_px = (int) TypedValue.applyDimension(
                 TypedValue.COMPLEX_UNIT_DIP, bottomMargin_dp, cardView.getResources()
@@ -70,6 +71,7 @@ public class CardStyle implements Serializable {
         ConstraintLayout.LayoutParams layoutParams = (ConstraintLayout.LayoutParams) cardView.getLayoutParams();
         layoutParams.setMargins(0, 0,  0, bottomMargin_px);
         cardView.setLayoutParams(layoutParams);
+        */
 
 
         String font = cardTemplate.getFont();
