@@ -905,7 +905,7 @@ public class ReviewActivity extends AppCompatActivity {
             retrieveFollowingCards();
         }
 
-
+        showQuestion();
 
 
     }
