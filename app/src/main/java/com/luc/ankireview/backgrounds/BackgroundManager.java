@@ -93,7 +93,10 @@ public class BackgroundManager {
                     public void onUrlReady(Url url) {
                         String finalUrl = url.generate();
                         Log.v(TAG, "final URL: " + finalUrl);
-                        Picasso.get().load(finalUrl ).into(imageView);
+                        Picasso.get()
+                                .load(finalUrl )
+                                .placeholder(imageView.getDrawable())// still show last image
+                                .into(imageView);
                     }
                 });
     }
