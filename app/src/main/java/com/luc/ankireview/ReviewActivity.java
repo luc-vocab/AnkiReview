@@ -177,16 +177,9 @@ public class ReviewActivity extends AppCompatActivity {
         m_answerBadAudio = MediaPlayer.create(this, R.raw.cancel_41);
         m_answerGoodAudio = MediaPlayer.create(this, R.raw.select_13);
 
-        // setup animation
-        // ---------------
-
-        m_correct = (ImageView) findViewById(R.id.correct_svg);
-        m_incorrect = (ImageView) findViewById(R.id.incorrect_svg);
-
-        m_correct.setVisibility(View.INVISIBLE);
-        m_incorrect.setVisibility(View.INVISIBLE);
 
         // setup speed dial
+        // ----------------
         m_speedDialView = findViewById(R.id.speedDial);
 
         m_speedDialView.setOnActionSelectedListener(new SpeedDialView.OnActionSelectedListener() {
@@ -1048,9 +1041,6 @@ public class ReviewActivity extends AppCompatActivity {
     // gesture detection
     private GestureDetectorCompat m_detector;
 
-    // animations
-    private ImageView m_correct;
-    private ImageView m_incorrect;
 
     // speed dial button
     SpeedDialView m_speedDialView;

@@ -53,6 +53,8 @@
                 android:scaleY="1.0" />
         </Constraint>
 
+
+
     </ConstraintSet>
 
     <ConstraintSet android:id="@+id/answer_shown">
@@ -128,6 +130,27 @@
                 android:scaleY="1.20" />
         </Constraint>
 
+        <Constraint
+            android:id="@id/correct_svg"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginBottom="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:alpha="0.0"
+            />
+
+        <Constraint
+            android:id="@id/incorrect_svg"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginBottom="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:alpha="0.0"
+            />
 
 
     </ConstraintSet>
@@ -205,6 +228,29 @@
                 android:scaleY="1.0" />
         </Constraint>
 
+        <Constraint
+            android:id="@id/correct_svg"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginBottom="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:alpha="0.0"
+            />
+
+
+        <Constraint
+            android:id="@id/incorrect_svg"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginBottom="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:alpha="1.0"
+            />
+
     </ConstraintSet>
 
     <ConstraintSet android:id="@+id/answer_good"
@@ -280,6 +326,28 @@
                 android:scaleY="1.0" />
         </Constraint>
 
+        <Constraint
+            android:id="@id/correct_svg"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginBottom="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:alpha="1.0"
+            />
+
+        <Constraint
+            android:id="@id/incorrect_svg"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginBottom="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:alpha="0.0"
+            />
+
     </ConstraintSet>
 
     <ConstraintSet android:id="@+id/answer_good_offscreen"
@@ -319,6 +387,29 @@
 
             app:layout_constraintTop_toBottomOf="@id/question_card" />
 
+        <Constraint
+            android:id="@id/correct_svg"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginBottom="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:alpha="0.0"
+            />
+
+
+        <Constraint
+            android:id="@id/incorrect_svg"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginBottom="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:alpha="0.0"
+            />
+
     </ConstraintSet>
 
     <ConstraintSet android:id="@+id/answer_bad_offscreen"
@@ -357,6 +448,29 @@
             android:elevation="5dp"
 
             app:layout_constraintTop_toBottomOf="@id/question_card" />
+
+        <Constraint
+            android:id="@id/correct_svg"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginBottom="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:alpha="0.0"
+            />
+
+
+        <Constraint
+            android:id="@id/incorrect_svg"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginBottom="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:alpha="0.0"
+            />
 
     </ConstraintSet>
 
