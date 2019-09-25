@@ -299,7 +299,7 @@
 
             android:elevation="5dp"
 
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="parent"
 
             />
 
@@ -338,7 +338,7 @@
 
             android:elevation="5dp"
 
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="parent"
 
             />
 
