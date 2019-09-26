@@ -38,7 +38,10 @@ public class BackgroundManager {
             m_fillImageQueue = new ArrayList<ImageView>();
             m_backgroundUrlList = new Vector<String>();
 
-            m_firestoreDb.collection("backgrounds").document("9JMXEtYV1J9UYCKPvxWv").collection("images")
+            String backgrounds = "9JMXEtYV1J9UYCKPvxWv";
+            String transparentBackgrounds = "enwYbCCRH0uHFHZDIUKT";
+
+            m_firestoreDb.collection("backgrounds").document(transparentBackgrounds).collection("images")
                     .get()
                     .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                         @Override
