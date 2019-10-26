@@ -3,7 +3,6 @@ package com.luc.ankireview;
 import android.animation.Animator;
 import android.animation.ObjectAnimator;
 import android.app.Activity;
-import android.app.FragmentTransaction;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -18,7 +17,6 @@ import androidx.core.content.res.ResourcesCompat;
 import androidx.core.view.GestureDetectorCompat;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.DialogFragment;
 import androidx.preference.PreferenceManager;
 import androidx.appcompat.widget.Toolbar;
 import android.text.InputType;
@@ -28,10 +26,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.animation.AccelerateInterpolator;
-import android.view.animation.AlphaAnimation;
-import android.view.animation.Animation;
-import android.view.animation.AnimationSet;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
 import android.widget.EditText;
@@ -568,8 +562,8 @@ public class ReviewActivity extends AppCompatActivity {
     private void showDeckDisplayOptions() {
         // start up dialog
 
-        DeckDisplayDialog dialog = new DeckDisplayDialog(this);
-        dialog.show(getSupportFragmentManager(), "DeckDisplayDialog");
+        DisplayOptionsDialog dialog = new DisplayOptionsDialog(this);
+        dialog.show(getSupportFragmentManager(), "DisplayOptionsDialog");
 
         /*
         m_flashcardFrame.setVisibility(View.INVISIBLE);

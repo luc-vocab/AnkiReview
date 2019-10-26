@@ -11,10 +11,16 @@ import android.view.LayoutInflater;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
 
-public class DeckDisplayDialog extends DialogFragment {
-    private static final String TAG = "DeckDisplayDialog";
+public class DisplayOptionsDialog extends DialogFragment {
+    private static final String TAG = "DisplayOptionsDialog";
 
-    public DeckDisplayDialog(Context activity) {
+    public interface DisplayOptionsDialogListener {
+        public void onSelectAnkiHTMLMode();
+        public void onSelectAnkireviewMode();
+    }
+
+
+    public DisplayOptionsDialog(Context activity) {
         m_activity = activity;
     }
 
@@ -26,26 +32,20 @@ public class DeckDisplayDialog extends DialogFragment {
         // Get the layout inflater
         LayoutInflater inflater = requireActivity().getLayoutInflater();
 
+        builder.setTitle("Deck Display Options");
+
         // Inflate and set the layout for the dialog
         // Pass null as the parent view because its going in the dialog layout
         builder.setView(inflater.inflate(R.layout.deck_display_options, null));
 
-
         builder
-                // Add action buttons
-                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int id) {
-                        // sign in the user ...
-                        Log.v(TAG, "OK");
-                    }
-                })
                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         // LoginDialogFragment.this.getDialog().cancel();
                         Log.v(TAG, "cancel");
                     }
                 });
+
 
         // Create the AlertDialog object and return it
         return builder.create();
