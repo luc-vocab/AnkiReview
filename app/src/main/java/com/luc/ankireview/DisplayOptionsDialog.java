@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.View;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
@@ -36,7 +37,25 @@ public class DisplayOptionsDialog extends DialogFragment {
 
         // Inflate and set the layout for the dialog
         // Pass null as the parent view because its going in the dialog layout
-        builder.setView(inflater.inflate(R.layout.deck_display_options, null));
+
+        View view = inflater.inflate(R.layout.deck_display_options, null);
+        view.findViewById(R.id.deck_display_mode_choose_ankihtml).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                m_listener.onSelectAnkiHTMLMode();
+                dismiss();
+            }
+        });
+        view.findViewById(R.id.deck_display_mode_choose_ankireview).setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                m_listener.onSelectAnkireviewMode();
+                dismiss();
+            }
+        });
+
+        builder.setView(view);
+
 
         builder
                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -51,7 +70,16 @@ public class DisplayOptionsDialog extends DialogFragment {
         return builder.create();
     }
 
+    // Override the Fragment.onAttach() method to instantiate the NoticeDialogListener
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        m_listener = (DisplayOptionsDialogListener) context;
+    }
+
+
     private Context m_activity;
+    private DisplayOptionsDialogListener m_listener;
 }
 
 

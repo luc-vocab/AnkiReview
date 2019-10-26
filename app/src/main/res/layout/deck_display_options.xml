@@ -15,6 +15,7 @@
 
 
             <com.google.android.material.card.MaterialCardView
+                android:id="@+id/deck_display_mode_choose_ankihtml"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
@@ -47,6 +48,7 @@
             </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.card.MaterialCardView
+                android:id="@+id/deck_display_mode_choose_ankireview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"

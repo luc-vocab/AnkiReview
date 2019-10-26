@@ -50,7 +50,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Vector;
 
-public class ReviewActivity extends AppCompatActivity {
+public class ReviewActivity extends AppCompatActivity implements DisplayOptionsDialog.DisplayOptionsDialogListener {
     private static final String TAG = "ReviewActivity";
 
     class ReviewerGestureDetector extends GestureDetector.SimpleOnGestureListener {
@@ -336,15 +336,16 @@ public class ReviewActivity extends AppCompatActivity {
         }
     }
 
-
-    private void deckDisplayOptionsChooseAnki() {
+    @Override
+    public void onSelectAnkiHTMLMode() {
         m_cardStyle.chooseDeckDisplayMode(m_deckId, false);
         showReviewControls();
         m_firebaseAnalytics.logEvent(Analytics.DISPLAYOPTIONS_HTML, null);
         reloadCardStyleAndCards();
     }
 
-    private void deckDisplayOptionsChooseAnkiReview() {
+    @Override
+    public void onSelectAnkireviewMode() {
         m_cardStyle.chooseDeckDisplayMode(m_deckId, true);
         showReviewControls();
         m_firebaseAnalytics.logEvent(Analytics.DISPLAYOPTIONS_ANKIREVIEW, null);
