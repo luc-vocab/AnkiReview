@@ -60,13 +60,6 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         />
 
-    <include
-        android:id="@+id/deck_display_mode"
-        layout="@layout/deck_display_options"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        />
 
     <com.leinardi.android.speeddial.SpeedDialView
         android:id="@+id/speedDial"

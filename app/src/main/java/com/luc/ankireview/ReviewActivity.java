@@ -3,6 +3,7 @@ package com.luc.ankireview;
 import android.animation.Animator;
 import android.animation.ObjectAnimator;
 import android.app.Activity;
+import android.app.FragmentTransaction;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -17,6 +18,7 @@ import androidx.core.content.res.ResourcesCompat;
 import androidx.core.view.GestureDetectorCompat;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
 import androidx.preference.PreferenceManager;
 import androidx.appcompat.widget.Toolbar;
 import android.text.InputType;
@@ -125,9 +127,7 @@ public class ReviewActivity extends AppCompatActivity {
         m_nextQuestionTextView = findViewById(R.id.next_question_text);
 
         m_styleNotFound = findViewById(R.id.cardstyle_not_defined);
-        m_deckDisplayMode = findViewById(R.id.deck_display_mode);
         m_styleNotFound.setVisibility(View.INVISIBLE);
-        m_deckDisplayMode.setVisibility(View.INVISIBLE);
 
 
         m_progressBar = findViewById(R.id.review_progressbar);
@@ -147,22 +147,6 @@ public class ReviewActivity extends AppCompatActivity {
             }
         });
 
-        // buttons for deck display options
-        Button deck_display_use_anki = findViewById(R.id.deck_display_use_anki);
-        Button deck_display_use_ankireview = findViewById(R.id.deck_display_use_ankireview);
-
-        deck_display_use_anki.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                deckDisplayOptionsChooseAnki();
-            }
-        });
-        deck_display_use_ankireview.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                deckDisplayOptionsChooseAnkiReview();
-            }
-        });
 
 
         // setup audio
@@ -572,7 +556,6 @@ public class ReviewActivity extends AppCompatActivity {
         m_flashcardFrame.setVisibility(View.VISIBLE);
         m_speedDialView.setVisibility(View.VISIBLE);
         m_styleNotFound.setVisibility(View.INVISIBLE);
-        m_deckDisplayMode.setVisibility(View.INVISIBLE);
     }
 
     private void showCardStyleNotDefinedControls(String cardTemplateName) {
@@ -583,10 +566,17 @@ public class ReviewActivity extends AppCompatActivity {
     }
 
     private void showDeckDisplayOptions() {
+        // start up dialog
+
+        DeckDisplayDialog dialog = new DeckDisplayDialog(this);
+        dialog.show(getSupportFragmentManager(), "DeckDisplayDialog");
+
+        /*
         m_flashcardFrame.setVisibility(View.INVISIBLE);
         m_speedDialView.setVisibility(View.INVISIBLE);
         m_styleNotFound.setVisibility(View.INVISIBLE);
         m_deckDisplayMode.setVisibility(View.VISIBLE);
+        */
     }
 
     private void setupCardStyleHandler(Card card) {
@@ -1008,7 +998,6 @@ public class ReviewActivity extends AppCompatActivity {
 
 
     private FrameLayout m_styleNotFound;
-    private FrameLayout m_deckDisplayMode;
 
     private TextView m_cardTemplateName;
 
