@@ -4,4 +4,7 @@
     <dimen name="cardstyle_hide_elevation">0dp</dimen>
     <dimen name="cardstyle_show_elevation">5dp</dimen>
     <item name="cardstyle_width" format="float" type="dimen">0.9</item>
+
+    <dimen name="cardstyle_swipe_away">700dp</dimen>
+    <dimen name="cardstyle_swipe_further">900dp</dimen>
 </resources>
