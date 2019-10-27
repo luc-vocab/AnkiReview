@@ -40,7 +40,6 @@ import com.google.firebase.analytics.FirebaseAnalytics;
 import com.leinardi.android.speeddial.SpeedDialActionItem;
 import com.leinardi.android.speeddial.SpeedDialView;
 import com.luc.ankireview.backgrounds.BackgroundManager;
-import com.luc.ankireview.display.ReviewConstraintSetManager;
 import com.luc.ankireview.style.CardStyle;
 
 import org.json.JSONArray;
