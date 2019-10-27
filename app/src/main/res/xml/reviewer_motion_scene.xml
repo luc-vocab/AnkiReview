@@ -13,10 +13,10 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
 
-            android:layout_marginTop="20dp"
-            app:layout_constraintWidth_percent="0.9"
+            android:layout_marginTop="@dimen/cardstyle_margin_top"
+            android:elevation="@dimen/cardstyle_show_elevation"
 
-            android:elevation="5dp"
+            app:layout_constraintWidth_percent="0.9"
 
             app:layout_constraintTop_toTopOf="parent"
 
@@ -30,11 +30,13 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
 
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="@dimen/cardstyle_margin_top"
+            android:elevation="@dimen/cardstyle_hide_elevation"
+
             app:layout_constraintWidth_percent="0.9"
 
             android:alpha="0.0"
-            android:elevation="0dp"
+
 
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -67,10 +69,10 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
 
-            android:layout_marginTop="20dp"
-            app:layout_constraintWidth_percent="0.9"
+            android:layout_marginTop="@dimen/cardstyle_margin_top"
+            android:elevation="@dimen/cardstyle_show_elevation"
 
-            android:elevation="5dp"
+            app:layout_constraintWidth_percent="0.9"
 
             app:layout_constraintTop_toTopOf="parent"
 
@@ -84,11 +86,13 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
 
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="@dimen/cardstyle_margin_top"
+            android:elevation="@dimen/cardstyle_show_elevation"
+
             app:layout_constraintWidth_percent="0.9"
 
             android:alpha="1.0"
-            android:elevation="5dp"
+
 
             app:layout_constraintTop_toBottomOf="@id/question_card" />
 
@@ -100,10 +104,10 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
 
-            android:layout_marginTop="20dp"
-            app:layout_constraintWidth_percent="0.9"
+            android:layout_marginTop="@dimen/cardstyle_margin_top"
+            android:elevation="@dimen/cardstyle_show_elevation"
 
-            android:elevation="5dp"
+            app:layout_constraintWidth_percent="0.9"
 
             android:alpha="0.0"
 
@@ -167,11 +171,13 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
 
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="@dimen/cardstyle_margin_top"
+            android:elevation="@dimen/cardstyle_hide_elevation"
+
             app:layout_constraintWidth_percent="0.9"
 
             android:alpha="0.0"
-            android:elevation="0dp"
+
 
             app:layout_constraintBottom_toTopOf="parent"
 
@@ -185,12 +191,13 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
 
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="@dimen/cardstyle_margin_top"
+            android:elevation="@dimen/cardstyle_hide_elevation"
+
             android:layout_marginLeft="700dp"
             app:layout_constraintWidth_percent="0.9"
 
             android:alpha="0.0"
-            android:elevation="0dp"
 
             app:layout_constraintTop_toBottomOf="@id/question_card" />
 
@@ -202,10 +209,10 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
 
-            android:layout_marginTop="20dp"
-            app:layout_constraintWidth_percent="0.9"
+            android:layout_marginTop="@dimen/cardstyle_margin_top"
+            android:elevation="@dimen/cardstyle_show_elevation"
 
-            android:elevation="5dp"
+            app:layout_constraintWidth_percent="0.9"
 
             android:alpha="1.0"
 
@@ -269,11 +276,12 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
 
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="@dimen/cardstyle_margin_top"
+            android:elevation="@dimen/cardstyle_hide_elevation"
+
             app:layout_constraintWidth_percent="0.9"
 
             android:alpha="0.0"
-            android:elevation="0dp"
 
             app:layout_constraintBottom_toTopOf="parent"
 
@@ -287,12 +295,14 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
 
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="@dimen/cardstyle_margin_top"
+            android:elevation="@dimen/cardstyle_hide_elevation"
+
             android:layout_marginRight="700dp"
             app:layout_constraintWidth_percent="0.9"
 
             android:alpha="0.0"
-            android:elevation="0dp"
+
 
             app:layout_constraintTop_toBottomOf="@id/question_card" />
 
@@ -304,10 +314,12 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
 
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="@dimen/cardstyle_margin_top"
+            android:elevation="@dimen/cardstyle_show_elevation"
+
             app:layout_constraintWidth_percent="0.9"
 
-            android:elevation="5dp"
+
 
             android:alpha="1.0"
 
@@ -370,10 +382,10 @@
 
             app:layout_constraintRight_toLeftOf="parent"
 
-            android:layout_marginTop="20dp"
-            app:layout_constraintWidth_percent="0.9"
+            android:layout_marginTop="@dimen/cardstyle_margin_top"
+            android:elevation="@dimen/cardstyle_show_elevation"
 
-            android:elevation="5dp"
+            app:layout_constraintWidth_percent="0.9"
 
             app:layout_constraintBottom_toTopOf="parent"
 
@@ -386,12 +398,13 @@
 
             app:layout_constraintRight_toLeftOf="parent"
 
+            android:layout_marginTop="@dimen/cardstyle_margin_top"
+            android:elevation="@dimen/cardstyle_show_elevation"
 
-            android:layout_marginTop="20dp"
             app:layout_constraintWidth_percent="0.9"
 
             android:alpha="1.0"
-            android:elevation="5dp"
+
 
             app:layout_constraintTop_toBottomOf="@id/question_card" />
 

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="cardstyle_margin_top">20dp</dimen>
+    <dimen name="cardstyle_hide_elevation">0dp</dimen>
+    <dimen name="cardstyle_show_elevation">5dp</dimen>
+    <item name="cardstyle_width" format="float" type="dimen">0.9</item>
+</resources>
