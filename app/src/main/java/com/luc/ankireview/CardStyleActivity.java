@@ -139,8 +139,8 @@ public class CardStyleActivity extends AppCompatActivity {
         m_answerCardView = findViewById(R.id.answer_card);
 
         // card textviews
-        m_questionTextView = findViewById(R.id.question_text);
-        m_answerTextView = findViewById(R.id.answer_text);
+        m_questionTextView = m_questionCardView.findViewById(R.id.side_text);
+        m_answerTextView = m_answerCardView.findViewById(R.id.side_text);
 
         m_cardStyle.renderBothCards(m_card, m_questionCardView, m_answerCardView, m_questionTextView, m_answerTextView);
 

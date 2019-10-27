@@ -42,12 +42,14 @@
                 android:orientation="vertical">
 
                 <include
-                    layout="@layout/question_card"
+                    android:id="@+id/question_card"
+                    layout="@layout/side_card"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 
                 <include
-                    layout="@layout/answer_card"
+                    android:id="@+id/answer_card"
+                    layout="@layout/side_card"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 
