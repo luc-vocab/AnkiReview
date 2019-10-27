@@ -40,6 +40,7 @@ import com.google.firebase.analytics.FirebaseAnalytics;
 import com.leinardi.android.speeddial.SpeedDialActionItem;
 import com.leinardi.android.speeddial.SpeedDialView;
 import com.luc.ankireview.backgrounds.BackgroundManager;
+import com.luc.ankireview.display.ReviewConstraintSetManager;
 import com.luc.ankireview.style.CardStyle;
 
 import org.json.JSONArray;
@@ -119,6 +120,10 @@ public class ReviewActivity extends AppCompatActivity implements DisplayOptionsD
         m_questionTextView = m_questionCardView.findViewById(R.id.side_text);
         m_answerTextView = m_answerCardView.findViewById(R.id.side_text);
         m_nextQuestionTextView = m_nextQuestionCardView.findViewById(R.id.side_text);
+
+        // do some modifications on the MotionLayout constraintset
+        // =======================================================
+        ReviewConstraintSetManager.applyConstraintSetConstants(m_flashcardFrame);
 
         m_styleNotFound = findViewById(R.id.cardstyle_not_defined);
         m_styleNotFound.setVisibility(View.INVISIBLE);
