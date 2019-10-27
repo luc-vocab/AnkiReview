@@ -115,9 +115,6 @@ public class ReviewActivity extends AppCompatActivity implements DisplayOptionsD
         m_styleNotFound = findViewById(R.id.cardstyle_not_defined);
         m_styleNotFound.setVisibility(View.INVISIBLE);
 
-
-        m_progressBar = findViewById(R.id.review_progressbar);
-
         m_cardTemplateName = findViewById(R.id.cardstyle_cardtemplate_name);
 
         // set touch listener
@@ -513,7 +510,7 @@ public class ReviewActivity extends AppCompatActivity implements DisplayOptionsD
         Log.v(TAG, "initial due count: " + m_initialDueCount);
 
         // m_progressBar.setMax(m_initialDueCount * 100);
-        m_progressBar.setProgress(0);
+        // m_progressBar.setProgress(0);
 
         try {
             Vector<Card> initialCards = AnkiUtils.getDueCards(getContentResolver(), m_deckId, 2);
@@ -862,7 +859,7 @@ public class ReviewActivity extends AppCompatActivity implements DisplayOptionsD
     private void setProgressAnimate(int progressTo)
     {
         int progress = (progressTo * 100) / m_initialDueCount;
-        m_progressBar.setProgress(progress);
+        // m_progressBar.setProgress(progress);
 
         /*
         ObjectAnimator animation = ObjectAnimator.ofFloat(m_progressBar, "progress", m_progressBar.getProgress(), progressTo * 100);
@@ -1032,7 +1029,6 @@ public class ReviewActivity extends AppCompatActivity implements DisplayOptionsD
 
     private TextView m_cardTemplateName;
 
-    private ProgressBar m_progressBar;
 
     // keep track of review time
     private long m_cardReviewStartTime;
