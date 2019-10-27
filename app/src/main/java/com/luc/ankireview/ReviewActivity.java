@@ -352,6 +352,14 @@ public class ReviewActivity extends AppCompatActivity implements DisplayOptionsD
         reloadCardStyleAndCards();
     }
 
+    @Override
+    public void onSelectTeacherMode() {
+        m_cardStyle.chooseDeckDisplayMode(m_deckId, CardStyle.DeckDisplayMode.TEACHER);
+        showReviewControls();
+        m_firebaseAnalytics.logEvent(Analytics.DISPLAYOPTIONS_TEACHER, null);
+        reloadCardStyleAndCards();
+    }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

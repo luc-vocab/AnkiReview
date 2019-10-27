@@ -40,7 +40,9 @@
         question/answer are separately animated. Only works for simple text-based decks.
     </string>
 
-
+    <string name="review_deck_display_teachermode">
+        Use AnkiReview rendering engine, with selectable teacher photos. As if a teacher was asking you questions! Only works for simple text-based decks.
+    </string>
 
     <string name="review_cardstyle_not_defined_title">Card Style not defined</string>
     <string name="review_cardstyle_not_defined_description">

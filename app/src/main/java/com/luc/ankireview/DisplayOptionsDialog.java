@@ -18,6 +18,7 @@ public class DisplayOptionsDialog extends DialogFragment {
     public interface DisplayOptionsDialogListener {
         void onSelectAnkiHTMLMode();
         void onSelectAnkireviewMode();
+        void onSelectTeacherMode();
     }
 
 
@@ -50,6 +51,13 @@ public class DisplayOptionsDialog extends DialogFragment {
             @Override
             public void onClick(View v) {
                 m_listener.onSelectAnkireviewMode();
+                dismiss();
+            }
+        });
+        view.findViewById(R.id.deck_display_mode_choose_teachermode).setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                m_listener.onSelectTeacherMode();
                 dismiss();
             }
         });
