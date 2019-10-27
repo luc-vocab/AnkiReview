@@ -13,10 +13,10 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
 
-            android:layout_marginTop="@dimen/cardstyle_margin_top"
-            android:elevation="@dimen/cardstyle_show_elevation"
-
             app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+
+            android:elevation="@dimen/cardstyle_show_elevation"
 
             />
 
@@ -28,14 +28,15 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
 
-            android:layout_marginTop="@dimen/cardstyle_margin_top"
             android:elevation="@dimen/cardstyle_hide_elevation"
 
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
 
             android:alpha="0.0"
 
 
-            app:layout_constraintTop_toTopOf="parent" />
+            />
 
 
     </ConstraintSet>
@@ -50,10 +51,11 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
 
-            android:layout_marginTop="@dimen/cardstyle_margin_top"
             android:elevation="@dimen/cardstyle_show_elevation"
 
             app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/answer_card"
+            app:layout_constraintVertical_chainStyle="packed"
 
             />
 
@@ -66,12 +68,14 @@
             app:layout_constraintRight_toRightOf="parent"
 
             android:layout_marginTop="@dimen/cardstyle_margin_top"
+
             android:elevation="@dimen/cardstyle_show_elevation"
 
             android:alpha="1.0"
 
-
-            app:layout_constraintTop_toBottomOf="@id/question_card" />
+            app:layout_constraintTop_toBottomOf="@id/question_card"
+            app:layout_constraintBottom_toBottomOf="parent"
+            />
 
         <Constraint
             android:id="@id/next_question_card"

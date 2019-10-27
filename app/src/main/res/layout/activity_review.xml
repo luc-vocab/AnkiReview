@@ -46,7 +46,7 @@
 
     <include
         android:id="@+id/review_cards_ankireview"
-        layout="@layout/reviewer_motionlayout_teachermode"
+        layout="@layout/reviewer_motionlayout_ankireview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
