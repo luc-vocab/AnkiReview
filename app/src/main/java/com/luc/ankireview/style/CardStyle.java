@@ -38,6 +38,12 @@ public class CardStyle implements Serializable {
     private static final String TAG = "CardStyle";
     public static final String CARDSTYLE_DATA_FILENAME = "cardstyle";
 
+    public enum DeckDisplayMode {
+        ANKIHTML,
+        ANKIREVIEW,
+        TEACHER
+    }
+
     public CardStyle(Context context) {
 
         m_context = context;
@@ -245,7 +251,7 @@ public class CardStyle implements Serializable {
     }
 
     public String getQuestionAudio(long deckId, Card card) {
-        if( ! useAnkiReviewDeckDisplayMode(deckId) ) {
+        if( getdeckDisplayMode(deckId) == DeckDisplayMode.ANKIHTML ) {
             String soundFile = card.extractSoundFile(card.getQuestionContent());
             return soundFile;
         }
@@ -263,7 +269,7 @@ public class CardStyle implements Serializable {
     }
 
     public String getAnswerAudio(long deckId, Card card) {
-        if( ! useAnkiReviewDeckDisplayMode(deckId) ) {
+        if( getdeckDisplayMode(deckId) == DeckDisplayMode.ANKIHTML ) {
             String soundFile = card.extractSoundFile(card.getAnswerContent());
             return soundFile;
         }
@@ -305,7 +311,7 @@ public class CardStyle implements Serializable {
             Log.e(TAG, "could not open cardstylestorage, creating new");
             m_cardStyleStorage = new CardStyleStorage();
             m_cardStyleStorage.cardTemplateMap = new HashMap<CardTemplateKey, CardTemplate>();
-            m_cardStyleStorage.deckDisplayMode = new HashMap<Long,Boolean>();
+            m_cardStyleStorage.deckDisplayMode = new HashMap<Long,DeckDisplayMode>();
         }
     }
 
@@ -330,9 +336,9 @@ public class CardStyle implements Serializable {
 
     }
 
-    public void chooseDeckDisplayMode(long deckId, boolean useAnkiReviewStyle) {
-        Log.v(TAG, "chooseDeckDisplayMode, useAnkiReviewStyle: " + useAnkiReviewStyle);
-        m_cardStyleStorage.deckDisplayMode.put(deckId, useAnkiReviewStyle);
+    public void chooseDeckDisplayMode(long deckId, DeckDisplayMode deckDisplayMode) {
+        Log.v(TAG, "chooseDeckDisplayMode, useAnkiReviewStyle: " + deckDisplayMode);
+        m_cardStyleStorage.deckDisplayMode.put(deckId, deckDisplayMode);
         saveCardStyleData();
     }
 
@@ -343,12 +349,13 @@ public class CardStyle implements Serializable {
         return false;
     }
 
-    public boolean useAnkiReviewDeckDisplayMode(long deckId) {
-        boolean result = false;
-        if (m_cardStyleStorage.deckDisplayMode.containsKey(deckId)) {
-            result = m_cardStyleStorage.deckDisplayMode.get(deckId).booleanValue();
-        }
-        return result;
+    public DeckDisplayMode getdeckDisplayMode(long deckId) {
+        return m_cardStyleStorage.deckDisplayMode.get(deckId);
+    }
+
+    public boolean usingAnkiReviewMode(long deckId) {
+        DeckDisplayMode deckDisplayMode = getdeckDisplayMode(deckId);
+        return (deckDisplayMode == DeckDisplayMode.ANKIREVIEW || deckDisplayMode == DeckDisplayMode.TEACHER);
     }
 
     private HashMap<String,Typeface> m_fontCache;

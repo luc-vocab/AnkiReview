@@ -309,7 +309,7 @@ public class ReviewActivity extends AppCompatActivity implements DisplayOptionsD
         if (m_cardForCardStyleEdit != null) {
 
             // is this deck enabled for AnkiReview style ?
-            if ( ! m_cardStyle.useAnkiReviewDeckDisplayMode(m_deckId)) {
+            if ( ! m_cardStyle.usingAnkiReviewMode(m_deckId)) {
 
                 new AlertDialog.Builder(this)
                         .setTitle("Please enable AnkiReview style")
@@ -338,7 +338,7 @@ public class ReviewActivity extends AppCompatActivity implements DisplayOptionsD
 
     @Override
     public void onSelectAnkiHTMLMode() {
-        m_cardStyle.chooseDeckDisplayMode(m_deckId, false);
+        m_cardStyle.chooseDeckDisplayMode(m_deckId, CardStyle.DeckDisplayMode.ANKIHTML);
         showReviewControls();
         m_firebaseAnalytics.logEvent(Analytics.DISPLAYOPTIONS_HTML, null);
         reloadCardStyleAndCards();
@@ -346,7 +346,7 @@ public class ReviewActivity extends AppCompatActivity implements DisplayOptionsD
 
     @Override
     public void onSelectAnkireviewMode() {
-        m_cardStyle.chooseDeckDisplayMode(m_deckId, true);
+        m_cardStyle.chooseDeckDisplayMode(m_deckId, CardStyle.DeckDisplayMode.ANKIREVIEW);
         showReviewControls();
         m_firebaseAnalytics.logEvent(Analytics.DISPLAYOPTIONS_ANKIREVIEW, null);
         reloadCardStyleAndCards();
@@ -506,6 +506,7 @@ public class ReviewActivity extends AppCompatActivity implements DisplayOptionsD
 
             }
         } catch (Exception e) {
+            e.printStackTrace();
             Crashlytics.logException(e);
             Utils.reportAnkiAPIException(this, e);
         }
@@ -565,13 +566,6 @@ public class ReviewActivity extends AppCompatActivity implements DisplayOptionsD
 
         DisplayOptionsDialog dialog = new DisplayOptionsDialog(this);
         dialog.show(getSupportFragmentManager(), "DisplayOptionsDialog");
-
-        /*
-        m_flashcardFrame.setVisibility(View.INVISIBLE);
-        m_speedDialView.setVisibility(View.INVISIBLE);
-        m_styleNotFound.setVisibility(View.INVISIBLE);
-        m_deckDisplayMode.setVisibility(View.VISIBLE);
-        */
     }
 
     private void setupCardStyleHandler(Card card) {
@@ -580,8 +574,7 @@ public class ReviewActivity extends AppCompatActivity implements DisplayOptionsD
     }
 
     private boolean checkStyleExists(Card card) {
-        boolean useAnkiReviewDeckDisplayMode = m_cardStyle.useAnkiReviewDeckDisplayMode(m_deckId);
-
+        boolean useAnkiReviewDeckDisplayMode = m_cardStyle.usingAnkiReviewMode(m_deckId);
         Log.v(TAG, "useAnkiReviewDeckDisplayMode: " + useAnkiReviewDeckDisplayMode);
 
         if( useAnkiReviewDeckDisplayMode )
@@ -934,7 +927,6 @@ public class ReviewActivity extends AppCompatActivity implements DisplayOptionsD
 
         Bundle bundle = new Bundle();
         bundle.putInt(Analytics.REVIEW_COUNT, m_reviewCount);
-        bundle.putBoolean(Analytics.DISPLAYOPTIONS_USE_ANKIREVIEW, useAnkiReviewStyle());
         m_firebaseAnalytics.logEvent(Analytics.REVIEW_PROGRESS, bundle);
     }
 
@@ -972,9 +964,6 @@ public class ReviewActivity extends AppCompatActivity implements DisplayOptionsD
     private CardStyle m_cardStyle;
     public CardStyle getCardStyle() { return m_cardStyle; }
 
-    public boolean useAnkiReviewStyle() {
-        return m_cardStyle.useAnkiReviewDeckDisplayMode(m_deckId);
-    }
 
     // layout elements
     private Toolbar m_toolbar;

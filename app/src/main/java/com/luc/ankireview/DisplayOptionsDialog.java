@@ -16,8 +16,8 @@ public class DisplayOptionsDialog extends DialogFragment {
     private static final String TAG = "DisplayOptionsDialog";
 
     public interface DisplayOptionsDialogListener {
-        public void onSelectAnkiHTMLMode();
-        public void onSelectAnkireviewMode();
+        void onSelectAnkiHTMLMode();
+        void onSelectAnkireviewMode();
     }
 
 
