@@ -422,7 +422,7 @@
 
             android:layout_marginTop="20dp"
 
-            android:elevation="5dp"
+            android:elevation="@dimen/cardstyle_show_elevation"
 
             app:layout_constraintBottom_toTopOf="parent"
 
@@ -438,7 +438,7 @@
             android:layout_marginTop="20dp"
 
             android:alpha="1.0"
-            android:elevation="5dp"
+            android:elevation="@dimen/cardstyle_show_elevation"
 
             app:layout_constraintTop_toBottomOf="@id/question_card" />
 

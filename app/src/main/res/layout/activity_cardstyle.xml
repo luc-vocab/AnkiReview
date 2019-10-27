@@ -35,25 +35,11 @@
             android:layout_weight="1"
             >
 
-            <LinearLayout
+            <include
                 android:id="@+id/cardstyle_editor_cards"
+                layout="@layout/cardstyle_motion_layout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <include
-                    android:id="@+id/question_card"
-                    layout="@layout/side_card"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-
-                <include
-                    android:id="@+id/answer_card"
-                    layout="@layout/side_card"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-
-            </LinearLayout>
+                android:layout_height="match_parent" />
 
         </androidx.core.widget.NestedScrollView>
 

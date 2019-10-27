@@ -5,6 +5,7 @@ import android.graphics.Typeface;
 import android.os.Handler;
 import android.os.HandlerThread;
 
+import androidx.constraintlayout.motion.widget.MotionLayout;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.core.provider.FontRequest;
@@ -25,6 +26,7 @@ import android.widget.Toast;
 import com.luc.ankireview.Utils;
 import com.luc.ankireview.Card;
 import com.luc.ankireview.R;
+import com.luc.ankireview.display.ReviewConstraintSetManager;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -129,6 +131,10 @@ public class CardStyle implements Serializable {
         renderOneCard(card, cardTemplate.getQuestionCardFields(), questionCard, questionText, questionCard.getContext().getString(R.string.card_style_question_empty));
         renderOneCard(card, cardTemplate.getAnswerCardFields(), answerCard, answerText, answerCard.getContext().getString(R.string.card_style_answer_empty));
 
+    }
+
+    public void applyMotionLayoutStyle(MotionLayout motionLayout) {
+        ReviewConstraintSetManager.applyConstraintSetConstants(motionLayout);
     }
 
     private void requestTypeface(final String fontRequested, final TextView cardText) {

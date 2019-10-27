@@ -121,10 +121,6 @@ public class ReviewActivity extends AppCompatActivity implements DisplayOptionsD
         m_answerTextView = m_answerCardView.findViewById(R.id.side_text);
         m_nextQuestionTextView = m_nextQuestionCardView.findViewById(R.id.side_text);
 
-        // do some modifications on the MotionLayout constraintset
-        // =======================================================
-        ReviewConstraintSetManager.applyConstraintSetConstants(m_flashcardFrame);
-
         m_styleNotFound = findViewById(R.id.cardstyle_not_defined);
         m_styleNotFound.setVisibility(View.INVISIBLE);
 
@@ -274,6 +270,7 @@ public class ReviewActivity extends AppCompatActivity implements DisplayOptionsD
             // show deck style prompt
             showDeckDisplayOptions();
         } else {
+            m_cardStyle.applyMotionLayoutStyle(m_flashcardFrame);
             loadCards();
         }
     }

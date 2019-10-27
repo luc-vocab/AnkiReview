@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.cardview.widget.CardView;
+import androidx.constraintlayout.motion.widget.MotionLayout;
 import androidx.core.content.ContextCompat;
 import androidx.core.widget.ImageViewCompat;
 import androidx.appcompat.app.AlertDialog;
@@ -685,6 +686,7 @@ public class CardStyleActivity extends AppCompatActivity {
     }
 
     public void updateCardPreview() {
+        m_cardStyle.applyMotionLayoutStyle(m_cardstyleEditorCards);
         m_cardStyle.renderBothCards(m_card, m_questionCardView, m_answerCardView, m_questionTextView, m_answerTextView);
     }
 
@@ -816,7 +818,7 @@ public class CardStyleActivity extends AppCompatActivity {
     // views
     private RecyclerView m_fullFieldListView;
     private FieldListAdapter m_fieldListAdapter;
-    private LinearLayout m_cardstyleEditorCards;
+    private MotionLayout m_cardstyleEditorCards;
 
     // navigation
     BottomNavigationView m_bottomNavigation;
