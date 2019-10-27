@@ -41,31 +41,15 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/answer_card"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    app:cardCornerRadius="5dp">
-                    <TextView
-                        android:id="@+id/answer_text"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:includeFontPadding="false" />
-                </androidx.cardview.widget.CardView>
+                <include
+                    layout="@layout/question_card"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
 
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/question_card"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    app:cardCornerRadius="5dp">
-                    <TextView
-                        android:id="@+id/question_text"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:includeFontPadding="false" />
-                </androidx.cardview.widget.CardView>
+                <include
+                    layout="@layout/answer_card"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
 
             </LinearLayout>
 

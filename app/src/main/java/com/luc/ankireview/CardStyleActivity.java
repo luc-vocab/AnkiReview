@@ -9,6 +9,7 @@ import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
 import androidx.core.widget.ImageViewCompat;
 import androidx.appcompat.app.AlertDialog;
@@ -129,8 +130,19 @@ public class CardStyleActivity extends AppCompatActivity {
             }
         });
 
+
+
         m_cardstyleEditorCards = findViewById(R.id.cardstyle_editor_cards);
-        //m_cardStyle.renderCard(m_card, m_cardstyleEditorCards);
+
+        // card views
+        m_questionCardView = findViewById(R.id.question_card);
+        m_answerCardView = findViewById(R.id.answer_card);
+
+        // card textviews
+        m_questionTextView = findViewById(R.id.question_text);
+        m_answerTextView = findViewById(R.id.answer_text);
+
+        m_cardStyle.renderBothCards(m_card, m_questionCardView, m_answerCardView, m_questionTextView, m_answerTextView);
 
         // get font view and margins view
         m_fieldSettingsView = findViewById(R.id.cardstyle_editor_fieldsettings);
@@ -673,8 +685,7 @@ public class CardStyleActivity extends AppCompatActivity {
     }
 
     public void updateCardPreview() {
-        // TODO: fix preview
-        // m_cardStyle.renderCard(m_card, m_cardstyleEditorCards);
+        m_cardStyle.renderBothCards(m_card, m_questionCardView, m_answerCardView, m_questionTextView, m_answerTextView);
     }
 
     public void exitWithoutSaving() {
@@ -784,6 +795,15 @@ public class CardStyleActivity extends AppCompatActivity {
         return ContextCompat.getColor(this, R.color.md_black);
     }
 
+
+
+    // card views
+    private CardView m_questionCardView;
+    private CardView m_answerCardView;
+
+    // card textviews
+    private TextView m_questionTextView;
+    private TextView m_answerTextView;
 
 
     private CardStyle m_cardStyle;
