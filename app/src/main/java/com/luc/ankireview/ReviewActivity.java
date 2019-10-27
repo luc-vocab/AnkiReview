@@ -31,6 +31,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -511,7 +512,7 @@ public class ReviewActivity extends AppCompatActivity implements DisplayOptionsD
         m_isFirstCard = true;
         Log.v(TAG, "initial due count: " + m_initialDueCount);
 
-        m_progressBar.setMax(m_initialDueCount * 100);
+        // m_progressBar.setMax(m_initialDueCount * 100);
         m_progressBar.setProgress(0);
 
         try {
@@ -860,6 +861,10 @@ public class ReviewActivity extends AppCompatActivity implements DisplayOptionsD
     // animate progress bar
     private void setProgressAnimate(int progressTo)
     {
+        int progress = (progressTo * 100) / m_initialDueCount;
+        m_progressBar.setProgress(progress);
+
+        /*
         ObjectAnimator animation = ObjectAnimator.ofFloat(m_progressBar, "progress", m_progressBar.getProgress(), progressTo * 100);
         animation.setDuration(500);
         animation.setInterpolator(new DecelerateInterpolator());
@@ -887,6 +892,7 @@ public class ReviewActivity extends AppCompatActivity implements DisplayOptionsD
         });
 
         animation.start();
+         */
     }
 
     private void moveToNextQuestion()
@@ -1026,7 +1032,7 @@ public class ReviewActivity extends AppCompatActivity implements DisplayOptionsD
 
     private TextView m_cardTemplateName;
 
-    private RoundCornerProgressBar m_progressBar;
+    private ProgressBar m_progressBar;
 
     // keep track of review time
     private long m_cardReviewStartTime;
