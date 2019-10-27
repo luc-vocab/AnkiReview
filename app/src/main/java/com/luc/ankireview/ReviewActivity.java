@@ -116,9 +116,9 @@ public class ReviewActivity extends AppCompatActivity implements DisplayOptionsD
         m_nextQuestionCardView = findViewById(R.id.next_question_card);
 
         // card textviews
-        m_questionTextView = findViewById(R.id.question_text);
-        m_answerTextView = findViewById(R.id.answer_text);
-        m_nextQuestionTextView = findViewById(R.id.next_question_text);
+        m_questionTextView = m_questionCardView.findViewById(R.id.side_text);
+        m_answerTextView = m_answerCardView.findViewById(R.id.side_text);
+        m_nextQuestionTextView = m_nextQuestionCardView.findViewById(R.id.side_text);
 
         m_styleNotFound = findViewById(R.id.cardstyle_not_defined);
         m_styleNotFound.setVisibility(View.INVISIBLE);

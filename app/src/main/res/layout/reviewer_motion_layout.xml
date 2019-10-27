@@ -18,44 +18,23 @@
 
     </ImageView>
 
-    <androidx.cardview.widget.CardView
+    <include
         android:id="@+id/next_question_card"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:cardCornerRadius="5dp">
-        <TextView
-            android:id="@+id/next_question_text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:includeFontPadding="false" />
-    </androidx.cardview.widget.CardView>
+        layout="@layout/side_card"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
-    <androidx.cardview.widget.CardView
+    <include
         android:id="@+id/answer_card"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:cardCornerRadius="5dp">
-        <TextView
-            android:id="@+id/answer_text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:includeFontPadding="false" />
-    </androidx.cardview.widget.CardView>
+        layout="@layout/side_card"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
-    <androidx.cardview.widget.CardView
+    <include
         android:id="@+id/question_card"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:cardCornerRadius="5dp">
-        <TextView
-            android:id="@+id/question_text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:includeFontPadding="false" />
-    </androidx.cardview.widget.CardView>
+        layout="@layout/side_card"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
     <ImageView
         android:id="@+id/correct_svg"
