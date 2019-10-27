@@ -378,17 +378,17 @@ public class ReviewActivity extends AppCompatActivity implements DisplayOptionsD
     @Override
     public void onSelectAnkireviewMode() {
         m_cardStyle.chooseDeckDisplayMode(m_deckId, CardStyle.DeckDisplayMode.ANKIREVIEW);
-        showReviewControls();
         m_firebaseAnalytics.logEvent(Analytics.DISPLAYOPTIONS_ANKIREVIEW, null);
         reloadCardStyleAndCards();
+        showReviewControls();
     }
 
     @Override
     public void onSelectTeacherMode() {
         m_cardStyle.chooseDeckDisplayMode(m_deckId, CardStyle.DeckDisplayMode.TEACHER);
-        showReviewControls();
         m_firebaseAnalytics.logEvent(Analytics.DISPLAYOPTIONS_TEACHER, null);
         reloadCardStyleAndCards();
+        showReviewControls();
     }
 
 
