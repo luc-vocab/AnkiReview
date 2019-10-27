@@ -44,6 +44,27 @@
     <ConstraintSet android:id="@+id/answer_shown">
 
         <Constraint
+            android:id="@id/next_question_card"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+
+            android:elevation="@dimen/cardstyle_show_elevation"
+
+            android:alpha="0.0"
+
+            >
+            <Transform
+                android:scaleX="0.80"
+                android:scaleY="0.80" />
+        </Constraint>
+
+        <Constraint
             android:id="@id/question_card"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -77,26 +98,6 @@
             app:layout_constraintBottom_toBottomOf="parent"
             />
 
-        <Constraint
-            android:id="@id/next_question_card"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-
-            android:elevation="@dimen/cardstyle_show_elevation"
-
-            android:alpha="0.0"
-
-            >
-            <Transform
-                android:scaleX="0.80"
-                android:scaleY="0.80" />
-        </Constraint>
 
         <Constraint
             android:id="@id/correct_svg"
@@ -126,6 +127,21 @@
     <ConstraintSet android:id="@+id/answer_bad"
         app:deriveConstraintsFrom="@id/answer_shown"
         >
+
+        <Constraint
+            android:id="@id/next_question_card"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+
+            android:alpha="1.0"
+
+            />
 
         <Constraint
             android:id="@id/question_card"
@@ -168,21 +184,7 @@
 
             />
 
-        <Constraint
-            android:id="@id/next_question_card"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
 
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-
-            android:alpha="1.0"
-
-
-            />
 
            <Constraint
             android:id="@id/correct_svg"
@@ -216,6 +218,23 @@
     <ConstraintSet android:id="@+id/answer_good"
         app:deriveConstraintsFrom="@id/answer_shown"
         >
+
+        <Constraint
+            android:id="@id/next_question_card"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+
+            android:elevation="@dimen/cardstyle_show_elevation"
+
+            android:alpha="1.0"
+
+            />
 
         <Constraint
             android:id="@id/question_card"
@@ -256,22 +275,7 @@
 
             />
 
-        <Constraint
-            android:id="@id/next_question_card"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
 
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-
-            android:elevation="@dimen/cardstyle_show_elevation"
-
-            android:alpha="1.0"
-
-            />
 
         <Constraint
             android:id="@id/correct_svg"
