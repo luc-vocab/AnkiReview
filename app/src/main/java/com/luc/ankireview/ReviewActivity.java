@@ -80,7 +80,7 @@ public class ReviewActivity extends AppCompatActivity implements DisplayOptionsD
         @Override
         public boolean onTouch(View v, MotionEvent event) {
             // let the viewpagers / webviews consume the event
-            m_flashcardFrame.dispatchTouchEvent(event);
+            m_activeMotionLayout.dispatchTouchEvent(event);
             // run through gesture detector
             if (m_detector.onTouchEvent(event)) {
                 return true;
@@ -108,17 +108,8 @@ public class ReviewActivity extends AppCompatActivity implements DisplayOptionsD
         // flashcard elements
         // ------------------
 
-        m_flashcardFrame = findViewById(R.id.flashcard_frame);
-
-        // card views
-        m_questionCardView = findViewById(R.id.question_card);
-        m_answerCardView = findViewById(R.id.answer_card);
-        m_nextQuestionCardView = findViewById(R.id.next_question_card);
-
-        // card textviews
-        m_questionTextView = m_questionCardView.findViewById(R.id.side_text);
-        m_answerTextView = m_answerCardView.findViewById(R.id.side_text);
-        m_nextQuestionTextView = m_nextQuestionCardView.findViewById(R.id.side_text);
+        m_flashcardFrameAnkiReview = findViewById(R.id.review_cards_ankireview);
+        m_flashcardFrameTeacherMode = findViewById(R.id.review_cards_teachermode);
 
         m_styleNotFound = findViewById(R.id.cardstyle_not_defined);
         m_styleNotFound.setVisibility(View.INVISIBLE);
@@ -222,7 +213,35 @@ public class ReviewActivity extends AppCompatActivity implements DisplayOptionsD
         m_toolbar.setTitle(m_deckName);
         setSupportActionBar(m_toolbar);
 
-        m_flashcardFrame.setTransitionListener(new MotionLayout.TransitionListener() {
+
+        setupCardMotionLayoutTransitions(m_flashcardFrameAnkiReview);
+        setupCardMotionLayoutTransitions(m_flashcardFrameTeacherMode);
+
+        m_backgroundPhoto = findViewById(R.id.background_photo);
+
+        m_backgroundManager = new BackgroundManager();
+        m_backgroundManager.fillImageView(m_backgroundPhoto);
+
+        // final step
+        reloadCardStyleAndCards();
+    }
+
+    private void reloadCardStyleAndCards() {
+        Log.v(TAG, "reloadCardStyleAndCards");
+
+        m_cardStyle = new CardStyle(this);
+        if( ! m_cardStyle.deckDisplayModeConfigured(m_deckId)) {
+            // show deck style prompt
+            showDeckDisplayOptions();
+        } else {
+            setupFlashcardFrame();
+            loadCards();
+        }
+    }
+
+
+    private void setupCardMotionLayoutTransitions(MotionLayout motionLayout) {
+        motionLayout.setTransitionListener(new MotionLayout.TransitionListener() {
             @Override
             public void onTransitionStarted(MotionLayout motionLayout, int i, int i1) {
 
@@ -251,28 +270,40 @@ public class ReviewActivity extends AppCompatActivity implements DisplayOptionsD
 
             }
         });
-
-        m_backgroundPhoto = findViewById(R.id.background_photo);
-
-        m_backgroundManager = new BackgroundManager();
-        m_backgroundManager.fillImageView(m_backgroundPhoto);
-
-        // final step
-        reloadCardStyleAndCards();
     }
 
-    private void reloadCardStyleAndCards() {
-        Log.v(TAG, "reloadCardStyleAndCards");
+    private void setupFlashcardFrame() {
+        CardStyle.DeckDisplayMode deckDisplayMode = m_cardStyle.getdeckDisplayMode(m_deckId);
 
-        m_cardStyle = new CardStyle(this);
-        if( ! m_cardStyle.deckDisplayModeConfigured(m_deckId)) {
-            // show deck style prompt
-            showDeckDisplayOptions();
+
+        if( deckDisplayMode == CardStyle.DeckDisplayMode.ANKIREVIEW) {
+            m_flashcardFrameTeacherMode .setVisibility(View.GONE);
+            m_flashcardFrameAnkiReview.setVisibility(View.VISIBLE);
+            m_activeMotionLayout = m_flashcardFrameAnkiReview;
+            setupFlashcardFrameFromMotionLayout(m_activeMotionLayout);
+        } else if (deckDisplayMode == CardStyle.DeckDisplayMode.TEACHER) {
+            m_flashcardFrameTeacherMode .setVisibility(View.VISIBLE);
+            m_flashcardFrameAnkiReview.setVisibility(View.GONE);
+            m_activeMotionLayout = m_flashcardFrameTeacherMode;
+            setupFlashcardFrameFromMotionLayout(m_activeMotionLayout );
         } else {
-            loadCards();
+            Log.e(TAG, "not supported yet");
         }
+
     }
 
+    private void setupFlashcardFrameFromMotionLayout(MotionLayout motionLayout) {
+
+        // card views
+        m_questionCardView = motionLayout.findViewById(R.id.question_card);
+        m_answerCardView = motionLayout.findViewById(R.id.answer_card);
+        m_nextQuestionCardView = motionLayout.findViewById(R.id.next_question_card);
+
+        // card textviews
+        m_questionTextView = m_questionCardView.findViewById(R.id.side_text);
+        m_answerTextView = m_answerCardView.findViewById(R.id.side_text);
+        m_nextQuestionTextView = m_nextQuestionCardView.findViewById(R.id.side_text);
+    }
 
 
     @Override
@@ -538,7 +569,7 @@ public class ReviewActivity extends AppCompatActivity implements DisplayOptionsD
         // render the next card
         cardStyle.renderQuestion(m_nextCard, m_nextQuestionCardView, m_nextQuestionTextView);
 
-        cardStyle.applyMotionLayoutStyle(m_currentCard, m_flashcardFrame);
+        cardStyle.applyMotionLayoutStyle(m_currentCard, m_activeMotionLayout);
     }
 
     private void loadNextQuestion() {
@@ -548,8 +579,8 @@ public class ReviewActivity extends AppCompatActivity implements DisplayOptionsD
         cardStyle.renderBothCards(m_currentCard, m_questionCardView, m_answerCardView, m_questionTextView, m_answerTextView);
 
         // transition back to "question shown" state, immediately
-        m_flashcardFrame.setProgress(0.0f);
-        m_flashcardFrame.setTransition(R.id.question_shown, R.id.answer_shown);
+        m_activeMotionLayout.setProgress(0.0f);
+        m_activeMotionLayout.setTransition(R.id.question_shown, R.id.answer_shown);
 
         // once we are in "question shown", render the next card (it is currently invisible)
         m_cardStyle.renderQuestion(m_nextCard, m_nextQuestionCardView, m_nextQuestionTextView);
@@ -557,13 +588,13 @@ public class ReviewActivity extends AppCompatActivity implements DisplayOptionsD
     }
 
     private void showReviewControls() {
-        m_flashcardFrame.setVisibility(View.VISIBLE);
+        m_activeMotionLayout.setVisibility(View.VISIBLE);
         m_speedDialView.setVisibility(View.VISIBLE);
         m_styleNotFound.setVisibility(View.INVISIBLE);
     }
 
     private void showCardStyleNotDefinedControls(String cardTemplateName) {
-        m_flashcardFrame.setVisibility(View.INVISIBLE);
+        m_activeMotionLayout.setVisibility(View.INVISIBLE);
         m_speedDialView.setVisibility(View.INVISIBLE);
         m_styleNotFound.setVisibility(View.VISIBLE);
         m_cardTemplateName.setText(cardTemplateName);
@@ -975,7 +1006,9 @@ public class ReviewActivity extends AppCompatActivity implements DisplayOptionsD
 
     // layout elements
     private Toolbar m_toolbar;
-    private MotionLayout m_flashcardFrame;
+    private MotionLayout m_activeMotionLayout;
+    private MotionLayout m_flashcardFrameAnkiReview;
+    private MotionLayout m_flashcardFrameTeacherMode;
 
     // card views
     private CardView m_questionCardView;

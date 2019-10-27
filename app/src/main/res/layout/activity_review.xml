@@ -36,10 +36,17 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
+    <include
+        android:id="@+id/review_cards_teachermode"
+        layout="@layout/reviewer_motionlayout_teachermode"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        />
 
     <include
-        android:id="@+id/flashcard_frame"
-        layout="@layout/reviewer_motion_layout"
+        android:id="@+id/review_cards_ankireview"
+        layout="@layout/reviewer_motionlayout_teachermode"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"

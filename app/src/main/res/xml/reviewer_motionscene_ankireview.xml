@@ -1,0 +1,459 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MotionScene xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ConstraintSet android:id="@+id/question_shown"
+        app:deriveConstraintsFrom="@id/answer_shown">
+
+        <Constraint
+            android:id="@id/question_card"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+
+            android:layout_marginTop="@dimen/cardstyle_margin_top"
+            android:elevation="@dimen/cardstyle_show_elevation"
+
+            app:layout_constraintTop_toTopOf="parent"
+
+            />
+
+        <Constraint
+            android:id="@id/answer_card"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+
+            android:layout_marginTop="@dimen/cardstyle_margin_top"
+            android:elevation="@dimen/cardstyle_hide_elevation"
+
+
+            android:alpha="0.0"
+
+
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+    </ConstraintSet>
+
+    <ConstraintSet android:id="@+id/answer_shown">
+
+        <Constraint
+            android:id="@id/question_card"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+
+            android:layout_marginTop="@dimen/cardstyle_margin_top"
+            android:elevation="@dimen/cardstyle_show_elevation"
+
+            app:layout_constraintTop_toTopOf="parent"
+
+            />
+
+        <Constraint
+            android:id="@id/answer_card"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+
+            android:layout_marginTop="@dimen/cardstyle_margin_top"
+            android:elevation="@dimen/cardstyle_show_elevation"
+
+            android:alpha="1.0"
+
+
+            app:layout_constraintTop_toBottomOf="@id/question_card" />
+
+        <Constraint
+            android:id="@id/next_question_card"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+
+            android:layout_marginTop="@dimen/cardstyle_margin_top"
+            android:elevation="@dimen/cardstyle_show_elevation"
+
+            android:alpha="0.0"
+
+            app:layout_constraintTop_toTopOf="parent"
+
+            >
+            <Transform
+                android:scaleX="0.80"
+                android:scaleY="0.80" />
+        </Constraint>
+
+        <Constraint
+            android:id="@id/correct_svg"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginBottom="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:alpha="0.0"
+            />
+
+        <Constraint
+            android:id="@id/incorrect_svg"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginBottom="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:alpha="0.0"
+            />
+
+
+    </ConstraintSet>
+
+    <ConstraintSet android:id="@+id/answer_bad"
+        app:deriveConstraintsFrom="@id/answer_shown"
+        >
+
+        <Constraint
+            android:id="@id/question_card"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+
+            android:layout_marginTop="@dimen/cardstyle_margin_top"
+            android:elevation="@dimen/cardstyle_hide_elevation"
+
+            android:alpha="0.0"
+
+
+            app:layout_constraintBottom_toTopOf="parent"
+
+            />
+
+        <Constraint
+            android:id="@id/answer_card"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+
+            android:layout_marginTop="@dimen/cardstyle_margin_top"
+            android:elevation="@dimen/cardstyle_hide_elevation"
+
+            android:layout_marginLeft="700dp"
+
+            android:alpha="0.0"
+
+            app:layout_constraintTop_toBottomOf="@id/question_card" />
+
+        <Constraint
+            android:id="@id/next_question_card"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+
+            android:layout_marginTop="@dimen/cardstyle_margin_top"
+            android:elevation="@dimen/cardstyle_show_elevation"
+
+
+            android:alpha="1.0"
+
+            app:layout_constraintTop_toTopOf="parent"
+
+            />
+
+           <Constraint
+            android:id="@id/correct_svg"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginBottom="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:alpha="0.0"
+            />
+
+
+        <Constraint
+            android:id="@id/incorrect_svg"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginBottom="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:alpha="1.0"
+            >
+            <Transform
+                android:scaleX="1.3"
+                android:scaleY="1.3" />
+        </Constraint>
+
+    </ConstraintSet>
+
+    <ConstraintSet android:id="@+id/answer_good"
+        app:deriveConstraintsFrom="@id/answer_shown"
+        >
+
+        <Constraint
+            android:id="@id/question_card"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+
+            android:layout_marginTop="@dimen/cardstyle_margin_top"
+            android:elevation="@dimen/cardstyle_hide_elevation"
+
+            android:alpha="0.0"
+
+            app:layout_constraintBottom_toTopOf="parent"
+
+            />
+
+        <Constraint
+            android:id="@id/answer_card"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+
+            android:layout_marginTop="@dimen/cardstyle_margin_top"
+            android:elevation="@dimen/cardstyle_hide_elevation"
+
+            android:layout_marginRight="700dp"
+
+            android:alpha="0.0"
+
+
+            app:layout_constraintTop_toBottomOf="@id/question_card" />
+
+        <Constraint
+            android:id="@id/next_question_card"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+
+            android:layout_marginTop="@dimen/cardstyle_margin_top"
+            android:elevation="@dimen/cardstyle_show_elevation"
+
+            android:alpha="1.0"
+
+            app:layout_constraintTop_toTopOf="parent"
+
+            />
+
+        <Constraint
+            android:id="@id/correct_svg"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginBottom="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:alpha="1.0"
+            >
+            <Transform
+                android:scaleX="1.3"
+                android:scaleY="1.3" />
+        </Constraint>/
+
+        <Constraint
+            android:id="@id/incorrect_svg"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginBottom="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:alpha="0.0"
+            />
+
+    </ConstraintSet>
+
+    <ConstraintSet android:id="@+id/answer_good_offscreen"
+        app:deriveConstraintsFrom="@id/answer_good"
+        >
+
+        <Constraint
+            android:id="@id/question_card"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+
+
+            app:layout_constraintRight_toLeftOf="parent"
+
+            android:layout_marginTop="@dimen/cardstyle_margin_top"
+            android:elevation="@dimen/cardstyle_show_elevation"
+
+            app:layout_constraintBottom_toTopOf="parent"
+
+            />
+
+        <Constraint
+            android:id="@id/answer_card"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+
+            app:layout_constraintRight_toLeftOf="parent"
+
+            android:layout_marginTop="@dimen/cardstyle_margin_top"
+            android:elevation="@dimen/cardstyle_show_elevation"
+
+            android:alpha="1.0"
+
+
+            app:layout_constraintTop_toBottomOf="@id/question_card" />
+
+        <Constraint
+            android:id="@id/correct_svg"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginBottom="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:alpha="0.0"
+            />
+
+
+        <Constraint
+            android:id="@id/incorrect_svg"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginBottom="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:alpha="0.0"
+            />
+
+    </ConstraintSet>
+
+    <ConstraintSet android:id="@+id/answer_bad_offscreen"
+        app:deriveConstraintsFrom="@id/answer_bad"
+        >
+
+        <Constraint
+            android:id="@id/question_card"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+
+            app:layout_constraintLeft_toRightOf="parent"
+
+            android:layout_marginTop="20dp"
+
+            android:elevation="@dimen/cardstyle_show_elevation"
+
+            app:layout_constraintBottom_toTopOf="parent"
+
+            />
+
+        <Constraint
+            android:id="@id/answer_card"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+
+            app:layout_constraintLeft_toRightOf="parent"
+
+            android:layout_marginTop="20dp"
+
+            android:alpha="1.0"
+            android:elevation="@dimen/cardstyle_show_elevation"
+
+            app:layout_constraintTop_toBottomOf="@id/question_card" />
+
+        <Constraint
+            android:id="@id/correct_svg"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginBottom="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:alpha="0.0"
+            />
+
+
+        <Constraint
+            android:id="@id/incorrect_svg"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginBottom="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:alpha="0.0"
+            />
+
+    </ConstraintSet>
+
+    <Transition
+        app:constraintSetEnd="@+id/answer_shown"
+        app:constraintSetStart="@+id/question_shown"
+        app:duration="300">
+
+        <OnSwipe
+            app:dragDirection="dragDown"
+            app:onTouchUp="autoComplete"
+            app:touchAnchorId="@id/answer_card"
+            app:touchAnchorSide="top" />
+    </Transition>
+
+
+    <Transition
+        app:constraintSetEnd="@+id/answer_bad"
+        app:constraintSetStart="@+id/answer_shown"
+        app:duration="300">
+
+        <OnSwipe
+            app:dragDirection="dragRight"
+            app:onTouchUp="autoComplete"
+            app:touchAnchorId="@id/answer_card"
+            app:touchAnchorSide="left" />
+    </Transition>
+
+    <Transition
+        app:constraintSetEnd="@+id/answer_good"
+        app:constraintSetStart="@+id/answer_shown"
+        app:duration="300">
+
+        <OnSwipe
+            app:dragDirection="dragLeft"
+            app:onTouchUp="autoComplete"
+            app:touchAnchorId="@id/answer_card"
+            app:touchAnchorSide="right" />
+    </Transition>
+
+
+    <Transition
+        app:autoTransition="animateToEnd"
+        app:constraintSetEnd="@+id/answer_good_offscreen"
+        app:constraintSetStart="@+id/answer_good"
+        app:duration="150" />
+
+    <Transition
+        app:autoTransition="animateToEnd"
+        app:constraintSetEnd="@+id/answer_bad_offscreen"
+        app:constraintSetStart="@+id/answer_bad"
+        app:duration="150" />
+
+</MotionScene>

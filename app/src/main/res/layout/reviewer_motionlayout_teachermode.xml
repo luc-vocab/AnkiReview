@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.motion.widget.MotionLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_weight="1"
+    app:layoutDescription="@xml/reviewer_motionscene_teachermode"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    >
+
+    <ImageView
+        android:id="@+id/background_photo"
+        android:layout_width="0dp"
+        android:layout_height="800dp"
+        android:scaleType="centerCrop">
+
+    </ImageView>
+
+    <include
+        android:id="@+id/next_question_card"
+        layout="@layout/side_card"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <include
+        android:id="@+id/answer_card"
+        layout="@layout/side_card"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <include
+        android:id="@+id/question_card"
+        layout="@layout/side_card"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <ImageView
+        android:id="@+id/correct_svg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/correct" />
+
+    <ImageView
+        android:id="@+id/incorrect_svg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/incorrect" />
+
+
+    <com.leinardi.android.speeddial.SpeedDialOverlayLayout
+        android:id="@+id/overlay"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</androidx.constraintlayout.motion.widget.MotionLayout>

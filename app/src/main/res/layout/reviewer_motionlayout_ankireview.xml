@@ -6,17 +6,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_weight="1"
-    app:layoutDescription="@xml/reviewer_motion_scene"
+    app:layoutDescription="@xml/reviewer_motionscene_ankireview"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     >
-
-    <ImageView
-        android:id="@+id/background_photo"
-        android:layout_width="0dp"
-        android:layout_height="800dp"
-        android:scaleType="centerCrop">
-
-    </ImageView>
 
     <include
         android:id="@+id/next_question_card"
