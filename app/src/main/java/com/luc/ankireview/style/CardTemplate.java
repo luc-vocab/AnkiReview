@@ -33,7 +33,7 @@ public class CardTemplate implements Serializable {
     }
 
     public void setDefaultSpacingValues() {
-        m_leftRightMargin_px = 40;
+        m_width = 90;
         m_centerMargin_px = 20;
 
         m_paddingTop = 20;
@@ -76,8 +76,8 @@ public class CardTemplate implements Serializable {
     public int getBaseTextSize() { return m_baseTextSize; }
     public void setBaseTextSize(int margin) { m_baseTextSize = margin; }
 
-    public int getLeftRightMargin() { return m_leftRightMargin_px; }
-    public void setLeftRightMargin( int margin ) { m_leftRightMargin_px = margin; }
+    public int getWidth() { return m_width; }
+    public void setWidth(int width) { m_width = width; }
 
     public int getCenterMargin() { return m_centerMargin_px; }
     public void setCenterMargin( int margin ) { m_centerMargin_px = margin; }
@@ -104,7 +104,7 @@ public class CardTemplate implements Serializable {
     private int m_baseTextSize;
 
     // margins
-    private int m_leftRightMargin_px;
+    private int m_width;
     private int m_centerMargin_px;
 
     private int m_paddingTop;

@@ -270,7 +270,6 @@ public class ReviewActivity extends AppCompatActivity implements DisplayOptionsD
             // show deck style prompt
             showDeckDisplayOptions();
         } else {
-            m_cardStyle.applyMotionLayoutStyle(m_flashcardFrame);
             loadCards();
         }
     }
@@ -523,8 +522,6 @@ public class ReviewActivity extends AppCompatActivity implements DisplayOptionsD
     {
         // if we've never shown a question before, do some first time setup
 
-        // TODO do something
-
         // m_currentCard
         CardStyle cardStyle = getCardStyle();
 
@@ -533,6 +530,8 @@ public class ReviewActivity extends AppCompatActivity implements DisplayOptionsD
 
         // render the next card
         cardStyle.renderQuestion(m_nextCard, m_nextQuestionCardView, m_nextQuestionTextView);
+
+        cardStyle.applyMotionLayoutStyle(m_currentCard, m_flashcardFrame);
     }
 
     private void loadNextQuestion() {

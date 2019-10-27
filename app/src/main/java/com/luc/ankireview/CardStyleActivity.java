@@ -15,7 +15,6 @@ import androidx.core.content.ContextCompat;
 import androidx.core.widget.ImageViewCompat;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.preference.PreferenceFragmentCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.appcompat.widget.Toolbar;
@@ -38,7 +37,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.luc.ankireview.style.CardField;
@@ -49,8 +47,6 @@ import com.luc.ankireview.style.FieldListAdapter;
 import com.luc.ankireview.style.ItemTouchCallback;
 import com.luc.ankireview.style.ValueSlider;
 import com.luc.ankireview.style.ValueSliderUpdate;
-import com.takusemba.spotlight.OnSpotlightStateChangedListener;
-import com.takusemba.spotlight.OnTargetStateChangedListener;
 import com.takusemba.spotlight.Spotlight;
 import com.takusemba.spotlight.shape.Circle;
 import com.takusemba.spotlight.target.SimpleTarget;
@@ -395,11 +391,11 @@ public class CardStyleActivity extends AppCompatActivity {
         // margin controls
         // ---------------
 
-        m_valueSliderMarginLeftRight = findViewById(R.id.cardstyle_margin_leftright_valueslider);
-        m_valueSliderMarginLeftRight.setListener(new ValueSliderUpdate() {
+        m_valueSliderWidth = findViewById(R.id.cardstyle_width_valueslider);
+        m_valueSliderWidth.setListener(new ValueSliderUpdate() {
             @Override
             public void valueUpdate(int currentValue) {
-                m_cardTemplate.setLeftRightMargin(currentValue);
+                m_cardTemplate.setWidth(currentValue);
                 updateCardPreview();
             }
         });
@@ -686,7 +682,7 @@ public class CardStyleActivity extends AppCompatActivity {
     }
 
     public void updateCardPreview() {
-        m_cardStyle.applyMotionLayoutStyle(m_cardstyleEditorCards);
+        m_cardStyle.applyMotionLayoutStyle(m_card, m_cardstyleEditorCards);
         m_cardStyle.renderBothCards(m_card, m_questionCardView, m_answerCardView, m_questionTextView, m_answerTextView);
     }
 
@@ -786,7 +782,7 @@ public class CardStyleActivity extends AppCompatActivity {
     }
 
     private void updateSpacingControls() {
-        m_valueSliderMarginLeftRight.setCurrentValue(m_cardTemplate.getLeftRightMargin());
+        m_valueSliderWidth.setCurrentValue(m_cardTemplate.getWidth());
         m_valueSliderBetween.setCurrentValue(m_cardTemplate.getCenterMargin());
         m_valueSliderPaddingTop.setCurrentValue(m_cardTemplate.getPaddingTop());
         m_valueSliderPaddingBottom.setCurrentValue(m_cardTemplate.getPaddingBottom());
@@ -844,7 +840,7 @@ public class CardStyleActivity extends AppCompatActivity {
     private ValueSlider m_text_basesize;
 
     // margin controls
-    private ValueSlider m_valueSliderMarginLeftRight;
+    private ValueSlider m_valueSliderWidth;
     private ValueSlider m_valueSliderBetween;
     private ValueSlider m_valueSliderPaddingTop;
     private ValueSlider m_valueSliderPaddingBottom;

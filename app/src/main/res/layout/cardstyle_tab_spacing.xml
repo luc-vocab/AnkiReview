@@ -19,12 +19,12 @@
                 android:orientation="vertical">
 
                 <com.luc.ankireview.style.ValueSlider
-                    android:id="@+id/cardstyle_margin_leftright_valueslider"
+                    android:id="@+id/cardstyle_width_valueslider"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:maxValue="120"
-                    app:minValue="0"
-                    app:titleText="Left/Right Margin" />
+                    app:maxValue="100"
+                    app:minValue="60"
+                    app:titleText="Card Width" />
 
                 <View style="@style/Divider" />
 

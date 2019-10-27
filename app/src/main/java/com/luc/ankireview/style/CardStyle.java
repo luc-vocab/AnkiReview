@@ -1,12 +1,14 @@
 package com.luc.ankireview.style;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Typeface;
 import android.os.Handler;
 import android.os.HandlerThread;
 
 import androidx.constraintlayout.motion.widget.MotionLayout;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.core.content.ContextCompat;
 import androidx.core.provider.FontRequest;
 import androidx.core.provider.FontsContractCompat;
@@ -133,8 +135,36 @@ public class CardStyle implements Serializable {
 
     }
 
-    public void applyMotionLayoutStyle(MotionLayout motionLayout) {
-        ReviewConstraintSetManager.applyConstraintSetConstants(motionLayout);
+    public void applyMotionLayoutStyle(Card card, MotionLayout motionLayout) {
+        Resources res = motionLayout.getResources();
+
+        setCardWidth(card, motionLayout.getConstraintSet(R.id.question_shown));
+        setCardWidth(card, motionLayout.getConstraintSet(R.id.answer_shown));
+        setCardWidth(card, motionLayout.getConstraintSet(R.id.answer_bad));
+        setCardWidth(card, motionLayout.getConstraintSet(R.id.answer_good));
+        setCardWidth(card, motionLayout.getConstraintSet(R.id.answer_good_offscreen));
+        setCardWidth(card, motionLayout.getConstraintSet(R.id.answer_bad_offscreen));
+
+        motionLayout.requestLayout();
+    }
+
+    public void setCardWidth(Card card, ConstraintSet constraintSet) {
+        CardTemplateKey templateKey = new CardTemplateKey(card.getModelId(), card.getCardOrd());
+        CardTemplate cardTemplate = m_cardStyleStorage.cardTemplateMap.get(templateKey);
+        int width_px = cardTemplate.getWidth();
+        float width_float = (float) width_px;
+        float width = width_float / 100.0f;
+
+        Log.v(TAG,"setCardWidth: " + width);
+
+        constraintSet.constrainPercentWidth(R.id.question_card, width);
+        constraintSet.constrainPercentWidth(R.id.answer_card, width);
+        constraintSet.constrainPercentWidth(R.id.next_question_card, width);
+    }
+
+    public static int dpToPx(int dpDimension, Resources resources) {
+        int dimension_px = (int) TypedValue.applyDimension( TypedValue.COMPLEX_UNIT_DIP, dpDimension, resources.getDisplayMetrics());
+        return dimension_px;
     }
 
     private void requestTypeface(final String fontRequested, final TextView cardText) {
