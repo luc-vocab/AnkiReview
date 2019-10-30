@@ -3,6 +3,7 @@
     android:layout_width="0dp"
     android:layout_height="wrap_content"
     app:cardCornerRadius="5dp"
+    android:elevation="@dimen/cardstyle_show_elevation"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <TextView

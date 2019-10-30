@@ -16,7 +16,6 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
 
-            android:elevation="@dimen/cardstyle_show_elevation"
 
             />
 
@@ -28,7 +27,6 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
 
-            android:elevation="@dimen/cardstyle_hide_elevation"
 
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -54,7 +52,6 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
 
-            android:elevation="@dimen/cardstyle_show_elevation"
 
             android:alpha="0.0"
 
@@ -72,7 +69,6 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
 
-            android:elevation="@dimen/cardstyle_show_elevation"
 
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toTopOf="@id/answer_card"
@@ -90,7 +86,6 @@
 
             android:layout_marginTop="@dimen/cardstyle_margin_top"
 
-            android:elevation="@dimen/cardstyle_show_elevation"
 
             android:alpha="1.0"
 
@@ -151,7 +146,6 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
 
-            android:elevation="@dimen/cardstyle_hide_elevation"
 
             android:layout_marginLeft="@dimen/cardstyle_swipe_away"
 
@@ -173,7 +167,6 @@
             app:layout_constraintRight_toRightOf="parent"
 
             android:layout_marginTop="@dimen/cardstyle_margin_top"
-            android:elevation="@dimen/cardstyle_hide_elevation"
 
             android:layout_marginLeft="@dimen/cardstyle_swipe_further"
 
@@ -230,7 +223,6 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
 
-            android:elevation="@dimen/cardstyle_show_elevation"
 
             android:alpha="1.0"
 
@@ -244,7 +236,6 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
 
-            android:elevation="@dimen/cardstyle_hide_elevation"
 
             android:layout_marginRight="@dimen/cardstyle_swipe_away"
             android:alpha="0.0"
@@ -264,7 +255,6 @@
             app:layout_constraintRight_toRightOf="parent"
 
             android:layout_marginTop="@dimen/cardstyle_margin_top"
-            android:elevation="@dimen/cardstyle_hide_elevation"
 
             android:layout_marginRight="@dimen/cardstyle_swipe_further"
 
@@ -318,7 +308,6 @@
             app:layout_constraintRight_toLeftOf="parent"
 
             android:layout_marginTop="@dimen/cardstyle_margin_top"
-            android:elevation="@dimen/cardstyle_show_elevation"
 
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toTopOf="@id/answer_card"
@@ -334,7 +323,6 @@
 
             app:layout_constraintRight_toLeftOf="parent"
 
-            android:elevation="@dimen/cardstyle_show_elevation"
 
             android:alpha="1.0"
 
@@ -380,7 +368,6 @@
             app:layout_constraintLeft_toRightOf="parent"
 
 
-            android:elevation="@dimen/cardstyle_show_elevation"
 
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toTopOf="@id/answer_card"
@@ -399,7 +386,6 @@
             android:layout_marginTop="20dp"
 
             android:alpha="1.0"
-            android:elevation="@dimen/cardstyle_show_elevation"
 
             app:layout_constraintTop_toBottomOf="@id/question_card"
             app:layout_constraintBottom_toBottomOf="parent"
