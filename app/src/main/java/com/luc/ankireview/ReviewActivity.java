@@ -447,8 +447,6 @@ public class ReviewActivity extends AppCompatActivity implements DisplayOptionsD
                         .create());
 
 
-        // disable these until Anki 2.9
-        /*
         m_speedDialView.addActionItem(
                 new SpeedDialActionItem.Builder(R.id.reviewer_action_mark_suspend, R.drawable.pause)
                         .setFabBackgroundColor(ResourcesCompat.getColor(getResources(), R.color.answer_tag_suspend, getTheme()))
@@ -460,8 +458,6 @@ public class ReviewActivity extends AppCompatActivity implements DisplayOptionsD
                         .setFabBackgroundColor(ResourcesCompat.getColor(getResources(), R.color.answer_tag_suspend, getTheme()))
                         .setLabel(R.string.reviewer_action_mark_bury)
                         .create());
-
-        */
 
 
         // quicktags

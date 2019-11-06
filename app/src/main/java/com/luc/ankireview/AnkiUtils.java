@@ -312,8 +312,6 @@ public class AnkiUtils {
     }
 
     public static void suspendCard(ContentResolver contentResolver, Card card) {
-        // will be supported only in Anki 2.9
-        /*
         Uri reviewInfoUri = FlashCardsContract.ReviewInfo.CONTENT_URI;
         ContentValues values = new ContentValues();
 
@@ -321,12 +319,9 @@ public class AnkiUtils {
         values.put(FlashCardsContract.ReviewInfo.CARD_ORD, card.getCardOrd());
         values.put(FlashCardsContract.ReviewInfo.SUSPEND, 1);
         contentResolver.update(reviewInfoUri, values, null, null);
-        */
     }
 
     public static void buryCard(ContentResolver contentResolver, Card card) {
-        // will be supported only in Anki 2.9
-        /*
         Uri reviewInfoUri = FlashCardsContract.ReviewInfo.CONTENT_URI;
         ContentValues values = new ContentValues();
 
@@ -334,7 +329,6 @@ public class AnkiUtils {
         values.put(FlashCardsContract.ReviewInfo.CARD_ORD, card.getCardOrd());
         values.put(FlashCardsContract.ReviewInfo.BURY, 1);
         contentResolver.update(reviewInfoUri, values, null, null);
-        */
     }
 
     public static void markCard(ContentResolver contentResolver, Card card) {
