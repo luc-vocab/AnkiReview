@@ -176,7 +176,7 @@
 
             android:layout_marginTop="@dimen/cardstyle_margin_top"
 
-            android:layout_marginLeft="700dp"
+            android:layout_marginLeft="@dimen/cardstyle_swipe_away"
 
             android:alpha="0.0"
 
@@ -273,7 +273,7 @@
 
             android:layout_marginTop="@dimen/cardstyle_margin_top"
 
-            android:layout_marginRight="700dp"
+            android:layout_marginRight="@dimen/cardstyle_swipe_away"
 
             android:alpha="0.0"
 
