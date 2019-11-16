@@ -32,7 +32,10 @@
 
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/deckName" />
+        app:layout_constraintTop_toBottomOf="@id/deckName"
+        app:layout_constraintBottom_toBottomOf="parent"
+
+        />
 
     <com.robinhood.ticker.TickerView
         android:id="@+id/learnCount"
@@ -47,7 +50,9 @@
         app:layout_constraintEnd_toStartOf="@+id/reviewLabel"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/learnLabel"
-        app:layout_constraintTop_toBottomOf="@id/deckName" >
+        app:layout_constraintTop_toBottomOf="@id/deckName"
+        app:layout_constraintBottom_toBottomOf="parent"
+        >
 
 
     </com.robinhood.ticker.TickerView>
@@ -64,7 +69,10 @@
         app:layout_constraintEnd_toStartOf="@+id/reviewCount"
 
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintTop_toBottomOf="@id/deckName" />
+        app:layout_constraintTop_toBottomOf="@id/deckName"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
 
     <com.robinhood.ticker.TickerView
         android:id="@+id/reviewCount"
@@ -80,7 +88,9 @@
 
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/reviewLabel"
-        app:layout_constraintTop_toBottomOf="@id/deckName" >
+        app:layout_constraintTop_toBottomOf="@id/deckName"
+        app:layout_constraintBottom_toBottomOf="parent"
+        >
 
 
     </com.robinhood.ticker.TickerView>
@@ -97,7 +107,9 @@
         app:layout_constraintEnd_toStartOf="@+id/newCount"
 
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintTop_toBottomOf="@id/deckName" />
+        app:layout_constraintTop_toBottomOf="@id/deckName"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
 
     <com.robinhood.ticker.TickerView
         android:id="@+id/newCount"
@@ -112,7 +124,9 @@
 
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/newLabel"
-        app:layout_constraintTop_toBottomOf="@id/deckName" >
+        app:layout_constraintTop_toBottomOf="@id/deckName"
+        app:layout_constraintBottom_toBottomOf="parent"
+        >
 
     </com.robinhood.ticker.TickerView>
 
