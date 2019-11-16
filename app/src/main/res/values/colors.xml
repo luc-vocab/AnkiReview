@@ -10,6 +10,9 @@
 
     <!-- toolbar colors -->
     <color name="toolbar_text">@color/md_white</color>
+    <color name="count_learn">@color/md_pink_400</color>
+    <color name="count_review">@color/md_green_a700</color>
+    <color name="count_new">@color/md_purple_300</color>
 
     <!-- answer colors -->
     <color name="answer_wrong">@color/md_pink_400</color>

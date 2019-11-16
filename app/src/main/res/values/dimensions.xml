@@ -2,6 +2,10 @@
 <resources>
     <dimen name="toolbar_elevation">4dp</dimen>
 
+    <dimen name="toolbar_deck_name">22dp</dimen>
+    <dimen name="toolbar_count_label">18dp</dimen>
+    <dimen name="toolbar_count_value">18dp</dimen>
+
     <dimen name="cardstyle_margin_top">20dp</dimen>
     <dimen name="cardstyle_hide_elevation">0dp</dimen>
     <dimen name="cardstyle_show_elevation">5dp</dimen>
