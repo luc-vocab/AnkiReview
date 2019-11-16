@@ -8,6 +8,9 @@
 
     <!-- https://www.materialui.co/colors -->
 
+    <!-- toolbar colors -->
+    <color name="toolbar_text">@color/md_white</color>
+
     <!-- answer colors -->
     <color name="answer_wrong">@color/md_pink_400</color>
     <color name="answer_hard">@color/md_purple_300</color>

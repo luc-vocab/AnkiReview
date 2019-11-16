@@ -11,20 +11,21 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="DeckName"
-        android:textColor="#FFFFFF"
+        android:textColor="@color/toolbar_text"
+
+        android:textSize="22dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
 
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-
-        app:layout_constraintHorizontal_bias="0.5"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/learnLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Learn"
-        android:textColor="#FFFFFF"
+        android:textColor="@color/toolbar_text"
 
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/learnCount"
@@ -49,7 +50,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Review"
-        android:textColor="#FFFFFF"
+        android:textColor="@color/toolbar_text"
 
         app:layout_constraintStart_toEndOf="@+id/learnCount"
         app:layout_constraintEnd_toStartOf="@+id/reviewCount"
@@ -74,7 +75,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="New"
-        android:textColor="#FFFFFF"
+        android:textColor="@color/toolbar_text"
 
         app:layout_constraintStart_toEndOf="@+id/reviewCount"
         app:layout_constraintEnd_toStartOf="@+id/newCount"

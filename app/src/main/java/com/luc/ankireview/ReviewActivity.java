@@ -206,15 +206,20 @@ public class ReviewActivity extends AppCompatActivity implements DisplayOptionsD
         // load deck name
         m_deckName = AnkiUtils.getDeckName(getContentResolver(), m_deckId);
 
-        // action bar
-        m_toolbar = (Toolbar) findViewById(R.id.review_toolbar);
-        m_toolbar.setTitle(m_deckName);
-        setSupportActionBar(m_toolbar);
-
-
+        m_deckNameText = findViewById(R.id.deckName);
         m_learnCountText = findViewById(R.id.learnCount);
         m_reviewCountText = findViewById(R.id.reviewCount);
         m_newCountText = findViewById(R.id.newCount);
+
+        // set deck name
+        m_deckNameText.setText(m_deckName);
+
+        // action bar
+        m_toolbar = (Toolbar) findViewById(R.id.review_toolbar);
+        setSupportActionBar(m_toolbar);
+
+
+
 
         setupCardMotionLayoutTransitions(m_flashcardFrameAnkiReview);
         setupCardMotionLayoutTransitions(m_flashcardFrameTeacherMode);
@@ -1046,6 +1051,7 @@ public class ReviewActivity extends AppCompatActivity implements DisplayOptionsD
     int m_cardsDone; // not due anymore
     int m_reviewCount = 0;
 
+    private TextView m_deckNameText;
     private TextView m_learnCountText;
     private TextView m_reviewCountText;
     private TextView m_newCountText;
