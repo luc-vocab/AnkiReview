@@ -19,6 +19,14 @@
             android:background="?attr/colorPrimary"
             android:elevation="4dp" />
 
+        <include
+            layout="@layout/review_counts"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:elevation="4dp"
+            />
+
+
     </com.google.android.material.appbar.AppBarLayout>
 
     <include

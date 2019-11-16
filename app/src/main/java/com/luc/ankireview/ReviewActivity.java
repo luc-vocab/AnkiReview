@@ -212,6 +212,10 @@ public class ReviewActivity extends AppCompatActivity implements DisplayOptionsD
         setSupportActionBar(m_toolbar);
 
 
+        m_learnCountText = findViewById(R.id.learnCount);
+        m_reviewCountText = findViewById(R.id.reviewCount);
+        m_newCountText = findViewById(R.id.newCount);
+
         setupCardMotionLayoutTransitions(m_flashcardFrameAnkiReview);
         setupCardMotionLayoutTransitions(m_flashcardFrameTeacherMode);
 
@@ -847,7 +851,9 @@ public class ReviewActivity extends AppCompatActivity implements DisplayOptionsD
     }
 
     private void updateDueCountSubtitle(AnkiUtils.DeckDueCounts deckDueCounts) {
-        m_toolbar.setSubtitle("Cards due: learn: " + deckDueCounts.learnCount + " review: " + deckDueCounts.reviewCount + " new: " + deckDueCounts.newCount);
+        m_learnCountText.setText(String.valueOf(deckDueCounts.learnCount));
+        m_reviewCountText.setText(String.valueOf(deckDueCounts.reviewCount));
+        m_newCountText.setText(String.valueOf(deckDueCounts.newCount));
     }
 
 
@@ -1039,6 +1045,10 @@ public class ReviewActivity extends AppCompatActivity implements DisplayOptionsD
     int m_initialDueCount;
     int m_cardsDone; // not due anymore
     int m_reviewCount = 0;
+
+    private TextView m_learnCountText;
+    private TextView m_reviewCountText;
+    private TextView m_newCountText;
 
     // where to load file assets
     private String m_baseUrl;
