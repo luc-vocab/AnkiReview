@@ -2,7 +2,7 @@
 <resources>
     <dimen name="toolbar_elevation">4dp</dimen>
 
-    <dimen name="toolbar_deck_name">22dp</dimen>
+    <dimen name="toolbar_deck_name">28dp</dimen>
     <dimen name="toolbar_count_label">18dp</dimen>
     <dimen name="toolbar_count_value">18dp</dimen>
 

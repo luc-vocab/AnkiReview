@@ -26,12 +26,15 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.TextSwitcher;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -42,6 +45,8 @@ import com.leinardi.android.speeddial.SpeedDialActionItem;
 import com.leinardi.android.speeddial.SpeedDialView;
 import com.luc.ankireview.backgrounds.BackgroundManager;
 import com.luc.ankireview.style.CardStyle;
+import com.robinhood.ticker.TickerUtils;
+import com.robinhood.ticker.TickerView;
 
 import org.json.JSONArray;
 
@@ -210,6 +215,10 @@ public class ReviewActivity extends AppCompatActivity implements DisplayOptionsD
         m_learnCountText = findViewById(R.id.learnCount);
         m_reviewCountText = findViewById(R.id.reviewCount);
         m_newCountText = findViewById(R.id.newCount);
+
+        m_learnCountText.setCharacterLists(TickerUtils.provideNumberList());
+        m_reviewCountText.setCharacterLists(TickerUtils.provideNumberList());
+        m_newCountText.setCharacterLists(TickerUtils.provideNumberList());
 
         // set deck name
         m_deckNameText.setText(m_deckName);
@@ -1052,9 +1061,9 @@ public class ReviewActivity extends AppCompatActivity implements DisplayOptionsD
     int m_reviewCount = 0;
 
     private TextView m_deckNameText;
-    private TextView m_learnCountText;
-    private TextView m_reviewCountText;
-    private TextView m_newCountText;
+    private TickerView m_learnCountText;
+    private TickerView m_reviewCountText;
+    private TickerView m_newCountText;
 
     // where to load file assets
     private String m_baseUrl;

@@ -53,6 +53,7 @@ dependencies {
     implementation 'io.github.kobakei:ratethisapp:1.2.0'
     api group: 'com.cloudinary', name: 'cloudinary-android', version: '1.25.0'
     implementation 'com.github.takusemba:spotlight:1.8.0'
+    implementation 'com.robinhood.ticker:ticker:2.0.2'
 }
 
 apply plugin: 'com.google.gms.google-services'

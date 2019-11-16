@@ -34,10 +34,11 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/deckName" />
 
-    <TextView
+    <com.robinhood.ticker.TickerView
         android:id="@+id/learnCount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+
         android:text="5"
         android:textColor="@color/count_learn"
         android:textSize="@dimen/toolbar_count_value"
@@ -46,7 +47,10 @@
         app:layout_constraintEnd_toStartOf="@+id/reviewLabel"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/learnLabel"
-        app:layout_constraintTop_toBottomOf="@id/deckName" />
+        app:layout_constraintTop_toBottomOf="@id/deckName" >
+
+
+    </com.robinhood.ticker.TickerView>
 
     <TextView
         android:id="@+id/reviewLabel"
@@ -62,10 +66,11 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintTop_toBottomOf="@id/deckName" />
 
-    <TextView
+    <com.robinhood.ticker.TickerView
         android:id="@+id/reviewCount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+
         android:text="6"
         android:textColor="@color/count_review"
         android:textSize="@dimen/toolbar_count_value"
@@ -75,7 +80,10 @@
 
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/reviewLabel"
-        app:layout_constraintTop_toBottomOf="@id/deckName" />
+        app:layout_constraintTop_toBottomOf="@id/deckName" >
+
+
+    </com.robinhood.ticker.TickerView>
 
     <TextView
         android:id="@+id/newLabel"
@@ -91,20 +99,22 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintTop_toBottomOf="@id/deckName" />
 
-    <TextView
+    <com.robinhood.ticker.TickerView
         android:id="@+id/newCount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="7"
         android:textSize="@dimen/toolbar_count_value"
         android:textStyle="bold"
-
         android:textColor="@color/count_new"
+
         app:layout_constraintEnd_toEndOf="parent"
 
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/newLabel"
-        app:layout_constraintTop_toBottomOf="@id/deckName" />
+        app:layout_constraintTop_toBottomOf="@id/deckName" >
+
+    </com.robinhood.ticker.TickerView>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
