@@ -118,6 +118,8 @@ public class ReviewActivity extends AppCompatActivity implements DisplayOptionsD
 
         // set touch listener
         m_detector = new GestureDetectorCompat(this, new ReviewerGestureDetector());
+        m_touchLayer = findViewById(R.id.touch_layer);
+        m_touchLayer.setOnTouchListener(m_gestureListener);
 
         // buttons for card style
 
@@ -1027,6 +1029,7 @@ public class ReviewActivity extends AppCompatActivity implements DisplayOptionsD
     MediaPlayer m_answerGoodAudio;
 
     // gesture detection
+    private FrameLayout m_touchLayer;
     private GestureDetectorCompat m_detector;
 
 
