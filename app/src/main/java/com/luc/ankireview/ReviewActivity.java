@@ -26,19 +26,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
-import android.widget.TextSwitcher;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar;
 import com.crashlytics.android.Crashlytics;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.leinardi.android.speeddial.SpeedDialActionItem;
@@ -226,8 +220,6 @@ public class ReviewActivity extends AppCompatActivity implements DisplayOptionsD
         // action bar
         m_toolbar = (Toolbar) findViewById(R.id.review_toolbar);
         setSupportActionBar(m_toolbar);
-
-
 
 
         setupCardMotionLayoutTransitions(m_flashcardFrameAnkiReview);
@@ -523,8 +515,6 @@ public class ReviewActivity extends AppCompatActivity implements DisplayOptionsD
         m_isFirstCard = true;
         Log.v(TAG, "initial due count: " + m_initialDueCount);
 
-        // m_progressBar.setMax(m_initialDueCount * 100);
-        // m_progressBar.setProgress(0);
 
         try {
             Vector<Card> initialCards = AnkiUtils.getDueCards(getContentResolver(), m_deckId, 2);
@@ -871,43 +861,6 @@ public class ReviewActivity extends AppCompatActivity implements DisplayOptionsD
     }
 
 
-    // animate progress bar
-    private void setProgressAnimate(int progressTo)
-    {
-        int progress = (progressTo * 100) / m_initialDueCount;
-        // m_progressBar.setProgress(progress);
-
-        /*
-        ObjectAnimator animation = ObjectAnimator.ofFloat(m_progressBar, "progress", m_progressBar.getProgress(), progressTo * 100);
-        animation.setDuration(500);
-        animation.setInterpolator(new DecelerateInterpolator());
-
-        animation.addListener(new Animator.AnimatorListener() {
-            @Override
-            public void onAnimationStart(Animator animator) {
-
-            }
-
-            @Override
-            public void onAnimationEnd(Animator animator) {
-
-            }
-
-            @Override
-            public void onAnimationCancel(Animator animator) {
-
-            }
-
-            @Override
-            public void onAnimationRepeat(Animator animator) {
-
-            }
-        });
-
-        animation.start();
-         */
-    }
-
     private void moveToNextQuestion()
     {
 
@@ -924,8 +877,6 @@ public class ReviewActivity extends AppCompatActivity implements DisplayOptionsD
             // we don't want the progress bar to move backwards (which can happen in some cases,
             // a single bad review can result in two due cards created on the queue
             m_cardsDone = numCardsDone;
-            // m_progressBar.setProgress(m_cardsDone * 100);
-            setProgressAnimate(m_cardsDone);
 
             retrieveFollowingCards();
 
