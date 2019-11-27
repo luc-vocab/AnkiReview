@@ -574,6 +574,10 @@ public class ReviewActivity extends AppCompatActivity implements DisplayOptionsD
         // render the current card
         cardStyle.renderBothCards(m_currentCard, m_questionCardView, m_answerCardView, m_questionTextView, m_answerTextView);
 
+        // set the intervals on the good/bad notifications
+        m_goodAnswerInterval.setText(m_currentCard.getGoodAnswerInterval());
+        m_badAnswerInterval.setText(m_currentCard.getBadAnswerInterval());
+
         // render the next card
         cardStyle.renderQuestion(m_nextCard, m_nextQuestionCardView, m_nextQuestionTextView);
 
