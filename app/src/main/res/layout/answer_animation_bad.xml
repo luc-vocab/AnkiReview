@@ -22,7 +22,7 @@
             android:layout_height="50dp"
             android:layout_weight="1"
             android:tint="@color/answer_wrong"
-            app:srcCompat="@drawable/close" />
+            app:srcCompat="@drawable/cross_circle" />
 
         <TextView
             android:id="@+id/bad_answer_description"
