@@ -315,6 +315,7 @@ public class ReviewActivity extends AppCompatActivity implements DisplayOptionsD
         m_nextQuestionTextView = m_nextQuestionCardView.findViewById(R.id.side_text);
 
         // intervals
+        m_badAnswerInterval = motionLayout.findViewById(R.id.bad_answer_interval);
         m_goodAnswerInterval = motionLayout.findViewById(R.id.good_answer_interval);
     }
 
@@ -594,6 +595,7 @@ public class ReviewActivity extends AppCompatActivity implements DisplayOptionsD
 
         // set the intervals on the good/bad notifications
         m_goodAnswerInterval.setText(m_currentCard.getGoodAnswerInterval());
+        m_badAnswerInterval.setText(m_currentCard.getBadAnswerInterval());
 
     }
 
@@ -1000,6 +1002,7 @@ public class ReviewActivity extends AppCompatActivity implements DisplayOptionsD
     private TextView m_nextQuestionTextView;
 
     // answer intervals
+    private TextView m_badAnswerInterval;
     private TextView m_goodAnswerInterval;
 
 
