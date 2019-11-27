@@ -13,4 +13,7 @@
 
     <dimen name="cardstyle_swipe_away">800dp</dimen>
     <dimen name="cardstyle_swipe_further">1000dp</dimen>
+
+    <dimen name="ticker_width">50dp</dimen>
+    <dimen name="ticker_label_left_margin">10dp</dimen>
 </resources>

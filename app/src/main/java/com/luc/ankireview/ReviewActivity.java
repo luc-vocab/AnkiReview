@@ -860,6 +860,7 @@ public class ReviewActivity extends AppCompatActivity implements DisplayOptionsD
         m_learnCountText.setText(String.valueOf(deckDueCounts.learnCount));
         m_reviewCountText.setText(String.valueOf(deckDueCounts.reviewCount));
         m_newCountText.setText(String.valueOf(deckDueCounts.newCount));
+        showToast("learn: " + deckDueCounts.learnCount + " review: " + deckDueCounts.reviewCount + " new: " + deckDueCounts.newCount);
     }
 
 
