@@ -11,39 +11,40 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        >
 
         <ImageView
             android:id="@+id/imageView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
             android:layout_weight="1"
+            android:tint="@color/answer_good"
             app:srcCompat="@drawable/check_circle" />
 
-        <LinearLayout
+        <TextView
+            android:id="@+id/good_answer_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="15dp"
-            android:layout_weight="3"
-            android:orientation="vertical">
+            android:layout_gravity="bottom"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/ease_button_good"
+            android:textSize="35dp" />
 
-            <TextView
-                android:id="@+id/textView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="TextView"
-                android:textSize="30dp"
-                tools:text="Good" />
+        <TextView
+            android:id="@+id/good_answer_interval"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="8.1 mo"
+            android:textSize="25dp" />
 
-            <TextView
-                android:id="@+id/textView2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="8.1 mo"
-                android:textSize="20dp" />
+
+
         </LinearLayout>
-    </LinearLayout>
 </androidx.cardview.widget.CardView>

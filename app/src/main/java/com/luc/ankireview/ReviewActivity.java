@@ -313,6 +313,9 @@ public class ReviewActivity extends AppCompatActivity implements DisplayOptionsD
         m_questionTextView = m_questionCardView.findViewById(R.id.side_text);
         m_answerTextView = m_answerCardView.findViewById(R.id.side_text);
         m_nextQuestionTextView = m_nextQuestionCardView.findViewById(R.id.side_text);
+
+        // intervals
+        m_goodAnswerInterval = motionLayout.findViewById(R.id.good_answer_interval);
     }
 
 
@@ -588,6 +591,9 @@ public class ReviewActivity extends AppCompatActivity implements DisplayOptionsD
 
         // once we are in "question shown", render the next card (it is currently invisible)
         m_cardStyle.renderQuestion(m_nextCard, m_nextQuestionCardView, m_nextQuestionTextView);
+
+        // set the intervals on the good/bad notifications
+        m_goodAnswerInterval.setText(m_currentCard.getGoodAnswerInterval());
 
     }
 
@@ -992,6 +998,9 @@ public class ReviewActivity extends AppCompatActivity implements DisplayOptionsD
     private TextView m_questionTextView;
     private TextView m_answerTextView;
     private TextView m_nextQuestionTextView;
+
+    // answer intervals
+    private TextView m_goodAnswerInterval;
 
 
 

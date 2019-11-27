@@ -158,6 +158,7 @@ public class CardStyle implements Serializable {
         constraintSet.constrainPercentWidth(R.id.question_card, width);
         constraintSet.constrainPercentWidth(R.id.answer_card, width);
         constraintSet.constrainPercentWidth(R.id.next_question_card, width);
+        constraintSet.constrainPercentWidth(R.id.answer_notification_good, width);
     }
 
     public static int dpToPx(int dpDimension, Resources resources) {

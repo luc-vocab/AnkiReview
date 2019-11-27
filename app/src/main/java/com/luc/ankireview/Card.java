@@ -132,6 +132,21 @@ public class Card {
         return choices;
     }
 
+    public String getBadAnswerInterval() {
+        return m_nextReviewTimes.get(0);
+    }
+
+    public String getGoodAnswerInterval() {
+        switch( m_buttonCount ) {
+            case 2:
+                return m_nextReviewTimes.get(1);
+            case 3:
+                return m_nextReviewTimes.get(1);
+            default:
+                return m_nextReviewTimes.get(2);
+        }
+    }
+
     public Vector<AnkiUtils.AnswerChoice> getAnswerChoices(Resources resources) {
         Vector<AnkiUtils.AnswerChoice> choices = new Vector<AnkiUtils.AnswerChoice>();
 
