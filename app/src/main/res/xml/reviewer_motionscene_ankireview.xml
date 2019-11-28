@@ -419,6 +419,22 @@
             app:onTouchUp="autoComplete"
             app:touchAnchorId="@id/answer_card"
             app:touchAnchorSide="left" />
+
+        <KeyFrameSet>
+            <KeyPosition
+                app:framePosition="40"
+                app:motionTarget="@id/answer_notification_bad"
+                app:percentY="1.00"
+                >
+            </KeyPosition>
+            <KeyAttribute
+                app:framePosition="40"
+                app:motionTarget="@id/answer_notification_bad"
+                android:alpha="1.0">
+            </KeyAttribute>
+        </KeyFrameSet>
+
+
     </Transition>
 
     <Transition
@@ -431,6 +447,21 @@
             app:onTouchUp="autoComplete"
             app:touchAnchorId="@id/answer_card"
             app:touchAnchorSide="right" />
+
+        <KeyFrameSet>
+            <KeyPosition
+                app:framePosition="40"
+                app:motionTarget="@id/answer_notification_good"
+                app:percentY="1.00"
+                >
+            </KeyPosition>
+            <KeyAttribute
+                app:framePosition="40"
+                app:motionTarget="@id/answer_notification_good"
+                android:alpha="1.0">
+            </KeyAttribute>
+        </KeyFrameSet>
+
     </Transition>
 
 
