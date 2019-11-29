@@ -34,6 +34,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.crashlytics.android.Crashlytics;
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.leinardi.android.speeddial.SpeedDialActionItem;
 import com.leinardi.android.speeddial.SpeedDialView;
@@ -1009,7 +1010,8 @@ public class ReviewActivity extends AppCompatActivity implements DisplayOptionsD
     private TextView m_badAnswerInterval;
     private TextView m_goodAnswerInterval;
 
-
+    // bottom sheet
+    BottomSheetBehavior m_bottomSheetBehavior;
 
     private FrameLayout m_styleNotFound;
 
