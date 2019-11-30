@@ -19,7 +19,7 @@
         <ImageView
             android:id="@+id/imageView"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="@dimen/answer_notification_icon_size"
             android:layout_weight="1"
             android:tint="@color/answer_good"
             app:srcCompat="@drawable/check_circle" />
@@ -28,9 +28,10 @@
             android:id="@+id/good_answer_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
+            android:layout_gravity="left|bottom"
+            android:layout_marginLeft="@dimen/answer_notification_name_margin_left"
             android:layout_weight="1"
-            android:gravity="center"
+            android:gravity="center|left"
             android:text="@string/ease_button_good"
             android:textSize="@dimen/answer_notification_name_size" />
 
