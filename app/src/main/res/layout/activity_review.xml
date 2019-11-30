@@ -72,7 +72,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|right"
+        android:layout_margin="10dp"
         android:clickable="true"
+        android:tint="@color/md_white"
+        app:maxImageSize="40dp"
         app:srcCompat="@drawable/arrow_up" />
 
 
