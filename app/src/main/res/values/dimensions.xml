@@ -17,6 +17,11 @@
     <dimen name="ticker_width">50dp</dimen>
     <dimen name="ticker_label_left_margin">10dp</dimen>
 
+    <!-- answer notifications -->
+    <dimen name="answer_notification_name_size">35dp</dimen>
+    <dimen name="answer_notification_interval_size">25dp</dimen>
+
+
     <dimen name="answer_notification_hidden_top_margin">0dp</dimen>
     <dimen name="answer_notification_shown_top_margin">20dp</dimen>
 

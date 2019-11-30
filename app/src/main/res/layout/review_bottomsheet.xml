@@ -4,16 +4,31 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
-    app:behavior_hideable="true"
-    app:behavior_peekHeight="80dp"
-    app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
     >
 
-    <TextView
-        android:id="@+id/textView"
+    <include
+        android:id="@+id/answer_ease_1"
+        layout="@layout/answer_animation_bad"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Test Bottom Sheet"
-        android:textSize="25dp" />
+        android:layout_height="wrap_content" />
+
+    <include
+        android:id="@+id/answer_ease_2"
+        layout="@layout/answer_animation_good"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <include
+        android:id="@+id/answer_ease_3"
+        layout="@layout/answer_animation_good"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <include
+        android:id="@+id/answer_ease_4"
+        layout="@layout/answer_animation_good"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+
 </LinearLayout>
