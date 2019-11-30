@@ -17,13 +17,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="?attr/colorPrimary"
-            android:elevation="@dimen/toolbar_elevation" >
+            android:elevation="@dimen/toolbar_elevation">
 
             <include
                 layout="@layout/review_toolbar"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                />
+                android:layout_height="wrap_content" />
 
         </androidx.appcompat.widget.Toolbar>
 
@@ -68,15 +67,13 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         />
 
-    <include layout="@layout/review_bottomsheet" />
-
-    <com.leinardi.android.speeddial.SpeedDialView
-        android:id="@+id/speedDial"
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/bottomsheet_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        app:sdMainFabClosedSrc="@drawable/check"
-        app:sdMainFabOpenedSrc="@drawable/close"
-        app:sdOverlayLayout="@id/overlay" />
+        android:layout_gravity="bottom|right"
+        android:clickable="true"
+        app:srcCompat="@drawable/arrow_up" />
+
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

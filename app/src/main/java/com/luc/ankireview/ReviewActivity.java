@@ -11,6 +11,7 @@ import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.motion.widget.MotionLayout;
 import androidx.core.content.res.ResourcesCompat;
@@ -22,10 +23,12 @@ import androidx.appcompat.widget.Toolbar;
 import android.text.InputType;
 import android.util.Log;
 import android.view.GestureDetector;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -35,6 +38,8 @@ import android.widget.Toast;
 
 import com.crashlytics.android.Crashlytics;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.leinardi.android.speeddial.SpeedDialActionItem;
 import com.leinardi.android.speeddial.SpeedDialView;
@@ -51,7 +56,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Vector;
 
-public class ReviewActivity extends AppCompatActivity implements DisplayOptionsDialog.DisplayOptionsDialogListener {
+public class ReviewActivity extends AppCompatActivity implements DisplayOptionsDialog.DisplayOptionsDialogListener, ReviewBottomSheet.ReviewBottomSheetListener {
     private static final String TAG = "ReviewActivity";
 
     class ReviewerGestureDetector extends GestureDetector.SimpleOnGestureListener {
@@ -147,8 +152,19 @@ public class ReviewActivity extends AppCompatActivity implements DisplayOptionsD
         m_answerGoodAudio = MediaPlayer.create(this, R.raw.select_13);
 
 
-        // setup speed dial
+        // setup floating action button  and bottomsheet
+        m_bottomSheetButton = findViewById(R.id.bottomsheet_button);
+        m_bottomSheetButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ReviewBottomSheet reviewBottomSheet = new ReviewBottomSheet();
+                reviewBottomSheet.show(getSupportFragmentManager(), "reviewBottomSheet");
+            }
+        });
+
+                // setup speed dial
         // ----------------
+        /*
         m_speedDialView = findViewById(R.id.speedDial);
 
         m_speedDialView.setOnActionSelectedListener(new SpeedDialView.OnActionSelectedListener() {
@@ -203,6 +219,7 @@ public class ReviewActivity extends AppCompatActivity implements DisplayOptionsD
                 }
             }
         });
+        */
 
 
         // load deck name
@@ -235,6 +252,11 @@ public class ReviewActivity extends AppCompatActivity implements DisplayOptionsD
 
         // final step
         reloadCardStyleAndCards();
+    }
+
+    @Override
+    public void onBottomSheetButtonClicked() {
+        Log.v(TAG, "onBottomSheetButtonClicked");
     }
 
     private void reloadCardStyleAndCards() {
@@ -432,6 +454,7 @@ public class ReviewActivity extends AppCompatActivity implements DisplayOptionsD
     }
 
     private void setupSpeedDial() {
+        /*
         // populate with possible choices
 
         if( m_currentCard == null) {
@@ -509,6 +532,8 @@ public class ReviewActivity extends AppCompatActivity implements DisplayOptionsD
                         .setLabel(R.string.reviewer_action_add_quicktag)
                         .create());
 
+
+         */
 
     }
 
@@ -606,13 +631,11 @@ public class ReviewActivity extends AppCompatActivity implements DisplayOptionsD
 
     private void showReviewControls() {
         m_activeMotionLayout.setVisibility(View.VISIBLE);
-        m_speedDialView.setVisibility(View.VISIBLE);
         m_styleNotFound.setVisibility(View.INVISIBLE);
     }
 
     private void showCardStyleNotDefinedControls(String cardTemplateName) {
         m_activeMotionLayout.setVisibility(View.INVISIBLE);
-        m_speedDialView.setVisibility(View.INVISIBLE);
         m_styleNotFound.setVisibility(View.VISIBLE);
         m_cardTemplateName.setText(cardTemplateName);
     }
@@ -1011,7 +1034,7 @@ public class ReviewActivity extends AppCompatActivity implements DisplayOptionsD
     private TextView m_goodAnswerInterval;
 
     // bottom sheet
-    BottomSheetBehavior m_bottomSheetBehavior;
+    FloatingActionButton m_bottomSheetButton;
 
     private FrameLayout m_styleNotFound;
 
@@ -1050,10 +1073,6 @@ public class ReviewActivity extends AppCompatActivity implements DisplayOptionsD
     // gesture detection
     private FrameLayout m_touchLayer;
     private GestureDetectorCompat m_detector;
-
-
-    // speed dial button
-    SpeedDialView m_speedDialView;
 
     BackgroundManager m_backgroundManager;
     ImageView m_backgroundPhoto;
