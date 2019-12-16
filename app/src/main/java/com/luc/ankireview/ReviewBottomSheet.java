@@ -29,6 +29,22 @@ public class ReviewBottomSheet extends BottomSheetDialogFragment {
             }
         });
 
+        View markSuspend = v.findViewById(R.id.bottomsheet_action_mark_suspend);
+        markSuspend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.v(TAG, "clicked Mark/suspend");
+            }
+        });
+
+        View markBury = v.findViewById(R.id.bottomsheet_action_mark_bury);
+        markBury.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.v(TAG, "clicked Mark/bury");
+            }
+        });
+
             /*
             Button button1 = v.findViewById(R.id.button1);
             Button button2 = v.findViewById(R.id.button2);
