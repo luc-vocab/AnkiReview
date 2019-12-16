@@ -23,6 +23,32 @@
             android:layout_weight="1"
             android:gravity="left"
             android:layout_marginLeft="@dimen/answer_notification_name_margin_left"
+            android:text="@string/reviewer_action_add_quicktag"
+            android:textSize="@dimen/answer_notification_name_size" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/answer_notification_icon_size"
+            android:layout_weight="2"
+            android:tint="@color/answer_tag_suspend"
+            app:srcCompat="@drawable/tag" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_weight="1"
+            android:gravity="left"
+            android:layout_marginLeft="@dimen/answer_notification_name_margin_left"
             android:text="@string/reviewer_action_mark"
             android:textSize="@dimen/answer_notification_name_size" />
     </LinearLayout>
@@ -45,6 +71,27 @@
             android:gravity="left"
             android:layout_marginLeft="@dimen/answer_notification_name_margin_left"
             android:text="@string/reviewer_action_mark_suspend"
+            android:textSize="@dimen/answer_notification_name_size" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/answer_notification_icon_size"
+            android:layout_weight="2"
+            android:tint="@color/answer_tag_suspend"
+            app:srcCompat="@drawable/pause" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_weight="1"
+            android:gravity="left"
+            android:layout_marginLeft="@dimen/answer_notification_name_margin_left"
+            android:text="@string/reviewer_action_mark_bury"
             android:textSize="@dimen/answer_notification_name_size" />
     </LinearLayout>
 
