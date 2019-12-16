@@ -25,7 +25,9 @@ public class ReviewBottomSheet extends BottomSheetDialogFragment {
         mark.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.v(TAG, "clicked Mark");
+                m_listener.markCard();
+                dismiss();
+
             }
         });
 
@@ -33,7 +35,8 @@ public class ReviewBottomSheet extends BottomSheetDialogFragment {
         markSuspend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.v(TAG, "clicked Mark/suspend");
+                m_listener.markSuspendCard();
+                dismiss();
             }
         });
 
@@ -41,7 +44,8 @@ public class ReviewBottomSheet extends BottomSheetDialogFragment {
         markBury.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.v(TAG, "clicked Mark/bury");
+                m_listener.markBuryCard();
+                dismiss();
             }
         });
 
@@ -69,6 +73,9 @@ public class ReviewBottomSheet extends BottomSheetDialogFragment {
 
     public interface ReviewBottomSheetListener {
         void onBottomSheetButtonClicked();
+        void markCard();
+        void markSuspendCard();
+        void markBuryCard();
     }
 
     @Override
