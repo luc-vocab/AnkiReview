@@ -159,10 +159,13 @@ public class ReviewActivity extends AppCompatActivity implements DisplayOptionsD
             public void onClick(View v) {
                 ReviewBottomSheet reviewBottomSheet = new ReviewBottomSheet();
                 reviewBottomSheet.show(getSupportFragmentManager(), "reviewBottomSheet");
+
             }
         });
 
-                // setup speed dial
+        // setup bottomsheet actions
+
+        // setup speed dial
         // ----------------
         /*
         m_speedDialView = findViewById(R.id.speedDial);
@@ -454,6 +457,9 @@ public class ReviewActivity extends AppCompatActivity implements DisplayOptionsD
     }
 
     private void setupSpeedDial() {
+
+
+
         /*
         // populate with possible choices
 
@@ -858,17 +864,18 @@ public class ReviewActivity extends AppCompatActivity implements DisplayOptionsD
 
     }
 
-    public void markCard() {
-        AnkiUtils.markCard(getContentResolver(), m_currentCard);
-        showToast("Marked Card");
-    }
-
     public void tagCard(String tag) {
         AnkiUtils.tagCard(getContentResolver(), m_currentCard, tag);
         // add the tag locally so that the speedial can reflect this new tag
         m_currentCard.getTagMap().add(tag);
         showToast("Tagged card " + tag);
         setupSpeedDial();
+    }
+
+
+    public void markCard() {
+        AnkiUtils.markCard(getContentResolver(), m_currentCard);
+        showToast("Marked Card");
     }
 
     public void markSuspendCard() {
