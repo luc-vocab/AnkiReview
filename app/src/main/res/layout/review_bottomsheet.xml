@@ -173,5 +173,47 @@
         app:layout_constraintStart_toEndOf="@+id/text_answer_ease3"
         app:layout_constraintTop_toTopOf="@+id/text_answer_ease3" />
 
+    <!-- these views are click handlers -->
+    <View
+        android:id="@+id/clickhandler_add_quicktag"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="@+id/text_quicktag_add"
+        app:layout_constraintEnd_toEndOf="@+id/text_quicktag_add"
+        app:layout_constraintStart_toStartOf="@+id/icon_quicktag_add"
+        app:layout_constraintTop_toTopOf="@+id/text_quicktag_add"
+        />
+
+    <View
+        android:id="@+id/clickhandler_mark"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="@+id/text_mark"
+        app:layout_constraintEnd_toEndOf="@+id/text_mark"
+        app:layout_constraintStart_toStartOf="@+id/icon_mark"
+        app:layout_constraintTop_toTopOf="@+id/text_mark"
+        />
+
+    <View
+        android:id="@+id/clickhandler_mark_suspend"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="@+id/text_mark_suspend"
+        app:layout_constraintEnd_toEndOf="@+id/text_mark_suspend"
+        app:layout_constraintStart_toStartOf="@+id/icon_mark_suspend"
+        app:layout_constraintTop_toTopOf="@+id/text_mark_suspend"
+        />
+
+    <View
+        android:id="@+id/clickhandler_mark_bury"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="@+id/text_mark_bury"
+        app:layout_constraintEnd_toEndOf="@+id/text_mark_bury"
+        app:layout_constraintStart_toStartOf="@+id/icon_mark_bury"
+        app:layout_constraintTop_toTopOf="@+id/text_mark_bury"
+        />
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

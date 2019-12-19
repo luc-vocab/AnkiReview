@@ -21,7 +21,7 @@ public class ReviewBottomSheet extends BottomSheetDialogFragment {
 
         // TODO: setup button wiring here
 
-        View mark = v.findViewById(R.id.bottomsheet_action_mark);
+        View mark = v.findViewById(R.id.clickhandler_mark);
         mark.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -31,7 +31,7 @@ public class ReviewBottomSheet extends BottomSheetDialogFragment {
             }
         });
 
-        View markSuspend = v.findViewById(R.id.bottomsheet_action_mark_suspend);
+        View markSuspend = v.findViewById(R.id.clickhandler_mark_suspend);
         markSuspend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -40,7 +40,7 @@ public class ReviewBottomSheet extends BottomSheetDialogFragment {
             }
         });
 
-        View markBury = v.findViewById(R.id.bottomsheet_action_mark_bury);
+        View markBury = v.findViewById(R.id.clickhandler_mark_bury);
         markBury.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
