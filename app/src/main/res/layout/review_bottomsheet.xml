@@ -253,6 +253,17 @@
         app:layout_constraintVertical_bias="0.0" />
 
     <View
+        android:id="@+id/clickhandler_mark_suspend"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="@+id/text_mark_suspend"
+        app:layout_constraintEnd_toEndOf="@+id/text_mark_suspend"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/icon_mark_suspend"
+        app:layout_constraintTop_toTopOf="@+id/text_mark_suspend"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <View
         android:id="@+id/clickhandler_mark_bury"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -264,15 +275,40 @@
         app:layout_constraintVertical_bias="0.0" />
 
     <View
-        android:id="@+id/clickhandler_mark_suspend"
+        android:id="@+id/clickhandler_answer_ease1"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="@+id/text_mark_suspend"
-        app:layout_constraintEnd_toEndOf="@+id/text_mark_suspend"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="@+id/icon_mark_suspend"
-        app:layout_constraintTop_toTopOf="@+id/text_mark_suspend"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintBottom_toBottomOf="@+id/text_answer_ease1"
+        app:layout_constraintEnd_toEndOf="@+id/interval_answer_ease1"
+        app:layout_constraintStart_toStartOf="@+id/icon_answer_ease1"
+        app:layout_constraintTop_toTopOf="@+id/text_answer_ease1"/>
+
+    <View
+        android:id="@+id/clickhandler_answer_ease2"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="@+id/text_answer_ease2"
+        app:layout_constraintEnd_toEndOf="@+id/interval_answer_ease2"
+        app:layout_constraintStart_toStartOf="@+id/icon_answer_ease2"
+        app:layout_constraintTop_toTopOf="@+id/text_answer_ease2"/>
+
+    <View
+        android:id="@+id/clickhandler_answer_ease3"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="@+id/text_answer_ease3"
+        app:layout_constraintEnd_toEndOf="@+id/interval_answer_ease3"
+        app:layout_constraintStart_toStartOf="@+id/icon_answer_ease3"
+        app:layout_constraintTop_toTopOf="@+id/text_answer_ease3"/>
+
+    <View
+        android:id="@+id/clickhandler_answer_ease4"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="@+id/text_answer_ease4"
+        app:layout_constraintEnd_toEndOf="@+id/interval_answer_ease4"
+        app:layout_constraintStart_toStartOf="@+id/icon_answer_ease4"
+        app:layout_constraintTop_toTopOf="@+id/text_answer_ease4"/>
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/text_guideline"
