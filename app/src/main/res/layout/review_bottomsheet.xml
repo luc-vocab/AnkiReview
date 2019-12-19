@@ -108,29 +108,87 @@
         android:layout_height="1dp"
         android:background="@android:color/darker_gray"/>
 
-    <include
-        android:id="@+id/answer_ease_1"
-        layout="@layout/answer_animation_bad"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        >
 
-    <include
-        android:id="@+id/answer_ease_2"
-        layout="@layout/answer_animation_good"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        <ImageView
+            android:id="@+id/answer_ease1_icon"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/answer_notification_icon_size"
+            android:layout_weight="1"
+            android:tint="@color/answer_wrong"
+            app:srcCompat="@drawable/cross_circle" />
 
-    <include
-        android:id="@+id/answer_ease_3"
-        layout="@layout/answer_animation_good"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/bad_answer_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left|bottom"
+            android:layout_marginLeft="@dimen/answer_notification_name_margin_left"
+            android:layout_weight="1"
+            android:gravity="center|left"
+            android:text="@string/ease_button_again"
+            android:textSize="@dimen/answer_notification_name_size" />
 
-    <include
-        android:id="@+id/answer_ease_4"
-        layout="@layout/answer_animation_good"
+        <TextView
+            android:id="@+id/bad_answer_interval"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="8.1 mo"
+            android:textSize="@dimen/answer_notification_interval_size" />
+
+
+
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        >
+
+        <ImageView
+            android:id="@+id/answer_ease3_icon"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/answer_notification_icon_size"
+            android:layout_weight="1"
+            android:tint="@color/answer_good"
+            app:srcCompat="@drawable/check_circle" />
+
+        <TextView
+            android:id="@+id/good_answer_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left|bottom"
+            android:layout_marginLeft="@dimen/answer_notification_name_margin_left"
+            android:layout_weight="1"
+            android:gravity="center|left"
+            android:text="@string/ease_button_good"
+            android:textSize="@dimen/answer_notification_name_size" />
+
+        <TextView
+            android:id="@+id/good_answer_interval"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="8.1 mo"
+            android:textSize="@dimen/answer_notification_interval_size" />
+
+
+
+    </LinearLayout>
 
 
 
