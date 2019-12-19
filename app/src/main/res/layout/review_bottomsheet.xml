@@ -9,13 +9,65 @@
 
     <ImageView
         android:id="@+id/icon_quicktag_add"
-        android:layout_width="40dp"
-        android:layout_height="0dp"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
         android:tint="@color/answer_tag_suspend"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/text_quicktag_add"
+        app:layout_constraintStart_toStartOf="@+id/icon_guideline"
+        app:layout_constraintTop_toTopOf="@+id/text_quicktag_add"
         app:srcCompat="@drawable/tag" />
 
+    <ImageView
+        android:id="@+id/icon_mark"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:tint="@color/answer_tag_suspend"
+        app:layout_constraintEnd_toEndOf="@+id/icon_quicktag_add"
+        app:layout_constraintStart_toStartOf="@+id/icon_quicktag_add"
+        app:layout_constraintTop_toTopOf="@+id/text_mark"
+        app:srcCompat="@drawable/tag" />
+
+    <ImageView
+        android:id="@+id/icon_mark_suspend"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:tint="@color/answer_tag_suspend"
+        app:layout_constraintEnd_toEndOf="@+id/icon_mark"
+        app:layout_constraintStart_toStartOf="@+id/icon_mark"
+        app:srcCompat="@drawable/pause"
+        tools:layout_editor_absoluteY="84dp" />
+
+    <ImageView
+        android:id="@+id/icon_mark_bury"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:tint="@color/answer_tag_suspend"
+        app:layout_constraintEnd_toEndOf="@+id/icon_mark_suspend"
+        app:layout_constraintStart_toStartOf="@+id/icon_mark_suspend"
+        app:srcCompat="@drawable/pause"
+        tools:layout_editor_absoluteY="128dp" />
+
+    <ImageView
+        android:id="@+id/icon_answer_ease1"
+        android:layout_width="37dp"
+        android:layout_height="37dp"
+        android:tint="@color/answer_wrong"
+        app:layout_constraintEnd_toEndOf="@+id/icon_mark_bury"
+        app:layout_constraintStart_toStartOf="@+id/icon_mark_bury"
+        app:srcCompat="@drawable/cross_circle"
+        tools:layout_editor_absoluteY="173dp" />
+
+    <!-- these views are click handlers -->
+
+    <ImageView
+        android:id="@+id/icon_answer_ease3"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:tint="@color/answer_good"
+        app:layout_constraintEnd_toEndOf="@+id/icon_answer_ease1"
+        app:layout_constraintStart_toStartOf="@+id/icon_answer_ease1"
+        app:srcCompat="@drawable/check_circle"
+        tools:layout_editor_absoluteY="213dp" />
 
     <TextView
         android:id="@+id/text_quicktag_add"
@@ -24,20 +76,8 @@
         android:text="@string/reviewer_action_add_quicktag"
         android:textSize="@dimen/answer_notification_name_size"
         app:layout_constraintBottom_toBottomOf="@+id/icon_quicktag_add"
-        app:layout_constraintStart_toEndOf="@+id/icon_quicktag_add"
-        app:layout_constraintStart_toStartOf="@+id/text_mark_suspend"
+        app:layout_constraintStart_toStartOf="@+id/text_guideline"
         app:layout_constraintTop_toTopOf="@+id/icon_quicktag_add" />
-
-    <ImageView
-        android:id="@+id/icon_mark"
-        android:layout_width="40dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:tint="@color/answer_tag_suspend"
-        app:layout_constraintEnd_toEndOf="@+id/icon_quicktag_add"
-        app:layout_constraintStart_toStartOf="@+id/icon_quicktag_add"
-        app:layout_constraintTop_toBottomOf="@+id/icon_quicktag_add"
-        app:srcCompat="@drawable/tag" />
 
     <TextView
         android:id="@+id/text_mark"
@@ -48,19 +88,8 @@
         android:text="@string/reviewer_action_mark"
         android:textSize="@dimen/answer_notification_name_size"
         app:layout_constraintBottom_toBottomOf="@+id/icon_mark"
-        app:layout_constraintStart_toEndOf="@+id/icon_mark"
-        app:layout_constraintStart_toStartOf="@+id/text_mark_suspend"
-        app:layout_constraintTop_toTopOf="@+id/icon_mark" />
-
-    <ImageView
-        android:id="@+id/icon_mark_suspend"
-        android:layout_width="0dp"
-        android:layout_height="@dimen/answer_notification_icon_size"
-        android:tint="@color/answer_tag_suspend"
-        app:layout_constraintEnd_toEndOf="@+id/icon_mark"
-        app:layout_constraintStart_toStartOf="@+id/icon_mark"
-        app:layout_constraintTop_toBottomOf="@+id/icon_mark"
-        app:srcCompat="@drawable/pause" />
+        app:layout_constraintStart_toStartOf="@+id/text_guideline"
+        app:layout_constraintTop_toBottomOf="@+id/text_quicktag_add" />
 
     <TextView
         android:id="@+id/text_mark_suspend"
@@ -70,20 +99,8 @@
         android:gravity="left"
         android:text="@string/reviewer_action_mark_suspend"
         android:textSize="@dimen/answer_notification_name_size"
-        app:layout_constraintBottom_toBottomOf="@+id/icon_mark_suspend"
-        app:layout_constraintStart_toEndOf="@+id/icon_mark_suspend"
-        app:layout_constraintStart_toStartOf="@+id/text_mark_bury"
-        app:layout_constraintTop_toTopOf="@+id/icon_mark_suspend" />
-
-    <ImageView
-        android:id="@+id/icon_mark_bury"
-        android:layout_width="0dp"
-        android:layout_height="@dimen/answer_notification_icon_size"
-        android:tint="@color/answer_tag_suspend"
-        app:layout_constraintEnd_toEndOf="@+id/icon_mark_suspend"
-        app:layout_constraintStart_toStartOf="@+id/icon_mark_suspend"
-        app:layout_constraintTop_toBottomOf="@+id/icon_mark_suspend"
-        app:srcCompat="@drawable/pause" />
+        app:layout_constraintStart_toStartOf="@+id/text_guideline"
+        app:layout_constraintTop_toBottomOf="@+id/text_mark" />
 
     <TextView
         android:id="@+id/text_mark_bury"
@@ -93,20 +110,8 @@
         android:gravity="left"
         android:text="@string/reviewer_action_mark_bury"
         android:textSize="@dimen/answer_notification_name_size"
-        app:layout_constraintBottom_toBottomOf="@+id/icon_mark_bury"
-        app:layout_constraintStart_toEndOf="@+id/icon_mark_bury"
-        app:layout_constraintStart_toStartOf="@+id/text_answer_ease1"
-        app:layout_constraintTop_toTopOf="@+id/icon_mark_bury" />
-
-    <ImageView
-        android:id="@+id/icon_answer_ease1"
-        android:layout_width="0dp"
-        android:layout_height="@dimen/answer_notification_icon_size"
-        android:tint="@color/answer_wrong"
-        app:layout_constraintEnd_toEndOf="@+id/icon_mark_bury"
-        app:layout_constraintStart_toStartOf="@+id/icon_mark_bury"
-        app:layout_constraintTop_toBottomOf="@+id/icon_mark_bury"
-        app:srcCompat="@drawable/cross_circle" />
+        app:layout_constraintStart_toStartOf="@+id/text_guideline"
+        app:layout_constraintTop_toBottomOf="@+id/icon_mark_suspend" />
 
     <TextView
         android:id="@+id/text_answer_ease1"
@@ -116,35 +121,20 @@
         android:gravity="center|left"
         android:text="@string/ease_button_again"
         android:textSize="@dimen/answer_notification_name_size"
-        app:layout_constraintBottom_toBottomOf="@+id/icon_answer_ease1"
-        app:layout_constraintStart_toEndOf="@+id/icon_answer_ease1"
-        app:layout_constraintStart_toStartOf="@+id/text_answer_ease3"
-        app:layout_constraintTop_toTopOf="@+id/icon_answer_ease1" />
+        app:layout_constraintStart_toStartOf="@+id/text_guideline"
+        app:layout_constraintTop_toBottomOf="@+id/text_mark_bury" />
 
     <TextView
         android:id="@+id/interval_answer_ease1"
-        android:layout_width="0dp"
+        android:layout_width="221dp"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:layout_marginStart="32dp"
-        android:layout_marginEnd="32dp"
         android:gravity="center"
         android:text="8.1 mo"
         android:textSize="@dimen/answer_notification_interval_size"
         app:layout_constraintBottom_toBottomOf="@+id/text_answer_ease1"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/text_answer_ease1"
-        app:layout_constraintTop_toTopOf="@+id/text_answer_ease1" />
-
-    <ImageView
-        android:id="@+id/icon_answer_ease3"
-        android:layout_width="0dp"
-        android:layout_height="@dimen/answer_notification_icon_size"
-        android:tint="@color/answer_good"
-        app:layout_constraintEnd_toEndOf="@+id/icon_answer_ease1"
-        app:layout_constraintStart_toStartOf="@+id/icon_answer_ease1"
-        app:layout_constraintTop_toBottomOf="@+id/icon_answer_ease1"
-        app:srcCompat="@drawable/check_circle" />
+        app:layout_constraintTop_toTopOf="@+id/text_answer_ease1"
+        tools:layout_editor_absoluteX="242dp" />
 
     <TextView
         android:id="@+id/text_answer_ease3"
@@ -154,35 +144,31 @@
         android:gravity="center|left"
         android:text="@string/ease_button_good"
         android:textSize="@dimen/answer_notification_name_size"
-        app:layout_constraintBottom_toBottomOf="@+id/icon_answer_ease3"
-        app:layout_constraintStart_toEndOf="@+id/icon_answer_ease3"
-        app:layout_constraintTop_toTopOf="@+id/icon_answer_ease3" />
+        app:layout_constraintStart_toStartOf="@+id/text_guideline"
+        app:layout_constraintTop_toBottomOf="@+id/text_answer_ease1" />
 
     <TextView
         android:id="@+id/interval_answer_ease3"
-        android:layout_width="0dp"
+        android:layout_width="227dp"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:layout_marginStart="32dp"
-        android:layout_marginEnd="32dp"
         android:gravity="center"
         android:text="8.1 mo"
         android:textSize="@dimen/answer_notification_interval_size"
         app:layout_constraintBottom_toBottomOf="@+id/text_answer_ease3"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/text_answer_ease3"
-        app:layout_constraintTop_toTopOf="@+id/text_answer_ease3" />
+        app:layout_constraintTop_toTopOf="@+id/text_answer_ease3"
+        tools:layout_editor_absoluteX="236dp" />
 
-    <!-- these views are click handlers -->
     <View
         android:id="@+id/clickhandler_add_quicktag"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="@+id/text_quicktag_add"
         app:layout_constraintEnd_toEndOf="@+id/text_quicktag_add"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="@+id/icon_quicktag_add"
         app:layout_constraintTop_toTopOf="@+id/text_quicktag_add"
-        />
+        app:layout_constraintVertical_bias="0.0" />
 
     <View
         android:id="@+id/clickhandler_mark"
@@ -190,19 +176,10 @@
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="@+id/text_mark"
         app:layout_constraintEnd_toEndOf="@+id/text_mark"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="@+id/icon_mark"
         app:layout_constraintTop_toTopOf="@+id/text_mark"
-        />
-
-    <View
-        android:id="@+id/clickhandler_mark_suspend"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="@+id/text_mark_suspend"
-        app:layout_constraintEnd_toEndOf="@+id/text_mark_suspend"
-        app:layout_constraintStart_toStartOf="@+id/icon_mark_suspend"
-        app:layout_constraintTop_toTopOf="@+id/text_mark_suspend"
-        />
+        app:layout_constraintVertical_bias="0.0" />
 
     <View
         android:id="@+id/clickhandler_mark_bury"
@@ -210,10 +187,35 @@
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="@+id/text_mark_bury"
         app:layout_constraintEnd_toEndOf="@+id/text_mark_bury"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="@+id/icon_mark_bury"
         app:layout_constraintTop_toTopOf="@+id/text_mark_bury"
-        />
+        app:layout_constraintVertical_bias="0.0" />
 
+    <View
+        android:id="@+id/clickhandler_mark_suspend"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="@+id/text_mark_suspend"
+        app:layout_constraintEnd_toEndOf="@+id/text_mark_suspend"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/icon_mark_suspend"
+        app:layout_constraintTop_toTopOf="@+id/text_mark_suspend"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/text_guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="311dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/icon_guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="386dp" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
