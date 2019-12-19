@@ -1,196 +1,177 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    >
+    android:orientation="vertical">
 
-    <LinearLayout
-        android:layout_width="match_parent"
+
+    <ImageView
+        android:id="@+id/icon_quicktag_add"
+        android:layout_width="40dp"
+        android:layout_height="0dp"
+        android:tint="@color/answer_tag_suspend"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/tag" />
+
+
+    <TextView
+        android:id="@+id/text_quicktag_add"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/answer_notification_icon_size"
-            android:layout_weight="2"
-            android:tint="@color/answer_tag_suspend"
-            app:srcCompat="@drawable/tag" />
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:layout_weight="1"
-            android:gravity="left"
-            android:layout_marginLeft="@dimen/answer_notification_name_margin_left"
-            android:text="@string/reviewer_action_add_quicktag"
-            android:textSize="@dimen/answer_notification_name_size" />
-    </LinearLayout>
+        android:text="@string/reviewer_action_add_quicktag"
+        android:textSize="@dimen/answer_notification_name_size"
+        app:layout_constraintBottom_toBottomOf="@+id/icon_quicktag_add"
+        app:layout_constraintStart_toEndOf="@+id/icon_quicktag_add"
+        app:layout_constraintStart_toStartOf="@+id/text_mark_suspend"
+        app:layout_constraintTop_toTopOf="@+id/icon_quicktag_add" />
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@android:color/darker_gray"
-        />
-
-    <LinearLayout
-        android:layout_width="match_parent"
+    <ImageView
+        android:id="@+id/icon_mark"
+        android:layout_width="40dp"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:id="@+id/bottomsheet_action_mark"
-        android:clickable="true"
-        >
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/answer_notification_icon_size"
-            android:layout_weight="2"
-            android:tint="@color/answer_tag_suspend"
-            app:srcCompat="@drawable/tag" />
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:layout_weight="1"
-            android:gravity="left"
-            android:layout_marginLeft="@dimen/answer_notification_name_margin_left"
-            android:text="@string/reviewer_action_mark"
-            android:textSize="@dimen/answer_notification_name_size" />
-    </LinearLayout>
+        android:layout_marginTop="8dp"
+        android:tint="@color/answer_tag_suspend"
+        app:layout_constraintEnd_toEndOf="@+id/icon_quicktag_add"
+        app:layout_constraintStart_toStartOf="@+id/icon_quicktag_add"
+        app:layout_constraintTop_toBottomOf="@+id/icon_quicktag_add"
+        app:srcCompat="@drawable/tag" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/text_mark"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:id="@+id/bottomsheet_action_mark_suspend"
-        >
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/answer_notification_icon_size"
-            android:layout_weight="2"
-            android:tint="@color/answer_tag_suspend"
-            app:srcCompat="@drawable/pause" />
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:layout_weight="1"
-            android:gravity="left"
-            android:layout_marginLeft="@dimen/answer_notification_name_margin_left"
-            android:text="@string/reviewer_action_mark_suspend"
-            android:textSize="@dimen/answer_notification_name_size" />
-    </LinearLayout>
+        android:layout_gravity="bottom"
+        android:gravity="left"
+        android:text="@string/reviewer_action_mark"
+        android:textSize="@dimen/answer_notification_name_size"
+        app:layout_constraintBottom_toBottomOf="@+id/icon_mark"
+        app:layout_constraintStart_toEndOf="@+id/icon_mark"
+        app:layout_constraintStart_toStartOf="@+id/text_mark_suspend"
+        app:layout_constraintTop_toTopOf="@+id/icon_mark" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    <ImageView
+        android:id="@+id/icon_mark_suspend"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/answer_notification_icon_size"
+        android:tint="@color/answer_tag_suspend"
+        app:layout_constraintEnd_toEndOf="@+id/icon_mark"
+        app:layout_constraintStart_toStartOf="@+id/icon_mark"
+        app:layout_constraintTop_toBottomOf="@+id/icon_mark"
+        app:srcCompat="@drawable/pause" />
+
+    <TextView
+        android:id="@+id/text_mark_suspend"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:id="@+id/bottomsheet_action_mark_bury"
-        >
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/answer_notification_icon_size"
-            android:layout_weight="2"
-            android:tint="@color/answer_tag_suspend"
-            app:srcCompat="@drawable/pause" />
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:layout_weight="1"
-            android:gravity="left"
-            android:layout_marginLeft="@dimen/answer_notification_name_margin_left"
-            android:text="@string/reviewer_action_mark_bury"
-            android:textSize="@dimen/answer_notification_name_size" />
-    </LinearLayout>
+        android:layout_gravity="bottom"
+        android:gravity="left"
+        android:text="@string/reviewer_action_mark_suspend"
+        android:textSize="@dimen/answer_notification_name_size"
+        app:layout_constraintBottom_toBottomOf="@+id/icon_mark_suspend"
+        app:layout_constraintStart_toEndOf="@+id/icon_mark_suspend"
+        app:layout_constraintStart_toStartOf="@+id/text_mark_bury"
+        app:layout_constraintTop_toTopOf="@+id/icon_mark_suspend" />
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@android:color/darker_gray"/>
+    <ImageView
+        android:id="@+id/icon_mark_bury"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/answer_notification_icon_size"
+        android:tint="@color/answer_tag_suspend"
+        app:layout_constraintEnd_toEndOf="@+id/icon_mark_suspend"
+        app:layout_constraintStart_toStartOf="@+id/icon_mark_suspend"
+        app:layout_constraintTop_toBottomOf="@+id/icon_mark_suspend"
+        app:srcCompat="@drawable/pause" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/text_mark_bury"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
-        >
+        android:layout_gravity="bottom"
+        android:gravity="left"
+        android:text="@string/reviewer_action_mark_bury"
+        android:textSize="@dimen/answer_notification_name_size"
+        app:layout_constraintBottom_toBottomOf="@+id/icon_mark_bury"
+        app:layout_constraintStart_toEndOf="@+id/icon_mark_bury"
+        app:layout_constraintStart_toStartOf="@+id/text_answer_ease1"
+        app:layout_constraintTop_toTopOf="@+id/icon_mark_bury" />
 
-        <ImageView
-            android:id="@+id/answer_ease1_icon"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/answer_notification_icon_size"
-            android:layout_weight="1"
-            android:tint="@color/answer_wrong"
-            app:srcCompat="@drawable/cross_circle" />
+    <ImageView
+        android:id="@+id/icon_answer_ease1"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/answer_notification_icon_size"
+        android:tint="@color/answer_wrong"
+        app:layout_constraintEnd_toEndOf="@+id/icon_mark_bury"
+        app:layout_constraintStart_toStartOf="@+id/icon_mark_bury"
+        app:layout_constraintTop_toBottomOf="@+id/icon_mark_bury"
+        app:srcCompat="@drawable/cross_circle" />
 
-        <TextView
-            android:id="@+id/bad_answer_description"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="left|bottom"
-            android:layout_marginLeft="@dimen/answer_notification_name_margin_left"
-            android:layout_weight="1"
-            android:gravity="center|left"
-            android:text="@string/ease_button_again"
-            android:textSize="@dimen/answer_notification_name_size" />
-
-        <TextView
-            android:id="@+id/bad_answer_interval"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="8.1 mo"
-            android:textSize="@dimen/answer_notification_interval_size" />
-
-
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/text_answer_ease1"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
-        >
+        android:layout_gravity="left|bottom"
+        android:gravity="center|left"
+        android:text="@string/ease_button_again"
+        android:textSize="@dimen/answer_notification_name_size"
+        app:layout_constraintBottom_toBottomOf="@+id/icon_answer_ease1"
+        app:layout_constraintStart_toEndOf="@+id/icon_answer_ease1"
+        app:layout_constraintStart_toStartOf="@+id/text_answer_ease3"
+        app:layout_constraintTop_toTopOf="@+id/icon_answer_ease1" />
 
-        <ImageView
-            android:id="@+id/answer_ease3_icon"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/answer_notification_icon_size"
-            android:layout_weight="1"
-            android:tint="@color/answer_good"
-            app:srcCompat="@drawable/check_circle" />
+    <TextView
+        android:id="@+id/interval_answer_ease1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:gravity="center"
+        android:text="8.1 mo"
+        android:textSize="@dimen/answer_notification_interval_size"
+        app:layout_constraintBottom_toBottomOf="@+id/text_answer_ease1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/text_answer_ease1"
+        app:layout_constraintTop_toTopOf="@+id/text_answer_ease1" />
 
-        <TextView
-            android:id="@+id/good_answer_description"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="left|bottom"
-            android:layout_marginLeft="@dimen/answer_notification_name_margin_left"
-            android:layout_weight="1"
-            android:gravity="center|left"
-            android:text="@string/ease_button_good"
-            android:textSize="@dimen/answer_notification_name_size" />
+    <ImageView
+        android:id="@+id/icon_answer_ease3"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/answer_notification_icon_size"
+        android:tint="@color/answer_good"
+        app:layout_constraintEnd_toEndOf="@+id/icon_answer_ease1"
+        app:layout_constraintStart_toStartOf="@+id/icon_answer_ease1"
+        app:layout_constraintTop_toBottomOf="@+id/icon_answer_ease1"
+        app:srcCompat="@drawable/check_circle" />
 
-        <TextView
-            android:id="@+id/good_answer_interval"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="8.1 mo"
-            android:textSize="@dimen/answer_notification_interval_size" />
+    <TextView
+        android:id="@+id/text_answer_ease3"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left|bottom"
+        android:gravity="center|left"
+        android:text="@string/ease_button_good"
+        android:textSize="@dimen/answer_notification_name_size"
+        app:layout_constraintBottom_toBottomOf="@+id/icon_answer_ease3"
+        app:layout_constraintStart_toEndOf="@+id/icon_answer_ease3"
+        app:layout_constraintTop_toTopOf="@+id/icon_answer_ease3" />
+
+    <TextView
+        android:id="@+id/interval_answer_ease3"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:gravity="center"
+        android:text="8.1 mo"
+        android:textSize="@dimen/answer_notification_interval_size"
+        app:layout_constraintBottom_toBottomOf="@+id/text_answer_ease3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/text_answer_ease3"
+        app:layout_constraintTop_toTopOf="@+id/text_answer_ease3" />
 
 
-
-    </LinearLayout>
-
-
-
-
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
