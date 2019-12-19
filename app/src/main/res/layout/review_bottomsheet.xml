@@ -184,7 +184,7 @@
         android:id="@+id/interval_answer_ease1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="32dp"
         android:text="8.1 mo"
         android:textSize="@dimen/answer_notification_interval_size"
         app:layout_constraintBottom_toBottomOf="@+id/text_answer_ease1"
