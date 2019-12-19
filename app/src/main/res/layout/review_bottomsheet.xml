@@ -25,6 +25,7 @@
         app:layout_constraintEnd_toEndOf="@+id/icon_quicktag_add"
         app:layout_constraintStart_toStartOf="@+id/icon_quicktag_add"
         app:layout_constraintTop_toTopOf="@+id/text_mark"
+        app:layout_constraintBottom_toBottomOf="@+id/text_mark"
         app:srcCompat="@drawable/tag" />
 
     <ImageView
@@ -34,6 +35,8 @@
         android:tint="@color/answer_tag_suspend"
         app:layout_constraintEnd_toEndOf="@+id/icon_mark"
         app:layout_constraintStart_toStartOf="@+id/icon_mark"
+        app:layout_constraintTop_toTopOf="@+id/text_mark_suspend"
+        app:layout_constraintBottom_toBottomOf="@+id/text_mark_suspend"
         app:srcCompat="@drawable/pause"
         tools:layout_editor_absoluteY="84dp" />
 
@@ -44,6 +47,8 @@
         android:tint="@color/answer_tag_suspend"
         app:layout_constraintEnd_toEndOf="@+id/icon_mark_suspend"
         app:layout_constraintStart_toStartOf="@+id/icon_mark_suspend"
+        app:layout_constraintTop_toTopOf="@+id/text_mark_bury"
+        app:layout_constraintBottom_toBottomOf="@+id/text_mark_bury"
         app:srcCompat="@drawable/pause"
         tools:layout_editor_absoluteY="128dp" />
 
@@ -54,6 +59,8 @@
         android:tint="@color/answer_wrong"
         app:layout_constraintEnd_toEndOf="@+id/icon_mark_bury"
         app:layout_constraintStart_toStartOf="@+id/icon_mark_bury"
+        app:layout_constraintTop_toTopOf="@+id/text_answer_ease1"
+        app:layout_constraintBottom_toBottomOf="@+id/text_answer_ease1"
         app:srcCompat="@drawable/cross_circle"
         tools:layout_editor_absoluteY="173dp" />
 
@@ -66,6 +73,8 @@
         android:tint="@color/answer_good"
         app:layout_constraintEnd_toEndOf="@+id/icon_answer_ease1"
         app:layout_constraintStart_toStartOf="@+id/icon_answer_ease1"
+        app:layout_constraintTop_toTopOf="@+id/text_answer_ease3"
+        app:layout_constraintBottom_toBottomOf="@+id/text_answer_ease3"
         app:srcCompat="@drawable/check_circle"
         tools:layout_editor_absoluteY="213dp" />
 
