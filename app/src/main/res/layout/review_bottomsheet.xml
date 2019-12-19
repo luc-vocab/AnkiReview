@@ -12,9 +12,9 @@
         android:layout_width="35dp"
         android:layout_height="35dp"
         android:tint="@color/answer_tag_suspend"
+        app:layout_constraintBottom_toBottomOf="@+id/text_quicktag_add"
         app:layout_constraintStart_toStartOf="@+id/icon_guideline"
         app:layout_constraintTop_toTopOf="@+id/text_quicktag_add"
-        app:layout_constraintBottom_toBottomOf="@+id/text_quicktag_add"
         app:srcCompat="@drawable/tag" />
 
     <ImageView
@@ -80,23 +80,19 @@
 
     <TextView
         android:id="@+id/text_quicktag_add"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="@string/reviewer_action_add_quicktag"
         android:textSize="@dimen/answer_notification_name_size"
-        app:layout_constraintBottom_toBottomOf="@+id/icon_quicktag_add"
         app:layout_constraintStart_toStartOf="@+id/text_guideline"
-        app:layout_constraintTop_toTopOf="@+id/icon_quicktag_add" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/text_mark"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:gravity="left"
         android:text="@string/reviewer_action_mark"
         android:textSize="@dimen/answer_notification_name_size"
-        app:layout_constraintBottom_toBottomOf="@+id/icon_mark"
         app:layout_constraintStart_toStartOf="@+id/text_guideline"
         app:layout_constraintTop_toBottomOf="@+id/text_quicktag_add" />
 
@@ -219,14 +215,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_end="311dp" />
+        app:layout_constraintGuide_end="322dp" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/icon_guideline"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_end="386dp" />
+        app:layout_constraintGuide_end="388dp" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
