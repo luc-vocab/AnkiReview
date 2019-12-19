@@ -65,6 +65,18 @@
         tools:layout_editor_absoluteY="173dp" />
 
     <ImageView
+        android:id="@+id/icon_answer_ease2"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:tint="@color/answer_hard"
+        app:layout_constraintEnd_toEndOf="@+id/icon_quicktag_add"
+        app:layout_constraintStart_toStartOf="@+id/icon_quicktag_add"
+        app:layout_constraintTop_toTopOf="@+id/text_answer_ease2"
+        app:layout_constraintBottom_toBottomOf="@+id/text_answer_ease2"
+        app:srcCompat="@drawable/check_circle"
+        tools:layout_editor_absoluteY="213dp" />
+
+    <ImageView
         android:id="@+id/icon_answer_ease3"
         android:layout_width="40dp"
         android:layout_height="40dp"
@@ -73,6 +85,18 @@
         app:layout_constraintStart_toStartOf="@+id/icon_quicktag_add"
         app:layout_constraintTop_toTopOf="@+id/text_answer_ease3"
         app:layout_constraintBottom_toBottomOf="@+id/text_answer_ease3"
+        app:srcCompat="@drawable/check_circle"
+        tools:layout_editor_absoluteY="213dp" />
+
+    <ImageView
+        android:id="@+id/icon_answer_ease4"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:tint="@color/answer_easy"
+        app:layout_constraintEnd_toEndOf="@+id/icon_quicktag_add"
+        app:layout_constraintStart_toStartOf="@+id/icon_quicktag_add"
+        app:layout_constraintTop_toTopOf="@+id/text_answer_ease4"
+        app:layout_constraintBottom_toBottomOf="@+id/text_answer_ease4"
         app:srcCompat="@drawable/check_circle"
         tools:layout_editor_absoluteY="213dp" />
 
@@ -128,6 +152,35 @@
         app:layout_constraintTop_toBottomOf="@+id/text_mark_bury" />
 
     <TextView
+        android:id="@+id/text_answer_ease2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/ease_button_hard"
+        android:textSize="@dimen/answer_notification_name_size"
+        app:layout_constraintStart_toStartOf="@+id/text_guideline"
+        app:layout_constraintTop_toBottomOf="@+id/text_answer_ease1" />
+
+    <TextView
+        android:id="@+id/text_answer_ease3"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/ease_button_good"
+        android:textSize="@dimen/answer_notification_name_size"
+        app:layout_constraintStart_toStartOf="@+id/text_guideline"
+        app:layout_constraintTop_toBottomOf="@+id/text_answer_ease2" />
+
+
+
+    <TextView
+        android:id="@+id/text_answer_ease4"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/ease_button_easy"
+        android:textSize="@dimen/answer_notification_name_size"
+        app:layout_constraintStart_toStartOf="@+id/text_guideline"
+        app:layout_constraintTop_toBottomOf="@+id/text_answer_ease3" />
+
+    <TextView
         android:id="@+id/interval_answer_ease1"
         android:layout_width="221dp"
         android:layout_height="wrap_content"
@@ -141,15 +194,15 @@
         tools:layout_editor_absoluteX="242dp" />
 
     <TextView
-        android:id="@+id/text_answer_ease3"
-        android:layout_width="0dp"
+        android:id="@+id/interval_answer_ease2"
+        android:layout_width="221dp"
         android:layout_height="wrap_content"
-        android:layout_gravity="left|bottom"
-        android:gravity="center|left"
-        android:text="@string/ease_button_good"
-        android:textSize="@dimen/answer_notification_name_size"
-        app:layout_constraintStart_toStartOf="@+id/text_guideline"
-        app:layout_constraintTop_toBottomOf="@+id/text_answer_ease1" />
+        android:text="8.1 mo"
+        android:textSize="@dimen/answer_notification_interval_size"
+        app:layout_constraintBottom_toBottomOf="@+id/text_answer_ease2"
+        app:layout_constraintTop_toTopOf="@+id/text_answer_ease2"
+        app:layout_constraintStart_toEndOf="@+id/text_answer_ease2"
+        tools:layout_editor_absoluteX="242dp" />
 
     <TextView
         android:id="@+id/interval_answer_ease3"
@@ -163,6 +216,18 @@
         app:layout_constraintTop_toTopOf="@+id/text_answer_ease3"
         app:layout_constraintStart_toEndOf="@+id/text_answer_ease3"
         tools:layout_editor_absoluteX="236dp" />
+
+    <TextView
+        android:id="@+id/interval_answer_ease4"
+        android:layout_width="221dp"
+        android:layout_height="wrap_content"
+        android:text="8.1 mo"
+        android:textSize="@dimen/answer_notification_interval_size"
+        app:layout_constraintBottom_toBottomOf="@+id/text_answer_ease4"
+        app:layout_constraintTop_toTopOf="@+id/text_answer_ease4"
+        app:layout_constraintStart_toEndOf="@+id/text_answer_ease4"
+        tools:layout_editor_absoluteX="242dp" />
+
 
     <View
         android:id="@+id/clickhandler_add_quicktag"
