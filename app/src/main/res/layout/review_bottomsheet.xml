@@ -12,9 +12,9 @@
         android:layout_width="35dp"
         android:layout_height="35dp"
         android:tint="@color/answer_tag_suspend"
-        app:layout_constraintBottom_toBottomOf="@+id/text_quicktag_add"
         app:layout_constraintStart_toStartOf="@+id/icon_guideline"
         app:layout_constraintTop_toTopOf="@+id/text_quicktag_add"
+        app:layout_constraintBottom_toBottomOf="@+id/text_quicktag_add"
         app:srcCompat="@drawable/tag" />
 
     <ImageView
@@ -143,6 +143,7 @@
         android:textSize="@dimen/answer_notification_interval_size"
         app:layout_constraintBottom_toBottomOf="@+id/text_answer_ease1"
         app:layout_constraintTop_toTopOf="@+id/text_answer_ease1"
+        app:layout_constraintStart_toEndOf="@+id/text_answer_ease1"
         tools:layout_editor_absoluteX="242dp" />
 
     <TextView
@@ -166,6 +167,7 @@
         android:textSize="@dimen/answer_notification_interval_size"
         app:layout_constraintBottom_toBottomOf="@+id/text_answer_ease3"
         app:layout_constraintTop_toTopOf="@+id/text_answer_ease3"
+        app:layout_constraintStart_toEndOf="@+id/text_answer_ease3"
         tools:layout_editor_absoluteX="236dp" />
 
     <View
