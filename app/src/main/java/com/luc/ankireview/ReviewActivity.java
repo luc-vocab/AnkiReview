@@ -805,7 +805,8 @@ public class ReviewActivity extends AppCompatActivity implements DisplayOptionsD
     }
 
 
-    private ArrayList<String> getQuicktagList() {
+    @Override
+    public ArrayList<String> getQuicktagList() {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
         ArrayList<String> quickTagList = new ArrayList<String>();
@@ -865,6 +866,7 @@ public class ReviewActivity extends AppCompatActivity implements DisplayOptionsD
 
     }
 
+    @Override
     public void tagCard(String tag) {
         AnkiUtils.tagCard(getContentResolver(), m_currentCard, tag);
         // add the tag locally so that the speedial can reflect this new tag

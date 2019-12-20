@@ -2,7 +2,6 @@ package com.luc.ankireview;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +9,7 @@ import android.widget.TextView;
 
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
+import java.util.ArrayList;
 import java.util.Vector;
 
 import androidx.annotation.Nullable;
@@ -17,12 +17,23 @@ import androidx.annotation.Nullable;
 public class ReviewBottomSheet extends BottomSheetDialogFragment {
     private static final String TAG = "ReviewBottomSheet";
 
+    class QuickTagData {
+        public QuickTagData(View clickHandler, int[] viewIds, TextView tagNameTextView) {
+            this.clickHandler = clickHandler;
+            this.viewIds = viewIds;
+            this.tagNameTextView = tagNameTextView;
+        }
+
+        public final View clickHandler;
+        public final int[] viewIds;
+        public final TextView tagNameTextView;
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.review_bottomsheet, container, false);
 
-        // TODO: setup button wiring here
 
         View addQuicktag = v.findViewById(R.id.clickhandler_add_quicktag);
         addQuicktag.setOnClickListener(new View.OnClickListener() {
@@ -64,8 +75,46 @@ public class ReviewBottomSheet extends BottomSheetDialogFragment {
 
 
         setupAnswerChoices(v);
+        setupQuicktags(v);
 
         return v;
+    }
+
+    private void setupQuicktags(View v) {
+        View clickHandler1 = v.findViewById(R.id.clickhandler_tag1);
+        View clickHandler2 = v.findViewById(R.id.clickhandler_tag2);
+        View clickHandler3 = v.findViewById(R.id.clickhandler_tag3);
+        View clickHandler4 = v.findViewById(R.id.clickhandler_tag4);
+        View clickHandler5 = v.findViewById(R.id.clickhandler_tag5);
+
+        TextView tagName1 = v.findViewById(R.id.tagname_1);
+        TextView tagName2 = v.findViewById(R.id.tagname_2);
+        TextView tagName3 = v.findViewById(R.id.tagname_3);
+        TextView tagName4 = v.findViewById(R.id.tagname_4);
+        TextView tagName5 = v.findViewById(R.id.tagname_5);
+
+        ArrayList<String> quicktagList = m_listener.getQuicktagList();
+
+        Vector<QuickTagData> quickTagDataVector = new Vector<QuickTagData>();
+        quickTagDataVector.add(new QuickTagData(clickHandler1, m_quicktag1ViewIds, tagName1));
+        quickTagDataVector.add(new QuickTagData(clickHandler2, m_quicktag2ViewIds, tagName2));
+        quickTagDataVector.add(new QuickTagData(clickHandler3, m_quicktag3ViewIds, tagName3));
+        quickTagDataVector.add(new QuickTagData(clickHandler4, m_quicktag4ViewIds, tagName4));
+        quickTagDataVector.add(new QuickTagData(clickHandler5, m_quicktag5ViewIds, tagName5));
+
+        for(int i = 0; i < Settings.MAX_QUICKTAGS; i++) {
+            QuickTagData quickTagData = quickTagDataVector.get(i);
+            // do we have a quicktag at that position ?
+            if (i < quicktagList.size()) {
+                String tagName = quicktagList.get(i);
+                quickTagData.tagNameTextView.setText(tagName);
+                setupTagHandler(quickTagData.clickHandler, tagName);
+            } else {
+                // no quicktag, hide the views
+                hideViewIds(v, quickTagData.viewIds);
+            }
+        }
+
     }
 
     private void setupAnswerChoices(View v) {
@@ -87,8 +136,8 @@ public class ReviewBottomSheet extends BottomSheetDialogFragment {
             case 2:
                 setupAnswerHandler(clickHandler1, AnkiUtils.Ease.EASE_1);
                 setupAnswerHandler(clickHandler3, AnkiUtils.Ease.EASE_2);
-                hideAnswerIds(v, m_answer2ViewIds);
-                hideAnswerIds(v, m_answer4ViewIds);
+                hideViewIds(v, m_answer2ViewIds);
+                hideViewIds(v, m_answer4ViewIds);
                 nextReviewTime1.setText(nextReviewTimes.get(0));
                 nextReviewTime3.setText(nextReviewTimes.get(1));
                 break;
@@ -99,7 +148,7 @@ public class ReviewBottomSheet extends BottomSheetDialogFragment {
                 nextReviewTime1.setText(nextReviewTimes.get(0));
                 nextReviewTime3.setText(nextReviewTimes.get(1));
                 nextReviewTime4.setText(nextReviewTimes.get(2));
-                hideAnswerIds(v, m_answer2ViewIds);
+                hideViewIds(v, m_answer2ViewIds);
                 break;
             default:
                 setupAnswerHandler(clickHandler1, AnkiUtils.Ease.EASE_1);
@@ -126,7 +175,17 @@ public class ReviewBottomSheet extends BottomSheetDialogFragment {
         });
     }
 
-    private void hideAnswerIds(View v, int[] answerIds) {
+    private void setupTagHandler(View clickHandler, final String tagName) {
+        clickHandler.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                m_listener.tagCard(tagName);
+                dismiss();
+            }
+        });
+    }
+
+    private void hideViewIds(View v, int[] answerIds) {
         for(int id : answerIds) {
             View view = v.findViewById(id);
             view.setVisibility(View.GONE);
@@ -137,10 +196,12 @@ public class ReviewBottomSheet extends BottomSheetDialogFragment {
         int getAnswerButtonCount();
         Vector<String> getNextReviewtimes();
         void showAddQuicktag();
+        ArrayList<String> getQuicktagList();
         void markCard();
         void markSuspendCard();
         void markBuryCard();
         void answerCustom(AnkiUtils.Ease ease);
+        void tagCard(String tag);
     }
 
     @Override
@@ -161,5 +222,11 @@ public class ReviewBottomSheet extends BottomSheetDialogFragment {
     private static final int[] m_answer2ViewIds = {R.id.icon_answer_ease2, R.id.text_answer_ease2, R.id.interval_answer_ease2};
     private static final int[] m_answer3ViewIds = {R.id.icon_answer_ease3, R.id.text_answer_ease3, R.id.interval_answer_ease3};
     private static final int[] m_answer4ViewIds = {R.id.icon_answer_ease4, R.id.text_answer_ease4, R.id.interval_answer_ease4};
+
+    private static final int[] m_quicktag1ViewIds = {R.id.icon_quicktag_1, R.id.text_quicktag_1, R.id.tagname_1};
+    private static final int[] m_quicktag2ViewIds = {R.id.icon_quicktag_2, R.id.text_quicktag_2, R.id.tagname_2};
+    private static final int[] m_quicktag3ViewIds = {R.id.icon_quicktag_3, R.id.text_quicktag_3, R.id.tagname_3};
+    private static final int[] m_quicktag4ViewIds = {R.id.icon_quicktag_4, R.id.text_quicktag_4, R.id.tagname_4};
+    private static final int[] m_quicktag5ViewIds = {R.id.icon_quicktag_5, R.id.text_quicktag_5, R.id.tagname_5};
 
 }
