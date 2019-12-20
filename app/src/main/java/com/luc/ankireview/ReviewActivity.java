@@ -250,8 +250,11 @@ public class ReviewActivity extends AppCompatActivity implements DisplayOptionsD
 
         m_backgroundPhoto = findViewById(R.id.background_photo);
 
+        /*
         m_backgroundManager = new BackgroundManager();
         m_backgroundManager.fillImageView(m_backgroundPhoto);
+        */
+        m_backgroundManager = null;
 
         // final step
         reloadCardStyleAndCards();
@@ -451,93 +454,6 @@ public class ReviewActivity extends AppCompatActivity implements DisplayOptionsD
         Log.v(TAG, "doubleTapHandler");
     }
 
-    private void setupSpeedDial() {
-
-
-
-        /*
-        // populate with possible choices
-
-        if( m_currentCard == null) {
-            // don't do anything
-            return;
-        }
-
-        m_speedDialView.clearActionItems();
-
-        if( ! m_showingQuestion) {
-            // card answers choices. only display on answer
-
-            Vector<AnkiUtils.AnswerChoice> answerChoices = m_currentCard.getAnswerChoices(getResources());
-            Collections.reverse(answerChoices);
-            for (AnkiUtils.AnswerChoice answerChoice : answerChoices) {
-                m_speedDialView.addActionItem(
-                        new SpeedDialActionItem.Builder(answerChoice.getActionId(), answerChoice.getDrawableId())
-                                .setFabBackgroundColor(ResourcesCompat.getColor(getResources(), answerChoice.getColorId(), getTheme()))
-                                .setLabel(answerChoice.getText())
-                                .create());
-            }
-        }
-
-        // other actions
-
-        m_speedDialView.addActionItem(
-                new SpeedDialActionItem.Builder(R.id.reviewer_action_mark, R.drawable.tag)
-                        .setFabBackgroundColor(ResourcesCompat.getColor(getResources(), R.color.answer_tag_suspend, getTheme()))
-                        .setLabel(R.string.reviewer_action_mark)
-                        .create());
-
-
-        m_speedDialView.addActionItem(
-                new SpeedDialActionItem.Builder(R.id.reviewer_action_mark_suspend, R.drawable.pause)
-                        .setFabBackgroundColor(ResourcesCompat.getColor(getResources(), R.color.answer_tag_suspend, getTheme()))
-                        .setLabel(R.string.reviewer_action_mark_suspend)
-                        .create());
-
-        m_speedDialView.addActionItem(
-                new SpeedDialActionItem.Builder(R.id.reviewer_action_mark_bury, R.drawable.pause)
-                        .setFabBackgroundColor(ResourcesCompat.getColor(getResources(), R.color.answer_tag_suspend, getTheme()))
-                        .setLabel(R.string.reviewer_action_mark_bury)
-                        .create());
-
-
-        // quicktags
-
-        ArrayList<String> quicktagList = getQuicktagList();
-        int resourceArray[] = {
-                R.id.reviewer_action_quicktag_1,
-                R.id.reviewer_action_quicktag_2,
-                R.id.reviewer_action_quicktag_3,
-                R.id.reviewer_action_quicktag_4,
-                R.id.reviewer_action_quicktag_5
-        };
-        int i = 0;
-        for(String quicktag : quicktagList) {
-
-            int color = ResourcesCompat.getColor(getResources(), R.color.answer_tag_suspend, getTheme());
-            if (m_currentCard.getTagMap().contains(quicktag)) {
-                color = ResourcesCompat.getColor(getResources(), R.color.answer_tag_disabled, getTheme());
-            }
-
-            m_speedDialView.addActionItem(
-                    new SpeedDialActionItem.Builder(resourceArray[i], R.drawable.tag)
-                            .setFabBackgroundColor(color)
-                            .setLabel(quicktag)
-                            .create());
-            i++;
-        }
-
-        m_speedDialView.addActionItem(
-                new SpeedDialActionItem.Builder(R.id.reviewer_action_add_quicktag, R.drawable.tag)
-                        .setFabBackgroundColor(ResourcesCompat.getColor(getResources(), R.color.answer_tag_suspend, getTheme()))
-                        .setLabel(R.string.reviewer_action_add_quicktag)
-                        .create());
-
-
-         */
-
-    }
-
 
     private void loadCards() {
 
@@ -690,7 +606,6 @@ public class ReviewActivity extends AppCompatActivity implements DisplayOptionsD
         m_cardReviewStartTime = System.currentTimeMillis();
         m_showingQuestion = true;
 
-        setupSpeedDial();
     }
 
     public void showAnswer()
@@ -699,7 +614,6 @@ public class ReviewActivity extends AppCompatActivity implements DisplayOptionsD
 
         m_showingQuestion = false;
         playAnswerAudio();
-        setupSpeedDial();
 
         Log.v(TAG, "showAnswer end");
     }
@@ -831,7 +745,6 @@ public class ReviewActivity extends AppCompatActivity implements DisplayOptionsD
         editor.putString(Settings.PREFERENCES_KEY_QUICKTAGS, null);
         editor.commit();
         showToast("Quicktags reset");
-        setupSpeedDial();
     }
 
     public void addQuicktag(String newTag) {
@@ -872,7 +785,6 @@ public class ReviewActivity extends AppCompatActivity implements DisplayOptionsD
         // add the tag locally so that the speedial can reflect this new tag
         m_currentCard.getTagMap().add(tag);
         showToast("Tagged card " + tag);
-        setupSpeedDial();
     }
 
     @Override
@@ -987,7 +899,7 @@ public class ReviewActivity extends AppCompatActivity implements DisplayOptionsD
             Utils.reportAnkiAPIException(this, e);
         }
 
-        if ((m_reviewCount % 3) == 0) {{
+        if (m_backgroundManager != null && (m_reviewCount % 3) == 0) {{
             // cycle background
             m_backgroundManager.fillImageView(m_backgroundPhoto);
         }}

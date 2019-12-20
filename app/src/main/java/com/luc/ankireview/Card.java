@@ -108,30 +108,6 @@ public class Card {
         }
     }
 
-    public Vector<String> getEaseStrings(Resources resources) {
-        Vector<String> choices = new Vector<String>();
-        // build possible choices based on number of buttons
-        switch (m_buttonCount) {
-            case 2:
-                choices.add(resources.getString(R.string.ease_button_again) + " (" + m_nextReviewTimes.get(0) + ")");
-                choices.add(resources.getString(R.string.ease_button_good) + " (" + m_nextReviewTimes.get(1) + ")");
-                break;
-            case 3:
-                choices.add(resources.getString(R.string.ease_button_again) + " (" + m_nextReviewTimes.get(0) + ")");
-                choices.add(resources.getString(R.string.ease_button_good) + " (" + m_nextReviewTimes.get(1) + ")");
-                choices.add(resources.getString(R.string.ease_button_easy) + " (" + m_nextReviewTimes.get(2) + ")");
-                break;
-            default:
-                choices.add(resources.getString(R.string.ease_button_again) + " (" + m_nextReviewTimes.get(0) + ")");
-                choices.add(resources.getString(R.string.ease_button_hard) + " (" + m_nextReviewTimes.get(1) + ")");
-                choices.add(resources.getString(R.string.ease_button_good) + " (" + m_nextReviewTimes.get(2) + ")");
-                choices.add(resources.getString(R.string.ease_button_easy) + " (" + m_nextReviewTimes.get(3) + ")");
-                break;
-        }
-
-        return choices;
-    }
-
     public String getBadAnswerInterval() {
         return m_nextReviewTimes.get(0);
     }
@@ -145,58 +121,6 @@ public class Card {
             default:
                 return m_nextReviewTimes.get(2);
         }
-    }
-
-    public Vector<AnkiUtils.AnswerChoice> getAnswerChoices(Resources resources) {
-        Vector<AnkiUtils.AnswerChoice> choices = new Vector<AnkiUtils.AnswerChoice>();
-
-        // build possible choices based on number of buttons
-        switch (m_buttonCount) {
-            case 2:
-                choices.add(new AnkiUtils.AnswerChoice(R.id.reviewer_action_ease_1,
-                                                       resources.getString(R.string.ease_button_again) + " (" + m_nextReviewTimes.get(0) + ")",
-                                                        R.drawable.close,
-                                                        R.color.answer_wrong));
-                choices.add(new AnkiUtils.AnswerChoice(R.id.reviewer_action_ease_2,
-                                                      resources.getString(R.string.ease_button_good) + " (" + m_nextReviewTimes.get(1) + ")",
-                                                       R.drawable.check,
-                                                       R.color.answer_good));
-                break;
-            case 3:
-                choices.add(new AnkiUtils.AnswerChoice(R.id.reviewer_action_ease_1,
-                                                      resources.getString(R.string.ease_button_again) + " (" + m_nextReviewTimes.get(0) + ")",
-                                                       R.drawable.close,
-                                                       R.color.answer_wrong));
-                choices.add(new AnkiUtils.AnswerChoice(R.id.reviewer_action_ease_2,
-                                                     resources.getString(R.string.ease_button_good) + " (" + m_nextReviewTimes.get(1) + ")",
-                                                       R.drawable.check,
-                                                       R.color.answer_good));
-                choices.add(new AnkiUtils.AnswerChoice(R.id.reviewer_action_ease_3,
-                                                       resources.getString(R.string.ease_button_easy) + " (" + m_nextReviewTimes.get(2) + ")",
-                                                        R.drawable.check,
-                                                        R.color.answer_easy));
-                break;
-            default:
-                choices.add(new AnkiUtils.AnswerChoice(R.id.reviewer_action_ease_1,
-                                                       resources.getString(R.string.ease_button_again) + " (" + m_nextReviewTimes.get(0) + ")",
-                                                        R.drawable.close,
-                                                        R.color.answer_wrong));
-                choices.add(new AnkiUtils.AnswerChoice(R.id.reviewer_action_ease_2,
-                                                       resources.getString(R.string.ease_button_hard) + " (" + m_nextReviewTimes.get(1) + ")",
-                                                        R.drawable.check,
-                                                        R.color.answer_hard));
-                choices.add(new AnkiUtils.AnswerChoice(R.id.reviewer_action_ease_3,
-                                                       resources.getString(R.string.ease_button_good) + " (" + m_nextReviewTimes.get(2) + ")",
-                                                        R.drawable.check,
-                                                        R.color.answer_good));
-                choices.add(new AnkiUtils.AnswerChoice(R.id.reviewer_action_ease_4,
-                                                        resources.getString(R.string.ease_button_easy) + " (" + m_nextReviewTimes.get(3) + ")",
-                                                         R.drawable.check,
-                                                         R.color.answer_easy));
-                break;
-        }
-
-        return choices;
     }
 
     @Override
