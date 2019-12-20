@@ -18,6 +18,58 @@
         app:srcCompat="@drawable/tag" />
 
     <ImageView
+        android:id="@+id/icon_quicktag_1"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:tint="@color/answer_tag_suspend"
+        app:layout_constraintBottom_toBottomOf="@+id/text_quicktag_1"
+        app:layout_constraintStart_toStartOf="@+id/icon_guideline"
+        app:layout_constraintTop_toTopOf="@+id/text_quicktag_1"
+        app:srcCompat="@drawable/tag" />
+
+    <ImageView
+        android:id="@+id/icon_quicktag_2"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:tint="@color/answer_tag_suspend"
+        app:layout_constraintBottom_toBottomOf="@+id/text_quicktag_2"
+        app:layout_constraintStart_toStartOf="@+id/icon_guideline"
+        app:layout_constraintTop_toTopOf="@+id/text_quicktag_2"
+        app:srcCompat="@drawable/tag" />
+
+    <ImageView
+        android:id="@+id/icon_quicktag_3"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:tint="@color/answer_tag_suspend"
+        app:layout_constraintBottom_toBottomOf="@+id/text_quicktag_3"
+        app:layout_constraintStart_toStartOf="@+id/icon_guideline"
+        app:layout_constraintTop_toTopOf="@+id/text_quicktag_3"
+        app:srcCompat="@drawable/tag" />
+
+    <ImageView
+        android:id="@+id/icon_quicktag_4"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:tint="@color/answer_tag_suspend"
+        app:layout_constraintBottom_toBottomOf="@+id/text_quicktag_4"
+        app:layout_constraintStart_toStartOf="@+id/icon_guideline"
+        app:layout_constraintTop_toTopOf="@+id/text_quicktag_4"
+        app:srcCompat="@drawable/tag" />
+
+    <ImageView
+        android:id="@+id/icon_quicktag_5"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:tint="@color/answer_tag_suspend"
+        app:layout_constraintBottom_toBottomOf="@+id/text_quicktag_5"
+        app:layout_constraintStart_toStartOf="@+id/icon_guideline"
+        app:layout_constraintTop_toTopOf="@+id/text_quicktag_5"
+        app:srcCompat="@drawable/tag" />
+
+
+
+    <ImageView
         android:id="@+id/icon_mark"
         android:layout_width="35dp"
         android:layout_height="35dp"
@@ -110,6 +162,51 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
+        android:id="@+id/text_quicktag_1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/reviewer_action_quicktag_prefix"
+        android:textSize="@dimen/answer_notification_name_size"
+        app:layout_constraintStart_toStartOf="@+id/text_guideline"
+        app:layout_constraintTop_toBottomOf="@+id/text_quicktag_add" />
+
+    <TextView
+        android:id="@+id/text_quicktag_2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/reviewer_action_quicktag_prefix"
+        android:textSize="@dimen/answer_notification_name_size"
+        app:layout_constraintStart_toStartOf="@+id/text_guideline"
+        app:layout_constraintTop_toBottomOf="@+id/text_quicktag_1" />
+
+    <TextView
+        android:id="@+id/text_quicktag_3"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/reviewer_action_quicktag_prefix"
+        android:textSize="@dimen/answer_notification_name_size"
+        app:layout_constraintStart_toStartOf="@+id/text_guideline"
+        app:layout_constraintTop_toBottomOf="@+id/text_quicktag_2" />
+
+    <TextView
+        android:id="@+id/text_quicktag_4"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/reviewer_action_quicktag_prefix"
+        android:textSize="@dimen/answer_notification_name_size"
+        app:layout_constraintStart_toStartOf="@+id/text_guideline"
+        app:layout_constraintTop_toBottomOf="@+id/text_quicktag_3" />
+
+    <TextView
+        android:id="@+id/text_quicktag_5"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/reviewer_action_quicktag_prefix"
+        android:textSize="@dimen/answer_notification_name_size"
+        app:layout_constraintStart_toStartOf="@+id/text_guideline"
+        app:layout_constraintTop_toBottomOf="@+id/text_quicktag_4" />
+
+    <TextView
         android:id="@+id/text_mark"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -117,7 +214,7 @@
         android:text="@string/reviewer_action_mark"
         android:textSize="@dimen/answer_notification_name_size"
         app:layout_constraintStart_toStartOf="@+id/text_guideline"
-        app:layout_constraintTop_toBottomOf="@+id/text_quicktag_add" />
+        app:layout_constraintTop_toBottomOf="@+id/text_quicktag_5" />
 
     <TextView
         android:id="@+id/text_mark_suspend"
