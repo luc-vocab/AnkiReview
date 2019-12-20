@@ -327,6 +327,61 @@
         tools:layout_editor_absoluteX="242dp" />
 
 
+    <TextView
+        android:id="@+id/tagname_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="tag 1"
+        android:textSize="@dimen/answer_notification_name_size"
+        app:layout_constraintBottom_toBottomOf="@+id/text_quicktag_1"
+        app:layout_constraintStart_toEndOf="@+id/text_quicktag_1"
+        app:layout_constraintTop_toTopOf="@+id/text_quicktag_1" />
+
+    <TextView
+        android:id="@+id/tagname_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="tag 2"
+        android:textSize="@dimen/answer_notification_name_size"
+        app:layout_constraintBottom_toBottomOf="@+id/text_quicktag_2"
+        app:layout_constraintStart_toEndOf="@+id/text_quicktag_2"
+        app:layout_constraintTop_toTopOf="@+id/text_quicktag_2" />
+
+    <TextView
+        android:id="@+id/tagname_3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="tag 3"
+        android:textSize="@dimen/answer_notification_name_size"
+        app:layout_constraintBottom_toBottomOf="@+id/text_quicktag_3"
+        app:layout_constraintStart_toEndOf="@+id/text_quicktag_3"
+        app:layout_constraintTop_toTopOf="@+id/text_quicktag_3" />
+
+    <TextView
+        android:id="@+id/tagname_4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="tag 4"
+        android:textSize="@dimen/answer_notification_name_size"
+        app:layout_constraintBottom_toBottomOf="@+id/text_quicktag_4"
+        app:layout_constraintStart_toEndOf="@+id/text_quicktag_4"
+        app:layout_constraintTop_toTopOf="@+id/text_quicktag_4" />
+
+    <TextView
+        android:id="@+id/tagname_5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="tag 5"
+        android:textSize="@dimen/answer_notification_name_size"
+        app:layout_constraintBottom_toBottomOf="@+id/text_quicktag_5"
+        app:layout_constraintStart_toEndOf="@+id/text_quicktag_5"
+        app:layout_constraintTop_toTopOf="@+id/text_quicktag_5" />
+
     <View
         android:id="@+id/clickhandler_add_quicktag"
         android:layout_width="0dp"
