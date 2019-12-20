@@ -736,13 +736,14 @@ public class ReviewActivity extends AppCompatActivity implements DisplayOptionsD
 
     }
 
-    private void answerCard(AnkiUtils.Ease ease) {
+    @Override
+    public void answerCard(AnkiUtils.Ease ease) {
 
         long timeTaken = Math.min(System.currentTimeMillis() - m_cardReviewStartTime, 60000);
         AnkiUtils.answerCard(getContentResolver(), m_currentCard, ease, timeTaken);
 
-        // String msg = String.format("ease: %d time: %.1fs", ease.getValue(), timeTaken / 1000.0);
-        // showToast(msg);
+        String msg = String.format("ease: %d time: %.1fs", ease.getValue(), timeTaken / 1000.0);
+        showToast(msg);
     }
 
     private void playAnswerAudio()
@@ -766,6 +767,12 @@ public class ReviewActivity extends AppCompatActivity implements DisplayOptionsD
         moveToNextQuestion();
     }
 
+    @Override
+    public int getAnswerButtonCount() {
+        return m_currentCard.getButtonCount();
+    }
+
+    @Override
     public void showAddQuicktag() {
 
 

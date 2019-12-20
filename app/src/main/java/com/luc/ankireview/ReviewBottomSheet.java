@@ -9,6 +9,8 @@ import android.view.ViewGroup;
 
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
+import java.util.Vector;
+
 import androidx.annotation.Nullable;
 
 public class ReviewBottomSheet extends BottomSheetDialogFragment {
@@ -59,33 +61,68 @@ public class ReviewBottomSheet extends BottomSheetDialogFragment {
             }
         });
 
-            /*
-            Button button1 = v.findViewById(R.id.button1);
-            Button button2 = v.findViewById(R.id.button2);
-            button1.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    mListener.onButtonClicked("Button 1 clicked");
-                    dismiss();
-                }
-            });
-            button2.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    mListener.onButtonClicked("Button 2 clicked");
-                    dismiss();
-                }
-            });
-            */
+
+        setupAnswerChoices(v);
 
         return v;
     }
 
+    private void setupAnswerChoices(View v) {
+        View clickHandler1 = v.findViewById(R.id.clickhandler_answer_ease1);
+        View clickHandler2 = v.findViewById(R.id.clickhandler_answer_ease2);
+        View clickHandler3 = v.findViewById(R.id.clickhandler_answer_ease3);
+        View clickHandler4 = v.findViewById(R.id.clickhandler_answer_ease4);
+
+        int buttonCount = m_listener.getAnswerButtonCount();
+
+        switch(buttonCount) {
+            case 2:
+                setupAnswerHandler(clickHandler1, AnkiUtils.Ease.EASE_1);
+                setupAnswerHandler(clickHandler3, AnkiUtils.Ease.EASE_2);
+                hideAnswerIds(v, m_answer2ViewIds);
+                hideAnswerIds(v, m_answer4ViewIds);
+                break;
+            case 3:
+                setupAnswerHandler(clickHandler1, AnkiUtils.Ease.EASE_1);
+                setupAnswerHandler(clickHandler3, AnkiUtils.Ease.EASE_2);
+                setupAnswerHandler(clickHandler4, AnkiUtils.Ease.EASE_3);
+                hideAnswerIds(v, m_answer2ViewIds);
+                break;
+            default:
+                setupAnswerHandler(clickHandler1, AnkiUtils.Ease.EASE_1);
+                setupAnswerHandler(clickHandler2, AnkiUtils.Ease.EASE_2);
+                setupAnswerHandler(clickHandler3, AnkiUtils.Ease.EASE_3);
+                setupAnswerHandler(clickHandler4, AnkiUtils.Ease.EASE_4);
+                break;
+        }
+
+
+    }
+
+    private void setupAnswerHandler(View clickHandler, final AnkiUtils.Ease ease) {
+        clickHandler.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                m_listener.answerCard(ease);
+                dismiss();
+            }
+        });
+    }
+
+    private void hideAnswerIds(View v, int[] answerIds) {
+        for(int id : answerIds) {
+            View view = v.findViewById(id);
+            view.setVisibility(View.GONE);
+        }
+    }
+
     public interface ReviewBottomSheetListener {
+        int getAnswerButtonCount();
         void showAddQuicktag();
         void markCard();
         void markSuspendCard();
         void markBuryCard();
+        void answerCard(AnkiUtils.Ease ease);
     }
 
     @Override
@@ -101,4 +138,10 @@ public class ReviewBottomSheet extends BottomSheetDialogFragment {
     }
 
     private ReviewBottomSheetListener m_listener;
+
+    private static final int[] m_answer1ViewIds = {R.id.icon_answer_ease1, R.id.text_answer_ease1, R.id.interval_answer_ease1};
+    private static final int[] m_answer2ViewIds = {R.id.icon_answer_ease2, R.id.text_answer_ease2, R.id.interval_answer_ease2};
+    private static final int[] m_answer3ViewIds = {R.id.icon_answer_ease3, R.id.text_answer_ease3, R.id.interval_answer_ease3};
+    private static final int[] m_answer4ViewIds = {R.id.icon_answer_ease4, R.id.text_answer_ease4, R.id.interval_answer_ease4};
+
 }
