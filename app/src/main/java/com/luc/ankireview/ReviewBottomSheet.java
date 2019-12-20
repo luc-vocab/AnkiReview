@@ -103,7 +103,7 @@ public class ReviewBottomSheet extends BottomSheetDialogFragment {
         clickHandler.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                m_listener.answerCard(ease);
+                m_listener.answerCustom(ease);
                 dismiss();
             }
         });
@@ -122,7 +122,7 @@ public class ReviewBottomSheet extends BottomSheetDialogFragment {
         void markCard();
         void markSuspendCard();
         void markBuryCard();
-        void answerCard(AnkiUtils.Ease ease);
+        void answerCustom(AnkiUtils.Ease ease);
     }
 
     @Override

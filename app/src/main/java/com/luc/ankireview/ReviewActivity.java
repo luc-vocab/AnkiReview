@@ -736,8 +736,7 @@ public class ReviewActivity extends AppCompatActivity implements DisplayOptionsD
 
     }
 
-    @Override
-    public void answerCard(AnkiUtils.Ease ease) {
+    private void answerCard(AnkiUtils.Ease ease) {
 
         long timeTaken = Math.min(System.currentTimeMillis() - m_cardReviewStartTime, 60000);
         AnkiUtils.answerCard(getContentResolver(), m_currentCard, ease, timeTaken);
@@ -896,6 +895,7 @@ public class ReviewActivity extends AppCompatActivity implements DisplayOptionsD
         showToast("Marked and Buried Card");
     }
 
+    @Override
     public void answerCustom(AnkiUtils.Ease ease) {
         answerCard(ease);
         moveToNextQuestion();
