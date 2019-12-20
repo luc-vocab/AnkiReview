@@ -12,7 +12,7 @@
     <string name="ease_button_easy">Easy</string>
 
     <string name="reviewer_action_add_quicktag">Add Quicktag</string>
-    <string name="reviewer_action_quicktag_prefix">Quicktag:</string>
+    <string name="reviewer_action_quicktag_prefix">Tag:</string>
     <string name="reviewer_action_mark">Mark</string>
     <string name="reviewer_action_mark_suspend">Mark and Suspend</string>
     <string name="reviewer_action_mark_bury">Mark and Bury</string>
