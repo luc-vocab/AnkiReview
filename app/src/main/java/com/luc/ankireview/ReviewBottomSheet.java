@@ -5,28 +5,33 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Vector;
 
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 
 public class ReviewBottomSheet extends BottomSheetDialogFragment {
     private static final String TAG = "ReviewBottomSheet";
 
     class QuickTagData {
-        public QuickTagData(View clickHandler, int[] viewIds, TextView tagNameTextView) {
+        public QuickTagData(View clickHandler, int[] viewIds, TextView tagNameTextView, ImageView icon) {
             this.clickHandler = clickHandler;
             this.viewIds = viewIds;
             this.tagNameTextView = tagNameTextView;
+            this.icon = icon;
         }
 
         public final View clickHandler;
         public final int[] viewIds;
         public final TextView tagNameTextView;
+        public final ImageView icon;
     }
 
     @Nullable
@@ -87,6 +92,12 @@ public class ReviewBottomSheet extends BottomSheetDialogFragment {
         View clickHandler4 = v.findViewById(R.id.clickhandler_tag4);
         View clickHandler5 = v.findViewById(R.id.clickhandler_tag5);
 
+        ImageView icon1 = v.findViewById(R.id.icon_quicktag_1);
+        ImageView icon2 = v.findViewById(R.id.icon_quicktag_2);
+        ImageView icon3 = v.findViewById(R.id.icon_quicktag_3);
+        ImageView icon4 = v.findViewById(R.id.icon_quicktag_4);
+        ImageView icon5 = v.findViewById(R.id.icon_quicktag_5);
+
         TextView tagName1 = v.findViewById(R.id.tagname_1);
         TextView tagName2 = v.findViewById(R.id.tagname_2);
         TextView tagName3 = v.findViewById(R.id.tagname_3);
@@ -94,13 +105,14 @@ public class ReviewBottomSheet extends BottomSheetDialogFragment {
         TextView tagName5 = v.findViewById(R.id.tagname_5);
 
         ArrayList<String> quicktagList = m_listener.getQuicktagList();
+        HashSet<String> tagMap = m_listener.getCardTagMap();
 
         Vector<QuickTagData> quickTagDataVector = new Vector<QuickTagData>();
-        quickTagDataVector.add(new QuickTagData(clickHandler1, m_quicktag1ViewIds, tagName1));
-        quickTagDataVector.add(new QuickTagData(clickHandler2, m_quicktag2ViewIds, tagName2));
-        quickTagDataVector.add(new QuickTagData(clickHandler3, m_quicktag3ViewIds, tagName3));
-        quickTagDataVector.add(new QuickTagData(clickHandler4, m_quicktag4ViewIds, tagName4));
-        quickTagDataVector.add(new QuickTagData(clickHandler5, m_quicktag5ViewIds, tagName5));
+        quickTagDataVector.add(new QuickTagData(clickHandler1, m_quicktag1ViewIds, tagName1, icon1));
+        quickTagDataVector.add(new QuickTagData(clickHandler2, m_quicktag2ViewIds, tagName2, icon2));
+        quickTagDataVector.add(new QuickTagData(clickHandler3, m_quicktag3ViewIds, tagName3, icon3));
+        quickTagDataVector.add(new QuickTagData(clickHandler4, m_quicktag4ViewIds, tagName4, icon4));
+        quickTagDataVector.add(new QuickTagData(clickHandler5, m_quicktag5ViewIds, tagName5, icon5));
 
         for(int i = 0; i < Settings.MAX_QUICKTAGS; i++) {
             QuickTagData quickTagData = quickTagDataVector.get(i);
@@ -109,6 +121,11 @@ public class ReviewBottomSheet extends BottomSheetDialogFragment {
                 String tagName = quicktagList.get(i);
                 quickTagData.tagNameTextView.setText(tagName);
                 setupTagHandler(quickTagData.clickHandler, tagName);
+                // is the card already tagged ? if so, change tint of icon
+                if(tagMap.contains(tagName)) {
+                    // quickTagData.icon.setTint
+                    quickTagData.icon.setColorFilter(ContextCompat.getColor(v.getContext(), R.color.answer_tag_disabled), android.graphics.PorterDuff.Mode.MULTIPLY);
+                }
             } else {
                 // no quicktag, hide the views
                 hideViewIds(v, quickTagData.viewIds);
@@ -202,6 +219,7 @@ public class ReviewBottomSheet extends BottomSheetDialogFragment {
         void markBuryCard();
         void answerCustom(AnkiUtils.Ease ease);
         void tagCard(String tag);
+        HashSet<String> getCardTagMap();
     }
 
     @Override

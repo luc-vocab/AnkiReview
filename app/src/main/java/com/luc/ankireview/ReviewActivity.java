@@ -49,6 +49,7 @@ import org.json.JSONArray;
 import java.io.IOException;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Vector;
 
 public class ReviewActivity extends AppCompatActivity implements DisplayOptionsDialog.DisplayOptionsDialogListener, ReviewBottomSheet.ReviewBottomSheetListener {
@@ -157,67 +158,6 @@ public class ReviewActivity extends AppCompatActivity implements DisplayOptionsD
 
             }
         });
-
-        // setup bottomsheet actions
-
-        // setup speed dial
-        // ----------------
-        /*
-        m_speedDialView = findViewById(R.id.speedDial);
-
-        m_speedDialView.setOnActionSelectedListener(new SpeedDialView.OnActionSelectedListener() {
-            @Override
-            public boolean onActionSelected(SpeedDialActionItem speedDialActionItem) {
-
-                int actionId = speedDialActionItem.getId();
-
-                if( actionId == R.id.reviewer_action_ease_1 ||
-                    actionId == R.id.reviewer_action_ease_2 ||
-                    actionId == R.id.reviewer_action_ease_3 ||
-                    actionId == R.id.reviewer_action_ease_4) {
-
-                    AnkiUtils.Ease ease = AnkiUtils.Ease.fromActionId(speedDialActionItem.getId());
-                    answerCustom(ease);
-                    return false;
-
-                } else {
-                    ArrayList<String> quicktagList = getQuicktagList();
-                    switch (speedDialActionItem.getId()) {
-                        case R.id.reviewer_action_quicktag_1:
-                            tagCard(quicktagList.get(0));
-                            return false;
-                        case R.id.reviewer_action_quicktag_2:
-                            tagCard(quicktagList.get(1));
-                            return false;
-                        case R.id.reviewer_action_quicktag_3:
-                            tagCard(quicktagList.get(2));
-                            return false;
-                        case R.id.reviewer_action_quicktag_4:
-                            tagCard(quicktagList.get(3));
-                            return false;
-                        case R.id.reviewer_action_quicktag_5:
-                            tagCard(quicktagList.get(4));
-                            return false;
-
-                        case R.id.reviewer_action_add_quicktag:
-                            showAddQuicktag();
-                            return false;
-                        case R.id.reviewer_action_mark:
-                            markCard();
-                            return false;
-                        case R.id.reviewer_action_mark_bury:
-                            markBuryCard();
-                            return false;
-                        case R.id.reviewer_action_mark_suspend:
-                            markSuspendCard();
-                            return false;
-                        default:
-                            return false;
-                    }
-                }
-            }
-        });
-        */
 
 
         // load deck name
@@ -772,6 +712,11 @@ public class ReviewActivity extends AppCompatActivity implements DisplayOptionsD
         // tag card regardless of whether the quicktag existed or not
         tagCard(newTag);
 
+    }
+
+    @Override
+    public HashSet<String> getCardTagMap() {
+        return m_currentCard.getTagMap();
     }
 
     @Override
