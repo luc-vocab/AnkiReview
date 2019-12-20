@@ -21,6 +21,16 @@ public class ReviewBottomSheet extends BottomSheetDialogFragment {
 
         // TODO: setup button wiring here
 
+        View addQuicktag = v.findViewById(R.id.clickhandler_add_quicktag);
+        addQuicktag.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                m_listener.showAddQuicktag();
+                dismiss();
+
+            }
+        });
+
         View mark = v.findViewById(R.id.clickhandler_mark);
         mark.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,7 +82,7 @@ public class ReviewBottomSheet extends BottomSheetDialogFragment {
     }
 
     public interface ReviewBottomSheetListener {
-        void onBottomSheetButtonClicked();
+        void showAddQuicktag();
         void markCard();
         void markSuspendCard();
         void markBuryCard();

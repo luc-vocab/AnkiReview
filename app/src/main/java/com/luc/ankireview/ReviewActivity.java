@@ -257,11 +257,6 @@ public class ReviewActivity extends AppCompatActivity implements DisplayOptionsD
         reloadCardStyleAndCards();
     }
 
-    @Override
-    public void onBottomSheetButtonClicked() {
-        Log.v(TAG, "onBottomSheetButtonClicked");
-    }
-
     private void reloadCardStyleAndCards() {
         Log.v(TAG, "reloadCardStyleAndCards");
 
