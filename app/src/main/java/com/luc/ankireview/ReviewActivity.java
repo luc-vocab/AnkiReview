@@ -873,12 +873,13 @@ public class ReviewActivity extends AppCompatActivity implements DisplayOptionsD
         setupSpeedDial();
     }
 
-
+    @Override
     public void markCard() {
         AnkiUtils.markCard(getContentResolver(), m_currentCard);
         showToast("Marked Card");
     }
 
+    @Override
     public void markSuspendCard() {
         AnkiUtils.markCard(getContentResolver(), m_currentCard);
         AnkiUtils.suspendCard(getContentResolver(), m_currentCard);
@@ -887,12 +888,19 @@ public class ReviewActivity extends AppCompatActivity implements DisplayOptionsD
         showToast("Marked and Suspended Card");
     }
 
+    @Override
     public void markBuryCard() {
         AnkiUtils.markCard(getContentResolver(), m_currentCard);
         AnkiUtils.buryCard(getContentResolver(), m_currentCard);
         showAnswer();
         moveToNextQuestion();
         showToast("Marked and Buried Card");
+    }
+
+
+    @Override
+    public Vector<String> getNextReviewtimes() {
+        return m_currentCard.getNextReviewTimes();
     }
 
     @Override

@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
@@ -73,6 +74,13 @@ public class ReviewBottomSheet extends BottomSheetDialogFragment {
         View clickHandler3 = v.findViewById(R.id.clickhandler_answer_ease3);
         View clickHandler4 = v.findViewById(R.id.clickhandler_answer_ease4);
 
+        TextView nextReviewTime1 = v.findViewById(R.id.interval_answer_ease1);
+        TextView nextReviewTime2 = v.findViewById(R.id.interval_answer_ease2);
+        TextView nextReviewTime3 = v.findViewById(R.id.interval_answer_ease3);
+        TextView nextReviewTime4 = v.findViewById(R.id.interval_answer_ease4);
+
+        Vector<String> nextReviewTimes = m_listener.getNextReviewtimes();
+
         int buttonCount = m_listener.getAnswerButtonCount();
 
         switch(buttonCount) {
@@ -81,11 +89,16 @@ public class ReviewBottomSheet extends BottomSheetDialogFragment {
                 setupAnswerHandler(clickHandler3, AnkiUtils.Ease.EASE_2);
                 hideAnswerIds(v, m_answer2ViewIds);
                 hideAnswerIds(v, m_answer4ViewIds);
+                nextReviewTime1.setText(nextReviewTimes.get(0));
+                nextReviewTime3.setText(nextReviewTimes.get(1));
                 break;
             case 3:
                 setupAnswerHandler(clickHandler1, AnkiUtils.Ease.EASE_1);
                 setupAnswerHandler(clickHandler3, AnkiUtils.Ease.EASE_2);
                 setupAnswerHandler(clickHandler4, AnkiUtils.Ease.EASE_3);
+                nextReviewTime1.setText(nextReviewTimes.get(0));
+                nextReviewTime3.setText(nextReviewTimes.get(1));
+                nextReviewTime4.setText(nextReviewTimes.get(2));
                 hideAnswerIds(v, m_answer2ViewIds);
                 break;
             default:
@@ -93,6 +106,10 @@ public class ReviewBottomSheet extends BottomSheetDialogFragment {
                 setupAnswerHandler(clickHandler2, AnkiUtils.Ease.EASE_2);
                 setupAnswerHandler(clickHandler3, AnkiUtils.Ease.EASE_3);
                 setupAnswerHandler(clickHandler4, AnkiUtils.Ease.EASE_4);
+                nextReviewTime1.setText(nextReviewTimes.get(0));
+                nextReviewTime2.setText(nextReviewTimes.get(1));
+                nextReviewTime3.setText(nextReviewTimes.get(2));
+                nextReviewTime4.setText(nextReviewTimes.get(3));
                 break;
         }
 
@@ -118,6 +135,7 @@ public class ReviewBottomSheet extends BottomSheetDialogFragment {
 
     public interface ReviewBottomSheetListener {
         int getAnswerButtonCount();
+        Vector<String> getNextReviewtimes();
         void showAddQuicktag();
         void markCard();
         void markSuspendCard();

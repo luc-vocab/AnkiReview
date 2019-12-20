@@ -223,6 +223,10 @@ public class Card {
         return fieldList;
     }
 
+    public Vector<String> getNextReviewTimes() {
+        return m_nextReviewTimes;
+    }
+
     private long m_noteId;
     private int m_cardOrd;
     private long m_modelId;
