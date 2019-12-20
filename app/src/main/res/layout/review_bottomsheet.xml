@@ -462,6 +462,51 @@
         app:layout_constraintStart_toStartOf="@+id/icon_answer_ease4"
         app:layout_constraintTop_toTopOf="@+id/text_answer_ease4"/>
 
+    <View
+        android:id="@+id/clickhandler_tag1"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="@+id/text_quicktag_1"
+        app:layout_constraintEnd_toEndOf="@+id/tagname_1"
+        app:layout_constraintStart_toStartOf="@+id/icon_quicktag_1"
+        app:layout_constraintTop_toTopOf="@+id/text_quicktag_1"/>
+
+    <View
+        android:id="@+id/clickhandler_tag2"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="@+id/text_quicktag_2"
+        app:layout_constraintEnd_toEndOf="@+id/tagname_2"
+        app:layout_constraintStart_toStartOf="@+id/icon_quicktag_2"
+        app:layout_constraintTop_toTopOf="@+id/text_quicktag_2"/>
+
+    <View
+        android:id="@+id/clickhandler_tag3"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="@+id/text_quicktag_3"
+        app:layout_constraintEnd_toEndOf="@+id/tagname_3"
+        app:layout_constraintStart_toStartOf="@+id/icon_quicktag_3"
+        app:layout_constraintTop_toTopOf="@+id/text_quicktag_3"/>
+
+    <View
+        android:id="@+id/clickhandler_tag4"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="@+id/text_quicktag_4"
+        app:layout_constraintEnd_toEndOf="@+id/tagname_4"
+        app:layout_constraintStart_toStartOf="@+id/icon_quicktag_4"
+        app:layout_constraintTop_toTopOf="@+id/text_quicktag_4"/>
+
+    <View
+        android:id="@+id/clickhandler_tag5"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="@+id/text_quicktag_5"
+        app:layout_constraintEnd_toEndOf="@+id/tagname_5"
+        app:layout_constraintStart_toStartOf="@+id/icon_quicktag_5"
+        app:layout_constraintTop_toTopOf="@+id/text_quicktag_5"/>
+
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/text_guideline"
         android:layout_width="wrap_content"
