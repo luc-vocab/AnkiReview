@@ -43,8 +43,6 @@ dependencies {
     implementation 'androidx.recyclerview:recyclerview:1.0.0'
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    implementation 'com.akexorcist:RoundCornerProgressBar:2.0.3'
-    implementation "com.leinardi.android:speed-dial:3.1.1"
     implementation 'androidx.dynamicanimation:dynamicanimation:1.0.0'
     implementation 'com.squareup.picasso:picasso:2.71828'
     implementation 'com.github.warkiz.widget:indicatorseekbar:2.1.2'
