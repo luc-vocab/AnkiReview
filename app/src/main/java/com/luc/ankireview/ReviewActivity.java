@@ -289,9 +289,11 @@ public class ReviewActivity extends AppCompatActivity implements DisplayOptionsD
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            /*
             case R.id.deck_display_mode:
                 showDeckDisplayOptions();
                 return true;
+             */
             case R.id.cardstyle:
                 Log.v(TAG, "card style selected");
                 launchCardStyle();

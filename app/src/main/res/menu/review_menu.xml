@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <!--
     <item
         android:id="@+id/deck_display_mode"
         android:title="Deck Display Mode" />
+        -->
 
     <item
         android:id="@+id/cardstyle"

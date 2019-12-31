@@ -379,14 +379,18 @@ public class CardStyle implements Serializable {
     }
 
     public boolean deckDisplayModeConfigured(long deckId) {
+        /*
         if( m_cardStyleStorage.deckDisplayMode.containsKey(deckId) ) {
             return true;
         }
         return false;
+        */
+        return true;
     }
 
     public DeckDisplayMode getdeckDisplayMode(long deckId) {
-        return m_cardStyleStorage.deckDisplayMode.get(deckId);
+        //return m_cardStyleStorage.deckDisplayMode.get(deckId);
+        return DeckDisplayMode.ANKIREVIEW;
     }
 
     public boolean usingAnkiReviewMode(long deckId) {
