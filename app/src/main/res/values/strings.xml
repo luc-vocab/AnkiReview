@@ -82,6 +82,9 @@
     <string name="review_request_title">Good Job ! Review session done</string>
     <string name="review_request_message">I spent nine months writing AnkiReview, to make reviewing more fun and give back to the Anki community. It would mean the world to me if you gave me a review!</string>
 
+    <string name="review_help_question">Swipe down to reveal answer</string>
+    <string name="review_help_answer">Swipe left to answer Bad, swipe right to answer Good. Or tap the button at the bottom to reveal more answer options.</string>
+
     <string name="developer_email">ankireview@mailc.net</string>
 
 </resources>

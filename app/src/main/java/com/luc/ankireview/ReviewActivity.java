@@ -183,6 +183,9 @@ public class ReviewActivity extends AppCompatActivity implements DisplayOptionsD
         setupCardMotionLayoutTransitions(m_flashcardFrameAnkiReview);
         setupCardMotionLayoutTransitions(m_flashcardFrameTeacherMode);
 
+        // background photos disabled for now
+        // ----------------------------------
+
         m_backgroundPhoto = findViewById(R.id.background_photo);
 
         /*
@@ -190,6 +193,17 @@ public class ReviewActivity extends AppCompatActivity implements DisplayOptionsD
         m_backgroundManager.fillImageView(m_backgroundPhoto);
         */
         m_backgroundManager = null;
+
+
+        // do we need to show hints the first time a user runs ?
+        // -----------------------------------------------------
+
+        m_showFirstRunQuestionHelp = false;
+        m_showFirstRunAnswerHelp = false;
+        if( isFirstRun() ) {
+            m_showFirstRunQuestionHelp = true;
+            m_showFirstRunAnswerHelp = true;
+        }
 
         // final step
         reloadCardStyleAndCards();
@@ -543,6 +557,12 @@ public class ReviewActivity extends AppCompatActivity implements DisplayOptionsD
         m_cardReviewStartTime = System.currentTimeMillis();
         m_showingQuestion = true;
 
+        if(m_showFirstRunQuestionHelp) {
+            // display hint on how to answer card
+            showToastLong(getString(R.string.review_help_question));
+            m_showFirstRunQuestionHelp = false;
+        }
+
     }
 
     public void showAnswer()
@@ -553,6 +573,12 @@ public class ReviewActivity extends AppCompatActivity implements DisplayOptionsD
         playAnswerAudio();
 
         Log.v(TAG, "showAnswer end");
+
+        if(m_showFirstRunAnswerHelp) {
+            // display hint on how to answer card
+            showToastLong(getString(R.string.review_help_answer));
+            m_showFirstRunAnswerHelp = false;
+        }
     }
 
     private void playQuestionAudio(String audioFile) {
@@ -653,6 +679,14 @@ public class ReviewActivity extends AppCompatActivity implements DisplayOptionsD
 
         alert.show();
 
+    }
+
+    private boolean isFirstRun() {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        boolean isFirstRun = prefs.getBoolean(Settings.PREFERENCES_KEY_FIRSTRUN, true);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putBoolean(Settings.PREFERENCES_KEY_FIRSTRUN, false);
+        return isFirstRun;
     }
 
 
@@ -858,6 +892,13 @@ public class ReviewActivity extends AppCompatActivity implements DisplayOptionsD
         toast.show();
     }
 
+    private void showToastLong(String text)
+    {
+        int duration = Toast.LENGTH_LONG;
+        Toast toast = Toast.makeText(this, text, duration);
+        toast.show();
+    }
+
 
     private void reviewsDone() {
         Bundle bundle = new Bundle();
@@ -949,6 +990,9 @@ public class ReviewActivity extends AppCompatActivity implements DisplayOptionsD
 
     BackgroundManager m_backgroundManager;
     ImageView m_backgroundPhoto;
+
+    private boolean m_showFirstRunQuestionHelp = false;
+    private boolean m_showFirstRunAnswerHelp = false;
 
     private FirebaseAnalytics m_firebaseAnalytics;
 
