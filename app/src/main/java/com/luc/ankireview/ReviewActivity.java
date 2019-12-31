@@ -686,6 +686,7 @@ public class ReviewActivity extends AppCompatActivity implements DisplayOptionsD
         boolean isFirstRun = prefs.getBoolean(Settings.PREFERENCES_KEY_FIRSTRUN, true);
         SharedPreferences.Editor editor = prefs.edit();
         editor.putBoolean(Settings.PREFERENCES_KEY_FIRSTRUN, false);
+        editor.commit();
         return isFirstRun;
     }
 
