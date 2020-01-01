@@ -5,6 +5,9 @@ Some more background: https://medium.com/@lucw/ankireview-yet-another-flashcard-
 
 Download from Play Store: https://play.google.com/store/apps/details?id=com.luc.ankireview
 
+Want to support my work on AnkiReview ? Become a supporter on patreon: https://www.patreon.com/lucw
+[![image](https://c5.patreon.com/external/logo/become_a_patron_button.png)](https://www.patreon.com/lucw)
+
 * Easily create beautiful flashcards using the built-in style editor (no HTML/CSS required).
 * Flip the question card up to reveal answer.
 * Swipe left to answer as card as wrong.
