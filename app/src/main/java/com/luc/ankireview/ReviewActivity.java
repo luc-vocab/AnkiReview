@@ -1,7 +1,5 @@
 package com.luc.ankireview;
 
-import android.animation.Animator;
-import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -11,10 +9,8 @@ import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 
-import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.motion.widget.MotionLayout;
-import androidx.core.content.res.ResourcesCompat;
 import androidx.core.view.GestureDetectorCompat;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,12 +19,10 @@ import androidx.appcompat.widget.Toolbar;
 import android.text.InputType;
 import android.util.Log;
 import android.view.GestureDetector;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -144,9 +138,8 @@ public class ReviewActivity extends AppCompatActivity implements DisplayOptionsD
         m_answerSoundMediaPlayer = new MediaPlayer();
         m_answerSoundMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
 
-        m_answerBadAudio = MediaPlayer.create(this, R.raw.cancel_41);
-        m_answerGoodAudio = MediaPlayer.create(this, R.raw.select_13);
-
+        m_answerBadAudioFeedback = MediaPlayer.create(this, R.raw.cancel_41);
+        m_answerGoodAudioFeedback = MediaPlayer.create(this, R.raw.select_13);
 
         // setup floating action button  and bottomsheet
         m_bottomSheetButton = findViewById(R.id.bottomsheet_button);
@@ -640,14 +633,18 @@ public class ReviewActivity extends AppCompatActivity implements DisplayOptionsD
 
     private void answerBad()
     {
-        m_answerBadAudio.start();
+        if(useAudioFeedback()) {
+            m_answerBadAudioFeedback.start();
+        }
         answerCard(m_currentCard.getEaseBad());
         moveToNextQuestion();
     }
 
     private void answerGood()
     {
-        m_answerGoodAudio.start();
+        if(useAudioFeedback()) {
+            m_answerGoodAudioFeedback.start();
+        }
         answerCard(m_currentCard.getEaseGood());
         moveToNextQuestion();
     }
@@ -688,6 +685,12 @@ public class ReviewActivity extends AppCompatActivity implements DisplayOptionsD
 
         alert.show();
 
+    }
+
+    private boolean useAudioFeedback() {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        boolean useAudioFeedback = prefs.getBoolean("audio_feedback", true);
+        return useAudioFeedback;
     }
 
     private boolean isFirstRun() {
@@ -991,8 +994,8 @@ public class ReviewActivity extends AppCompatActivity implements DisplayOptionsD
     private MediaPlayer m_answerSoundMediaPlayer;
 
     // answer audio
-    MediaPlayer m_answerBadAudio;
-    MediaPlayer m_answerGoodAudio;
+    MediaPlayer m_answerBadAudioFeedback;
+    MediaPlayer m_answerGoodAudioFeedback;
 
     // gesture detection
     private FrameLayout m_touchLayer;

@@ -7,7 +7,8 @@
 
         <SwitchPreferenceCompat
             app:key="audio_feedback"
-            app:title="Enable audio feedback when reviewing"/>
+            app:title="Audio feedback during review"
+            android:defaultValue="true" />
 
     </PreferenceCategory>
 
