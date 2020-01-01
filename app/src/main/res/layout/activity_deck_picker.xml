@@ -80,6 +80,15 @@
                         android:layout_marginBottom="8dp"
                         android:textSize="18dp" />
 
+                    <Button
+                        android:id="@+id/deckpicker_retry"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        style="@style/Widget.AppCompat.Button.Colored"
+                        android:text="Retry"
+                         />
+
 
                 </LinearLayout>
 

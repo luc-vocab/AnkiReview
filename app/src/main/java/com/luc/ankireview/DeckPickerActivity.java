@@ -23,6 +23,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -289,6 +290,15 @@ public class DeckPickerActivity extends AppCompatActivity implements AdapterView
         m_deckPickerMessageDescription = findViewById(R.id.deckpicker_message_description);
         m_deckPickerMessageExtra = findViewById(R.id.deckpicker_message_extra);
 
+        Button retryButton = findViewById(R.id.deckpicker_retry);
+        retryButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.v(TAG, "retry button clicked");
+                checkAllPermissions();
+            }
+        });
+
         checkAllPermissions();
 
     }
@@ -304,6 +314,7 @@ public class DeckPickerActivity extends AppCompatActivity implements AdapterView
     private void listDecks() {
 
         try {
+
 
             m_ankiDeckList.clear();
             Vector<AnkiDeck> noDueDeckList = new Vector<AnkiDeck>();
