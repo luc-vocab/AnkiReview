@@ -8,6 +8,10 @@
         -->
 
     <item
+        android:id="@+id/preferences"
+        android:title="Preferences" />
+
+    <item
         android:id="@+id/cardstyle"
         android:title="Card Style" />
 

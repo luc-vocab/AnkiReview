@@ -308,6 +308,10 @@ public class ReviewActivity extends AppCompatActivity implements DisplayOptionsD
                 showDeckDisplayOptions();
                 return true;
              */
+            case R.id.preferences:
+                Log.v(TAG, "preferences selected");
+                launchPreferences();
+                return true;
             case R.id.cardstyle:
                 Log.v(TAG, "card style selected");
                 launchCardStyle();
@@ -323,6 +327,11 @@ public class ReviewActivity extends AppCompatActivity implements DisplayOptionsD
                 return super.onOptionsItemSelected(item);
 
         }
+    }
+
+    private void launchPreferences() {
+        Intent intent = new Intent(ReviewActivity.this, SettingsActivity.class);
+        this.startActivityForResult(intent, 0);
     }
 
     private void launchCardStyle() {
