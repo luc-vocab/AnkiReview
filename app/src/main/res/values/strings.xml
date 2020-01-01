@@ -4,6 +4,8 @@
 
     <string name="card_style">Card Style</string>
 
+    <string name="settings_toolbar_title">AnkiReview Preferences</string>
+
     <string name="pick_ease">Answer Card</string>
 
     <string name="ease_button_again">Again</string>
