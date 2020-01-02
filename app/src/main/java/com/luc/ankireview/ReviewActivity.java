@@ -501,11 +501,13 @@ public class ReviewActivity extends AppCompatActivity implements DisplayOptionsD
 
     private void showReviewControls() {
         m_activeMotionLayout.setVisibility(View.VISIBLE);
+        m_bottomSheetButton.show();
         m_styleNotFound.setVisibility(View.INVISIBLE);
     }
 
     private void showCardStyleNotDefinedControls(String cardTemplateName) {
         m_activeMotionLayout.setVisibility(View.INVISIBLE);
+        m_bottomSheetButton.hide();
         m_styleNotFound.setVisibility(View.VISIBLE);
         m_cardTemplateName.setText(cardTemplateName);
     }
