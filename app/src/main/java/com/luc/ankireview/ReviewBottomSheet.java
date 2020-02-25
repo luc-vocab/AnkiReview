@@ -154,16 +154,16 @@ public class ReviewBottomSheet extends BottomSheetDialogFragment {
                 setupAnswerHandler(ease3, AnkiUtils.Ease.EASE_2);
                 ease2.setVisibility(View.GONE);
                 ease4.setVisibility(View.GONE);
-                ease1.setText(nextReviewTimes.get(0));
-                ease3.setText(nextReviewTimes.get(1));
+                ease1.setText(nextReviewTimes.get(0) + '\n' + v.getContext().getString(R.string.ease_button_again));
+                ease3.setText(nextReviewTimes.get(1) + '\n' + v.getContext().getString(R.string.ease_button_good));
                 break;
             case 3:
                 setupAnswerHandler(ease1, AnkiUtils.Ease.EASE_1);
                 setupAnswerHandler(ease3, AnkiUtils.Ease.EASE_2);
                 setupAnswerHandler(ease4, AnkiUtils.Ease.EASE_3);
-                ease1.setText(nextReviewTimes.get(0));
-                ease3.setText(nextReviewTimes.get(1));
-                ease4.setText(nextReviewTimes.get(2));
+                ease1.setText(nextReviewTimes.get(0) + '\n' + v.getContext().getString(R.string.ease_button_again));
+                ease3.setText(nextReviewTimes.get(1) + '\n' + v.getContext().getString(R.string.ease_button_good));
+                ease4.setText(nextReviewTimes.get(2) + '\n' + v.getContext().getString(R.string.ease_button_easy));
                 ease2.setVisibility(View.GONE);
                 break;
             default:
@@ -171,10 +171,10 @@ public class ReviewBottomSheet extends BottomSheetDialogFragment {
                 setupAnswerHandler(ease2, AnkiUtils.Ease.EASE_2);
                 setupAnswerHandler(ease3, AnkiUtils.Ease.EASE_3);
                 setupAnswerHandler(ease4, AnkiUtils.Ease.EASE_4);
-                ease1.setText(nextReviewTimes.get(0));
-                ease2.setText(nextReviewTimes.get(1));
-                ease3.setText(nextReviewTimes.get(2));
-                ease4.setText(nextReviewTimes.get(3));
+                ease1.setText(nextReviewTimes.get(0) + '\n' + v.getContext().getString(R.string.ease_button_again));
+                ease2.setText(nextReviewTimes.get(1) + '\n' + v.getContext().getString(R.string.ease_button_hard));
+                ease3.setText(nextReviewTimes.get(2) + '\n' + v.getContext().getString(R.string.ease_button_good));
+                ease4.setText(nextReviewTimes.get(3) + '\n' + v.getContext().getString(R.string.ease_button_easy));
                 break;
         }
 
@@ -234,18 +234,5 @@ public class ReviewBottomSheet extends BottomSheetDialogFragment {
     }
 
     private ReviewBottomSheetListener m_listener;
-
-    /*
-    private static final int[] m_answer1ViewIds = {R.id.icon_answer_ease1, R.id.text_answer_ease1, R.id.interval_answer_ease1};
-    private static final int[] m_answer2ViewIds = {R.id.icon_answer_ease2, R.id.text_answer_ease2, R.id.interval_answer_ease2};
-    private static final int[] m_answer3ViewIds = {R.id.icon_answer_ease3, R.id.text_answer_ease3, R.id.interval_answer_ease3};
-    private static final int[] m_answer4ViewIds = {R.id.icon_answer_ease4, R.id.text_answer_ease4, R.id.interval_answer_ease4};
-
-    private static final int[] m_quicktag1ViewIds = {R.id.icon_quicktag_1, R.id.text_quicktag_1, R.id.tagname_1};
-    private static final int[] m_quicktag2ViewIds = {R.id.icon_quicktag_2, R.id.text_quicktag_2, R.id.tagname_2};
-    private static final int[] m_quicktag3ViewIds = {R.id.icon_quicktag_3, R.id.text_quicktag_3, R.id.tagname_3};
-    private static final int[] m_quicktag4ViewIds = {R.id.icon_quicktag_4, R.id.text_quicktag_4, R.id.tagname_4};
-    private static final int[] m_quicktag5ViewIds = {R.id.icon_quicktag_5, R.id.text_quicktag_5, R.id.tagname_5};
-    */
 
 }
