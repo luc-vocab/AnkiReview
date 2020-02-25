@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -39,7 +40,7 @@ public class ReviewBottomSheet extends BottomSheetDialogFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.review_bottomsheet, container, false);
 
-
+        /*
         View addQuicktag = v.findViewById(R.id.clickhandler_add_quicktag);
         addQuicktag.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -49,8 +50,9 @@ public class ReviewBottomSheet extends BottomSheetDialogFragment {
 
             }
         });
+        */
 
-        View mark = v.findViewById(R.id.clickhandler_mark);
+        View mark = v.findViewById(R.id.button_mark);
         mark.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -60,7 +62,7 @@ public class ReviewBottomSheet extends BottomSheetDialogFragment {
             }
         });
 
-        View markSuspend = v.findViewById(R.id.clickhandler_mark_suspend);
+        View markSuspend = v.findViewById(R.id.button_mark_suspend);
         markSuspend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -69,7 +71,7 @@ public class ReviewBottomSheet extends BottomSheetDialogFragment {
             }
         });
 
-        View markBury = v.findViewById(R.id.clickhandler_mark_bury);
+        View markBury = v.findViewById(R.id.button_mark_bury);
         markBury.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -80,11 +82,12 @@ public class ReviewBottomSheet extends BottomSheetDialogFragment {
 
 
         setupAnswerChoices(v);
-        setupQuicktags(v);
+        //setupQuicktags(v);
 
         return v;
     }
 
+    /*
     private void setupQuicktags(View v) {
         View clickHandler1 = v.findViewById(R.id.clickhandler_tag1);
         View clickHandler2 = v.findViewById(R.id.clickhandler_tag2);
@@ -133,17 +136,13 @@ public class ReviewBottomSheet extends BottomSheetDialogFragment {
         }
 
     }
+    */
 
     private void setupAnswerChoices(View v) {
-        View clickHandler1 = v.findViewById(R.id.clickhandler_answer_ease1);
-        View clickHandler2 = v.findViewById(R.id.clickhandler_answer_ease2);
-        View clickHandler3 = v.findViewById(R.id.clickhandler_answer_ease3);
-        View clickHandler4 = v.findViewById(R.id.clickhandler_answer_ease4);
-
-        TextView nextReviewTime1 = v.findViewById(R.id.interval_answer_ease1);
-        TextView nextReviewTime2 = v.findViewById(R.id.interval_answer_ease2);
-        TextView nextReviewTime3 = v.findViewById(R.id.interval_answer_ease3);
-        TextView nextReviewTime4 = v.findViewById(R.id.interval_answer_ease4);
+        Button ease1 = v.findViewById(R.id.button_answer_ease1);
+        Button ease2 = v.findViewById(R.id.button_answer_ease2);
+        Button ease3 = v.findViewById(R.id.button_answer_ease3);
+        Button ease4 = v.findViewById(R.id.button_answer_ease4);
 
         Vector<String> nextReviewTimes = m_listener.getNextReviewtimes();
 
@@ -151,31 +150,31 @@ public class ReviewBottomSheet extends BottomSheetDialogFragment {
 
         switch(buttonCount) {
             case 2:
-                setupAnswerHandler(clickHandler1, AnkiUtils.Ease.EASE_1);
-                setupAnswerHandler(clickHandler3, AnkiUtils.Ease.EASE_2);
-                hideViewIds(v, m_answer2ViewIds);
-                hideViewIds(v, m_answer4ViewIds);
-                nextReviewTime1.setText(nextReviewTimes.get(0));
-                nextReviewTime3.setText(nextReviewTimes.get(1));
+                setupAnswerHandler(ease1, AnkiUtils.Ease.EASE_1);
+                setupAnswerHandler(ease3, AnkiUtils.Ease.EASE_2);
+                ease2.setVisibility(View.GONE);
+                ease4.setVisibility(View.GONE);
+                ease1.setText(nextReviewTimes.get(0));
+                ease3.setText(nextReviewTimes.get(1));
                 break;
             case 3:
-                setupAnswerHandler(clickHandler1, AnkiUtils.Ease.EASE_1);
-                setupAnswerHandler(clickHandler3, AnkiUtils.Ease.EASE_2);
-                setupAnswerHandler(clickHandler4, AnkiUtils.Ease.EASE_3);
-                nextReviewTime1.setText(nextReviewTimes.get(0));
-                nextReviewTime3.setText(nextReviewTimes.get(1));
-                nextReviewTime4.setText(nextReviewTimes.get(2));
-                hideViewIds(v, m_answer2ViewIds);
+                setupAnswerHandler(ease1, AnkiUtils.Ease.EASE_1);
+                setupAnswerHandler(ease3, AnkiUtils.Ease.EASE_2);
+                setupAnswerHandler(ease4, AnkiUtils.Ease.EASE_3);
+                ease1.setText(nextReviewTimes.get(0));
+                ease3.setText(nextReviewTimes.get(1));
+                ease4.setText(nextReviewTimes.get(2));
+                ease2.setVisibility(View.GONE);
                 break;
             default:
-                setupAnswerHandler(clickHandler1, AnkiUtils.Ease.EASE_1);
-                setupAnswerHandler(clickHandler2, AnkiUtils.Ease.EASE_2);
-                setupAnswerHandler(clickHandler3, AnkiUtils.Ease.EASE_3);
-                setupAnswerHandler(clickHandler4, AnkiUtils.Ease.EASE_4);
-                nextReviewTime1.setText(nextReviewTimes.get(0));
-                nextReviewTime2.setText(nextReviewTimes.get(1));
-                nextReviewTime3.setText(nextReviewTimes.get(2));
-                nextReviewTime4.setText(nextReviewTimes.get(3));
+                setupAnswerHandler(ease1, AnkiUtils.Ease.EASE_1);
+                setupAnswerHandler(ease2, AnkiUtils.Ease.EASE_2);
+                setupAnswerHandler(ease3, AnkiUtils.Ease.EASE_3);
+                setupAnswerHandler(ease4, AnkiUtils.Ease.EASE_4);
+                ease1.setText(nextReviewTimes.get(0));
+                ease2.setText(nextReviewTimes.get(1));
+                ease3.setText(nextReviewTimes.get(2));
+                ease4.setText(nextReviewTimes.get(3));
                 break;
         }
 
@@ -236,6 +235,7 @@ public class ReviewBottomSheet extends BottomSheetDialogFragment {
 
     private ReviewBottomSheetListener m_listener;
 
+    /*
     private static final int[] m_answer1ViewIds = {R.id.icon_answer_ease1, R.id.text_answer_ease1, R.id.interval_answer_ease1};
     private static final int[] m_answer2ViewIds = {R.id.icon_answer_ease2, R.id.text_answer_ease2, R.id.interval_answer_ease2};
     private static final int[] m_answer3ViewIds = {R.id.icon_answer_ease3, R.id.text_answer_ease3, R.id.interval_answer_ease3};
@@ -246,5 +246,6 @@ public class ReviewBottomSheet extends BottomSheetDialogFragment {
     private static final int[] m_quicktag3ViewIds = {R.id.icon_quicktag_3, R.id.text_quicktag_3, R.id.tagname_3};
     private static final int[] m_quicktag4ViewIds = {R.id.icon_quicktag_4, R.id.text_quicktag_4, R.id.tagname_4};
     private static final int[] m_quicktag5ViewIds = {R.id.icon_quicktag_5, R.id.text_quicktag_5, R.id.tagname_5};
+    */
 
 }
