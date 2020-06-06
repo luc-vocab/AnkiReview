@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:columnCount="3"
+    >
+
+    <Button
+        android:id="@+id/quicktag_1"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:backgroundTint="@color/answer_tag_suspend"
+        android:text="romanization"
+        android:textColor="#FFFFFF"
+        android:layout_width="0dp"
+        android:layout_columnWeight="1"
+        >
+
+    </Button>
+
+    <Button
+        android:id="@+id/quicktag_2"
+
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:backgroundTint="@color/answer_tag_suspend"
+        android:text="sound"
+        android:textColor="#FFFFFF"
+        android:layout_width="0dp"
+        android:layout_columnWeight="1"
+        />
+
+    <Button
+        android:id="@+id/quicktag_3"
+
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:backgroundTint="@color/answer_tag_suspend"
+        android:text="definition"
+        android:textColor="#FFFFFF"
+        android:visibility="visible"
+        android:layout_width="0dp"
+        android:layout_columnWeight="1"
+        />
+
+    <Button
+        android:id="@+id/quicktag_4"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:backgroundTint="@color/answer_tag_suspend"
+        android:text="clarify"
+        android:textColor="#FFFFFF"
+        android:visibility="visible"
+        android:layout_width="0dp"
+        android:layout_columnWeight="1"
+        />
+
+    <Button
+        android:id="@+id/quicktag_5"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:backgroundTint="@color/answer_tag_suspend"
+        android:text="html"
+        android:textColor="#FFFFFF"
+        android:visibility="visible"
+        android:layout_width="0dp"
+        android:layout_columnWeight="1"
+        />
+
+    <Button
+        android:id="@+id/quicktag_6"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:backgroundTint="@color/answer_tag_suspend"
+        android:text="whentouse"
+        android:textColor="#FFFFFF"
+        android:visibility="visible"
+        android:layout_width="0dp"
+        android:layout_columnWeight="1"
+        />
+
+    <Button
+        android:id="@+id/quicktag_7"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:backgroundTint="@color/answer_tag_suspend"
+        android:text="other"
+        android:textColor="#FFFFFF"
+        android:visibility="visible"
+        android:layout_width="0dp"
+        android:layout_columnWeight="1"
+        />
+
+</GridLayout>

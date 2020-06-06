@@ -3,11 +3,39 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
+    <TextView
+        android:id="@+id/review_bottomsheet_header1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:text="Quicktags"
+        android:textSize="20sp" />
+
+    <include
+        layout="@layout/review_quicktags"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/review_bottomsheet_header2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:text="Card Actions"
+        android:textSize="20sp" />
 
     <include
         layout="@layout/review_markactions"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/review_bottomsheet_header3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:text="Answer"
+        android:textSize="20sp" />
 
     <include
         layout="@layout/review_answerbuttons"
