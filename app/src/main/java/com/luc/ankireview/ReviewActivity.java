@@ -769,11 +769,6 @@ public class ReviewActivity extends AppCompatActivity implements DisplayOptionsD
     }
 
     @Override
-    public HashSet<String> getCardTagMap() {
-        return m_currentCard.getTagMap();
-    }
-
-    @Override
     public void tagCard(String tag) {
         AnkiUtils.tagCard(getContentResolver(), m_currentCard, tag);
         // add the tag locally so that the speedial can reflect this new tag

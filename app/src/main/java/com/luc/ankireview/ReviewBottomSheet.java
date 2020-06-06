@@ -39,37 +39,60 @@ public class ReviewBottomSheet extends BottomSheetDialogFragment {
         public final ImageView icon;
     }
 
+    private Button createQuicktagButton(String buttonText, Boolean disabled) {
+        Button addQuicktagButton = new Button(getContext());
+        addQuicktagButton.setText(buttonText);
+        if( disabled) {
+            addQuicktagButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.answer_tag_disabled)));
+        } else {
+            addQuicktagButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.answer_tag_suspend)));
+        }
+        addQuicktagButton.setTextColor(getResources().getColor(R.color.button_text_color));
+        // set layout params
+        GridLayout.LayoutParams param= new GridLayout.LayoutParams(
+                GridLayout.spec(GridLayout.UNDEFINED,GridLayout.FILL,1f),
+                GridLayout.spec(GridLayout.UNDEFINED,GridLayout.FILL,1f));
+        param.height = GridLayout.LayoutParams.WRAP_CONTENT;
+        param.width  = 0;
+        addQuicktagButton.setLayoutParams(param);
+        return addQuicktagButton;
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.review_bottomsheet, container, false);
 
         ViewGroup quickTagContainer = v.findViewById(R.id.review_bottomsheet_quicktag_container);
-        // create new button
-        Button addQuicktagButton = new Button(getContext());
-        addQuicktagButton.setText("Add Quicktag");
-        addQuicktagButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.answer_tag_suspend)));
-        addQuicktagButton.setTextColor(getResources().getColor(R.color.button_text_color));
-        // set layout params
-        GridLayout.LayoutParams param= new GridLayout.LayoutParams(
-                GridLayout.spec(GridLayout.UNDEFINED,GridLayout.FILL,1f),
-                GridLayout.spec(GridLayout.UNDEFINED,GridLayout.FILL,1f));
-        param.height = 0;
-        param.width  = 0;
-        addQuicktagButton.setLayoutParams(param);
-        quickTagContainer.addView(addQuicktagButton);
 
-        /*
-        View addQuicktag = v.findViewById(R.id.clickhandler_add_quicktag);
-        addQuicktag.setOnClickListener(new View.OnClickListener() {
+        // add all quicktags
+        Map<String,Boolean> quicktagList = m_listener.getQuicktagList();
+        for( Map.Entry<String,Boolean> entry : quicktagList.entrySet()) {
+            final String tag = entry.getKey();
+            Boolean disabled = entry.getValue();
+
+            Button quicktagButton = createQuicktagButton(tag, disabled);
+            quicktagButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    m_listener.tagCard(tag);
+                    dismiss();
+                }
+            });
+            quickTagContainer.addView(quicktagButton);
+        }
+
+        // create new quicktag button
+        Button addQuicktagButton = createQuicktagButton("Add quicktag", false);
+        addQuicktagButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 m_listener.showAddQuicktag();
                 dismiss();
-
             }
         });
-        */
+        quickTagContainer.addView(addQuicktagButton);
+
 
         View mark = v.findViewById(R.id.button_mark);
         mark.setOnClickListener(new View.OnClickListener() {
@@ -101,61 +124,9 @@ public class ReviewBottomSheet extends BottomSheetDialogFragment {
 
 
         setupAnswerChoices(v);
-        //setupQuicktags(v);
 
         return v;
     }
-
-    /*
-    private void setupQuicktags(View v) {
-        View clickHandler1 = v.findViewById(R.id.clickhandler_tag1);
-        View clickHandler2 = v.findViewById(R.id.clickhandler_tag2);
-        View clickHandler3 = v.findViewById(R.id.clickhandler_tag3);
-        View clickHandler4 = v.findViewById(R.id.clickhandler_tag4);
-        View clickHandler5 = v.findViewById(R.id.clickhandler_tag5);
-
-        ImageView icon1 = v.findViewById(R.id.icon_quicktag_1);
-        ImageView icon2 = v.findViewById(R.id.icon_quicktag_2);
-        ImageView icon3 = v.findViewById(R.id.icon_quicktag_3);
-        ImageView icon4 = v.findViewById(R.id.icon_quicktag_4);
-        ImageView icon5 = v.findViewById(R.id.icon_quicktag_5);
-
-        TextView tagName1 = v.findViewById(R.id.tagname_1);
-        TextView tagName2 = v.findViewById(R.id.tagname_2);
-        TextView tagName3 = v.findViewById(R.id.tagname_3);
-        TextView tagName4 = v.findViewById(R.id.tagname_4);
-        TextView tagName5 = v.findViewById(R.id.tagname_5);
-
-        ArrayList<String> quicktagList = m_listener.getQuicktagList();
-        HashSet<String> tagMap = m_listener.getCardTagMap();
-
-        Vector<QuickTagData> quickTagDataVector = new Vector<QuickTagData>();
-        quickTagDataVector.add(new QuickTagData(clickHandler1, m_quicktag1ViewIds, tagName1, icon1));
-        quickTagDataVector.add(new QuickTagData(clickHandler2, m_quicktag2ViewIds, tagName2, icon2));
-        quickTagDataVector.add(new QuickTagData(clickHandler3, m_quicktag3ViewIds, tagName3, icon3));
-        quickTagDataVector.add(new QuickTagData(clickHandler4, m_quicktag4ViewIds, tagName4, icon4));
-        quickTagDataVector.add(new QuickTagData(clickHandler5, m_quicktag5ViewIds, tagName5, icon5));
-
-        for(int i = 0; i < Settings.MAX_QUICKTAGS; i++) {
-            QuickTagData quickTagData = quickTagDataVector.get(i);
-            // do we have a quicktag at that position ?
-            if (i < quicktagList.size()) {
-                String tagName = quicktagList.get(i);
-                quickTagData.tagNameTextView.setText(tagName);
-                setupTagHandler(quickTagData.clickHandler, tagName);
-                // is the card already tagged ? if so, change tint of icon
-                if(tagMap.contains(tagName)) {
-                    // quickTagData.icon.setTint
-                    quickTagData.icon.setColorFilter(ContextCompat.getColor(v.getContext(), R.color.answer_tag_disabled), android.graphics.PorterDuff.Mode.MULTIPLY);
-                }
-            } else {
-                // no quicktag, hide the views
-                hideViewIds(v, quickTagData.viewIds);
-            }
-        }
-
-    }
-    */
 
     private void setupAnswerChoices(View v) {
         Button ease1 = v.findViewById(R.id.button_answer_ease1);
@@ -237,7 +208,6 @@ public class ReviewBottomSheet extends BottomSheetDialogFragment {
         void markBuryCard();
         void answerCustom(AnkiUtils.Ease ease);
         void tagCard(String tag);
-        HashSet<String> getCardTagMap();
     }
 
     @Override
