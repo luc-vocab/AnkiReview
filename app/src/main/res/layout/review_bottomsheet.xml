@@ -12,6 +12,7 @@
         android:textSize="20sp" />
 
     <include
+        android:id="@+id/review_bottomsheet_quicktag_container"
         layout="@layout/review_quicktags"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />

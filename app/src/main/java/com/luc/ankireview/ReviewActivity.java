@@ -43,7 +43,9 @@ import org.json.JSONArray;
 import java.io.IOException;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Vector;
 
 public class ReviewActivity extends AppCompatActivity implements DisplayOptionsDialog.DisplayOptionsDialogListener, ReviewBottomSheet.ReviewBottomSheetListener {
@@ -385,6 +387,7 @@ public class ReviewActivity extends AppCompatActivity implements DisplayOptionsD
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
         // Check which request we're responding to
         if (requestCode == 0) {
             // Make sure the request was successful
@@ -706,17 +709,21 @@ public class ReviewActivity extends AppCompatActivity implements DisplayOptionsD
 
 
     @Override
-    public ArrayList<String> getQuicktagList() {
+    public Map<String,Boolean> getQuicktagList() {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
-        ArrayList<String> quickTagList = new ArrayList<String>();
+        HashMap<String, Boolean> quickTagList = new HashMap<String, Boolean>();
 
         try{
 
             JSONArray quickTagArray = new JSONArray(prefs.getString(Settings.PREFERENCES_KEY_QUICKTAGS, "[]"));
             for (int i = 0; i < quickTagArray.length(); i++) {
                 String currentTag = quickTagArray.getString(i);
-                quickTagList.add(currentTag);
+                if (m_currentCard.getTagMap().contains(currentTag)) {
+                    quickTagList.put(currentTag, true);
+                } else {
+                    quickTagList.put(currentTag, false);
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -735,13 +742,9 @@ public class ReviewActivity extends AppCompatActivity implements DisplayOptionsD
 
     public void addQuicktag(String newTag) {
 
-        ArrayList<String> quickTagList = getQuicktagList();
-        if( ! quickTagList.contains(newTag)){
+        Map<String,Boolean> quickTagList = getQuicktagList();
 
-            if (quickTagList.size() >= Settings.MAX_QUICKTAGS) {
-                showToast("You can set a maximum of " + Settings.MAX_QUICKTAGS + " quicktags");
-                return;
-            }
+        if( ! quickTagList.containsKey(newTag)){
 
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
             try {

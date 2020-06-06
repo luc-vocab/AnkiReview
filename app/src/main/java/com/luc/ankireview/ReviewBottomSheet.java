@@ -1,11 +1,14 @@
 package com.luc.ankireview;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -13,6 +16,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Vector;
 
 import androidx.annotation.Nullable;
@@ -39,6 +43,21 @@ public class ReviewBottomSheet extends BottomSheetDialogFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.review_bottomsheet, container, false);
+
+        ViewGroup quickTagContainer = v.findViewById(R.id.review_bottomsheet_quicktag_container);
+        // create new button
+        Button addQuicktagButton = new Button(getContext());
+        addQuicktagButton.setText("Add Quicktag");
+        addQuicktagButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.answer_tag_suspend)));
+        addQuicktagButton.setTextColor(getResources().getColor(R.color.button_text_color));
+        // set layout params
+        GridLayout.LayoutParams param= new GridLayout.LayoutParams(
+                GridLayout.spec(GridLayout.UNDEFINED,GridLayout.FILL,1f),
+                GridLayout.spec(GridLayout.UNDEFINED,GridLayout.FILL,1f));
+        param.height = 0;
+        param.width  = 0;
+        addQuicktagButton.setLayoutParams(param);
+        quickTagContainer.addView(addQuicktagButton);
 
         /*
         View addQuicktag = v.findViewById(R.id.clickhandler_add_quicktag);
@@ -212,7 +231,7 @@ public class ReviewBottomSheet extends BottomSheetDialogFragment {
         int getAnswerButtonCount();
         Vector<String> getNextReviewtimes();
         void showAddQuicktag();
-        ArrayList<String> getQuicktagList();
+        Map<String,Boolean> getQuicktagList(); // true if set for current card
         void markCard();
         void markSuspendCard();
         void markBuryCard();
