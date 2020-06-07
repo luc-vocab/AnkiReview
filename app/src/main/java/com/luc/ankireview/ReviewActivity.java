@@ -240,7 +240,7 @@ public class ReviewActivity extends AppCompatActivity implements DisplayOptionsD
         motionLayout.setTransitionListener(new MotionLayout.TransitionListener() {
             @Override
             public void onTransitionStarted(MotionLayout motionLayout, int i, int i1) {
-                Log.v(TAG, "onTransitionStarted: " + getMotionLayoutStateName(i) + "->" + getMotionLayoutStateName(i1));
+                //Log.v(TAG, "onTransitionStarted: " + getMotionLayoutStateName(i) + "->" + getMotionLayoutStateName(i1));
 
                 if( i == R.id.answer_shown &&
                     (i1 == R.id.answer_good || i1 == R.id.answer_bad) ) {
@@ -255,7 +255,7 @@ public class ReviewActivity extends AppCompatActivity implements DisplayOptionsD
 
             @Override
             public void onTransitionCompleted(MotionLayout motionLayout, int i) {
-                Log.v(TAG, "onTransitionCompleted: " + getMotionLayoutStateName(i));
+                // Log.v(TAG, "onTransitionCompleted: " + getMotionLayoutStateName(i));
 
                 if( i == R.id.answer_shown){
                     showAnswer();
