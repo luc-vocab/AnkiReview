@@ -218,34 +218,67 @@ public class ReviewActivity extends AppCompatActivity implements DisplayOptionsD
     }
 
 
+    private String getMotionLayoutStateName(int i ){
+        if (i == R.id.answer_shown) {
+            return "answer_shown";
+        } else if (i == R.id.question_shown) {
+            return "question_shown";
+        } else if (i == R.id.answer_good) {
+            return "answer_good";
+        } else if (i == R.id.answer_bad) {
+            return "answer_bad";
+        } else if (i == R.id.answer_good_offscreen) {
+            return "answer_good_offscreen";
+        } else if (i == R.id.answer_bad_offscreen) {
+            return "answer_good_offscreen";
+        } else {
+            return "unknown: " + i;
+        }
+    }
+
     private void setupCardMotionLayoutTransitions(MotionLayout motionLayout) {
         motionLayout.setTransitionListener(new MotionLayout.TransitionListener() {
             @Override
             public void onTransitionStarted(MotionLayout motionLayout, int i, int i1) {
+                Log.v(TAG, "onTransitionStarted: " + getMotionLayoutStateName(i) + "->" + getMotionLayoutStateName(i1));
 
+                if( i == R.id.answer_shown &&
+                    (i1 == R.id.answer_good || i1 == R.id.answer_bad) ) {
+                    m_respondToTransitionComplete = true;
+                }
             }
 
             @Override
             public void onTransitionChange(MotionLayout motionLayout, int i, int i1, float v) {
-
+                //Log.v(TAG, "onTransitionChange: " + getMotionLayoutStateName(i) + "->" + getMotionLayoutStateName(i1));
             }
 
             @Override
             public void onTransitionCompleted(MotionLayout motionLayout, int i) {
+                Log.v(TAG, "onTransitionCompleted: " + getMotionLayoutStateName(i));
+
                 if( i == R.id.answer_shown){
                     showAnswer();
                 }
                 else if( i == R.id.answer_good_offscreen) {
-                    answerGood();
+                    if(m_respondToTransitionComplete) {
+                        // need to do this to avoid double firing
+                        m_respondToTransitionComplete = false;
+                        answerGood();
+                    }
                 }
                 else if( i == R.id.answer_bad_offscreen) {
-                    answerBad();
+                    if(m_respondToTransitionComplete) {
+                        // need to do this to avoid double firing
+                        m_respondToTransitionComplete = false;
+                        answerBad();
+                    }
                 }
             }
 
             @Override
             public void onTransitionTrigger(MotionLayout motionLayout, int i, boolean b, float v) {
-
+                Log.v(TAG, "onTransitionTrigger: " + getMotionLayoutStateName(i));
             }
         });
     }
@@ -945,6 +978,7 @@ public class ReviewActivity extends AppCompatActivity implements DisplayOptionsD
     private MotionLayout m_activeMotionLayout;
     private MotionLayout m_flashcardFrameAnkiReview;
     private MotionLayout m_flashcardFrameTeacherMode;
+    private boolean m_respondToTransitionComplete;
 
     // card views
     private CardView m_questionCardView;
