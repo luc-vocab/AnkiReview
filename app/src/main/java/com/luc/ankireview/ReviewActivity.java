@@ -42,9 +42,7 @@ import org.json.JSONArray;
 
 import java.io.IOException;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
 import java.util.Vector;
 
@@ -244,7 +242,8 @@ public class ReviewActivity extends AppCompatActivity implements DisplayOptionsD
 
                 if( i == R.id.answer_shown &&
                     (i1 == R.id.answer_good || i1 == R.id.answer_bad) ) {
-                    m_respondToTransitionComplete = true;
+                    // starting transition to an answer, allow triggering answerGood/ answerBad
+                    m_respondToTransitionCompleteAnswerCard = true;
                 }
             }
 
@@ -258,19 +257,24 @@ public class ReviewActivity extends AppCompatActivity implements DisplayOptionsD
                 // Log.v(TAG, "onTransitionCompleted: " + getMotionLayoutStateName(i));
 
                 if( i == R.id.answer_shown){
-                    showAnswer();
+                    if( m_respondToTransitionCompleteShowAnswer) {
+                        m_respondToTransitionCompleteShowAnswer = false;
+                        showAnswer();
+                    }
                 }
                 else if( i == R.id.answer_good_offscreen) {
-                    if(m_respondToTransitionComplete) {
+                    if(m_respondToTransitionCompleteAnswerCard) {
                         // need to do this to avoid double firing
-                        m_respondToTransitionComplete = false;
+                        m_respondToTransitionCompleteAnswerCard = false;
+                        m_respondToTransitionCompleteShowAnswer = true;
                         answerGood();
                     }
                 }
                 else if( i == R.id.answer_bad_offscreen) {
-                    if(m_respondToTransitionComplete) {
+                    if(m_respondToTransitionCompleteAnswerCard) {
                         // need to do this to avoid double firing
-                        m_respondToTransitionComplete = false;
+                        m_respondToTransitionCompleteAnswerCard = false;
+                        m_respondToTransitionCompleteShowAnswer = true;
                         answerBad();
                     }
                 }
@@ -978,7 +982,8 @@ public class ReviewActivity extends AppCompatActivity implements DisplayOptionsD
     private MotionLayout m_activeMotionLayout;
     private MotionLayout m_flashcardFrameAnkiReview;
     private MotionLayout m_flashcardFrameTeacherMode;
-    private boolean m_respondToTransitionComplete;
+    private boolean m_respondToTransitionCompleteAnswerCard = false;
+    private boolean m_respondToTransitionCompleteShowAnswer = true;
 
     // card views
     private CardView m_questionCardView;
