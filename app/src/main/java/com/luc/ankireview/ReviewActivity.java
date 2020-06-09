@@ -823,18 +823,18 @@ public class ReviewActivity extends AppCompatActivity implements DisplayOptionsD
     public void markSuspendCard() {
         AnkiUtils.markCard(getContentResolver(), m_currentCard);
         AnkiUtils.suspendCard(getContentResolver(), m_currentCard);
-        showAnswer();
         moveToNextQuestion();
         showToast("Marked and Suspended Card");
+        m_respondToTransitionCompleteShowAnswer = true;
     }
 
     @Override
     public void markBuryCard() {
         AnkiUtils.markCard(getContentResolver(), m_currentCard);
         AnkiUtils.buryCard(getContentResolver(), m_currentCard);
-        showAnswer();
         moveToNextQuestion();
         showToast("Marked and Buried Card");
+        m_respondToTransitionCompleteShowAnswer = true;
     }
 
 
@@ -847,6 +847,7 @@ public class ReviewActivity extends AppCompatActivity implements DisplayOptionsD
     public void answerCustom(AnkiUtils.Ease ease) {
         answerCard(ease);
         moveToNextQuestion();
+        m_respondToTransitionCompleteShowAnswer = true;
     }
 
     private void updateDueCountSubtitle(AnkiUtils.DeckDueCounts deckDueCounts) {
