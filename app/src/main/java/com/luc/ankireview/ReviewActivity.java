@@ -42,8 +42,8 @@ import org.json.JSONArray;
 
 import java.io.IOException;
 
-import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Vector;
 
 public class ReviewActivity extends AppCompatActivity implements DisplayOptionsDialog.DisplayOptionsDialogListener, ReviewBottomSheet.ReviewBottomSheetListener {
@@ -216,34 +216,73 @@ public class ReviewActivity extends AppCompatActivity implements DisplayOptionsD
     }
 
 
+    private String getMotionLayoutStateName(int i ){
+        if (i == R.id.answer_shown) {
+            return "answer_shown";
+        } else if (i == R.id.question_shown) {
+            return "question_shown";
+        } else if (i == R.id.answer_good) {
+            return "answer_good";
+        } else if (i == R.id.answer_bad) {
+            return "answer_bad";
+        } else if (i == R.id.answer_good_offscreen) {
+            return "answer_good_offscreen";
+        } else if (i == R.id.answer_bad_offscreen) {
+            return "answer_good_offscreen";
+        } else {
+            return "unknown: " + i;
+        }
+    }
+
     private void setupCardMotionLayoutTransitions(MotionLayout motionLayout) {
         motionLayout.setTransitionListener(new MotionLayout.TransitionListener() {
             @Override
             public void onTransitionStarted(MotionLayout motionLayout, int i, int i1) {
+                //Log.v(TAG, "onTransitionStarted: " + getMotionLayoutStateName(i) + "->" + getMotionLayoutStateName(i1));
 
+                if( i == R.id.answer_shown &&
+                    (i1 == R.id.answer_good || i1 == R.id.answer_bad) ) {
+                    // starting transition to an answer, allow triggering answerGood/ answerBad
+                    m_respondToTransitionCompleteAnswerCard = true;
+                }
             }
 
             @Override
             public void onTransitionChange(MotionLayout motionLayout, int i, int i1, float v) {
-
+                //Log.v(TAG, "onTransitionChange: " + getMotionLayoutStateName(i) + "->" + getMotionLayoutStateName(i1));
             }
 
             @Override
             public void onTransitionCompleted(MotionLayout motionLayout, int i) {
+                // Log.v(TAG, "onTransitionCompleted: " + getMotionLayoutStateName(i));
+
                 if( i == R.id.answer_shown){
-                    showAnswer();
+                    if( m_respondToTransitionCompleteShowAnswer) {
+                        m_respondToTransitionCompleteShowAnswer = false;
+                        showAnswer();
+                    }
                 }
                 else if( i == R.id.answer_good_offscreen) {
-                    answerGood();
+                    if(m_respondToTransitionCompleteAnswerCard) {
+                        // need to do this to avoid double firing
+                        m_respondToTransitionCompleteAnswerCard = false;
+                        m_respondToTransitionCompleteShowAnswer = true;
+                        answerGood();
+                    }
                 }
                 else if( i == R.id.answer_bad_offscreen) {
-                    answerBad();
+                    if(m_respondToTransitionCompleteAnswerCard) {
+                        // need to do this to avoid double firing
+                        m_respondToTransitionCompleteAnswerCard = false;
+                        m_respondToTransitionCompleteShowAnswer = true;
+                        answerBad();
+                    }
                 }
             }
 
             @Override
             public void onTransitionTrigger(MotionLayout motionLayout, int i, boolean b, float v) {
-
+                Log.v(TAG, "onTransitionTrigger: " + getMotionLayoutStateName(i));
             }
         });
     }
@@ -385,6 +424,7 @@ public class ReviewActivity extends AppCompatActivity implements DisplayOptionsD
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
         // Check which request we're responding to
         if (requestCode == 0) {
             // Make sure the request was successful
@@ -706,17 +746,21 @@ public class ReviewActivity extends AppCompatActivity implements DisplayOptionsD
 
 
     @Override
-    public ArrayList<String> getQuicktagList() {
+    public Map<String,Boolean> getQuicktagList() {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
-        ArrayList<String> quickTagList = new ArrayList<String>();
+        HashMap<String, Boolean> quickTagList = new HashMap<String, Boolean>();
 
         try{
 
             JSONArray quickTagArray = new JSONArray(prefs.getString(Settings.PREFERENCES_KEY_QUICKTAGS, "[]"));
             for (int i = 0; i < quickTagArray.length(); i++) {
                 String currentTag = quickTagArray.getString(i);
-                quickTagList.add(currentTag);
+                if (m_currentCard.getTagMap().contains(currentTag)) {
+                    quickTagList.put(currentTag, true);
+                } else {
+                    quickTagList.put(currentTag, false);
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -735,13 +779,9 @@ public class ReviewActivity extends AppCompatActivity implements DisplayOptionsD
 
     public void addQuicktag(String newTag) {
 
-        ArrayList<String> quickTagList = getQuicktagList();
-        if( ! quickTagList.contains(newTag)){
+        Map<String,Boolean> quickTagList = getQuicktagList();
 
-            if (quickTagList.size() >= Settings.MAX_QUICKTAGS) {
-                showToast("You can set a maximum of " + Settings.MAX_QUICKTAGS + " quicktags");
-                return;
-            }
+        if( ! quickTagList.containsKey(newTag)){
 
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
             try {
@@ -766,11 +806,6 @@ public class ReviewActivity extends AppCompatActivity implements DisplayOptionsD
     }
 
     @Override
-    public HashSet<String> getCardTagMap() {
-        return m_currentCard.getTagMap();
-    }
-
-    @Override
     public void tagCard(String tag) {
         AnkiUtils.tagCard(getContentResolver(), m_currentCard, tag);
         // add the tag locally so that the speedial can reflect this new tag
@@ -788,18 +823,18 @@ public class ReviewActivity extends AppCompatActivity implements DisplayOptionsD
     public void markSuspendCard() {
         AnkiUtils.markCard(getContentResolver(), m_currentCard);
         AnkiUtils.suspendCard(getContentResolver(), m_currentCard);
-        showAnswer();
         moveToNextQuestion();
         showToast("Marked and Suspended Card");
+        m_respondToTransitionCompleteShowAnswer = true;
     }
 
     @Override
     public void markBuryCard() {
         AnkiUtils.markCard(getContentResolver(), m_currentCard);
         AnkiUtils.buryCard(getContentResolver(), m_currentCard);
-        showAnswer();
         moveToNextQuestion();
         showToast("Marked and Buried Card");
+        m_respondToTransitionCompleteShowAnswer = true;
     }
 
 
@@ -812,6 +847,7 @@ public class ReviewActivity extends AppCompatActivity implements DisplayOptionsD
     public void answerCustom(AnkiUtils.Ease ease) {
         answerCard(ease);
         moveToNextQuestion();
+        m_respondToTransitionCompleteShowAnswer = true;
     }
 
     private void updateDueCountSubtitle(AnkiUtils.DeckDueCounts deckDueCounts) {
@@ -947,6 +983,8 @@ public class ReviewActivity extends AppCompatActivity implements DisplayOptionsD
     private MotionLayout m_activeMotionLayout;
     private MotionLayout m_flashcardFrameAnkiReview;
     private MotionLayout m_flashcardFrameTeacherMode;
+    private boolean m_respondToTransitionCompleteAnswerCard = false;
+    private boolean m_respondToTransitionCompleteShowAnswer = true;
 
     // card views
     private CardView m_questionCardView;

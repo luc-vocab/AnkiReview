@@ -8,6 +8,7 @@
     android:layout_weight="1"
     app:layoutDescription="@xml/cardstyle_motion_scene"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    app:currentState="@+id/answer_shown"
     >
 
     <include

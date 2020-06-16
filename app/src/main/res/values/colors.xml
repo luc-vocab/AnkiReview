@@ -14,6 +14,9 @@
     <color name="count_review">@color/md_green_a700</color>
     <color name="count_new">@color/md_cyan_500</color>
 
+    <!-- text color on buttons -->
+    <color name="button_text_color">@color/md_white</color>
+
     <!-- answer colors -->
     <color name="answer_wrong">@color/md_pink_400</color>
     <color name="answer_hard">@color/md_purple_300</color>

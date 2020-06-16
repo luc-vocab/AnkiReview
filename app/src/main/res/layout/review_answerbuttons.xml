@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal">
+
+    <Button
+        android:id="@+id/button_answer_ease1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:backgroundTint="@color/answer_wrong"
+        android:text="10mn\nagain"
+        android:textColor="#FFFFFF">
+
+    </Button>
+
+    <Button
+        android:id="@+id/button_answer_ease2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:backgroundTint="@color/answer_hard"
+        android:text="1d\nhard"
+        android:textColor="#FFFFFF" />
+
+    <Button
+        android:id="@+id/button_answer_ease3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:backgroundTint="@color/answer_good"
+        android:text="4d\ngood"
+        android:textColor="#FFFFFF"
+        android:visibility="visible" />
+
+    <Button
+        android:id="@+id/button_answer_ease4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:backgroundTint="@color/answer_easy"
+        android:text="21d\neasy"
+        android:textColor="#FFFFFF" />
+</LinearLayout>

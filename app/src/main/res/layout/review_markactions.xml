@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <Button
+        android:id="@+id/button_mark"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:backgroundTint="@color/answer_tag_suspend"
+        android:text="mark"
+        android:textColor="#FFFFFF">
+
+    </Button>
+
+    <Button
+        android:id="@+id/button_mark_suspend"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:backgroundTint="@color/answer_tag_suspend"
+        android:text="mark/suspend"
+        android:textColor="#FFFFFF" />
+
+    <Button
+        android:id="@+id/button_mark_bury"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:backgroundTint="@color/answer_tag_suspend"
+        android:text="mark / bury"
+        android:textColor="#FFFFFF"
+        android:visibility="visible" />
+
+
+
+</LinearLayout>
