@@ -12,4 +12,15 @@
 
     </PreferenceCategory>
 
+    <PreferenceCategory
+        app:key="display"
+        app:title="Display">
+
+        <SwitchPreferenceCompat
+            app:key="teacher_mode"
+            app:title="Enable Teacher Mode"
+            android:defaultValue="false" />
+
+    </PreferenceCategory>
+
 </PreferenceScreen>

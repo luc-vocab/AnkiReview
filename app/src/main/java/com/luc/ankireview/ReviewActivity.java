@@ -181,12 +181,12 @@ public class ReviewActivity extends AppCompatActivity implements DisplayOptionsD
 
         m_backgroundPhoto = findViewById(R.id.background_photo);
 
-        /*
-        m_backgroundManager = new BackgroundManager();
-        m_backgroundManager.fillImageView(m_backgroundPhoto);
-        */
-        m_backgroundManager = null;
-
+        if( enableTeacherMode() ) {
+            m_backgroundManager = new BackgroundManager();
+            m_backgroundManager.fillImageView(m_backgroundPhoto);
+        } else {
+            m_backgroundManager = null;
+        }
 
         // do we need to show hints the first time a user runs ?
         // -----------------------------------------------------
@@ -733,6 +733,12 @@ public class ReviewActivity extends AppCompatActivity implements DisplayOptionsD
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         boolean useAudioFeedback = prefs.getBoolean("audio_feedback", true);
         return useAudioFeedback;
+    }
+
+    private boolean enableTeacherMode() {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        boolean enableTeacherMode = prefs.getBoolean("teacher_mode", false);
+        return enableTeacherMode;
     }
 
     private boolean isFirstRun() {
