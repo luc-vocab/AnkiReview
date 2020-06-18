@@ -288,21 +288,17 @@ public class ReviewActivity extends AppCompatActivity implements DisplayOptionsD
     }
 
     private void setupFlashcardFrame() {
-        CardStyle.DeckDisplayMode deckDisplayMode = m_cardStyle.getdeckDisplayMode(m_deckId);
 
-
-        if( deckDisplayMode == CardStyle.DeckDisplayMode.ANKIREVIEW) {
+        if( ! enableTeacherMode() ) {
             m_flashcardFrameTeacherMode .setVisibility(View.GONE);
             m_flashcardFrameAnkiReview.setVisibility(View.VISIBLE);
             m_activeMotionLayout = m_flashcardFrameAnkiReview;
             setupFlashcardFrameFromMotionLayout(m_activeMotionLayout);
-        } else if (deckDisplayMode == CardStyle.DeckDisplayMode.TEACHER) {
+        } else {
             m_flashcardFrameTeacherMode .setVisibility(View.VISIBLE);
             m_flashcardFrameAnkiReview.setVisibility(View.GONE);
             m_activeMotionLayout = m_flashcardFrameTeacherMode;
             setupFlashcardFrameFromMotionLayout(m_activeMotionLayout );
-        } else {
-            Log.e(TAG, "not supported yet");
         }
 
     }

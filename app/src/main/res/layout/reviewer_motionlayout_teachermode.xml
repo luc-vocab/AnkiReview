@@ -36,17 +36,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
-    <ImageView
-        android:id="@+id/correct_svg"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:srcCompat="@drawable/correct" />
+    <include
+        android:id="@+id/answer_notification_good"
+        layout="@layout/answer_animation_good"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
-    <ImageView
-        android:id="@+id/incorrect_svg"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:srcCompat="@drawable/incorrect" />
+    <include
+        android:id="@+id/answer_notification_bad"
+        layout="@layout/answer_animation_bad"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
 
 </androidx.constraintlayout.motion.widget.MotionLayout>
