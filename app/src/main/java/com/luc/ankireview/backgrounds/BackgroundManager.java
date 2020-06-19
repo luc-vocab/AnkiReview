@@ -27,13 +27,14 @@ public class BackgroundManager {
     public static final String BACKGROUNDS = "backgrounds";
 
 
-    public BackgroundManager(String setType, String setName) {
+    public BackgroundManager(String setType, String setName, int changeImageEveryNumTicks) {
         FirebaseFirestoreSettings settings = new FirebaseFirestoreSettings.Builder()
                 .setPersistenceEnabled(true)
                 .build();
         m_firestoreDb = FirebaseFirestore.getInstance();
         m_firestoreDb.setFirestoreSettings(settings);
 
+        m_changeImageNumTicks = changeImageEveryNumTicks;
 
         m_imageView = null;
         m_imageUrlList = new Vector<String>();
