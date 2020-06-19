@@ -39,6 +39,10 @@ public class BackgroundManager {
         m_imageView = null;
         m_imageUrlList = new Vector<String>();
 
+        if(setType.equals(BACKGROUNDS)) {
+            m_applyBlur = true;
+        }
+
         m_firestoreDb.collection(setType).document(setName).collection("images")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -105,6 +109,13 @@ public class BackgroundManager {
         String imagePublicId = getImage();
         Url baseUrl = MediaManager.get().url().secure(true).transformation(new Transformation().quality("auto").fetchFormat("webp")).publicId(imagePublicId);
 
+        if(m_applyBlur) {
+            baseUrl = MediaManager.get().url().secure(true).
+                    transformation(new Transformation().quality("auto").fetchFormat("webp")).
+                    transformation(new Transformation().effect("blur:200")).
+                    publicId(imagePublicId);
+        }
+
         MediaManager.get().responsiveUrl(true, true, "imagga_scale", null)
                 .stepSize(100)
                 .minDimension(100)
@@ -149,5 +160,6 @@ public class BackgroundManager {
     private ImageView m_imageView;
     private int m_changeImageNumTicks = 3;
     private int m_ticks = 0;
+    private boolean m_applyBlur = false;
 
 }
