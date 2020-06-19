@@ -83,8 +83,11 @@ public class BackgroundManager {
         return imgUrl;
     }
 
-    public void fillImageViewTest(final ImageView imageView, String imagePublicId) {
-        Url baseUrl = MediaManager.get().url().secure(true).transformation(new Transformation().quality("auto").fetchFormat("webp")).publicId(imagePublicId);
+    public void fillImageViewTestBackground(final ImageView imageView, String imagePublicId) {
+        Url baseUrl = MediaManager.get().url().secure(true).
+                transformation(new Transformation().quality("auto").fetchFormat("webp")).
+                transformation(new Transformation().effect("blur:200")).
+                publicId(imagePublicId);
 
         MediaManager.get().responsiveUrl(true, true, "imagga_scale", null)
                 .stepSize(100)

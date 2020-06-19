@@ -186,7 +186,7 @@ public class ReviewActivity extends AppCompatActivity implements DisplayOptionsD
             m_backgroundManager = new BackgroundManager();
             m_backgroundManager.fillImageView(m_teacherPhoto);
 
-            m_backgroundManager.fillImageViewTest(m_backgroundPhoto, "ankireview_backgrounds/backgrounds/dreamstimeextralarge_22760637.jpg");
+            m_backgroundManager.fillImageViewTestBackground(m_backgroundPhoto, "ankireview_backgrounds/backgrounds/dreamstimeextralarge_22760637.jpg");
         } else {
             m_backgroundManager = null;
         }
