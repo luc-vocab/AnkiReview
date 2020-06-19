@@ -38,10 +38,12 @@ public class BackgroundManager {
             m_fillImageQueue = new ArrayList<ImageView>();
             m_backgroundUrlList = new Vector<String>();
 
-            String backgrounds = "9JMXEtYV1J9UYCKPvxWv";
-            String transparentBackgrounds = "enwYbCCRH0uHFHZDIUKT";
+            //String backgrounds = "9JMXEtYV1J9UYCKPvxWv";
+            //String transparentBackgrounds = "enwYbCCRH0uHFHZDIUKT";
 
-            m_firestoreDb.collection("backgrounds").document(transparentBackgrounds).collection("images")
+            String teacherCollection = "chinese_women";
+
+            m_firestoreDb.collection("teachers").document(teacherCollection).collection("images")
                     .get()
                     .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                         @Override
@@ -49,7 +51,7 @@ public class BackgroundManager {
                             if (task.isSuccessful()) {
                                 for (DocumentSnapshot document : task.getResult()) {
                                     Log.d(TAG, document.getId() + " => " + document.getData());
-                                    m_backgroundUrlList.add(document.getString("image"));
+                                    m_backgroundUrlList.add(document.getString("public_id"));
                                 }
                                 Collections.shuffle(m_backgroundUrlList);
                                 // process backlog of "fillImageView"
