@@ -50,6 +50,21 @@
                 android:scaleY="1.0" />
         </Constraint>
 
+        <Constraint
+            android:id="@id/background_photo"
+            android:layout_width="0dp"
+            android:layout_height="800dp"
+
+            android:layout_marginTop="0dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            >
+            <Transform
+                android:scaleX="1.0"
+                android:scaleY="1.0" />
+        </Constraint>
+
 
 
     </ConstraintSet>
@@ -114,6 +129,21 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/answer_card"
+            >
+            <Transform
+                android:scaleX="1.2"
+                android:scaleY="1.2" />
+        </Constraint>
+
+        <Constraint
+            android:id="@id/background_photo"
+            android:layout_width="0dp"
+            android:layout_height="800dp"
+
+            android:layout_marginTop="50dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             >
             <Transform
                 android:scaleX="1.2"
@@ -219,6 +249,21 @@
         </Constraint>
 
         <Constraint
+            android:id="@id/background_photo"
+            android:layout_width="0dp"
+            android:layout_height="800dp"
+
+            android:layout_marginTop="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            >
+            <Transform
+                android:scaleX="1.0"
+                android:scaleY="1.0" />
+        </Constraint>
+
+        <Constraint
             android:id="@id/answer_notification_bad"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -294,6 +339,21 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/next_question_card"
+            >
+            <Transform
+                android:scaleX="1.0"
+                android:scaleY="1.0" />
+        </Constraint>
+
+        <Constraint
+            android:id="@id/background_photo"
+            android:layout_width="0dp"
+            android:layout_height="800dp"
+
+            android:layout_marginTop="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             >
             <Transform
                 android:scaleX="1.0"
