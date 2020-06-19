@@ -183,12 +183,15 @@ public class ReviewActivity extends AppCompatActivity implements DisplayOptionsD
         m_backgroundPhoto = findViewById(R.id.background_photo);
 
         if( enableTeacherMode() ) {
-            m_backgroundManager = new BackgroundManager();
-            m_backgroundManager.fillImageView(m_teacherPhoto);
+            m_imageManagerTeacher = new BackgroundManager(BackgroundManager.TEACHERS, "chinese_women");
+            m_imageManagerTeacher.fillImageView(m_teacherPhoto);
 
-            m_backgroundManager.fillImageViewTestBackground(m_backgroundPhoto, "ankireview_backgrounds/backgrounds/dreamstimeextralarge_22760637.jpg");
+            m_imageManagerBackgrounds = new BackgroundManager(BackgroundManager.BACKGROUNDS, "nature");
+            m_imageManagerBackgrounds.fillImageView(m_backgroundPhoto);
+
+            //m_imageManagerTeacher.fillImageViewTestBackground(m_backgroundPhoto, "ankireview_backgrounds/backgrounds/dreamstimeextralarge_22760637.jpg");
         } else {
-            m_backgroundManager = null;
+            m_imageManagerTeacher = null;
         }
 
         // do we need to show hints the first time a user runs ?
@@ -931,10 +934,12 @@ public class ReviewActivity extends AppCompatActivity implements DisplayOptionsD
             Utils.reportAnkiAPIException(this, e);
         }
 
-        if (m_backgroundManager != null && (m_reviewCount % 3) == 0) {{
-            // cycle background
-            m_backgroundManager.fillImageView(m_teacherPhoto);
-        }}
+        if(m_imageManagerTeacher != null) {
+            m_imageManagerTeacher.tick();
+        }
+        if(m_imageManagerBackgrounds != null) {
+            m_imageManagerBackgrounds.tick();
+        }
 
         Bundle bundle = new Bundle();
         bundle.putInt(Analytics.REVIEW_COUNT, m_reviewCount);
@@ -1046,7 +1051,8 @@ public class ReviewActivity extends AppCompatActivity implements DisplayOptionsD
     private FrameLayout m_touchLayer;
     private GestureDetectorCompat m_detector;
 
-    BackgroundManager m_backgroundManager;
+    BackgroundManager m_imageManagerTeacher;
+    BackgroundManager m_imageManagerBackgrounds;
     ImageView m_teacherPhoto;
     ImageView m_backgroundPhoto;
 

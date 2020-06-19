@@ -14,61 +14,53 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreSettings;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.luc.ankireview.Settings;
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 import java.util.Vector;
 
 
 public class BackgroundManager {
     private static final String TAG = "BackgroundManager";
 
-    public BackgroundManager() {
-        if(true) {
-            FirebaseFirestoreSettings settings = new FirebaseFirestoreSettings.Builder()
-                    .setPersistenceEnabled(true)
-                    .build();
-            m_firestoreDb = FirebaseFirestore.getInstance();
-            m_firestoreDb.setFirestoreSettings(settings);
+    public static final String TEACHERS = "teachers";
+    public static final String BACKGROUNDS = "backgrounds";
 
 
-            m_fillImageQueue = new ArrayList<ImageView>();
-            m_backgroundUrlList = new Vector<String>();
+    public BackgroundManager(String setType, String setName) {
+        FirebaseFirestoreSettings settings = new FirebaseFirestoreSettings.Builder()
+                .setPersistenceEnabled(true)
+                .build();
+        m_firestoreDb = FirebaseFirestore.getInstance();
+        m_firestoreDb.setFirestoreSettings(settings);
 
-            //String backgrounds = "9JMXEtYV1J9UYCKPvxWv";
-            //String transparentBackgrounds = "enwYbCCRH0uHFHZDIUKT";
 
-            String teacherCollection = "chinese_women";
+        m_imageView = null;
+        m_imageUrlList = new Vector<String>();
 
-            m_firestoreDb.collection("teachers").document(teacherCollection).collection("images")
-                    .get()
-                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                        @Override
-                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                            if (task.isSuccessful()) {
-                                for (DocumentSnapshot document : task.getResult()) {
-                                    Log.d(TAG, document.getId() + " => " + document.getData());
-                                    m_backgroundUrlList.add(document.getString("public_id"));
-                                }
-                                Collections.shuffle(m_backgroundUrlList);
-                                // process backlog of "fillImageView"
-                                for( ImageView imageView : m_fillImageQueue) {
-                                    fillImageViewComplete(imageView);
-                                }
-                                m_fillImageQueue.clear();
-                                m_backgroundListReady = true;
-                                Log.v(TAG, "retrieved " + m_backgroundUrlList.size() + " backgrounds");
-
-                            } else {
-                                Log.w(TAG, "Error getting documents.", task.getException());
+        m_firestoreDb.collection(setType).document(setName).collection("images")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (DocumentSnapshot document : task.getResult()) {
+                                Log.d(TAG, document.getId() + " => " + document.getData());
+                                m_imageUrlList.add(document.getString("public_id"));
                             }
-                        }
-                    });
-        }
+                            Collections.shuffle(m_imageUrlList);
+                            // process backlog of "fillImageView"
+                            if(m_imageView != null) {
+                                fillImageViewComplete(m_imageView);
+                            }
+                            m_backgroundListReady = true;
+                            Log.v(TAG, "retrieved " + m_imageUrlList.size() + " backgrounds");
 
+                        } else {
+                            Log.w(TAG, "Error getting documents.", task.getException());
+                        }
+                    }
+                });
 
     }
 
@@ -77,10 +69,10 @@ public class BackgroundManager {
 
         // get current URL
         m_currentBackgroundIndex++;
-        if(m_currentBackgroundIndex > m_backgroundUrlList.size() - 1) {
+        if(m_currentBackgroundIndex > m_imageUrlList.size() - 1) {
             m_currentBackgroundIndex = 0;
         }
-        String imgUrl = m_backgroundUrlList.get(m_currentBackgroundIndex);
+        String imgUrl = m_imageUrlList.get(m_currentBackgroundIndex);
 
         return imgUrl;
     }
@@ -136,16 +128,25 @@ public class BackgroundManager {
             fillImageViewComplete(imageView);
         } else {
             // need to queue up this action
-            m_fillImageQueue.add(imageView);
+            m_imageView = imageView;
         }
 
     }
 
+    public void tick() {
+        m_ticks += 1;
+        if( m_ticks % m_changeImageNumTicks == 0) {
+            fillImageView(m_imageView);
+        }
+    }
+
 
     private boolean m_backgroundListReady = false;
-    private Vector<String> m_backgroundUrlList;
+    private Vector<String> m_imageUrlList;
     private int m_currentBackgroundIndex = 0;
     private FirebaseFirestore m_firestoreDb;
-    private List<ImageView> m_fillImageQueue;
+    private ImageView m_imageView;
+    private int m_changeImageNumTicks = 3;
+    private int m_ticks = 0;
 
 }

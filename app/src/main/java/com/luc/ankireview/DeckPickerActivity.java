@@ -108,10 +108,12 @@ public class DeckPickerActivity extends AppCompatActivity implements AdapterView
                 view.findViewById(R.id.deck_due_counts).setVisibility(View.GONE);
             }
 
+            /*
             if( Settings.ENABLE_BACKGROUNDS) {
                 ImageView backgroundImageView = view.findViewById(R.id.deck_backgroundimage);
                 m_backgroundManager.fillImageView(backgroundImageView);
             }
+            */
 
             return view;
         }
@@ -246,7 +248,6 @@ public class DeckPickerActivity extends AppCompatActivity implements AdapterView
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_deck_picker);
 
-        m_backgroundManager = new BackgroundManager();
         m_firebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
         // rating request library
@@ -423,7 +424,6 @@ public class DeckPickerActivity extends AppCompatActivity implements AdapterView
         }
     }
 
-    private BackgroundManager m_backgroundManager;
     private FirebaseAnalytics m_firebaseAnalytics;
 
 }
