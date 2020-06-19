@@ -36,7 +36,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <Constraint
-            android:id="@id/background_photo"
+            android:id="@id/teacher_photo"
             android:layout_width="0dp"
             android:layout_height="800dp"
 
@@ -106,7 +106,7 @@
         </Constraint>
 
         <Constraint
-            android:id="@id/background_photo"
+            android:id="@id/teacher_photo"
             android:layout_width="0dp"
             android:layout_height="800dp"
 
@@ -204,7 +204,7 @@
             />
 
         <Constraint
-            android:id="@id/background_photo"
+            android:id="@id/teacher_photo"
             android:layout_width="0dp"
             android:layout_height="800dp"
 
@@ -286,7 +286,7 @@
             />
 
         <Constraint
-            android:id="@id/background_photo"
+            android:id="@id/teacher_photo"
             android:layout_width="0dp"
             android:layout_height="800dp"
 

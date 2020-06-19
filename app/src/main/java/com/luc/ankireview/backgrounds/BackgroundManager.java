@@ -83,6 +83,26 @@ public class BackgroundManager {
         return imgUrl;
     }
 
+    public void fillImageViewTest(final ImageView imageView, String imagePublicId) {
+        Url baseUrl = MediaManager.get().url().secure(true).transformation(new Transformation().quality("auto").fetchFormat("webp")).publicId(imagePublicId);
+
+        MediaManager.get().responsiveUrl(true, true, "imagga_scale", null)
+                .stepSize(100)
+                .minDimension(100)
+                .maxDimension(2500)
+                .generate(baseUrl, imageView, new ResponsiveUrl.Callback() {
+                    @Override
+                    public void onUrlReady(Url url) {
+                        String finalUrl = url.generate();
+                        Log.v(TAG, "final URL: " + finalUrl);
+                        Picasso.get()
+                                .load(finalUrl )
+                                .placeholder(imageView.getDrawable())// still show last image
+                                .into(imageView);
+                    }
+                });
+    }
+
     private void fillImageViewComplete(final ImageView imageView) {
         String imagePublicId = getImage();
         Url baseUrl = MediaManager.get().url().secure(true).transformation(new Transformation().quality("auto").fetchFormat("webp")).publicId(imagePublicId);

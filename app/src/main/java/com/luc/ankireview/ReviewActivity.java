@@ -179,11 +179,14 @@ public class ReviewActivity extends AppCompatActivity implements DisplayOptionsD
         // background photos disabled for now
         // ----------------------------------
 
+        m_teacherPhoto = findViewById(R.id.teacher_photo);
         m_backgroundPhoto = findViewById(R.id.background_photo);
 
         if( enableTeacherMode() ) {
             m_backgroundManager = new BackgroundManager();
-            m_backgroundManager.fillImageView(m_backgroundPhoto);
+            m_backgroundManager.fillImageView(m_teacherPhoto);
+
+            m_backgroundManager.fillImageViewTest(m_backgroundPhoto, "ankireview_backgrounds/backgrounds/dreamstimeextralarge_22760637.jpg");
         } else {
             m_backgroundManager = null;
         }
@@ -930,7 +933,7 @@ public class ReviewActivity extends AppCompatActivity implements DisplayOptionsD
 
         if (m_backgroundManager != null && (m_reviewCount % 3) == 0) {{
             // cycle background
-            m_backgroundManager.fillImageView(m_backgroundPhoto);
+            m_backgroundManager.fillImageView(m_teacherPhoto);
         }}
 
         Bundle bundle = new Bundle();
@@ -1044,6 +1047,7 @@ public class ReviewActivity extends AppCompatActivity implements DisplayOptionsD
     private GestureDetectorCompat m_detector;
 
     BackgroundManager m_backgroundManager;
+    ImageView m_teacherPhoto;
     ImageView m_backgroundPhoto;
 
     private boolean m_showFirstRunQuestionHelp = false;
