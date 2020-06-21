@@ -183,10 +183,10 @@ public class ReviewActivity extends AppCompatActivity implements DisplayOptionsD
         m_backgroundPhoto = findViewById(R.id.background_photo);
 
         if( enableTeacherMode() ) {
-            m_imageManagerTeacher = new BackgroundManager(BackgroundManager.TEACHERS, "chinese_women", 3);
+            m_imageManagerTeacher = new BackgroundManager(BackgroundManager.BackgroundType.Teachers, "chinese_women", 3);
             m_imageManagerTeacher.fillImageView(m_teacherPhoto);
 
-            m_imageManagerBackgrounds = new BackgroundManager(BackgroundManager.BACKGROUNDS, "nature", 6);
+            m_imageManagerBackgrounds = new BackgroundManager(BackgroundManager.BackgroundType.Backgrounds, "nature", 6);
             m_imageManagerBackgrounds.fillImageView(m_backgroundPhoto);
 
             //m_imageManagerTeacher.fillImageViewTestBackground(m_backgroundPhoto, "ankireview_backgrounds/backgrounds/dreamstimeextralarge_22760637.jpg");
