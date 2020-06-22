@@ -30,7 +30,7 @@ public class BackgroundManager {
     public static final String CROPMODE_CROP = "imagga_crop";
 
     public enum BackgroundType {
-        Teachers(TEACHERS, CROPMODE_CROP, false),
+        Teachers(TEACHERS, CROPMODE_SCALE, false),
         Backgrounds(BACKGROUNDS, CROPMODE_SCALE, true);
 
         BackgroundType(String setType, String cropMode, boolean applyBlur) {
