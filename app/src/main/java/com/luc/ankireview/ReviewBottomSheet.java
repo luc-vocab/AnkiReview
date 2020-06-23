@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Vector;
@@ -67,9 +68,10 @@ public class ReviewBottomSheet extends BottomSheetDialogFragment {
 
         // add all quicktags
         Map<String,Boolean> quicktagList = m_listener.getQuicktagList();
-        for( Map.Entry<String,Boolean> entry : quicktagList.entrySet()) {
-            final String tag = entry.getKey();
-            Boolean disabled = entry.getValue();
+        ArrayList<String> tagArrayList = new ArrayList<String>(quicktagList.keySet());
+        Collections.sort(tagArrayList, String.CASE_INSENSITIVE_ORDER);
+        for( final String tag : tagArrayList ) {
+            Boolean disabled = quicktagList.get(tag);
 
             Button quicktagButton = createQuicktagButton(tag, disabled);
             quicktagButton.setOnClickListener(new View.OnClickListener() {
