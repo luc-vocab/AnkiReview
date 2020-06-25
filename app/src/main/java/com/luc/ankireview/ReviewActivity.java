@@ -179,10 +179,12 @@ public class ReviewActivity extends AppCompatActivity implements DisplayOptionsD
         // background photos disabled for now
         // ----------------------------------
 
-        m_teacherPhoto = findViewById(R.id.teacher_photo);
-        m_backgroundPhoto = findViewById(R.id.background_photo);
+
 
         if( enableTeacherMode() ) {
+            m_teacherPhoto = findViewById(R.id.teacher_photo);
+            m_backgroundPhoto = findViewById(R.id.background_photo);
+
             m_imageManagerTeacher = new BackgroundManager(BackgroundManager.BackgroundType.Teachers, "chinese_women", 3);
             m_imageManagerTeacher.fillImageView(m_teacherPhoto);
 
@@ -190,6 +192,9 @@ public class ReviewActivity extends AppCompatActivity implements DisplayOptionsD
             m_imageManagerBackgrounds.fillImageView(m_backgroundPhoto);
 
         } else {
+
+            m_backgroundPhoto = findViewById(R.id.background_photo_1);
+
             m_imageManagerTeacher = null;
             m_imageManagerBackgrounds = null;
 

@@ -8,12 +8,16 @@
     android:layout_weight="1"
     app:layoutDescription="@xml/reviewer_motionscene_ankireview"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    app:showPaths="true"
+    app:motionDebug="SHOW_ALL"
     >
 
     <ImageView
-        android:id="@+id/background_photo"
+        android:id="@+id/background_photo_1"
+
         android:layout_width="0dp"
         android:layout_height="800dp"
+
         android:scaleType="centerCrop">
     </ImageView>
 

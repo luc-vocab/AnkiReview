@@ -37,14 +37,15 @@
             />
 
         <Constraint
-            android:id="@id/background_photo"
+            android:id="@id/background_photo_1"
+
             android:layout_width="0dp"
             android:layout_height="800dp"
 
-            android:layout_marginTop="0dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+
             >
             <Transform
                 android:scaleX="@dimen/teacher_mode_background_default_scale"
