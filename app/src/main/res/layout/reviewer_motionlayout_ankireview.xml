@@ -10,6 +10,13 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     >
 
+    <ImageView
+        android:id="@+id/background_photo"
+        android:layout_width="0dp"
+        android:layout_height="800dp"
+        android:scaleType="centerCrop">
+    </ImageView>
+
     <include
         android:id="@+id/next_question_card"
         layout="@layout/side_card"

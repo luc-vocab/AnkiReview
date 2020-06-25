@@ -21,6 +21,11 @@
             app:title="Enable Teacher Mode"
             android:defaultValue="false" />
 
+        <SwitchPreferenceCompat
+            app:key="backgrounds"
+            app:title="Enable Backgrounds"
+            android:defaultValue="false" />
+
     </PreferenceCategory>
 
 </PreferenceScreen>

@@ -189,9 +189,17 @@ public class ReviewActivity extends AppCompatActivity implements DisplayOptionsD
             m_imageManagerBackgrounds = new BackgroundManager(BackgroundManager.BackgroundType.Backgrounds, "nature", 6);
             m_imageManagerBackgrounds.fillImageView(m_backgroundPhoto);
 
-            //m_imageManagerTeacher.fillImageViewTestBackground(m_backgroundPhoto, "ankireview_backgrounds/backgrounds/dreamstimeextralarge_22760637.jpg");
         } else {
             m_imageManagerTeacher = null;
+            m_imageManagerBackgrounds = null;
+
+            if( enableBackgrounds() ) {
+                Log.v(TAG, "enableBackgrounds");
+                m_imageManagerBackgrounds = new BackgroundManager(BackgroundManager.BackgroundType.BackgroundsFull, "abstract_future", 4);
+                m_imageManagerBackgrounds.fillImageView(m_backgroundPhoto);
+            } else {
+                m_backgroundPhoto.setVisibility(View.GONE);
+            }
         }
 
         // do we need to show hints the first time a user runs ?
@@ -741,6 +749,12 @@ public class ReviewActivity extends AppCompatActivity implements DisplayOptionsD
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         boolean enableTeacherMode = prefs.getBoolean("teacher_mode", false);
         return enableTeacherMode;
+    }
+
+    private boolean enableBackgrounds() {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        boolean enableBackgrounds = prefs.getBoolean("backgrounds", false);
+        return enableBackgrounds;
     }
 
     private boolean isFirstRun() {

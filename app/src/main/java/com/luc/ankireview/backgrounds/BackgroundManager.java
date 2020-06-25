@@ -28,10 +28,12 @@ public class BackgroundManager {
 
     public static final String CROPMODE_SCALE = "imagga_scale";
     public static final String CROPMODE_CROP = "imagga_crop";
+    public static final String CROPMODE_FILL = "fill";
 
     public enum BackgroundType {
         Teachers(TEACHERS, CROPMODE_SCALE, false),
-        Backgrounds(BACKGROUNDS, CROPMODE_SCALE, true);
+        Backgrounds(BACKGROUNDS, CROPMODE_SCALE, true),
+        BackgroundsFull(BACKGROUNDS, CROPMODE_FILL, false);
 
         BackgroundType(String setType, String cropMode, boolean applyBlur) {
             m_setType = setType;
@@ -121,6 +123,8 @@ public class BackgroundManager {
                     publicId(imagePublicId);
         }
 
+        Log.v(TAG, "fillImageViewComplete, baseUrl: " + baseUrl);
+
         MediaManager.get().responsiveUrl(true, true, m_backgroundType.getCropMode(), null)
                 .stepSize(100)
                 .minDimension(100)
@@ -140,6 +144,8 @@ public class BackgroundManager {
 
     public void fillImageView(final ImageView imageView)
     {
+        Log.v(TAG, "fillImageView");
+
         if( m_backgroundListReady ) {
             // we have the backgrounds, go ahead
             fillImageViewComplete(imageView);

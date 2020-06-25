@@ -36,6 +36,21 @@
 
             />
 
+        <Constraint
+            android:id="@id/background_photo"
+            android:layout_width="0dp"
+            android:layout_height="800dp"
+
+            android:layout_marginTop="0dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            >
+            <Transform
+                android:scaleX="@dimen/teacher_mode_background_default_scale"
+                android:scaleY="@dimen/teacher_mode_background_default_scale" />
+        </Constraint>
+
 
     </ConstraintSet>
 
@@ -93,6 +108,20 @@
             app:layout_constraintBottom_toBottomOf="parent"
             />
 
+        <Constraint
+            android:id="@id/background_photo"
+            android:layout_width="0dp"
+            android:layout_height="800dp"
+
+            android:layout_marginTop="0dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            >
+            <Transform
+                android:scaleX="@dimen/teacher_mode_background_zoomed_scale"
+                android:scaleY="@dimen/teacher_mode_background_zoomed_scale" />
+        </Constraint>
 
         <Constraint
             android:id="@id/answer_notification_good"
@@ -181,6 +210,21 @@
 
             />
 
+        <Constraint
+            android:id="@id/background_photo"
+            android:layout_width="0dp"
+            android:layout_height="800dp"
+
+            android:layout_marginTop="0dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            >
+            <Transform
+                android:scaleX="@dimen/teacher_mode_background_default_scale"
+                android:scaleY="@dimen/teacher_mode_background_default_scale" />
+        </Constraint>
+
             <Constraint
                 android:id="@id/answer_notification_bad"
                 android:layout_width="0dp"
@@ -252,6 +296,21 @@
             app:layout_constraintBottom_toBottomOf="parent"
 
             />
+
+        <Constraint
+            android:id="@id/background_photo"
+            android:layout_width="0dp"
+            android:layout_height="800dp"
+
+            android:layout_marginTop="0dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            >
+            <Transform
+                android:scaleX="@dimen/teacher_mode_background_default_scale"
+                android:scaleY="@dimen/teacher_mode_background_default_scale" />
+        </Constraint>
 
         <Constraint
             android:id="@id/answer_notification_good"
