@@ -8,8 +8,6 @@
     android:layout_weight="1"
     app:layoutDescription="@xml/reviewer_motionscene_ankireview"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    app:showPaths="true"
-    app:motionDebug="SHOW_ALL"
     >
 
     <ImageView
