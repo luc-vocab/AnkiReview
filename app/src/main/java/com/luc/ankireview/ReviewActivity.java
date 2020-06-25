@@ -193,7 +193,7 @@ public class ReviewActivity extends AppCompatActivity implements DisplayOptionsD
 
         } else {
 
-            m_backgroundPhoto = findViewById(R.id.background_photo_1);
+            m_backgroundPhoto = findViewById(R.id.background_photo_ankireview);
 
             m_imageManagerTeacher = null;
             m_imageManagerBackgrounds = null;

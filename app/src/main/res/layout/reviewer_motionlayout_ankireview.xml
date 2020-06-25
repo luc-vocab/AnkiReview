@@ -13,7 +13,7 @@
     >
 
     <ImageView
-        android:id="@+id/background_photo_1"
+        android:id="@+id/background_photo_ankireview"
 
         android:layout_width="0dp"
         android:layout_height="800dp"
