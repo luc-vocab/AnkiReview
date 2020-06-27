@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".DeckPickerActivity"
     android:orientation="vertical"
-    android:background="?attr/background"
     >
 
     <com.google.android.material.appbar.AppBarLayout

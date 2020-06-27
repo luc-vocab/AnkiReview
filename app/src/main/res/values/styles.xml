@@ -4,7 +4,7 @@
     <!-- https://material.io/design/color/the-color-system.html#tools-for-picking-colors -->
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/md_blue_700</item>
         <item name="colorPrimaryDark">@color/md_blue_700</item>
