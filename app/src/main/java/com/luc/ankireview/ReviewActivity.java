@@ -182,8 +182,8 @@ public class ReviewActivity extends AppCompatActivity implements DisplayOptionsD
 
 
         if( enableTeacherMode() ) {
-            m_teacherPhoto = findViewById(R.id.teacher_photo);
-            m_backgroundPhoto = findViewById(R.id.background_photo);
+            m_teacherPhoto = m_flashcardFrameTeacherMode.findViewById(R.id.teacher_photo);
+            m_backgroundPhoto = m_flashcardFrameTeacherMode.findViewById(R.id.background_photo);
 
             m_imageManagerTeacher = new BackgroundManager(BackgroundManager.BackgroundType.Teachers, "chinese_women", 3);
             m_imageManagerTeacher.fillImageView(m_teacherPhoto);
@@ -193,7 +193,8 @@ public class ReviewActivity extends AppCompatActivity implements DisplayOptionsD
 
         } else {
 
-            m_backgroundPhoto = findViewById(R.id.background_photo_ankireview);
+            m_teacherPhoto = null;
+            m_backgroundPhoto = m_flashcardFrameAnkiReview.findViewById(R.id.background_photo);
 
             m_imageManagerTeacher = null;
             m_imageManagerBackgrounds = null;

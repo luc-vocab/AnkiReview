@@ -37,7 +37,7 @@
             />
 
         <Constraint
-            android:id="@id/background_photo_ankireview"
+            android:id="@id/background_photo"
 
             android:layout_width="0dp"
             android:layout_height="800dp"
@@ -110,7 +110,7 @@
             />
 
         <Constraint
-            android:id="@id/background_photo_ankireview"
+            android:id="@id/background_photo"
             android:layout_width="0dp"
             android:layout_height="800dp"
 
@@ -212,7 +212,7 @@
             />
 
         <Constraint
-            android:id="@id/background_photo_ankireview"
+            android:id="@id/background_photo"
             android:layout_width="0dp"
             android:layout_height="800dp"
 
@@ -299,7 +299,7 @@
             />
 
         <Constraint
-            android:id="@id/background_photo_ankireview"
+            android:id="@id/background_photo"
             android:layout_width="0dp"
             android:layout_height="800dp"
 
