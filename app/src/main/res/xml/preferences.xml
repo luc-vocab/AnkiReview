@@ -17,6 +17,11 @@
         app:title="Display">
 
         <SwitchPreferenceCompat
+            app:key="force_dark_mode"
+            app:title="Force Dark Mode"
+            android:defaultValue="false" />
+
+        <SwitchPreferenceCompat
             app:key="teacher_mode"
             app:title="Enable Teacher Mode"
             android:defaultValue="false" />

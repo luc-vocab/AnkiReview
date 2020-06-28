@@ -9,6 +9,7 @@ import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.motion.widget.MotionLayout;
 import androidx.core.view.GestureDetectorCompat;
@@ -206,6 +207,13 @@ public class ReviewActivity extends AppCompatActivity implements DisplayOptionsD
             } else {
                 m_backgroundPhoto.setVisibility(View.GONE);
             }
+        }
+
+        // dark mode ?
+        if (forceDarkMode()) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
         }
 
         // do we need to show hints the first time a user runs ?
@@ -749,6 +757,12 @@ public class ReviewActivity extends AppCompatActivity implements DisplayOptionsD
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         boolean useAudioFeedback = prefs.getBoolean("audio_feedback", true);
         return useAudioFeedback;
+    }
+
+    private boolean forceDarkMode() {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        boolean forceDarkMode = prefs.getBoolean("force_dark_mode", false);
+        return forceDarkMode;
     }
 
     private boolean enableTeacherMode() {
