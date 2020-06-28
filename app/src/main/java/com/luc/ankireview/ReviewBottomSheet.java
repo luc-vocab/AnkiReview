@@ -21,7 +21,6 @@ import java.util.Map;
 import java.util.Vector;
 
 import androidx.annotation.Nullable;
-import androidx.core.content.ContextCompat;
 
 public class ReviewBottomSheet extends BottomSheetDialogFragment {
     private static final String TAG = "ReviewBottomSheet";
