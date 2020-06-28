@@ -8,8 +8,6 @@
         <item name="colorSecondary">@color/md_deep_purple_400</item>
         <item name="colorOnSecondary">@color/md_grey_400</item>
 
-        <item name="colorSecondaryVariant">@color/md_deep_purple_600</item>
-
         <item name="android:colorBackground">@color/md_grey_900</item>
 
         <item name="android:shadowColor">@color/md_black</item>
