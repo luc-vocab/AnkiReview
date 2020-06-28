@@ -10,8 +10,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="DeckName"
-        android:textColor="@color/toolbar_text"
         android:textSize="@dimen/toolbar_deck_name"
+        android:textColor="?attr/appBarTextColor"
 
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -25,7 +25,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/ticker_label_left_margin"
         android:text="Learn"
-        android:textColor="@color/toolbar_text"
+        android:textColor="?attr/appBarTextColor"
 
         android:textSize="@dimen/toolbar_count_label"
 
@@ -62,7 +62,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/ticker_label_left_margin"
         android:text="Review"
-        android:textColor="@color/toolbar_text"
+        android:textColor="?attr/appBarTextColor"
 
         android:textSize="@dimen/toolbar_count_label"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -100,7 +100,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/ticker_label_left_margin"
         android:text="New"
-        android:textColor="@color/toolbar_text"
+        android:textColor="?attr/appBarTextColor"
 
         android:textSize="@dimen/toolbar_count_label"
         app:layout_constraintBottom_toBottomOf="parent"

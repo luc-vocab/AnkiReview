@@ -7,4 +7,6 @@
         <attr name="maxValue" format="integer" />
     </declare-styleable>
 
+    <attr name="appBarTextColor" format="color" />
+
 </resources>

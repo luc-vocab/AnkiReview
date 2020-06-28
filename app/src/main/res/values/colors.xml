@@ -9,7 +9,6 @@
     <!-- https://www.materialui.co/colors -->
 
     <!-- toolbar colors -->
-    <color name="toolbar_text">@color/md_white</color>
     <color name="count_learn">@color/md_pink_400</color>
     <color name="count_review">@color/md_green_a700</color>
     <color name="count_new">@color/md_cyan_500</color>

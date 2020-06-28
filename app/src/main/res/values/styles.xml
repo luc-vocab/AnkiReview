@@ -26,6 +26,7 @@
         <item name="subtitleTextColor">@color/md_white</item>
         -->
 
+        <item name="appBarTextColor">@color/md_white</item>
 
 
     </style>
