@@ -24,6 +24,14 @@
     </style>
 
 
+    <!-- review bottom sheet buttons -->
+    <style name="ReviewActionButton" parent="TextAppearance.MaterialComponents.Button">
+        <item name="android:textColor">@color/md_white</item>
+        <item name="android:layout_marginLeft">2dp</item>
+        <item name="android:layout_marginRight">2dp</item>
+    </style>
+
+
     <!-- Deck Picker styles -->
     <style name="DeckPickerDeckName">
         <item name="android:layout_marginLeft">10dp</item>

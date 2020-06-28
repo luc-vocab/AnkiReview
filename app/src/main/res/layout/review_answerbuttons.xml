@@ -9,9 +9,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
+        style="@style/ReviewActionButton"
         android:backgroundTint="@color/answer_wrong"
-        android:text="10mn\nagain"
-        android:textColor="#FFFFFF">
+        android:text="10mn\nagain">
 
     </Button>
 
@@ -20,6 +20,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
+        style="@style/ReviewActionButton"
         android:backgroundTint="@color/answer_hard"
         android:text="1d\nhard"
         android:textColor="#FFFFFF" />
@@ -29,6 +30,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
+        style="@style/ReviewActionButton"
         android:backgroundTint="@color/answer_good"
         android:text="4d\ngood"
         android:textColor="#FFFFFF"
@@ -39,6 +41,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
+        style="@style/ReviewActionButton"
         android:backgroundTint="@color/answer_easy"
         android:text="21d\neasy"
         android:textColor="#FFFFFF" />

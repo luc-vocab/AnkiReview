@@ -8,9 +8,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
+        style="@style/ReviewActionButton"
         android:backgroundTint="@color/answer_tag_suspend"
-        android:text="mark"
-        android:textColor="#FFFFFF">
+        android:text="mark">
 
     </Button>
 
@@ -19,19 +19,18 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
+        style="@style/ReviewActionButton"
         android:backgroundTint="@color/answer_tag_suspend"
-        android:text="mark/suspend"
-        android:textColor="#FFFFFF" />
+        android:text="mark/suspend" />
 
     <Button
         android:id="@+id/button_mark_bury"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
+        style="@style/ReviewActionButton"
         android:backgroundTint="@color/answer_tag_suspend"
-        android:text="mark / bury"
-        android:textColor="#FFFFFF"
-        android:visibility="visible" />
+        android:text="mark / bury" />
 
 
 
