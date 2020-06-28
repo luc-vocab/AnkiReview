@@ -13,14 +13,18 @@
         <item name="colorSecondary">@color/md_pink_500</item>
         <item name="colorOnSecondary">@color/md_white</item>
 
+        <item name="colorSecondaryVariant">@color/md_pink_700</item>
+
         <item name="android:colorBackground">@color/md_grey_300</item>
 
         <item name="android:shadowColor">@color/md_black</item>
 
         <!-- Toolbar -->
+        <!--
         <item name="android:textColorSecondary">@color/md_grey_500</item>
         <item name="titleTextColor">@color/md_white</item>
         <item name="subtitleTextColor">@color/md_white</item>
+        -->
 
 
 
@@ -56,7 +60,7 @@
     </style>
 
     <style name="CardStyleItemTextHeavy" parent="CardStyleItemText">
-        <item name="android:textColor">?android:attr/textColorPrimary</item>
+        <item name="android:textColor">?attr/colorSecondary</item>
     </style>
 
     <style name="CardStyleHeader">
@@ -70,9 +74,11 @@
     </style>
 
     <style name="CardStyleFieldListSectionHeader" parent="CardStyleFieldListItem">
+        <!-- <item name="android:background">?attr/colorSurface</item> -->
         <!-- <item name="android:background">?attr/colorPrimary</item>
         <item name="android:textColor">?attr/colorSecondary</item>
          -->
+        <item name="android:textColor">?attr/colorSecondary</item>
     </style>
 
     <style name="CardStyleFieldListSectionDescription" parent="CardStyleFieldListItem">
@@ -81,6 +87,7 @@
         <item name="android:background">@color/md_grey_300</item>
         <item name="android:textColor">@color/md_grey_800</item>
         -->
+        <item name="android:textColor">?attr/colorSecondaryVariant</item>
     </style>
 
     <style name="CardStyleFieldListField" parent="CardStyleFieldListItem">
