@@ -27,6 +27,7 @@
             android:layout_height="30dp"
             android:layout_gravity="right|center"
             android:layout_weight="1"
+            android:tint="?android:attr/textColorPrimary"
             app:srcCompat="@drawable/drag_handle" />
 
 
