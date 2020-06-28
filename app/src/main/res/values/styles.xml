@@ -20,12 +20,6 @@
         <item name="android:shadowColor">@color/md_black</item>
 
         <!-- Toolbar -->
-        <!--
-        <item name="android:textColorSecondary">@color/md_grey_500</item>
-        <item name="titleTextColor">@color/md_white</item>
-        <item name="subtitleTextColor">@color/md_white</item>
-        -->
-
         <item name="appBarTextColor">@color/md_white</item>
 
 
