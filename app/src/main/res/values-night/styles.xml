@@ -4,8 +4,6 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.MaterialComponents.NoActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/md_blue_700</item>
-        <item name="colorPrimaryDark">@color/md_blue_700</item>
 
         <item name="colorSecondary">@color/md_deep_purple_600</item>
         <item name="colorOnSecondary">@color/md_white</item>
