@@ -47,7 +47,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Vector;
 
-public class ReviewActivity extends AppCompatActivity implements DisplayOptionsDialog.DisplayOptionsDialogListener, ReviewBottomSheet.ReviewBottomSheetListener {
+public class ReviewActivity extends AppCompatActivity implements ReviewBottomSheet.ReviewBottomSheetListener {
     private static final String TAG = "ReviewActivity";
 
     class ReviewerGestureDetector extends GestureDetector.SimpleOnGestureListener {
@@ -234,13 +234,8 @@ public class ReviewActivity extends AppCompatActivity implements DisplayOptionsD
         Log.v(TAG, "reloadCardStyleAndCards");
 
         m_cardStyle = new CardStyle(this);
-        if( ! m_cardStyle.deckDisplayModeConfigured(m_deckId)) {
-            // show deck style prompt
-            showDeckDisplayOptions();
-        } else {
-            setupFlashcardFrame();
-            loadCards();
-        }
+        setupFlashcardFrame();
+        loadCards();
     }
 
 
@@ -422,31 +417,6 @@ public class ReviewActivity extends AppCompatActivity implements DisplayOptionsD
     }
 
     @Override
-    public void onSelectAnkiHTMLMode() {
-        m_cardStyle.chooseDeckDisplayMode(m_deckId, CardStyle.DeckDisplayMode.ANKIHTML);
-        showReviewControls();
-        m_firebaseAnalytics.logEvent(Analytics.DISPLAYOPTIONS_HTML, null);
-        reloadCardStyleAndCards();
-    }
-
-    @Override
-    public void onSelectAnkireviewMode() {
-        m_cardStyle.chooseDeckDisplayMode(m_deckId, CardStyle.DeckDisplayMode.ANKIREVIEW);
-        m_firebaseAnalytics.logEvent(Analytics.DISPLAYOPTIONS_ANKIREVIEW, null);
-        reloadCardStyleAndCards();
-        showReviewControls();
-    }
-
-    @Override
-    public void onSelectTeacherMode() {
-        m_cardStyle.chooseDeckDisplayMode(m_deckId, CardStyle.DeckDisplayMode.TEACHER);
-        m_firebaseAnalytics.logEvent(Analytics.DISPLAYOPTIONS_TEACHER, null);
-        reloadCardStyleAndCards();
-        showReviewControls();
-    }
-
-
-    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         // Check which request we're responding to
@@ -574,13 +544,6 @@ public class ReviewActivity extends AppCompatActivity implements DisplayOptionsD
         m_bottomSheetButton.hide();
         m_styleNotFound.setVisibility(View.VISIBLE);
         m_cardTemplateName.setText(cardTemplateName);
-    }
-
-    private void showDeckDisplayOptions() {
-        // start up dialog
-
-        DisplayOptionsDialog dialog = new DisplayOptionsDialog(this);
-        dialog.show(getSupportFragmentManager(), "DisplayOptionsDialog");
     }
 
     private void setupCardStyleHandler(Card card) {
