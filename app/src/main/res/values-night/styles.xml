@@ -5,8 +5,8 @@
     <style name="AppTheme" parent="Theme.MaterialComponents.NoActionBar">
         <!-- Customize your theme here. -->
 
-        <item name="colorSecondary">@color/md_deep_purple_600</item>
-        <item name="colorOnSecondary">@color/md_white</item>
+        <item name="colorSecondary">@color/md_deep_purple_400</item>
+        <item name="colorOnSecondary">@color/md_grey_400</item>
 
         <item name="android:colorBackground">@color/md_grey_900</item>
 
