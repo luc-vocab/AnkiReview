@@ -232,11 +232,7 @@ public class ReviewActivity extends AppCompatActivity implements ReviewBottomShe
         // dark mode ?
         // -----------
 
-        if (forceDarkMode()) {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-        } else {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
-        }
+        AnkiReviewApp.handleForceDarkSetting(this);
 
         m_cardStyle = new CardStyle(this);
         setupFlashcardFrame();
@@ -727,12 +723,6 @@ public class ReviewActivity extends AppCompatActivity implements ReviewBottomShe
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         boolean useAudioFeedback = prefs.getBoolean("audio_feedback", true);
         return useAudioFeedback;
-    }
-
-    private boolean forceDarkMode() {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        boolean forceDarkMode = prefs.getBoolean("force_dark_mode", false);
-        return forceDarkMode;
     }
 
     private boolean enableTeacherMode() {

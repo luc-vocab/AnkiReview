@@ -19,6 +19,8 @@ import androidx.core.content.ContextCompat;
 import android.content.pm.PackageManager;
 import androidx.core.app.ActivityCompat;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -43,6 +45,10 @@ public class DeckPickerActivity extends AppCompatActivity implements AdapterView
     private static final String ANKI_PERMISSIONS = "com.ichi2.anki.permission.READ_WRITE_DATABASE";
     private static final String READ_STORAGE_PERMISSION = android.Manifest.permission.READ_EXTERNAL_STORAGE;
     private static final String INTERNET_PERMISSION = Manifest.permission.INTERNET;
+
+
+    private static final int LAUNCH_PREFERENCES = 200;
+    private static final int LAUNCH_REVIEW = 300;
 
 
     private class AnkiDeck {
@@ -380,6 +386,40 @@ public class DeckPickerActivity extends AppCompatActivity implements AdapterView
 
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.deckpicker_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            /*
+            case R.id.deck_display_mode:
+                showDeckDisplayOptions();
+                return true;
+             */
+            case R.id.preferences:
+                Log.v(TAG, "preferences selected");
+                launchPreferences();
+                return true;
+                 default:
+                // If we got here, the user's action was not recognized.
+                // Invoke the superclass to handle it.
+                return super.onOptionsItemSelected(item);
+
+        }
+    }
+
+    private void launchPreferences() {
+        Intent intent = new Intent(DeckPickerActivity.this, SettingsActivity.class);
+        this.startActivityForResult(intent, LAUNCH_PREFERENCES);
+    }
+
+
+
     Vector<AnkiDeck> m_ankiDeckList;
     private ListView m_deckList;
     private DeckAdapter m_adapter;
@@ -401,14 +441,16 @@ public class DeckPickerActivity extends AppCompatActivity implements AdapterView
         // launch review activity
         Intent intent = new Intent(DeckPickerActivity.this, ReviewActivity.class);
         intent.putExtra("deckId", deck.deckId);
-        this.startActivityForResult(intent, 0);
+        this.startActivityForResult(intent, LAUNCH_REVIEW);
     }
     //private List<String> m_decks = new LinkedList<String>();
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         // Check which request we're responding to
-        if (requestCode == 0) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == LAUNCH_REVIEW) {
             // Make sure the request was successful
             if (resultCode == RESULT_OK) {
                 Log.v(TAG, "review session has been completed");
@@ -421,6 +463,9 @@ public class DeckPickerActivity extends AppCompatActivity implements AdapterView
             } else if (resultCode == RESULT_CANCELED) {
                 Log.v(TAG, "review session has been interrupted");
             }
+        } else if (requestCode == LAUNCH_PREFERENCES) {
+            // do we need to enable dark mode ?
+            AnkiReviewApp.handleForceDarkSetting(this);
         }
     }
 
