@@ -50,6 +50,10 @@ import java.util.Vector;
 public class ReviewActivity extends AppCompatActivity implements ReviewBottomSheet.ReviewBottomSheetListener {
     private static final String TAG = "ReviewActivity";
 
+    private static final int LAUNCH_CARDSTYLE = 100;
+    private static final int LAUNCH_PREFERENCES = 200;
+
+
     class ReviewerGestureDetector extends GestureDetector.SimpleOnGestureListener {
 
         @Override
@@ -177,10 +181,26 @@ public class ReviewActivity extends AppCompatActivity implements ReviewBottomShe
         setupCardMotionLayoutTransitions(m_flashcardFrameAnkiReview);
         setupCardMotionLayoutTransitions(m_flashcardFrameTeacherMode);
 
-        // background photos disabled for now
-        // ----------------------------------
 
+        // do we need to show hints the first time a user runs ?
+        // -----------------------------------------------------
 
+        m_showFirstRunQuestionHelp = false;
+        m_showFirstRunAnswerHelp = false;
+        if( isFirstRun() ) {
+            m_showFirstRunQuestionHelp = true;
+            m_showFirstRunAnswerHelp = true;
+        }
+
+        // final step
+        reloadCardStyleAndCards();
+    }
+
+    private void reloadCardStyleAndCards() {
+        Log.v(TAG, "reloadCardStyleAndCards");
+
+        // do we need to enable teacher mode ?
+        // -----------------------------------
 
         if( enableTeacherMode() ) {
             m_teacherPhoto = m_flashcardFrameTeacherMode.findViewById(R.id.teacher_photo);
@@ -210,28 +230,13 @@ public class ReviewActivity extends AppCompatActivity implements ReviewBottomShe
         }
 
         // dark mode ?
+        // -----------
+
         if (forceDarkMode()) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
         } else {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
         }
-
-        // do we need to show hints the first time a user runs ?
-        // -----------------------------------------------------
-
-        m_showFirstRunQuestionHelp = false;
-        m_showFirstRunAnswerHelp = false;
-        if( isFirstRun() ) {
-            m_showFirstRunQuestionHelp = true;
-            m_showFirstRunAnswerHelp = true;
-        }
-
-        // final step
-        reloadCardStyleAndCards();
-    }
-
-    private void reloadCardStyleAndCards() {
-        Log.v(TAG, "reloadCardStyleAndCards");
 
         m_cardStyle = new CardStyle(this);
         setupFlashcardFrame();
@@ -382,7 +387,7 @@ public class ReviewActivity extends AppCompatActivity implements ReviewBottomShe
 
     private void launchPreferences() {
         Intent intent = new Intent(ReviewActivity.this, SettingsActivity.class);
-        this.startActivityForResult(intent, 0);
+        this.startActivityForResult(intent, LAUNCH_PREFERENCES);
     }
 
     private void launchCardStyle() {
@@ -411,7 +416,7 @@ public class ReviewActivity extends AppCompatActivity implements ReviewBottomShe
                 intent.putExtra("cardOrd", m_cardForCardStyleEdit.getCardOrd());
                 intent.putExtra("cardTemplateName", m_cardForCardStyleEdit.getCardTemplateName());
                 intent.putExtra("deckName", m_deckName);
-                this.startActivityForResult(intent, 0);
+                this.startActivityForResult(intent, LAUNCH_CARDSTYLE);
             }
         }
     }
@@ -420,7 +425,7 @@ public class ReviewActivity extends AppCompatActivity implements ReviewBottomShe
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         // Check which request we're responding to
-        if (requestCode == 0) {
+        if (requestCode == LAUNCH_CARDSTYLE) {
             // Make sure the request was successful
             if (resultCode == RESULT_OK) {
                 // card style has been saved
@@ -429,6 +434,8 @@ public class ReviewActivity extends AppCompatActivity implements ReviewBottomShe
             } else if (resultCode == RESULT_CANCELED) {
                 Log.v(TAG, "user canceled");
             }
+        } else if( requestCode == LAUNCH_PREFERENCES) {
+            reloadCardStyleAndCards();
         }
     }
 
