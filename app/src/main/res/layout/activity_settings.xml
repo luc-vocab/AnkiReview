@@ -12,7 +12,10 @@
             android:id="@+id/settings_toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:elevation="4dp" />
+            android:elevation="4dp"
+            app:subtitleTextColor="?attr/appBarTextColor"
+            app:titleTextColor="?attr/appBarTextColor"
+            />
     </com.google.android.material.appbar.AppBarLayout>
 
     <FrameLayout
