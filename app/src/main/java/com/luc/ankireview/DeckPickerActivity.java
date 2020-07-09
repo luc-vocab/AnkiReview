@@ -393,8 +393,8 @@ public class DeckPickerActivity extends AppCompatActivity implements AdapterView
 
     private void showWhatsNew() {
         WhatsNew whatsNewInstance = WhatsNew.newInstance(
-                new WhatsNewItem("v0.21", getResources().getString(R.string.whatsnew_v21), WhatsNewItem.NO_IMAGE_RES_ID),
-                new WhatsNewItem("v0.20", getResources().getString(R.string.whatsnew_v20), WhatsNewItem.NO_IMAGE_RES_ID));
+                new WhatsNewItem("v0.22", getResources().getString(R.string.whatsnew_v22), WhatsNewItem.NO_IMAGE_RES_ID),
+                new WhatsNewItem("v0.21", getResources().getString(R.string.whatsnew_v21), WhatsNewItem.NO_IMAGE_RES_ID));
         whatsNewInstance.setTitleText(getResources().getString(R.string.whatsnew_title));
 
         whatsNewInstance.setButtonText("Got it!");
