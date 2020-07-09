@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import android.text.Layout;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -497,24 +498,44 @@ public class CardStyleActivity extends AppCompatActivity {
 
         // instruct user to drag the field handle
         {
+            float targetX;
+            float targetY;
+
+            float targetSize = 400f;
+
+            float overlayX;
+            float overlayY;
+
             int[] location = new int[2];
             LinearLayout fieldEntry = (LinearLayout) m_fullFieldListView.getChildAt(m_fieldListAdapter.getFirstUnassignedFieldId());
-            View dragHandle = fieldEntry.getChildAt(1);
-            dragHandle.getLocationOnScreen(location);
 
-            float targetSize = 100f;
-            float targetX = (float) (location[0] + dragHandle.getWidth() / 2.0);
-            float targetY = (float) (location[1] - dragHandle.getHeight() / 2.0);
+            if(fieldEntry != null) {
+                View dragHandle = fieldEntry.getChildAt(1);
+                dragHandle.getLocationOnScreen(location);
 
-            float overlayX = 10f;
-            float overlayY = targetY - 800f;
+                targetX = (float) (location[0] + dragHandle.getWidth() / 2.0);
+                targetY = (float) (location[1] - dragHandle.getHeight() / 2.0);
+
+                overlayX = 10f;
+                overlayY = targetY - 800f;
+            } else {
+                m_fieldSettingsView.getLocationOnScreen(location);
+
+                targetX = (float) (location[0] + m_fieldSettingsView.getWidth() / 2.0);
+                targetY = (float) (location[1] + m_fieldSettingsView.getHeight() / 2.0);
+
+                overlayX = 10f;
+                overlayY = targetY - 800f;
+            }
+
+
 
             target2 = new SimpleTarget.Builder(this)
                     .setPoint(targetX, targetY)
                     .setShape(new Circle(targetSize)) // or RoundedRectangle()
                     .setTitle("Field List")
                     .setDescription("Here you can configure which fields appear in the Question card or Answer card. Grab this handle to drag the field into the Question or Answer section above. " +
-                                    "You can also scroll up or down to see the complete field list.")
+                            "You can also scroll up or down to see the complete field list.")
                     .setOverlayPoint(overlayX, overlayY)
                     .build();
         }
