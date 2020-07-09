@@ -18,6 +18,9 @@ import org.json.JSONObject;
 import androidx.core.content.ContextCompat;
 import android.content.pm.PackageManager;
 import androidx.core.app.ActivityCompat;
+import io.github.tonnyl.whatsnew.WhatsNew;
+import io.github.tonnyl.whatsnew.item.WhatsNewItem;
+
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -384,6 +387,20 @@ public class DeckPickerActivity extends AppCompatActivity implements AdapterView
             showDeckPickerMessage(R.string.deckpicker_cannotlistdecks_title, R.string.deckpicker_cannotlistdecks_description, e.getMessage());
         }
 
+        showWhatsNew();
+
+    }
+
+    private void showWhatsNew() {
+        WhatsNew whatsNewInstance = WhatsNew.newInstance(
+                new WhatsNewItem("v0.21", getResources().getString(R.string.whatsnew_v21), WhatsNewItem.NO_IMAGE_RES_ID),
+                new WhatsNewItem("v0.20", getResources().getString(R.string.whatsnew_v20), WhatsNewItem.NO_IMAGE_RES_ID));
+        whatsNewInstance.setTitleText(getResources().getString(R.string.whatsnew_title));
+
+        whatsNewInstance.setButtonText("Got it!");
+        whatsNewInstance.setButtonBackground(ContextCompat.getColor(this, R.color.md_pink_500));
+        whatsNewInstance.setButtonTextColor(ContextCompat.getColor(this, R.color.white));
+        whatsNewInstance.presentAutomatically(this);
     }
 
     @Override

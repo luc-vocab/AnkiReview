@@ -53,6 +53,7 @@ dependencies {
     api group: 'com.cloudinary', name: 'cloudinary-android', version: '1.25.0'
     implementation 'com.github.takusemba:spotlight:1.8.0'
     implementation 'com.robinhood.ticker:ticker:2.0.2'
+    implementation 'io.github.tonnyl:whatsnew:0.1.2'
 }
 
 apply plugin: 'com.google.gms.google-services'

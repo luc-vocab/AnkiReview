@@ -21,6 +21,13 @@
             app:title="Force Dark Mode"
             android:defaultValue="false" />
 
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        app:key="experimental"
+        app:title="Experimental">
+
+
         <SwitchPreferenceCompat
             app:key="teacher_mode"
             app:title="Enable Teacher Mode"

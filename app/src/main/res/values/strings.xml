@@ -87,6 +87,10 @@
     <string name="review_help_question">Swipe down to reveal answer</string>
     <string name="review_help_answer">Swipe left to answer Bad, swipe right to answer Good. Or tap the button at the bottom to reveal more answer options.</string>
 
+    <string name="whatsnew_v21">Added Dark Mode, added experimental Backgrounds and Teacher modes. These show backgrounds with parallax effects as you review. The set of image backgrounds is hardcoded to just one set for now. More backgrounds will be added based on user feedback. Enable these in Preferences.</string>
+    <string name="whatsnew_v20">Review bottom bar now has a more compact look, and the number of quicktags is not limited to 5 anymore. Fixed a bug at startup.</string>
+    <string name="whatsnew_title">What\'s new in AnkiReview</string>
+
     <string name="developer_email">ankireview@mailc.net</string>
 
 </resources>
