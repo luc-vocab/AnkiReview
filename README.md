@@ -19,3 +19,5 @@ Want to support my work on AnkiReview ? Become a supporter on patreon: https://w
 ![screenshot 2](https://res.cloudinary.com/photozzap/image/upload/c_scale,h_600/v1549122129/ankireview_github_images/Screenshot_1548166436.png)
 ![screenshot 3](https://res.cloudinary.com/photozzap/image/upload/c_scale,h_600/v1549122130/ankireview_github_images/Screenshot_1548166463.png)
 ![screenshot 4](https://res.cloudinary.com/photozzap/image/upload/c_scale,h_600/v1549122130/ankireview_github_images/Screenshot_1548166476.png)
+
+Video of reviewing animation: https://vimeo.com/382281907/553b3bf6d3
