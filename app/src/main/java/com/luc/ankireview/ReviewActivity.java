@@ -202,6 +202,8 @@ public class ReviewActivity extends AppCompatActivity implements ReviewBottomShe
         // do we need to enable teacher mode ?
         // -----------------------------------
 
+        String backgroundSet = getBackgroundSet();
+
         if( enableTeacherMode() ) {
             m_teacherPhoto = m_flashcardFrameTeacherMode.findViewById(R.id.teacher_photo);
             m_backgroundPhoto = m_flashcardFrameTeacherMode.findViewById(R.id.background_photo);
@@ -209,7 +211,7 @@ public class ReviewActivity extends AppCompatActivity implements ReviewBottomShe
             m_imageManagerTeacher = new BackgroundManager(BackgroundManager.BackgroundType.Teachers, "chinese_women", 3);
             m_imageManagerTeacher.fillImageView(m_teacherPhoto);
 
-            m_imageManagerBackgrounds = new BackgroundManager(BackgroundManager.BackgroundType.Backgrounds, "nature", 6);
+            m_imageManagerBackgrounds = new BackgroundManager(BackgroundManager.BackgroundType.Backgrounds, backgroundSet, 6);
             m_imageManagerBackgrounds.fillImageView(m_backgroundPhoto);
 
         } else {
@@ -222,7 +224,7 @@ public class ReviewActivity extends AppCompatActivity implements ReviewBottomShe
 
             if( enableBackgrounds() ) {
                 Log.v(TAG, "enableBackgrounds");
-                m_imageManagerBackgrounds = new BackgroundManager(BackgroundManager.BackgroundType.BackgroundsFull, "abstract_future", 4);
+                m_imageManagerBackgrounds = new BackgroundManager(BackgroundManager.BackgroundType.BackgroundsFull, backgroundSet, 4);
                 m_imageManagerBackgrounds.fillImageView(m_backgroundPhoto);
             } else {
                 m_backgroundPhoto.setVisibility(View.GONE);
@@ -735,6 +737,12 @@ public class ReviewActivity extends AppCompatActivity implements ReviewBottomShe
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         boolean enableBackgrounds = prefs.getBoolean("backgrounds", false);
         return enableBackgrounds;
+    }
+
+    private String getBackgroundSet() {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        String backgroundSet = prefs.getString("background_set", "abstract_blur");
+        return backgroundSet;
     }
 
     private boolean isFirstRun() {
