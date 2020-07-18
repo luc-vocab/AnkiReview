@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="backgrounds_sets_names">
+        <item>Abstract Blur</item>
+        <item>Abstract Futuristic</item>
+        <item>Abstract Halftone</item>
+        <item>Cities</item>
+        <item>Nature</item>
+    </string-array>
+
+    <string-array name="backgrounds_sets_values">
+        <item>abstract_blur</item>
+        <item>abstract_futuristic</item>
+        <item>abstract_halftone</item>
+        <item>cities</item>
+        <item>nature</item>
+    </string-array>
+</resources>

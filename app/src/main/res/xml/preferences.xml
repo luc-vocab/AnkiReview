@@ -38,6 +38,14 @@
             app:title="Enable Backgrounds"
             android:defaultValue="false" />
 
+        <ListPreference
+            android:key="background_set"
+            android:title="Background Set"
+            android:entries="@array/backgrounds_sets_names"
+            android:entryValues="@array/backgrounds_sets_values"
+            android:summary="Choose a background set"
+            />
+
     </PreferenceCategory>
 
 </PreferenceScreen>
