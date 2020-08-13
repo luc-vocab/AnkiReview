@@ -10,6 +10,7 @@ import com.cloudinary.android.MediaManager;
 import com.cloudinary.android.ResponsiveUrl;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreSettings;
@@ -73,7 +74,10 @@ public class BackgroundManager {
         m_imageView = null;
         m_imageUrlList = new Vector<String>();
 
-        m_firestoreDb.collection(m_backgroundType.getSetType()).document(setName).collection("images")
+        // Log.v(TAG, "retrieving ")
+        CollectionReference path = m_firestoreDb.collection(m_backgroundType.getSetType()).document(setName).collection("images");
+        Log.v(TAG, "retrieving from " + path.getPath());
+        path
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -83,13 +87,14 @@ public class BackgroundManager {
                                 Log.d(TAG, document.getId() + " => " + document.getData());
                                 m_imageUrlList.add(document.getString("public_id"));
                             }
+                            Log.v(TAG, "retrieved " + m_imageUrlList.size() + " backgrounds");
                             Collections.shuffle(m_imageUrlList);
                             // process backlog of "fillImageView"
                             if(m_imageView != null) {
                                 fillImageViewComplete(m_imageView);
                             }
                             m_backgroundListReady = true;
-                            Log.v(TAG, "retrieved " + m_imageUrlList.size() + " backgrounds");
+
 
                         } else {
                             Log.w(TAG, "Error getting documents.", task.getException());
