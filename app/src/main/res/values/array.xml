@@ -6,6 +6,7 @@
         <item>Abstract Futuristic</item>
         <item>Abstract Halftone</item>
         <item>Cities</item>
+        <item>Cities / Asia / Bangkok</item>
         <item>Nature</item>
     </string-array>
 
@@ -14,6 +15,7 @@
         <item>abstract_future</item>
         <item>abstract_halftone</item>
         <item>cities</item>
+        <item>cities_asia_bangkok</item>
         <item>nature</item>
     </string-array>
 
