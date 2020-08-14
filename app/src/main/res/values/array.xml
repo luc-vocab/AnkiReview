@@ -16,4 +16,14 @@
         <item>cities</item>
         <item>nature</item>
     </string-array>
+
+    <string-array name="teacher_sets_names">
+        <item>Chinese Women</item>
+        <item>Asian Woman</item>
+    </string-array>
+
+    <string-array name="teacher_sets_values">
+        <item>chinese_women</item>
+        <item>asian_woman_1</item>
+    </string-array>
 </resources>

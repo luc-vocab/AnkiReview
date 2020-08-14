@@ -46,6 +46,14 @@
             android:summary="Choose a background set"
             />
 
+        <ListPreference
+            android:key="teacher_set"
+            android:title="Teacher Set"
+            android:entries="@array/teacher_sets_names"
+            android:entryValues="@array/teacher_sets_values"
+            android:summary="Choose a teacher set"
+            />
+
     </PreferenceCategory>
 
 </PreferenceScreen>
