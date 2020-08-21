@@ -22,7 +22,7 @@
         android:layout_width="0dp"
         android:layout_height="800dp"
         android:background="@android:color/transparent"
-        android:scaleType="centerCrop">
+        android:scaleType="fitStart">
     </ImageView>
 
     <include

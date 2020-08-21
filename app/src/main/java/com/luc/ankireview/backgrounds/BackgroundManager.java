@@ -27,18 +27,23 @@ public class BackgroundManager {
     public static final String TEACHERS = "teachers";
     public static final String BACKGROUNDS = "backgrounds";
 
-    public static final String CROPMODE_SCALE = "imagga_scale";
-    public static final String CROPMODE_CROP = "imagga_crop";
+    public static final String CROPMODE_IMAGGA_SCALE = "imagga_scale";
+    //public static final String CROPMODE_CROP = "imagga_crop";
     public static final String CROPMODE_FILL = "fill";
+    public static final String CROPMODE_FIT = "fit";
+    public static final String CROPMODE_PAD = "pad";
+
+    public static final String GRAVITY_NORTH = "north";
 
     public enum BackgroundType {
-        Teachers(TEACHERS, CROPMODE_SCALE, false),
-        Backgrounds(BACKGROUNDS, CROPMODE_SCALE, true),
-        BackgroundsFull(BACKGROUNDS, CROPMODE_FILL, false);
+        Teachers(TEACHERS, CROPMODE_PAD, GRAVITY_NORTH, false),
+        Backgrounds(BACKGROUNDS, CROPMODE_IMAGGA_SCALE, null, true),
+        BackgroundsFull(BACKGROUNDS, CROPMODE_IMAGGA_SCALE, null, false);
 
-        BackgroundType(String setType, String cropMode, boolean applyBlur) {
+        BackgroundType(String setType, String cropMode, String gravity, boolean applyBlur) {
             m_setType = setType;
             m_cropMode = cropMode;
+            m_gravity = gravity;
             m_applyBlur = applyBlur;
         }
 
@@ -50,12 +55,15 @@ public class BackgroundManager {
             return m_cropMode;
         }
 
+        public String getGravity() { return m_gravity; }
+
         public boolean getApplyBlur() {
             return m_applyBlur;
         }
 
         private final String m_setType;
         private final String m_cropMode;
+        private final String m_gravity;
         private final boolean m_applyBlur;
     }
 
@@ -130,7 +138,7 @@ public class BackgroundManager {
 
         Log.v(TAG, "fillImageViewComplete, baseUrl: " + baseUrl);
 
-        MediaManager.get().responsiveUrl(true, true, m_backgroundType.getCropMode(), null)
+        MediaManager.get().responsiveUrl(true, true, m_backgroundType.getCropMode(), m_backgroundType.getGravity())
                 .stepSize(100)
                 .minDimension(100)
                 .maxDimension(2500)
