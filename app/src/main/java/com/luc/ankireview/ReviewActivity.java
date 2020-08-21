@@ -209,7 +209,7 @@ public class ReviewActivity extends AppCompatActivity implements ReviewBottomShe
             m_teacherPhoto = m_flashcardFrameTeacherMode.findViewById(R.id.teacher_photo);
             m_backgroundPhoto = m_flashcardFrameTeacherMode.findViewById(R.id.background_photo);
 
-            m_imageManagerTeacher = new BackgroundManager(BackgroundManager.BackgroundType.Teachers, teacherSet, 1);
+            m_imageManagerTeacher = new BackgroundManager(BackgroundManager.BackgroundType.Teachers, teacherSet, 3);
             m_imageManagerTeacher.fillImageView(m_teacherPhoto);
 
             m_imageManagerBackgrounds = new BackgroundManager(BackgroundManager.BackgroundType.Backgrounds, backgroundSet, 6);
