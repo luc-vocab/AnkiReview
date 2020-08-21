@@ -21,13 +21,19 @@
 
     <string-array name="teacher_sets_names">
         <item>Chinese Women</item>
-        <item>Asian Woman</item>
+        <item>Asian Woman 1</item>
+        <item>Asian Woman 16</item>
+        <item>Asian Woman 17</item>
+        <item>Asian Woman 18</item>
         <item>Thai Woman</item>
     </string-array>
 
     <string-array name="teacher_sets_values">
         <item>chinese_women</item>
         <item>asian_woman_1</item>
+        <item>asian_woman_16</item>
+        <item>asian_woman_17</item>
+        <item>asian_woman_18</item>
         <item>thai_woman_1</item>
     </string-array>
 </resources>
