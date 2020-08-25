@@ -1,7 +1,11 @@
 package com.luc.ankireview.backgrounds;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
+import android.graphics.drawable.Drawable;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 
 import com.cloudinary.Transformation;
@@ -15,7 +19,10 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreSettings;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.luc.ankireview.DynamicHeightImageView;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
+import android.graphics.Bitmap;
 
 import java.util.Collections;
 import java.util.Vector;
@@ -31,12 +38,53 @@ public class BackgroundManager {
     //public static final String CROPMODE_CROP = "imagga_crop";
     public static final String CROPMODE_FILL = "fill";
     public static final String CROPMODE_FIT = "fit";
+    public static final String CROPMODE_LIMIT = "limit";
     public static final String CROPMODE_PAD = "pad";
 
     public static final String GRAVITY_NORTH = "north";
 
+
+
+
+    private class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, Target {
+        DynamicHeightImageView ivImage;
+
+        public ViewHolder(@NonNull View itemView) {
+            super(itemView);
+        }
+
+        // implement ViewHolder methods here
+
+        @Override
+        public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+            // Calculate the image ratio of the loaded bitmap
+            float ratio = (float) bitmap.getHeight() / (float) bitmap.getWidth();
+            // Set the ratio for the image
+            ivImage.setHeightRatio(ratio);
+            // Load the image into the view
+            ivImage.setImageBitmap(bitmap);
+        }
+
+        @Override
+        public void onBitmapFailed(Exception e, Drawable errorDrawable) {
+
+        }
+
+        @Override
+        public void onPrepareLoad(Drawable placeHolderDrawable) {
+
+        }
+
+        @Override
+        public void onClick(View v) {
+
+        }
+
+        private DynamicHeightImageView m_imageView;
+    }
+
     public enum BackgroundType {
-        Teachers(TEACHERS, CROPMODE_PAD, GRAVITY_NORTH, false),
+        Teachers(TEACHERS, CROPMODE_LIMIT, GRAVITY_NORTH, false),
         Backgrounds(BACKGROUNDS, CROPMODE_IMAGGA_SCALE, null, true),
         BackgroundsFull(BACKGROUNDS, CROPMODE_IMAGGA_SCALE, null, false);
 
@@ -82,6 +130,30 @@ public class BackgroundManager {
         m_imageView = null;
         m_imageUrlList = new Vector<String>();
 
+
+        m_target = new Target() {
+            @Override
+            public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+                // Bitmap is loaded, use image here
+
+                float ratio = (float) bitmap.getHeight() / (float) bitmap.getWidth();
+                // Set the ratio for the image
+                m_imageView.setHeightRatio(ratio);
+                // Load the image into the view
+                m_imageView.setImageBitmap(bitmap);
+            }
+
+            @Override
+            public void onBitmapFailed(Exception e, Drawable errorDrawable) {
+
+            }
+
+            @Override
+            public void onPrepareLoad(Drawable placeHolderDrawable) {
+
+            }
+        };
+
         // Log.v(TAG, "retrieving ")
         CollectionReference path = m_firestoreDb.collection(m_backgroundType.getSetType()).document(setName).collection("images");
         Log.v(TAG, "retrieving from " + path.getPath());
@@ -125,7 +197,7 @@ public class BackgroundManager {
         return imgUrl;
     }
 
-    private void fillImageViewComplete(final ImageView imageView) {
+    private void fillImageViewComplete(final DynamicHeightImageView imageView) {
         String imagePublicId = getImage();
         Url baseUrl = MediaManager.get().url().secure(true).transformation(new Transformation().quality("auto").fetchFormat("webp")).publicId(imagePublicId);
 
@@ -150,12 +222,12 @@ public class BackgroundManager {
                         Picasso.get()
                                 .load(finalUrl )
                                 .placeholder(imageView.getDrawable())// still show last image
-                                .into(imageView);
+                                .into(m_target);
                     }
                 });
     }
 
-    public void fillImageView(final ImageView imageView)
+    public void fillImageView(final DynamicHeightImageView imageView)
     {
         Log.v(TAG, "fillImageView");
 
@@ -182,8 +254,9 @@ public class BackgroundManager {
     private Vector<String> m_imageUrlList;
     private int m_currentBackgroundIndex = 0;
     private FirebaseFirestore m_firestoreDb;
-    private ImageView m_imageView;
+    private DynamicHeightImageView m_imageView;
     private int m_changeImageNumTicks = 3;
     private int m_ticks = 0;
+    private Target m_target;
 
 }

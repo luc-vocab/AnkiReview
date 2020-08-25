@@ -10,20 +10,20 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     >
 
-    <ImageView
+    <com.luc.ankireview.DynamicHeightImageView
         android:id="@+id/background_photo"
-        android:layout_width="0dp"
-        android:layout_height="800dp"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
         android:scaleType="centerCrop">
-    </ImageView>
+    </com.luc.ankireview.DynamicHeightImageView>
 
-    <ImageView
+    <com.luc.ankireview.DynamicHeightImageView
         android:id="@+id/teacher_photo"
-        android:layout_width="0dp"
-        android:layout_height="800dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:background="@android:color/transparent"
         android:scaleType="fitStart">
-    </ImageView>
+    </com.luc.ankireview.DynamicHeightImageView>
 
     <include
         android:id="@+id/next_question_card"
