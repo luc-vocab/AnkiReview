@@ -29,7 +29,6 @@
         android:id="@+id/teacher_photo_top_spacer"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:background="@color/md_red_500"
         />
 
     <androidx.constraintlayout.widget.Barrier

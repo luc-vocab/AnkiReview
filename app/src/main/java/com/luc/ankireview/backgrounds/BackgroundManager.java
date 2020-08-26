@@ -151,6 +151,10 @@ public class BackgroundManager {
 
                     // set height of spacer
                     int spacerHeight = availableHeight - bitmap.getHeight();
+                    if( spacerHeight < 0) {
+                        // don't go below zero
+                        spacerHeight = 0;
+                    }
 
                     ViewGroup.LayoutParams layoutParams = m_teacherSpacerTop.getLayoutParams();
                     layoutParams.height = spacerHeight;
