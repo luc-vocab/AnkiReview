@@ -137,6 +137,9 @@ public class BackgroundManager {
                 // Bitmap is loaded, use image here
 
                 float ratio = (float) bitmap.getHeight() / (float) bitmap.getWidth();
+
+                Log.v(TAG, "onBitmapLoaded, ratio: " + ratio);
+
                 // Set the ratio for the image
                 m_imageView.setHeightRatio(ratio);
                 // Load the image into the view
@@ -199,7 +202,18 @@ public class BackgroundManager {
 
     private void fillImageViewComplete(final DynamicHeightImageView imageView) {
         String imagePublicId = getImage();
-        Url baseUrl = MediaManager.get().url().secure(true).transformation(new Transformation().quality("auto").fetchFormat("webp")).publicId(imagePublicId);
+
+        int width = 1080;
+        int height = 2280;
+
+        Url baseUrl = MediaManager.get().url().secure(true).transformation(new Transformation()
+                .quality("auto")
+                .fetchFormat("webp")
+                .width(width)
+                .height(height)
+                .crop(m_backgroundType.getCropMode())
+                .gravity(m_backgroundType.getGravity())
+        ).publicId(imagePublicId);
 
         if(m_backgroundType.getApplyBlur()) {
             baseUrl = MediaManager.get().url().secure(true).
@@ -210,7 +224,15 @@ public class BackgroundManager {
 
         Log.v(TAG, "fillImageViewComplete, baseUrl: " + baseUrl);
 
-        MediaManager.get().responsiveUrl(true, true, m_backgroundType.getCropMode(), m_backgroundType.getGravity())
+        String finalUrl = baseUrl.generate();
+        Log.v(TAG, "Final URL: " + finalUrl);
+        Picasso.get()
+                .load(finalUrl)
+                .placeholder(imageView.getDrawable())// still show last image
+                .into(m_target);
+
+        /*
+        MediaManager.get().responsiveUrl(false, false, m_backgroundType.getCropMode(), m_backgroundType.getGravity())
                 .stepSize(100)
                 .minDimension(100)
                 .maxDimension(2500)
@@ -225,6 +247,8 @@ public class BackgroundManager {
                                 .into(m_target);
                     }
                 });
+
+         */
     }
 
     public void fillImageView(final DynamicHeightImageView imageView)

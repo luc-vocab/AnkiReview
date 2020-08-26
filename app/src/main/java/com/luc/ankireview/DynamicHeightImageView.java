@@ -2,9 +2,11 @@ package com.luc.ankireview;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.widget.ImageView;
 
 public class DynamicHeightImageView extends androidx.appcompat.widget.AppCompatImageView {
+    private static final String TAG = "DynamicHeightImageView";
 
     private double mHeightRatio;
 
@@ -30,9 +32,12 @@ public class DynamicHeightImageView extends androidx.appcompat.widget.AppCompatI
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         if (mHeightRatio > 0.0) {
+
             // set the image views size
             int width = MeasureSpec.getSize(widthMeasureSpec);
             int height = (int) (width * mHeightRatio);
+
+            Log.v(TAG, "onMeasure, mHeightRatio: " + mHeightRatio + " width: " + width + " height: " + height );
             setMeasuredDimension(width, height);
         }
         else {

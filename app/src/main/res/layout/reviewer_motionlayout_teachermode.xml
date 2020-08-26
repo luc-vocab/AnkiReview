@@ -20,7 +20,7 @@
     <com.luc.ankireview.DynamicHeightImageView
         android:id="@+id/teacher_photo"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         android:background="@android:color/transparent"
         android:scaleType="fitStart">
     </com.luc.ankireview.DynamicHeightImageView>
