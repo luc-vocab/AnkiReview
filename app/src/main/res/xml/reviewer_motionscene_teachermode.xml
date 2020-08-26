@@ -42,7 +42,9 @@
 
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
+
+            app:layout_constraintTop_toBottomOf="@id/question_barrier"
+
             >
             <Transform
                 android:scaleX="@dimen/teacher_mode_teacher_default_scale"
@@ -97,7 +99,10 @@
             android:alpha="1.0"
 
 
-            app:layout_constraintTop_toBottomOf="@id/question_card" />
+            app:layout_constraintTop_toBottomOf="@id/question_card"
+
+
+            />
 
         <Constraint
             android:id="@id/next_question_card"
@@ -121,13 +126,14 @@
 
         <Constraint
             android:id="@id/teacher_photo"
-            android:layout_width="0dp"
-            android:layout_height="800dp"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
 
-            android:layout_marginTop="50dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/answer_card"
+
+            app:layout_constraintTop_toBottomOf="@id/answer_barrier"
+
             >
             <Transform
                 android:scaleX="@dimen/teacher_mode_teacher_zoomed_scale"
@@ -143,6 +149,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+
             >
             <Transform
                 android:scaleX="@dimen/teacher_mode_background_zoomed_scale"
@@ -234,13 +241,13 @@
 
         <Constraint
             android:id="@id/teacher_photo"
-            android:layout_width="0dp"
-            android:layout_height="800dp"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
 
-            android:layout_marginTop="10dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/next_question_card"
+            app:layout_constraintTop_toBottomOf="@id/next_question_barrier"
+
             >
             <Transform
                 android:scaleX="@dimen/teacher_mode_teacher_default_scale"
@@ -331,13 +338,13 @@
 
         <Constraint
             android:id="@id/teacher_photo"
-            android:layout_width="0dp"
-            android:layout_height="800dp"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
 
-            android:layout_marginTop="10dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/next_question_card"
+            app:layout_constraintTop_toBottomOf="@id/next_question_barrier"
+
             >
             <Transform
                 android:scaleX="@dimen/teacher_mode_teacher_default_scale"

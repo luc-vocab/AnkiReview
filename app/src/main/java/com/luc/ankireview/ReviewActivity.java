@@ -209,10 +209,12 @@ public class ReviewActivity extends AppCompatActivity implements ReviewBottomShe
             m_teacherPhoto = m_flashcardFrameTeacherMode.findViewById(R.id.teacher_photo);
             m_backgroundPhoto = m_flashcardFrameTeacherMode.findViewById(R.id.background_photo);
 
-            m_imageManagerTeacher = new BackgroundManager(BackgroundManager.BackgroundType.Teachers, teacherSet, 1);
+            View teacherSpacerTop = m_flashcardFrameTeacherMode.findViewById(R.id.teacher_photo_top_spacer);
+
+            m_imageManagerTeacher = new BackgroundManager(BackgroundManager.BackgroundType.Teachers, teacherSet, 1, m_flashcardFrameTeacherMode, teacherSpacerTop);
             m_imageManagerTeacher.fillImageView(m_teacherPhoto);
 
-            m_imageManagerBackgrounds = new BackgroundManager(BackgroundManager.BackgroundType.Backgrounds, backgroundSet, 6);
+            m_imageManagerBackgrounds = new BackgroundManager(BackgroundManager.BackgroundType.Backgrounds, backgroundSet, 6, m_flashcardFrameTeacherMode, null);
             m_imageManagerBackgrounds.fillImageView(m_backgroundPhoto);
 
         } else {
@@ -225,7 +227,7 @@ public class ReviewActivity extends AppCompatActivity implements ReviewBottomShe
 
             if( enableBackgrounds() ) {
                 Log.v(TAG, "enableBackgrounds");
-                m_imageManagerBackgrounds = new BackgroundManager(BackgroundManager.BackgroundType.BackgroundsFull, backgroundSet, 4);
+                m_imageManagerBackgrounds = new BackgroundManager(BackgroundManager.BackgroundType.BackgroundsFull, backgroundSet, 4, m_flashcardFrameAnkiReview, null);
                 m_imageManagerBackgrounds.fillImageView(m_backgroundPhoto);
             } else {
                 m_backgroundPhoto.setVisibility(View.GONE);

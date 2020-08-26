@@ -25,6 +25,34 @@
         android:scaleType="fitStart">
     </com.luc.ankireview.DynamicHeightImageView>
 
+    <View
+        android:id="@+id/teacher_photo_top_spacer"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:background="@color/md_red_500"
+        />
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/question_barrier"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="bottom"
+        app:constraint_referenced_ids="teacher_photo_top_spacer, question_card" />
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/next_question_barrier"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="bottom"
+        app:constraint_referenced_ids="teacher_photo_top_spacer, next_question_card" />
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/answer_barrier"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="bottom"
+        app:constraint_referenced_ids="teacher_photo_top_spacer, answer_card" />
+
     <include
         android:id="@+id/next_question_card"
         layout="@layout/side_card"

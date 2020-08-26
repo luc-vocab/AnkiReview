@@ -1,11 +1,14 @@
 package com.luc.ankireview.backgrounds;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.motion.widget.MotionLayout;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.cloudinary.Transformation;
@@ -84,15 +87,16 @@ public class BackgroundManager {
     }
 
     public enum BackgroundType {
-        Teachers(TEACHERS, CROPMODE_LIMIT, GRAVITY_NORTH, false),
-        Backgrounds(BACKGROUNDS, CROPMODE_IMAGGA_SCALE, null, true),
-        BackgroundsFull(BACKGROUNDS, CROPMODE_IMAGGA_SCALE, null, false);
+        Teachers(TEACHERS, CROPMODE_LIMIT, GRAVITY_NORTH, false, true),
+        Backgrounds(BACKGROUNDS, CROPMODE_IMAGGA_SCALE, null, true, false),
+        BackgroundsFull(BACKGROUNDS, CROPMODE_IMAGGA_SCALE, null, false, false);
 
-        BackgroundType(String setType, String cropMode, String gravity, boolean applyBlur) {
+        BackgroundType(String setType, String cropMode, String gravity, boolean applyBlur, boolean resizeImageView) {
             m_setType = setType;
             m_cropMode = cropMode;
             m_gravity = gravity;
             m_applyBlur = applyBlur;
+            m_resizeImageView = resizeImageView;
         }
 
         public String getSetType() {
@@ -109,14 +113,17 @@ public class BackgroundManager {
             return m_applyBlur;
         }
 
+        public boolean getResizeImageView() { return m_resizeImageView; }
+
         private final String m_setType;
         private final String m_cropMode;
         private final String m_gravity;
         private final boolean m_applyBlur;
+        private final boolean m_resizeImageView;
     }
 
 
-    public BackgroundManager(BackgroundType backgroundType, String setName, int changeImageEveryNumTicks) {
+    public BackgroundManager(BackgroundType backgroundType, String setName, int changeImageEveryNumTicks, MotionLayout container, View teacherSpacerTop) {
         FirebaseFirestoreSettings settings = new FirebaseFirestoreSettings.Builder()
                 .setPersistenceEnabled(true)
                 .build();
@@ -130,10 +137,31 @@ public class BackgroundManager {
         m_imageView = null;
         m_imageUrlList = new Vector<String>();
 
+        m_container = container;
+        m_teacherSpacerTop = teacherSpacerTop;
+
 
         m_target = new Target() {
             @Override
             public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+
+                if( m_backgroundType.getResizeImageView()) {
+                    int availableWidth = m_container.getWidth();
+                    int availableHeight = m_container.getHeight();
+
+                    // set height of spacer
+                    int spacerHeight = availableHeight - bitmap.getHeight();
+
+                    ViewGroup.LayoutParams layoutParams = m_teacherSpacerTop.getLayoutParams();
+                    layoutParams.height = spacerHeight;
+                    m_teacherSpacerTop.setMinimumHeight(spacerHeight);
+                    m_teacherSpacerTop.requestLayout();
+
+                    Log.v(TAG, "setting teacherSpacerTop height to " + spacerHeight);
+
+                    // m_teacherSpacerTop.setLayoutParams(new ConstraintLayout.LayoutParams(availableWidth, spacerHeight));
+                }
+
                 // Bitmap is loaded, use image here
 
                 float ratio = (float) bitmap.getHeight() / (float) bitmap.getWidth();
@@ -282,5 +310,7 @@ public class BackgroundManager {
     private int m_changeImageNumTicks = 3;
     private int m_ticks = 0;
     private Target m_target;
+    private MotionLayout m_container;
+    private View m_teacherSpacerTop;
 
 }
