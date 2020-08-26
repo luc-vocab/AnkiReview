@@ -163,6 +163,9 @@ public class BackgroundManager {
 
                     Log.v(TAG, "setting teacherSpacerTop height to " + spacerHeight);
 
+                    float middle = (float) (availableWidth / 2.0);
+                    m_imageView.setPivotX(middle);
+
                     // m_teacherSpacerTop.setLayoutParams(new ConstraintLayout.LayoutParams(availableWidth, spacerHeight));
                 }
 
@@ -235,8 +238,8 @@ public class BackgroundManager {
     private void fillImageViewComplete(final DynamicHeightImageView imageView) {
         String imagePublicId = getImage();
 
-        int width = 1080;
-        int height = 2280;
+        int width = m_container.getWidth();
+        int height = m_container.getHeight();
 
         Url baseUrl = MediaManager.get().url().secure(true).transformation(new Transformation()
                 .quality("auto")

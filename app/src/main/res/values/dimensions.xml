@@ -25,7 +25,7 @@
 
 
     <dimen name="teacher_mode_teacher_default_scale">1.0</dimen>
-    <dimen name="teacher_mode_teacher_zoomed_scale">1.0</dimen>
+    <dimen name="teacher_mode_teacher_zoomed_scale">1.2</dimen>
 
     <dimen name="teacher_mode_background_default_scale">1.0</dimen>
     <dimen name="teacher_mode_background_zoomed_scale">1.1</dimen>
