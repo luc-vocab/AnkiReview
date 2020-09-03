@@ -442,7 +442,7 @@ public class ReviewActivity extends AppCompatActivity implements ReviewBottomShe
 
     private void singleTapHandler() {
         Log.v(TAG, "singleTapHandler");
-        playAnswerAudio();
+        replayAudio();
     }
 
     private void doubleTapHandler() {
@@ -580,6 +580,7 @@ public class ReviewActivity extends AppCompatActivity implements ReviewBottomShe
     }
 
     private void showQuestion() {
+        m_questionAudio = false;
         m_answerAudio = false;
 
         // play question audio if found
@@ -629,6 +630,8 @@ public class ReviewActivity extends AppCompatActivity implements ReviewBottomShe
                 m_questionSoundMediaPlayer.prepare();
                 m_questionSoundMediaPlayer.start();
 
+                m_questionAudio = true;
+
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -659,6 +662,16 @@ public class ReviewActivity extends AppCompatActivity implements ReviewBottomShe
 
         //String msg = String.format("ease: %d time: %.1fs", ease.getValue(), timeTaken / 1000.0);
         //showToast(msg);
+    }
+
+    private void replayAudio() {
+        if(! m_showingQuestion) {
+            if(m_answerAudio) {
+                m_answerSoundMediaPlayer.start();
+            } else if (m_questionAudio) {
+                m_questionSoundMediaPlayer.start();
+            }
+        }
     }
 
     private void playAnswerAudio()
@@ -994,6 +1007,7 @@ public class ReviewActivity extends AppCompatActivity implements ReviewBottomShe
     private Card m_cardForCardStyleEdit;
 
     private boolean m_answerAudio = false;
+    private boolean m_questionAudio = false;
 
     private CardStyle m_cardStyle;
     public CardStyle getCardStyle() { return m_cardStyle; }
