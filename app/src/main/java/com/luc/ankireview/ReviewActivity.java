@@ -671,6 +671,10 @@ public class ReviewActivity extends AppCompatActivity implements ReviewBottomShe
             } else if (m_questionAudio) {
                 m_questionSoundMediaPlayer.start();
             }
+        } else {
+            if (m_questionAudio) {
+                m_questionSoundMediaPlayer.start();
+            }
         }
     }
 
