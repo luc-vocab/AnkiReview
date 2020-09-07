@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.cloudinary.Transformation;
 import com.cloudinary.Url;
 import com.cloudinary.android.MediaManager;
@@ -261,27 +262,19 @@ public class BackgroundManager {
 
         String finalUrl = baseUrl.generate();
         Log.v(TAG, "Final URL: " + finalUrl);
+
+        Glide
+                .with(m_container)
+                .load(finalUrl)
+                .centerCrop()
+                .placeholder(imageView.getDrawable())
+                .into(m_target);
+
+        /*
         Picasso.get()
                 .load(finalUrl)
                 .placeholder(imageView.getDrawable())// still show last image
                 .into(m_target);
-
-        /*
-        MediaManager.get().responsiveUrl(false, false, m_backgroundType.getCropMode(), m_backgroundType.getGravity())
-                .stepSize(100)
-                .minDimension(100)
-                .maxDimension(2500)
-                .generate(baseUrl, imageView, new ResponsiveUrl.Callback() {
-                    @Override
-                    public void onUrlReady(Url url) {
-                        String finalUrl = url.generate();
-                        Log.v(TAG, "final URL: " + finalUrl);
-                        Picasso.get()
-                                .load(finalUrl )
-                                .placeholder(imageView.getDrawable())// still show last image
-                                .into(m_target);
-                    }
-                });
 
          */
     }

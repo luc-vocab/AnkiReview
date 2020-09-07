@@ -54,6 +54,9 @@ dependencies {
     implementation 'com.github.takusemba:spotlight:1.8.0'
     implementation 'com.robinhood.ticker:ticker:2.0.2'
     implementation 'io.github.tonnyl:whatsnew:0.1.2'
+
+    implementation 'com.github.bumptech.glide:glide:4.11.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
 }
 
 apply plugin: 'com.google.gms.google-services'
