@@ -45,7 +45,6 @@ dependencies {
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.dynamicanimation:dynamicanimation:1.0.0'
-    implementation 'com.squareup.picasso:picasso:2.71828'
     implementation 'com.github.warkiz.widget:indicatorseekbar:2.1.2'
     implementation 'com.thebluealliance:spectrum:0.7.1'
     implementation 'com.wada811:android-material-design-colors:3.0.0'

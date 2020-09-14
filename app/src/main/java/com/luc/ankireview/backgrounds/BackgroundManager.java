@@ -1,6 +1,7 @@
 package com.luc.ankireview.backgrounds;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.constraintlayout.motion.widget.MotionLayout;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
@@ -12,6 +13,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.Request;
+import com.bumptech.glide.request.target.SizeReadyCallback;
+import com.bumptech.glide.request.transition.Transition;
 import com.cloudinary.Transformation;
 import com.cloudinary.Url;
 import com.cloudinary.android.MediaManager;
@@ -24,8 +28,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreSettings;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.luc.ankireview.DynamicHeightImageView;
-import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Target;
+import com.bumptech.glide.request.target.Target;
 import android.graphics.Bitmap;
 
 import java.util.Collections;
@@ -85,6 +88,62 @@ public class BackgroundManager {
         }
 
         private DynamicHeightImageView m_imageView;
+
+        @Override
+        public void onLoadStarted(@Nullable Drawable placeholder) {
+
+        }
+
+        @Override
+        public void onLoadFailed(@Nullable Drawable errorDrawable) {
+
+        }
+
+        @Override
+        public void onResourceReady(@NonNull Object resource, @Nullable Transition transition) {
+
+        }
+
+        @Override
+        public void onLoadCleared(@Nullable Drawable placeholder) {
+
+        }
+
+        @Override
+        public void getSize(@NonNull SizeReadyCallback cb) {
+
+        }
+
+        @Override
+        public void removeCallback(@NonNull SizeReadyCallback cb) {
+
+        }
+
+        @Override
+        public void setRequest(@Nullable Request request) {
+
+        }
+
+        @Nullable
+        @Override
+        public Request getRequest() {
+            return null;
+        }
+
+        @Override
+        public void onStart() {
+
+        }
+
+        @Override
+        public void onStop() {
+
+        }
+
+        @Override
+        public void onDestroy() {
+
+        }
     }
 
     public enum BackgroundType {
@@ -268,7 +327,7 @@ public class BackgroundManager {
                 .load(finalUrl)
                 .centerCrop()
                 .placeholder(imageView.getDrawable())
-                .into(m_target);
+                .into(imageView);
 
         /*
         Picasso.get()
