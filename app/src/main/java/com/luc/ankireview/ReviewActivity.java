@@ -32,6 +32,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.crashlytics.android.Crashlytics;
+import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.luc.ankireview.backgrounds.BackgroundManager;
@@ -343,6 +344,10 @@ public class ReviewActivity extends AppCompatActivity implements ReviewBottomShe
         m_questionTextView = m_questionCardView.findViewById(R.id.side_text);
         m_answerTextView = m_answerCardView.findViewById(R.id.side_text);
         m_nextQuestionTextView = m_nextQuestionCardView.findViewById(R.id.side_text);
+
+        // shimmer containers
+        m_questionShimmer = m_questionCardView.findViewById(R.id.side_shimmer);
+        m_answerShimmer = m_answerCardView.findViewById(R.id.side_shimmer);
 
         // intervals
         m_badAnswerInterval = motionLayout.findViewById(R.id.bad_answer_interval);
@@ -665,6 +670,8 @@ public class ReviewActivity extends AppCompatActivity implements ReviewBottomShe
     }
 
     private void replayAudio() {
+        m_questionShimmer.startShimmer();
+        m_answerShimmer.startShimmer();
         if(! m_showingQuestion) {
             if(m_answerAudio) {
                 m_answerSoundMediaPlayer.start();
@@ -1034,6 +1041,10 @@ public class ReviewActivity extends AppCompatActivity implements ReviewBottomShe
     private TextView m_questionTextView;
     private TextView m_answerTextView;
     private TextView m_nextQuestionTextView;
+
+    // shimmer containers
+    private ShimmerFrameLayout m_questionShimmer;
+    private ShimmerFrameLayout m_answerShimmer;
 
     // answer intervals
     private TextView m_badAnswerInterval;

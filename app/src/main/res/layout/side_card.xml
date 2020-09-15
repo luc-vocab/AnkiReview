@@ -7,10 +7,21 @@
     app:cardCornerRadius="5dp"
     app:cardElevation="@dimen/cardstyle_show_elevation">
 
+    <com.facebook.shimmer.ShimmerFrameLayout
+        android:id="@+id/side_shimmer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:shimmer_auto_start="false"
+        app:shimmer_colored="false"
+        app:shimmer_repeat_count="0"
+        >
+
     <TextView
         android:id="@+id/side_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:includeFontPadding="false" />
+
+    </com.facebook.shimmer.ShimmerFrameLayout>
 </androidx.cardview.widget.CardView>
