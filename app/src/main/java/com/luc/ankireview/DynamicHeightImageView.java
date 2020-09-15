@@ -8,7 +8,7 @@ import android.widget.ImageView;
 public class DynamicHeightImageView extends androidx.appcompat.widget.AppCompatImageView {
     private static final String TAG = "DynamicHeightImageView";
 
-    private double mHeightRatio;
+    private double mHeightRatio = 1.0;
 
     public DynamicHeightImageView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -17,6 +17,7 @@ public class DynamicHeightImageView extends androidx.appcompat.widget.AppCompatI
     public DynamicHeightImageView(Context context) {
         super(context);
     }
+
 
     public void setHeightRatio(double ratio) {
         if (ratio != mHeightRatio) {
@@ -44,4 +45,5 @@ public class DynamicHeightImageView extends androidx.appcompat.widget.AppCompatI
             super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         }
     }
+
 }

@@ -3,23 +3,28 @@ package com.luc.ankireview.backgrounds;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.motion.widget.MotionLayout;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.recyclerview.widget.RecyclerView;
 
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.Request;
-import com.bumptech.glide.request.target.SizeReadyCallback;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestFutureTarget;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.BitmapImageViewTarget;
+import com.bumptech.glide.request.target.DrawableImageViewTarget;
+import com.bumptech.glide.request.target.Target;
 import com.bumptech.glide.request.transition.Transition;
 import com.cloudinary.Transformation;
 import com.cloudinary.Url;
 import com.cloudinary.android.MediaManager;
-import com.cloudinary.android.ResponsiveUrl;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
@@ -27,9 +32,8 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreSettings;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.luc.ankireview.AnkiReviewGlideModule;
 import com.luc.ankireview.DynamicHeightImageView;
-import com.bumptech.glide.request.target.Target;
-import android.graphics.Bitmap;
 
 import java.util.Collections;
 import java.util.Vector;
@@ -42,108 +46,33 @@ public class BackgroundManager {
     public static final String BACKGROUNDS = "backgrounds";
 
     public static final String CROPMODE_IMAGGA_SCALE = "imagga_scale";
-    //public static final String CROPMODE_CROP = "imagga_crop";
-    public static final String CROPMODE_FILL = "fill";
-    public static final String CROPMODE_FIT = "fit";
     public static final String CROPMODE_LIMIT = "limit";
-    public static final String CROPMODE_PAD = "pad";
 
     public static final String GRAVITY_NORTH = "north";
 
 
+    private class BitmapImageViewTargetDynamic extends BitmapImageViewTarget {
 
-
-    private class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, Target {
-        DynamicHeightImageView ivImage;
-
-        public ViewHolder(@NonNull View itemView) {
-            super(itemView);
-        }
-
-        // implement ViewHolder methods here
-
-        @Override
-        public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-            // Calculate the image ratio of the loaded bitmap
-            float ratio = (float) bitmap.getHeight() / (float) bitmap.getWidth();
-            // Set the ratio for the image
-            ivImage.setHeightRatio(ratio);
-            // Load the image into the view
-            ivImage.setImageBitmap(bitmap);
+        public BitmapImageViewTargetDynamic(ImageView view) {
+            super(view);
         }
 
         @Override
-        public void onBitmapFailed(Exception e, Drawable errorDrawable) {
-
+        public void onResourceReady(@NonNull Bitmap bitmap, @Nullable Transition<? super Bitmap> transition) {
+            Log.v(TAG, "*** onResourceReady");
+            processLoadedBitmap(bitmap);
         }
 
         @Override
-        public void onPrepareLoad(Drawable placeHolderDrawable) {
-
+        public void setResource(Bitmap bitmap) {
+            Log.v(TAG, "*** setResource, bitmap=" + bitmap);
+            if(bitmap != null) {
+                //processLoadedBitmap(bitmap);
+            }
         }
 
-        @Override
-        public void onClick(View v) {
 
-        }
 
-        private DynamicHeightImageView m_imageView;
-
-        @Override
-        public void onLoadStarted(@Nullable Drawable placeholder) {
-
-        }
-
-        @Override
-        public void onLoadFailed(@Nullable Drawable errorDrawable) {
-
-        }
-
-        @Override
-        public void onResourceReady(@NonNull Object resource, @Nullable Transition transition) {
-
-        }
-
-        @Override
-        public void onLoadCleared(@Nullable Drawable placeholder) {
-
-        }
-
-        @Override
-        public void getSize(@NonNull SizeReadyCallback cb) {
-
-        }
-
-        @Override
-        public void removeCallback(@NonNull SizeReadyCallback cb) {
-
-        }
-
-        @Override
-        public void setRequest(@Nullable Request request) {
-
-        }
-
-        @Nullable
-        @Override
-        public Request getRequest() {
-            return null;
-        }
-
-        @Override
-        public void onStart() {
-
-        }
-
-        @Override
-        public void onStop() {
-
-        }
-
-        @Override
-        public void onDestroy() {
-
-        }
     }
 
     public enum BackgroundType {
@@ -183,7 +112,14 @@ public class BackgroundManager {
     }
 
 
-    public BackgroundManager(BackgroundType backgroundType, String setName, int changeImageEveryNumTicks, MotionLayout container, View teacherSpacerTop) {
+    public BackgroundManager(
+            DynamicHeightImageView imageView,
+            BackgroundType backgroundType, String setName, int changeImageEveryNumTicks, MotionLayout container, View teacherSpacerTop) {
+
+        m_imageView = imageView;
+        m_target = new BitmapImageViewTargetDynamic(m_imageView);
+//        m_imageView.setHeightRatio(1.0);
+
         FirebaseFirestoreSettings settings = new FirebaseFirestoreSettings.Builder()
                 .setPersistenceEnabled(true)
                 .build();
@@ -194,63 +130,10 @@ public class BackgroundManager {
 
         m_changeImageNumTicks = changeImageEveryNumTicks;
 
-        m_imageView = null;
         m_imageUrlList = new Vector<String>();
 
         m_container = container;
         m_teacherSpacerTop = teacherSpacerTop;
-
-
-        m_target = new Target() {
-            @Override
-            public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-
-                if( m_backgroundType.getResizeImageView()) {
-                    int availableWidth = m_container.getWidth();
-                    int availableHeight = m_container.getHeight();
-
-                    // set height of spacer
-                    int spacerHeight = availableHeight - bitmap.getHeight();
-                    if( spacerHeight < 0) {
-                        // don't go below zero
-                        spacerHeight = 0;
-                    }
-
-                    ViewGroup.LayoutParams layoutParams = m_teacherSpacerTop.getLayoutParams();
-                    layoutParams.height = spacerHeight;
-                    m_teacherSpacerTop.setMinimumHeight(spacerHeight);
-                    m_teacherSpacerTop.requestLayout();
-
-                    Log.v(TAG, "setting teacherSpacerTop height to " + spacerHeight);
-
-                    float middle = (float) (availableWidth / 2.0);
-                    m_imageView.setPivotX(middle);
-
-                    // m_teacherSpacerTop.setLayoutParams(new ConstraintLayout.LayoutParams(availableWidth, spacerHeight));
-                }
-
-                // Bitmap is loaded, use image here
-
-                float ratio = (float) bitmap.getHeight() / (float) bitmap.getWidth();
-
-                Log.v(TAG, "onBitmapLoaded, ratio: " + ratio);
-
-                // Set the ratio for the image
-                m_imageView.setHeightRatio(ratio);
-                // Load the image into the view
-                m_imageView.setImageBitmap(bitmap);
-            }
-
-            @Override
-            public void onBitmapFailed(Exception e, Drawable errorDrawable) {
-
-            }
-
-            @Override
-            public void onPrepareLoad(Drawable placeHolderDrawable) {
-
-            }
-        };
 
         // Log.v(TAG, "retrieving ")
         CollectionReference path = m_firestoreDb.collection(m_backgroundType.getSetType()).document(setName).collection("images");
@@ -267,10 +150,9 @@ public class BackgroundManager {
                             }
                             Log.v(TAG, "retrieved " + m_imageUrlList.size() + " backgrounds");
                             Collections.shuffle(m_imageUrlList);
+
                             // process backlog of "fillImageView"
-                            if(m_imageView != null) {
-                                fillImageViewComplete(m_imageView);
-                            }
+                            fillImageViewComplete();
                             m_backgroundListReady = true;
 
 
@@ -282,6 +164,42 @@ public class BackgroundManager {
 
     }
 
+    private void processLoadedBitmap(Bitmap bitmap) {
+        if( m_backgroundType.getResizeImageView()) {
+            int availableWidth = m_container.getWidth();
+            int availableHeight = m_container.getHeight();
+
+            // set height of spacer
+            int spacerHeight = availableHeight - bitmap.getHeight();
+            if( spacerHeight < 0) {
+                // don't go below zero
+                spacerHeight = 0;
+            }
+
+            ViewGroup.LayoutParams layoutParams = m_teacherSpacerTop.getLayoutParams();
+            layoutParams.height = spacerHeight;
+            m_teacherSpacerTop.setMinimumHeight(spacerHeight);
+            m_teacherSpacerTop.requestLayout();
+
+            Log.v(TAG, "setting teacherSpacerTop height to " + spacerHeight);
+
+            float middle = (float) (availableWidth / 2.0);
+            m_imageView.setPivotX(middle);
+
+            // m_teacherSpacerTop.setLayoutParams(new ConstraintLayout.LayoutParams(availableWidth, spacerHeight));
+        }
+
+        // Bitmap is loaded, use image here
+
+        float ratio = (float) bitmap.getHeight() / (float) bitmap.getWidth();
+
+        Log.v(TAG, "onBitmapLoaded, ratio: " + ratio);
+
+        // Set the ratio for the image
+        m_imageView.setHeightRatio(ratio);
+        // Load the image into the view
+        m_imageView.setImageBitmap(bitmap);
+    }
 
     private String getImage() {
 
@@ -295,7 +213,7 @@ public class BackgroundManager {
         return imgUrl;
     }
 
-    private void fillImageViewComplete(final DynamicHeightImageView imageView) {
+    private void fillImageViewComplete() {
         String imagePublicId = getImage();
 
         int width = m_container.getWidth();
@@ -312,50 +230,49 @@ public class BackgroundManager {
 
         if(m_backgroundType.getApplyBlur()) {
             baseUrl = MediaManager.get().url().secure(true).
-                    transformation(new Transformation().quality("auto").fetchFormat("webp")).
-                    transformation(new Transformation().effect("blur:200")).
-                    publicId(imagePublicId);
+                    transformation(
+                            new Transformation()
+                                    .quality("auto")
+                                    .fetchFormat("webp")
+                                    .width(width)
+                                    .height(height)
+                                    .crop(m_backgroundType.getCropMode())
+                                    .gravity(m_backgroundType.getGravity())
+                                    .effect("blur:200")
+                    )
+                    .publicId(imagePublicId);
         }
-
-        Log.v(TAG, "fillImageViewComplete, baseUrl: " + baseUrl);
 
         String finalUrl = baseUrl.generate();
         Log.v(TAG, "Final URL: " + finalUrl);
 
         Glide
-                .with(m_container)
-                .load(finalUrl)
-                .centerCrop()
-                .placeholder(imageView.getDrawable())
-                .into(imageView);
+            .with(m_container)
+            .asBitmap()
+            .load(finalUrl)
+            .timeout(60000)
+            .centerCrop()
+            .placeholder(m_imageView.getDrawable())
+            .into(m_target);
 
-        /*
-        Picasso.get()
-                .load(finalUrl)
-                .placeholder(imageView.getDrawable())// still show last image
-                .into(m_target);
-
-         */
     }
 
-    public void fillImageView(final DynamicHeightImageView imageView)
+    public void fillImageView()
     {
         Log.v(TAG, "fillImageView");
 
         if( m_backgroundListReady ) {
             // we have the backgrounds, go ahead
-            fillImageViewComplete(imageView);
-        } else {
-            // need to queue up this action
-            m_imageView = imageView;
+            fillImageViewComplete();
         }
+        // queue up action
 
     }
 
     public void tick() {
         m_ticks += 1;
         if( m_ticks % m_changeImageNumTicks == 0) {
-            fillImageView(m_imageView);
+            fillImageView();
         }
     }
 
@@ -365,10 +282,10 @@ public class BackgroundManager {
     private Vector<String> m_imageUrlList;
     private int m_currentBackgroundIndex = 0;
     private FirebaseFirestore m_firestoreDb;
+    private BitmapImageViewTargetDynamic m_target;
     private DynamicHeightImageView m_imageView;
     private int m_changeImageNumTicks = 3;
     private int m_ticks = 0;
-    private Target m_target;
     private MotionLayout m_container;
     private View m_teacherSpacerTop;
 
