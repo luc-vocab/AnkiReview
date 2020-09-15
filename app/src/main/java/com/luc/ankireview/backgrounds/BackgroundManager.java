@@ -59,19 +59,9 @@ public class BackgroundManager {
 
         @Override
         public void onResourceReady(@NonNull Bitmap bitmap, @Nullable Transition<? super Bitmap> transition) {
-            Log.v(TAG, "*** onResourceReady");
+            Log.v(TAG, "BitmapImageViewTargetDynamic.onResourceReady");
             processLoadedBitmap(bitmap);
         }
-
-        @Override
-        public void setResource(Bitmap bitmap) {
-            Log.v(TAG, "*** setResource, bitmap=" + bitmap);
-            if(bitmap != null) {
-                //processLoadedBitmap(bitmap);
-            }
-        }
-
-
 
     }
 
@@ -176,6 +166,12 @@ public class BackgroundManager {
                 spacerHeight = 0;
             }
 
+            Log.v(TAG, "processLoadedBitmap: "
+                    + " bitmap.getWidth(): " + bitmap.getWidth()
+                    + " bitmap.getHeight(): " + bitmap.getHeight()
+                    + " availableHeight: " + availableHeight
+                    + " spacerHeight: " + spacerHeight);
+
             ViewGroup.LayoutParams layoutParams = m_teacherSpacerTop.getLayoutParams();
             layoutParams.height = spacerHeight;
             m_teacherSpacerTop.setMinimumHeight(spacerHeight);
@@ -251,7 +247,7 @@ public class BackgroundManager {
             .asBitmap()
             .load(finalUrl)
             .timeout(60000)
-            .centerCrop()
+            .dontTransform()
             .placeholder(m_imageView.getDrawable())
             .into(m_target);
 
