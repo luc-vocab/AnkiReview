@@ -150,16 +150,37 @@ public class BackgroundManager {
             int availableWidth = m_container.getWidth();
             int availableHeight = m_container.getHeight();
 
+            int reportedBitmapHeight = bitmap.getHeight();
+            int reportedBitmapWidth = bitmap.getWidth();
+
+            int adjBitmapHeight;
+            int adjBitmapWidth;
+
+            adjBitmapHeight = reportedBitmapHeight;
+            adjBitmapWidth = reportedBitmapWidth;
+
+            if(reportedBitmapWidth > availableWidth) {
+                // need to scaled down
+                float factor = (float) reportedBitmapWidth / availableWidth;
+                adjBitmapHeight = (int) ((int) reportedBitmapHeight / factor);
+                adjBitmapWidth = (int) ((int) reportedBitmapWidth / factor);
+                Log.v(TAG, "availableWidth: " + availableWidth
+                                + " reportedBitmapWidth: " + reportedBitmapWidth
+                                + " adjBitmapWidth: " + adjBitmapWidth
+                                + " factor: " + factor);
+            }
+
             // set height of spacer
-            int spacerHeight = availableHeight - bitmap.getHeight();
+            int spacerHeight = availableHeight - adjBitmapHeight;
             if( spacerHeight < 0) {
                 // don't go below zero
                 spacerHeight = 0;
             }
 
             Log.v(TAG, "processLoadedBitmap: "
-                    + " bitmap.getWidth(): " + bitmap.getWidth()
-                    + " bitmap.getHeight(): " + bitmap.getHeight()
+                    + " bitmapWidth: " + adjBitmapWidth
+                    + " bitmapHeight: " + adjBitmapHeight
+                    + " availableWidth: " + availableWidth
                     + " availableHeight: " + availableHeight
                     + " spacerHeight: " + spacerHeight);
 
@@ -238,7 +259,7 @@ public class BackgroundManager {
             .asBitmap()
             .load(finalUrl)
             .timeout(60000)
-            .fitCenter() // seems to work better with the placeholder logic
+            .dontTransform()
             .placeholder(m_imageView.getDrawable())
             .into(m_target);
 
