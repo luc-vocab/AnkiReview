@@ -3,7 +3,10 @@ package com.luc.ankireview.backgrounds;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.motion.widget.MotionLayout;
+import androidx.preference.PreferenceManager;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.util.Log;
 import android.view.View;
@@ -25,6 +28,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreSettings;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.luc.ankireview.DynamicHeightImageView;
+import com.luc.ankireview.Settings;
 
 import java.util.Collections;
 import java.util.Vector;
@@ -40,6 +44,8 @@ public class BackgroundManager {
     public static final String CROPMODE_LIMIT = "limit";
 
     public static final String GRAVITY_NORTH = "north";
+
+    public static final String LAST_LOADED_KEY_PREFIX = "backgrounds_last_loaded_";
 
 
     private class BitmapImageViewTargetDynamic extends BitmapImageViewTarget {
@@ -95,7 +101,7 @@ public class BackgroundManager {
 
     public BackgroundManager(
             DynamicHeightImageView imageView,
-            BackgroundType backgroundType, String setName, int changeImageEveryNumTicks, MotionLayout container, View teacherSpacerTop) {
+            BackgroundType backgroundType, String setName, int changeImageEveryNumTicks, MotionLayout container, View teacherSpacerTop, Context context) {
 
         m_imageView = imageView;
         m_target = new BitmapImageViewTargetDynamic(m_imageView);
@@ -113,7 +119,10 @@ public class BackgroundManager {
 
         m_imageUrlList = new Vector<String>();
 
+        m_setName = setName;
+
         m_container = container;
+        m_context = context;
         m_teacherSpacerTop = teacherSpacerTop;
 
         // Log.v(TAG, "retrieving ")
@@ -131,6 +140,11 @@ public class BackgroundManager {
                             }
                             Log.v(TAG, "retrieved " + m_imageUrlList.size() + " backgrounds");
                             Collections.shuffle(m_imageUrlList);
+
+                            String lastLoadedPublicId = getLastLoaded();
+                            if(lastLoadedPublicId != null) {
+                                m_imageUrlList.insertElementAt(lastLoadedPublicId, 0);
+                            }
 
                             // process backlog of "fillImageView"
                             fillImageViewComplete();
@@ -207,16 +221,21 @@ public class BackgroundManager {
         m_imageView.setHeightRatio(ratio);
         // Load the image into the view
         m_imageView.setImageBitmap(bitmap);
+
+        registerLastLoaded();
     }
 
     private String getImage() {
 
         // get current URL
+        String imgUrl = m_imageUrlList.get(m_currentBackgroundIndex);
+
+
         m_currentBackgroundIndex++;
+
         if(m_currentBackgroundIndex > m_imageUrlList.size() - 1) {
             m_currentBackgroundIndex = 0;
         }
-        String imgUrl = m_imageUrlList.get(m_currentBackgroundIndex);
 
         return imgUrl;
     }
@@ -254,6 +273,8 @@ public class BackgroundManager {
         String finalUrl = baseUrl.generate();
         Log.v(TAG, "Final URL: " + finalUrl);
 
+        m_currentPublicId = imagePublicId;
+
         Glide
             .with(m_container)
             .asBitmap()
@@ -277,6 +298,27 @@ public class BackgroundManager {
 
     }
 
+    private String getLastLoadedKey() {
+        String key = LAST_LOADED_KEY_PREFIX + m_setName;
+        return key;
+    }
+
+    public void registerLastLoaded() {
+        String publicId = m_currentPublicId;
+        String key = getLastLoadedKey();
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(m_context);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString(key, publicId);
+        editor.commit();
+    }
+
+    private String getLastLoaded() {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(m_context);
+        String key = getLastLoadedKey();
+        String lastLoadedPublicId = prefs.getString(getLastLoadedKey(), null);
+        return lastLoadedPublicId;
+    }
+
     public void tick() {
         m_ticks += 1;
         if( m_ticks % m_changeImageNumTicks == 0) {
@@ -296,5 +338,8 @@ public class BackgroundManager {
     private int m_ticks = 0;
     private MotionLayout m_container;
     private View m_teacherSpacerTop;
+    private Context m_context;
+    private String m_currentPublicId;
+    private String m_setName;
 
 }
