@@ -147,7 +147,7 @@ public class BackgroundManager {
                             }
 
                             // process backlog of "fillImageView"
-                            fillImageViewComplete();
+                            fillImageViewComplete(getImage());
                             m_backgroundListReady = true;
 
 
@@ -240,9 +240,7 @@ public class BackgroundManager {
         return imgUrl;
     }
 
-    private void fillImageViewComplete() {
-        String imagePublicId = getImage();
-
+    private void fillImageViewComplete(String imagePublicId) {
         int width = m_container.getWidth();
         int height = m_container.getHeight();
 
@@ -292,10 +290,13 @@ public class BackgroundManager {
 
         if( m_backgroundListReady ) {
             // we have the backgrounds, go ahead
-            fillImageViewComplete();
+            fillImageViewComplete(getImage());
+        } else {
+            String lastLoadedPublicId = getLastLoaded();
+            if( lastLoadedPublicId != null) {
+                fillImageViewComplete(getLastLoaded());
+            }
         }
-        // queue up action
-
     }
 
     private String getLastLoadedKey() {
