@@ -11,6 +11,7 @@ import android.graphics.Bitmap;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 
 
@@ -125,6 +126,8 @@ public class BackgroundManager {
         m_context = context;
         m_teacherSpacerTop = teacherSpacerTop;
 
+        final String lastLoadedPublicId = getLastLoaded();
+
         // Log.v(TAG, "retrieving ")
         CollectionReference path = m_firestoreDb.collection(m_backgroundType.getSetType()).document(setName).collection("images");
         Log.v(TAG, "retrieving from " + path.getPath());
@@ -133,6 +136,7 @@ public class BackgroundManager {
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
+
                         if (task.isSuccessful()) {
                             for (DocumentSnapshot document : task.getResult()) {
                                 Log.d(TAG, document.getId() + " => " + document.getData());
@@ -141,13 +145,10 @@ public class BackgroundManager {
                             Log.v(TAG, "retrieved " + m_imageUrlList.size() + " backgrounds");
                             Collections.shuffle(m_imageUrlList);
 
-                            String lastLoadedPublicId = getLastLoaded();
-                            if(lastLoadedPublicId != null) {
-                                m_imageUrlList.insertElementAt(lastLoadedPublicId, 0);
-                            }
-
                             // process backlog of "fillImageView"
-                            fillImageViewComplete(getImage());
+                            if(lastLoadedPublicId == null) {
+                                fillImageViewComplete(getImage());
+                            }
                             m_backgroundListReady = true;
 
 
@@ -288,6 +289,26 @@ public class BackgroundManager {
     {
         Log.v(TAG, "fillImageView");
 
+        if(m_containerLayoutDone) {
+            fillImageViewLayoutDone();
+        } else {
+            // need to wait for the first layout
+            final ViewTreeObserver textViewTreeObserver = m_container.getViewTreeObserver();
+            textViewTreeObserver.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+
+                public void onGlobalLayout() {
+                    if(m_containerLayoutDone == false) {
+                        Log.v(TAG, "onGlobalLayout");
+                        m_containerLayoutDone = true;
+                        fillImageViewLayoutDone();
+                    }
+                }
+            });
+        }
+
+    }
+
+    private void fillImageViewLayoutDone() {
         if( m_backgroundListReady ) {
             // we have the backgrounds, go ahead
             fillImageViewComplete(getImage());
@@ -342,5 +363,6 @@ public class BackgroundManager {
     private Context m_context;
     private String m_currentPublicId;
     private String m_setName;
+    private boolean m_containerLayoutDone = false;
 
 }
