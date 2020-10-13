@@ -41,7 +41,8 @@ public class BackgroundManager {
     public static final String TEACHERS = "teachers";
     public static final String BACKGROUNDS = "backgrounds";
 
-    public static final String CROPMODE_IMAGGA_SCALE = "imagga_scale";
+    public static final String CROPMODE_FILL = "fill";
+
     public static final String CROPMODE_LIMIT = "limit";
 
     public static final String GRAVITY_NORTH = "north";
@@ -65,8 +66,8 @@ public class BackgroundManager {
 
     public enum BackgroundType {
         Teachers(TEACHERS, CROPMODE_LIMIT, GRAVITY_NORTH, false, true),
-        Backgrounds(BACKGROUNDS, CROPMODE_IMAGGA_SCALE, null, true, false),
-        BackgroundsFull(BACKGROUNDS, CROPMODE_IMAGGA_SCALE, null, false, false);
+        Backgrounds(BACKGROUNDS, CROPMODE_FILL, null, true, false),
+        BackgroundsFull(BACKGROUNDS, CROPMODE_FILL, null, false, false);
 
         BackgroundType(String setType, String cropMode, String gravity, boolean applyBlur, boolean resizeImageView) {
             m_setType = setType;
