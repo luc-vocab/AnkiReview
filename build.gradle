@@ -5,20 +5,17 @@ buildscript {
     repositories {
         google()
         jcenter()
-        maven {
-            url 'https://maven.fabric.io/public'
-        }
 
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:4.0.1'
+        classpath 'com.android.tools.build:gradle:7.0.3'
 
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
         classpath 'com.google.gms:google-services:4.2.0'
+        classpath 'com.google.firebase:firebase-crashlytics-gradle:2.3.0'
 
-        classpath 'io.fabric.tools:gradle:1.31.2'
     }
 }
 
@@ -26,7 +23,7 @@ allprojects {
     repositories {
         google()
         jcenter()
-        maven { url 'http://github.com/wada811/Android-Material-Design-Colors/raw/master/repository/' }
+        maven { url 'https://github.com/wada811/Android-Material-Design-Colors/raw/master/repository/' }
         maven {
             url 'https://maven.google.com/'
         }
