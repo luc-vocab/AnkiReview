@@ -35,7 +35,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.crashlytics.android.Crashlytics;
+// import com.crashlytics.android.Crashlytics;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.ichi2.anki.FlashCardsContract;
 import com.kobakei.ratethisapp.RateThisApp;
@@ -382,7 +382,7 @@ public class DeckPickerActivity extends AppCompatActivity implements AdapterView
             }
 
         } catch (Exception e) {
-            Crashlytics.logException(e);
+            // Crashlytics.logException(e);
             Log.e(TAG, "Could not list AnkiDroid decks: " + e);
             showDeckPickerMessage(R.string.deckpicker_cannotlistdecks_title, R.string.deckpicker_cannotlistdecks_description, e.getMessage());
         }

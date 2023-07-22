@@ -31,7 +31,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.crashlytics.android.Crashlytics;
+// import com.crashlytics.android.Crashlytics;
 import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.analytics.FirebaseAnalytics;
@@ -497,7 +497,7 @@ public class ReviewActivity extends AppCompatActivity implements ReviewBottomShe
             }
         } catch (Exception e) {
             e.printStackTrace();
-            Crashlytics.logException(e);
+            // Crashlytics.logException(e);
             Utils.reportAnkiAPIException(this, e);
         }
 
@@ -965,7 +965,7 @@ public class ReviewActivity extends AppCompatActivity implements ReviewBottomShe
                 loadNextQuestion();
             }
         } catch ( Exception e ) {
-            Crashlytics.logException(e);
+            // Crashlytics.logException(e);
             Utils.reportAnkiAPIException(this, e);
         }
 

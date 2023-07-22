@@ -16,7 +16,10 @@
         android:theme="@style/AppTheme"
         android:name=".AnkiReviewApp"
         >
-        <activity android:name=".DeckPickerActivity">
+        <activity
+            android:name=".DeckPickerActivity"
+            android:exported="true">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

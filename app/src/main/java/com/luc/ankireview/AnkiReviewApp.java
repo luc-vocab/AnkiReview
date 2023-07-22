@@ -6,8 +6,8 @@ import android.content.SharedPreferences;
 import android.util.Log;
 
 import com.cloudinary.android.MediaManager;
-import com.crashlytics.android.Crashlytics;
-import com.crashlytics.android.core.CrashlyticsCore;
+// import com.crashlytics.android.Crashlytics;
+// import com.crashlytics.android.core.CrashlyticsCore;
 import com.google.firebase.firestore.FirebaseFirestoreSettings;
 
 import java.util.HashMap;
@@ -17,7 +17,7 @@ import java.util.Set;
 
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.preference.PreferenceManager;
-import io.fabric.sdk.android.Fabric;
+// import io.fabric.sdk.android.Fabric;
 
 public class AnkiReviewApp extends Application {
     private static final String TAG = "AnkiReviewApp";
