@@ -38,4 +38,8 @@
             android:resource="@array/preloaded_fonts" />
     </application>
 
+    <queries>
+        <package android:name="com.ichi2.anki" />
+   </queries>    
+
 </manifest>
