@@ -6,7 +6,7 @@ android {
     compileSdkVersion 28
     defaultConfig {
         applicationId "com.luc.ankireview"
-        resConfigs "en"
+        resourceConfigurations += ['en']
         minSdkVersion 22
         targetSdkVersion 28
         versionCode 22
@@ -22,6 +22,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    namespace 'com.luc.ankireview'
 }
 
 dependencies {
