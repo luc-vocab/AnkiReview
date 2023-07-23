@@ -41,6 +41,7 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
 
     // implementation 'com.ichi2.anki:api:1.1.0alpha6'
+    // implementation 'com.github.ankidroid:Anki-Android:api-v1.1.0'
     // the embedded anki-api project contains support for API bury/suspend, but anki 2.9 should have that support soon
     implementation project(":anki-api")
 
