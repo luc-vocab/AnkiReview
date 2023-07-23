@@ -40,9 +40,10 @@ dependencies {
     androidTestImplementation 'androidx.test:runner:1.5.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
 
-    //implementation 'com.ichi2.anki:api:1.0.0alpha2'
+    // implementation 'com.ichi2.anki:api:1.1.0alpha6'
     // the embedded anki-api project contains support for API bury/suspend, but anki 2.9 should have that support soon
     implementation project(":anki-api")
+
     implementation 'androidx.recyclerview:recyclerview:1.3.0'
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
