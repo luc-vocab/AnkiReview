@@ -1,2 +1,2 @@
 configurations.maybeCreate("default")
-artifacts.add("default", file('api-debug.aar'))
+artifacts.add("default", file('api-release.aar'))

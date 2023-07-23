@@ -329,7 +329,14 @@ public class DeckPickerActivity extends AppCompatActivity implements AdapterView
             m_ankiDeckList.clear();
             Vector<AnkiDeck> noDueDeckList = new Vector<AnkiDeck>();
 
+            // Log.i("querying AnkiDroid API: " + FlashCardsContract.Deck.CONTENT_ALL_URI.toString());
             Cursor decksCursor = getContentResolver().query(FlashCardsContract.Deck.CONTENT_ALL_URI, null, null, null, null);
+            if (decksCursor == null) 
+            {
+                Log.e(TAG, "Could not list AnkiDroid decks, decksCursor null: ");
+                showDeckPickerMessage(R.string.deckpicker_cannotlistdecks_title, R.string.deckpicker_cannotlistdecks_description, "decksCursor null");
+                return;
+            }
             if (decksCursor.moveToFirst()) {
                 do {
                     long deckID = decksCursor.getLong(decksCursor.getColumnIndex(FlashCardsContract.Deck.DECK_ID));
