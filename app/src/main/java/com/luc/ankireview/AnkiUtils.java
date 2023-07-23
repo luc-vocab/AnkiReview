@@ -101,13 +101,14 @@ public class AnkiUtils {
 
         if (decksCursor == null || !decksCursor.moveToFirst()) {
             Log.e(TAG, "query for deck returned no result");
-            if (decksCursor != null) {
-                decksCursor.close();
-            }
         } else {
             JSONObject decks = new JSONObject();
             long deckID = decksCursor.getLong(decksCursor.getColumnIndex(FlashCardsContract.Deck.DECK_ID));
             deckName = decksCursor.getString(decksCursor.getColumnIndex(FlashCardsContract.Deck.DECK_NAME));
+        }
+
+        if (decksCursor != null) {
+            decksCursor.close();
         }
 
         return deckName;
@@ -133,9 +134,6 @@ public class AnkiUtils {
 
         if (decksCursor == null || !decksCursor.moveToFirst()) {
             Log.e(TAG, "query for deck returned no result");
-            if (decksCursor != null) {
-                decksCursor.close();
-            }
         } else {
             try {
                 JSONArray deckCounts = new JSONArray(decksCursor.getString(decksCursor.getColumnIndex(FlashCardsContract.Deck.DECK_COUNTS)));
@@ -143,6 +141,9 @@ public class AnkiUtils {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
+        }
+
+        if (decksCursor != null) {
             decksCursor.close();
         }
 
@@ -191,6 +192,10 @@ public class AnkiUtils {
             } while (cur.moveToNext());
         }
 
+        if (cur != null) {
+            cur.close();
+        }
+
         return cardList;
     }
 
@@ -215,6 +220,10 @@ public class AnkiUtils {
             answer = cardCursor.getString(cardCursor.getColumnIndex(FlashCardsContract.Card.ANSWER));
 
         }
+
+        if (cardCursor != null) {
+            cardCursor.close();
+        }        
 
         // retrieve note information
         // -------------------------
@@ -246,6 +255,10 @@ public class AnkiUtils {
 
         }
 
+        if (noteCursor != null) {
+            noteCursor.close();
+        }        
+
         // retrieve model information
         // --------------------------
 
@@ -263,6 +276,10 @@ public class AnkiUtils {
             String fieldNamesStr = modelCursor.getString(modelCursor.getColumnIndex(FlashCardsContract.Model.FIELD_NAMES));
             fieldNames = fieldNamesStr.split("\\x1f");
         }
+
+        if (modelCursor != null) {
+            modelCursor.close();
+        }        
 
         // create field name/value map
         HashMap<String,String> fieldMap = new HashMap<String,String>();
@@ -294,6 +311,10 @@ public class AnkiUtils {
             cardTemplateName = cardTemplateCursor.getString(cardTemplateCursor.getColumnIndex(FlashCardsContract.CardTemplate.NAME));
             // Log.v(TAG, "card template name: " + cardTemplateName);
         }
+
+        if (cardTemplateCursor != null) {
+            cardTemplateCursor.close();
+        }                
 
         Card card = new Card(noteId, cardOrd, modelId, cardTemplateName, fieldMap, tagSet, question, answer);
 
@@ -364,6 +385,10 @@ public class AnkiUtils {
             int updateCount = contentResolver.update(updateNoteUri, values, null, null);
 
         }
+
+        if (cursor != null) {
+            cursor.close();
+        }                        
     }
 
 }
