@@ -3,5 +3,15 @@
 		{
 			"path": "."
 		}
-	]
+	],
+	"settings":
+	{
+		"java.configuration.runtimes": [
+			{
+				"name": "JavaSE-17",
+				"path": "/opt/android-studio/jbr",
+				"default": true
+			},
+		]
+	}
 }
