@@ -3,6 +3,8 @@ package com.luc.ankireview.backgrounds;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.motion.widget.MotionLayout;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.preference.PreferenceManager;
 
 import android.content.Context;
@@ -29,6 +31,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreSettings;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.luc.ankireview.DynamicHeightImageView;
+import com.luc.ankireview.R;
 import com.luc.ankireview.Settings;
 
 import java.util.Collections;
@@ -103,7 +106,7 @@ public class BackgroundManager {
 
     public BackgroundManager(
             DynamicHeightImageView imageView,
-            BackgroundType backgroundType, String setName, int changeImageEveryNumTicks, MotionLayout container, View teacherSpacerTop, Context context) {
+            BackgroundType backgroundType, String setName, int changeImageEveryNumTicks, MotionLayout container, androidx.constraintlayout.widget.Guideline teacherSpacerGuideline, Context context) {
 
         m_imageView = imageView;
         m_target = new BitmapImageViewTargetDynamic(m_imageView);
@@ -125,7 +128,7 @@ public class BackgroundManager {
 
         m_container = container;
         m_context = context;
-        m_teacherSpacerTop = teacherSpacerTop;
+        m_teacherSpacerGuideline = teacherSpacerGuideline;
 
         final String lastLoadedPublicId = getLastLoaded();
 
@@ -182,35 +185,41 @@ public class BackgroundManager {
                 adjBitmapWidth = (int) ((int) reportedBitmapWidth / factor);
                 Log.v(TAG, "availableWidth: " + availableWidth
                                 + " reportedBitmapWidth: " + reportedBitmapWidth
+                                + " adjBitmapHeight: " + adjBitmapHeight
                                 + " adjBitmapWidth: " + adjBitmapWidth
                                 + " factor: " + factor);
             }
 
-            // set height of spacer
-            int spacerHeight = availableHeight - adjBitmapHeight;
-            if( spacerHeight < 0) {
-                // don't go below zero
-                spacerHeight = 0;
-            }
+            // now we use a guideline to position the highest position of the teacher 
+            // photo
+            // https://medium.com/tech-takeaways/android-constraint-layout-about-guidelines-groups-and-barriers-c76149e4e4b1
+            float teacherVerticalGuidelineRatio = ((float) availableHeight - adjBitmapHeight) / (float) availableHeight;
+            teacherVerticalGuidelineRatio = (float) Math.min(teacherVerticalGuidelineRatio, 1.0);
 
             Log.v(TAG, "processLoadedBitmap: "
                     + " bitmapWidth: " + adjBitmapWidth
                     + " bitmapHeight: " + adjBitmapHeight
                     + " availableWidth: " + availableWidth
                     + " availableHeight: " + availableHeight
-                    + " spacerHeight: " + spacerHeight);
-
-            ViewGroup.LayoutParams layoutParams = m_teacherSpacerTop.getLayoutParams();
-            layoutParams.height = spacerHeight;
-            m_teacherSpacerTop.setMinimumHeight(spacerHeight);
-            m_teacherSpacerTop.requestLayout();
-
-            Log.v(TAG, "setting teacherSpacerTop height to " + spacerHeight);
+                    + " teacherVerticalGuidelineRatio: " + teacherVerticalGuidelineRatio);
 
             float middle = (float) (availableWidth / 2.0);
             m_imageView.setPivotX(middle);
 
-            // m_teacherSpacerTop.setLayoutParams(new ConstraintLayout.LayoutParams(availableWidth, spacerHeight));
+
+            // https://stackoverflow.com/questions/41085338/change-guideline-percentage-in-constraint-layout-programmatically
+/*             ConstraintSet constraintSet = new ConstraintSet();
+            constraintSet.clone(constraintLayout);
+            constraintSet.setGuidelinePercent(R.id.teacher_photo_top_guideline, teacherVerticalGuidelineRatio); */
+
+/*             ConstraintLayout.LayoutParams params = (ConstraintLayout.LayoutParams) m_teacherSpacerGuideline.getLayoutParams();
+            params.guidePercent = teacherVerticalGuidelineRatio;
+            m_teacherSpacerGuideline.setLayoutParams(params);             */
+
+            m_teacherSpacerGuideline.setGuidelinePercent(teacherVerticalGuidelineRatio);
+            // m_teacherSpacerGuideline.invalidate();
+            // m_teacherSpacerGuideline.requestLayout();
+
         }
 
         // Bitmap is loaded, use image here
@@ -360,7 +369,7 @@ public class BackgroundManager {
     private int m_changeImageNumTicks = 3;
     private int m_ticks = 0;
     private MotionLayout m_container;
-    private View m_teacherSpacerTop;
+    private androidx.constraintlayout.widget.Guideline m_teacherSpacerGuideline;
     private Context m_context;
     private String m_currentPublicId;
     private String m_setName;

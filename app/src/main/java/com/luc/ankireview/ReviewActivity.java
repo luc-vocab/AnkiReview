@@ -12,6 +12,7 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.motion.widget.MotionLayout;
+import androidx.constraintlayout.widget.Guideline;
 import androidx.core.view.GestureDetectorCompat;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -210,9 +211,9 @@ public class ReviewActivity extends AppCompatActivity implements ReviewBottomShe
             m_teacherPhoto = m_flashcardFrameTeacherMode.findViewById(R.id.teacher_photo);
             m_backgroundPhoto = m_flashcardFrameTeacherMode.findViewById(R.id.background_photo);
 
-            View teacherSpacerTop = m_flashcardFrameTeacherMode.findViewById(R.id.teacher_photo_top_spacer);
+            Guideline teacherSpacerGuideline = m_flashcardFrameTeacherMode.findViewById(R.id.teacher_photo_top_guideline);
 
-            m_imageManagerTeacher = new BackgroundManager(m_teacherPhoto, BackgroundManager.BackgroundType.Teachers, teacherSet, 3, m_flashcardFrameTeacherMode, teacherSpacerTop, this);
+            m_imageManagerTeacher = new BackgroundManager(m_teacherPhoto, BackgroundManager.BackgroundType.Teachers, teacherSet, 3, m_flashcardFrameTeacherMode, teacherSpacerGuideline, this);
             m_imageManagerTeacher.fillImageView();
 
             m_imageManagerBackgrounds = new BackgroundManager(m_backgroundPhoto, BackgroundManager.BackgroundType.Backgrounds, backgroundSet, 6, m_flashcardFrameTeacherMode, null, this);
