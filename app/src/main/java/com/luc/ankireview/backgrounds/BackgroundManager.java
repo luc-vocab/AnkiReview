@@ -196,52 +196,26 @@ public class BackgroundManager {
             // https://medium.com/tech-takeaways/android-constraint-layout-about-guidelines-groups-and-barriers-c76149e4e4b1
             float teacherVerticalGuidelineRatio = ((float) availableHeight - adjBitmapHeight) / (float) availableHeight;
             teacherVerticalGuidelineRatio = (float) Math.min(teacherVerticalGuidelineRatio, 1.0);
-            int guidelineStart = availableHeight - adjBitmapHeight;
+            // this seems to work, the guideline is in reverse
+            int guidelineStart = adjBitmapHeight;
 
             Log.v(TAG, "processLoadedBitmap: "
                     + " bitmapWidth: " + adjBitmapWidth
                     + " bitmapHeight: " + adjBitmapHeight
                     + " availableWidth: " + availableWidth
                     + " availableHeight: " + availableHeight
-                    + " teacherVerticalGuidelineRatio: " + teacherVerticalGuidelineRatio);
+                    + " teacherVerticalGuidelineRatio: " + teacherVerticalGuidelineRatio
+                    + " guidelineStart: " + guidelineStart);
 
             float middle = (float) (availableWidth / 2.0);
             m_imageView.setPivotX(middle);
 
-
-            // see if we can use ReactiveGuide:
+            // use ReactiveGuide to dynamically position guideline
             // https://github.com/androidx/constraintlayout/wiki/Foldable-Support
             // https://developer.android.com/reference/androidx/constraintlayout/widget/ReactiveGuide
             // https://github.com/androidx/constraintlayout/blob/main/constraintlayout/constraintlayout/src/main/java/androidx/constraintlayout/widget/ReactiveGuide.java
 
             ConstraintLayout.getSharedValues().fireNewValue(R.id.teacher_photo_top_guideline, guidelineStart);
-
-            // https://stackoverflow.com/questions/41085338/change-guideline-percentage-in-constraint-layout-programmatically
-/*             ConstraintSet constraintSet = new ConstraintSet();
-            constraintSet.clone(constraintLayout);
-            constraintSet.setGuidelinePercent(R.id.teacher_photo_top_guideline, teacherVerticalGuidelineRatio); */
-
-/*             ConstraintLayout.LayoutParams params = (ConstraintLayout.LayoutParams) m_teacherSpacerGuideline.getLayoutParams();
-            params.guidePercent = teacherVerticalGuidelineRatio;
-            m_teacherSpacerGuideline.setLayoutParams(params);             */
-
-            // teacherVerticalGuidelineRatio = 0.8f;
-            // m_teacherSpacerGuideline.setGuidelinePercent(teacherVerticalGuidelineRatio);
-            // m_teacherSpacerGuideline.setGuidelineBegin(guidelineStart);
-            // m_teacherSpacerGuideline.invalidate();
-            // m_teacherSpacerGuideline.requestLayout();
-
-
-            // https://stackoverflow.com/questions/44845121/constraintlayout-with-databinding/44847951#44847951
-/*             ConstraintLayout constraintLayout = (ConstraintLayout) m_container;
-            ConstraintSet constraintSet = new ConstraintSet();
-            constraintSet.clone(constraintLayout);
-            constraintSet.setGuidelinePercent(R.id.teacher_photo_top_guideline, teacherVerticalGuidelineRatio);
-            constraintLayout.setConstraintSet(constraintSet); */
-
-            // request layout
-            // m_container.requestLayout();
-
         }
 
         // Bitmap is loaded, use image here
