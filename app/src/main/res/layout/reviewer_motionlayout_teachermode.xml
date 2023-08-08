@@ -27,13 +27,13 @@
     >
     </com.luc.ankireview.DynamicHeightImageView>
 
-    <androidx.constraintlayout.widget.Guideline
+    <androidx.constraintlayout.widget.ReactiveGuide
         android:id="@+id/teacher_photo_top_guideline"
+        app:reactiveGuide_valueId="@id/teacher_photo_top_guideline"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintGuide_percent="0.36"
+        app:layout_constraintGuide_percent="0.0"
         />
 
     <androidx.constraintlayout.widget.Barrier

@@ -5,6 +5,7 @@ import androidx.annotation.Nullable;
 import androidx.constraintlayout.motion.widget.MotionLayout;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
+import androidx.constraintlayout.widget.ReactiveGuide;
 import androidx.preference.PreferenceManager;
 
 import android.content.Context;
@@ -106,7 +107,7 @@ public class BackgroundManager {
 
     public BackgroundManager(
             DynamicHeightImageView imageView,
-            BackgroundType backgroundType, String setName, int changeImageEveryNumTicks, MotionLayout container, androidx.constraintlayout.widget.Guideline teacherSpacerGuideline, Context context) {
+            BackgroundType backgroundType, String setName, int changeImageEveryNumTicks, MotionLayout container, ReactiveGuide teacherSpacerGuideline, Context context) {
 
         m_imageView = imageView;
         m_target = new BitmapImageViewTargetDynamic(m_imageView);
@@ -195,6 +196,7 @@ public class BackgroundManager {
             // https://medium.com/tech-takeaways/android-constraint-layout-about-guidelines-groups-and-barriers-c76149e4e4b1
             float teacherVerticalGuidelineRatio = ((float) availableHeight - adjBitmapHeight) / (float) availableHeight;
             teacherVerticalGuidelineRatio = (float) Math.min(teacherVerticalGuidelineRatio, 1.0);
+            int guidelineStart = availableHeight - adjBitmapHeight;
 
             Log.v(TAG, "processLoadedBitmap: "
                     + " bitmapWidth: " + adjBitmapWidth
@@ -207,6 +209,13 @@ public class BackgroundManager {
             m_imageView.setPivotX(middle);
 
 
+            // see if we can use ReactiveGuide:
+            // https://github.com/androidx/constraintlayout/wiki/Foldable-Support
+            // https://developer.android.com/reference/androidx/constraintlayout/widget/ReactiveGuide
+            // https://github.com/androidx/constraintlayout/blob/main/constraintlayout/constraintlayout/src/main/java/androidx/constraintlayout/widget/ReactiveGuide.java
+
+            ConstraintLayout.getSharedValues().fireNewValue(R.id.teacher_photo_top_guideline, guidelineStart);
+
             // https://stackoverflow.com/questions/41085338/change-guideline-percentage-in-constraint-layout-programmatically
 /*             ConstraintSet constraintSet = new ConstraintSet();
             constraintSet.clone(constraintLayout);
@@ -216,9 +225,22 @@ public class BackgroundManager {
             params.guidePercent = teacherVerticalGuidelineRatio;
             m_teacherSpacerGuideline.setLayoutParams(params);             */
 
-            m_teacherSpacerGuideline.setGuidelinePercent(teacherVerticalGuidelineRatio);
+            // teacherVerticalGuidelineRatio = 0.8f;
+            // m_teacherSpacerGuideline.setGuidelinePercent(teacherVerticalGuidelineRatio);
+            // m_teacherSpacerGuideline.setGuidelineBegin(guidelineStart);
             // m_teacherSpacerGuideline.invalidate();
             // m_teacherSpacerGuideline.requestLayout();
+
+
+            // https://stackoverflow.com/questions/44845121/constraintlayout-with-databinding/44847951#44847951
+/*             ConstraintLayout constraintLayout = (ConstraintLayout) m_container;
+            ConstraintSet constraintSet = new ConstraintSet();
+            constraintSet.clone(constraintLayout);
+            constraintSet.setGuidelinePercent(R.id.teacher_photo_top_guideline, teacherVerticalGuidelineRatio);
+            constraintLayout.setConstraintSet(constraintSet); */
+
+            // request layout
+            // m_container.requestLayout();
 
         }
 
@@ -369,7 +391,7 @@ public class BackgroundManager {
     private int m_changeImageNumTicks = 3;
     private int m_ticks = 0;
     private MotionLayout m_container;
-    private androidx.constraintlayout.widget.Guideline m_teacherSpacerGuideline;
+    private ReactiveGuide m_teacherSpacerGuideline;
     private Context m_context;
     private String m_currentPublicId;
     private String m_setName;
