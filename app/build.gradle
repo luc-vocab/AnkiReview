@@ -7,8 +7,10 @@ android {
     defaultConfig {
         applicationId "com.luc.ankireview"
         resourceConfigurations += ['en']
-        minSdkVersion 30
-        targetSdkVersion 34
+        minSdkVersion 29
+        //noinspection ExpiredTargetSdkVersion
+        // note: target android 10 to retain access to external audio files (https://developer.android.com/about/versions/11/privacy/storage)
+        targetSdkVersion 29
         versionCode 22
         versionName "0.22"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
